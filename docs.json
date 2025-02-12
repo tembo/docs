@@ -18,21 +18,20 @@
             "pages": ["quickstart"]
           },
           {
-            "group": "Postgres Connect",
+            "group": "Integrations",
             "pages": [
-              "postgres/aws",
-              "postgres/azure",
-              "postgres/gcp",
-              "postgres/tembo-cloud"
+              "integrations/aws",
+              "integrations/tembo-cloud",
+              "integrations/github"
             ]
           },
           {
-            "group": "Code Connect",
-            "pages": ["code/github", "code/gitlab"]
+            "group": "Solving",
+            "pages": ["solving/issues", "solving/pull-requests"]
           },
           {
-            "group": "Solving",
-            "pages": ["solving/issues", "solving/experiments"]
+            "group": "Security & Privacy",
+            "pages": ["security"]
           }
         ]
       }
