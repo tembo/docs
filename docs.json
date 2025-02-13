@@ -1,11 +1,14 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "maple",
+  "theme": "palm",
   "name": "dba.ai docs",
   "colors": {
     "primary": "#16A34A",
     "light": "#07C983",
     "dark": "#15803D"
+  },
+  "background": {
+    "color": { "light": "#F8F8F8", "dark": "#000000" }
   },
   "favicon": "/favicon.ico",
   "navigation": {
@@ -14,15 +17,15 @@
         "tab": "Documentation",
         "groups": [
           {
-            "group": "Getting Started",
-            "pages": ["quickstart"]
+            "group": "Get Started",
+            "pages": ["welcome", "faq"]
           },
           {
             "group": "Integrations",
             "pages": [
               "integrations/aws",
-              "integrations/tembo-cloud",
-              "integrations/github"
+              "integrations/github",
+              "integrations/tembo-cloud"
             ]
           },
           {
@@ -30,8 +33,14 @@
             "pages": ["solving/issues", "solving/pull-requests"]
           },
           {
-            "group": "Security & Privacy",
-            "pages": ["security"]
+            "group": "Account",
+            "pages": [
+              "account/usage",
+              "account/plans",
+              "account/pricing",
+              "account/billing",
+              "account/security"
+            ]
           }
         ]
       }
@@ -44,8 +53,8 @@
   "navbar": {
     "links": [
       {
-        "label": "Support",
-        "href": "mailto:support@tembo.io"
+        "label": "Get Help",
+        "href": "mailto:hi@dba.ai"
       }
     ],
     "primary": {

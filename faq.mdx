@@ -1,0 +1,25 @@
+---
+title: "FAQ"
+description: "Frequently asked questions about dba"
+---
+
+<AccordionGroup>
+  <Accordion title="What managed Postgres providers do you support?">
+    Initially [AWS RDS for PostgreSQL](https://aws.amazon.com/rds/postgresql/)
+    and [Tembo Cloud](https://cloud.tembo.io).
+  </Accordion>
+  <Accordion title="How do you keep the AI models up-to-date with the latest documentation?">
+    **dba** leverages powerful foundational from Anthropic and OpenAI. We also
+    regularly ingest platform documentation, Postgres documentation, and other
+    sources of knowledge for the latest Postgres techniques.
+  </Accordion>
+  <Accordion title="Are there size limits for code indexing?">
+    Code repos are limited to 10,000 files, though this can be adjusted. To
+    optimize indexing performance, you can use .dbaignore to exclude unnecessary
+    files from the indexing process.
+  </Accordion>
+  <Accordion title="Can one database be linked to multipe code repos?">
+    Yes, you can map databases to multiple code repos, and vice versa. It's a
+    many-to-many relationship.
+  </Accordion>
+</AccordionGroup>
