@@ -1,0 +1,419 @@
+---
+title: "Troubleshooting Postgres"
+description: "Common PostgreSQL problems and how dba.ai helps solve them"
+icon: "wrench"
+---
+
+## Performance Issues
+
+### Slow Queries
+
+**Symptoms:**
+
+- Queries taking longer than expected
+- Timeouts in application logs
+- Increasing response times
+
+**How dba.ai helps:**
+
+1. Identifies slow queries through PostgreSQL's `pg_stat_statements`
+2. Analyzes query execution plans with `EXPLAIN ANALYZE`
+3. Recommends specific index improvements
+4. Suggests query rewrites for better performance
+5. Monitors query performance trends over time
+
+**Example solution:**
+
+```sql
+-- dba.ai recommended index for slow customer search query
+CREATE INDEX idx_customers_last_name_first_name
+ON customers(last_name, first_name);
+```
+
+### Connection Pooling Issues
+
+**Symptoms:**
+
+- "Too many connections" errors
+- Connection timeouts
+- High CPU usage from connection establishment
+
+**How dba.ai helps:**
+
+1. Analyzes connection patterns using `pg_stat_activity`
+2. Recommends optimal connection pool settings
+3. Suggests PgBouncer configuration improvements
+4. Monitors connection utilization over time
+
+**Example solution:**
+
+```
+# dba.ai recommended PgBouncer settings
+max_client_conn = 500
+default_pool_size = 50
+pool_mode = transaction
+```
+
+### High CPU Usage
+
+**Symptoms:**
+
+- Consistently high CPU utilization
+- Slow response times across all queries
+- Server performance degradation
+
+**How dba.ai helps:**
+
+1. Identifies CPU-intensive queries
+2. Analyzes query execution patterns
+3. Recommends parallelism settings adjustments
+4. Suggests workload distribution strategies
+
+**Example solution:**
+
+```
+# dba.ai recommended PostgreSQL settings
+max_worker_processes = 16
+max_parallel_workers_per_gather = 4
+max_parallel_workers = 12
+```
+
+## Storage Issues
+
+### Database Bloat
+
+**Symptoms:**
+
+- Growing database size despite unchanged data volume
+- Degrading performance after updates/deletes
+- Increasing storage costs
+
+**How dba.ai helps:**
+
+1. Detects bloated tables and indexes
+2. Recommends appropriate VACUUM settings
+3. Suggests autovacuum parameter adjustments
+4. Creates maintenance schedules for manual VACUUM FULL when needed
+
+**Example solution:**
+
+```sql
+-- dba.ai recommended autovacuum settings
+ALTER SYSTEM SET autovacuum_vacuum_scale_factor = 0.05;
+ALTER SYSTEM SET autovacuum_analyze_scale_factor = 0.02;
+ALTER SYSTEM SET autovacuum_vacuum_threshold = 50;
+```
+
+### Index Bloat
+
+**Symptoms:**
+
+- Degrading index performance
+- Growing index size
+- Increasing query times
+
+**How dba.ai helps:**
+
+1. Identifies bloated indexes using diagnostic queries
+2. Recommends index rebuild strategies
+3. Suggests maintenance windows for rebuilding
+4. Monitors index effectiveness
+
+**Example solution:**
+
+```sql
+-- dba.ai recommended maintenance script
+REINDEX TABLE CONCURRENTLY orders;
+```
+
+### Disk Space Issues
+
+**Symptoms:**
+
+- Disk space alerts
+- Database unable to grow
+- Failed operations due to disk full errors
+
+**How dba.ai helps:**
+
+1. Monitors disk space trends
+2. Identifies largest tables and indices
+3. Suggests data archiving strategies
+4. Recommends partitioning for large tables
+
+**Example solution:**
+
+```sql
+-- dba.ai recommended partitioning strategy
+CREATE TABLE orders_partitioned (LIKE orders) PARTITION BY RANGE (order_date);
+```
+
+## Configuration Issues
+
+### Memory Configuration
+
+**Symptoms:**
+
+- Out of memory errors
+- Swapping detected
+- Poor cache hit ratios
+
+**How dba.ai helps:**
+
+1. Analyzes current memory settings
+2. Monitors actual memory usage patterns
+3. Recommends optimal shared_buffers, work_mem settings
+4. Suggests OS configuration improvements
+
+**Example solution:**
+
+```
+# dba.ai recommended memory settings
+shared_buffers = 8GB
+work_mem = 64MB
+maintenance_work_mem = 512MB
+effective_cache_size = 24GB
+```
+
+### WAL Configuration
+
+**Symptoms:**
+
+- Checkpoint warning messages
+- I/O spikes during checkpoints
+- Slow transaction commit times
+
+**How dba.ai helps:**
+
+1. Analyzes WAL generation rates
+2. Monitors checkpoint behavior
+3. Recommends optimal WAL settings
+4. Suggests checkpoint spread improvements
+
+**Example solution:**
+
+```
+# dba.ai recommended WAL settings
+max_wal_size = 4GB
+checkpoint_timeout = 15min
+checkpoint_completion_target = 0.9
+```
+
+### Logging Configuration
+
+**Symptoms:**
+
+- Missing important error information
+- Excessively large log files
+- Difficulty troubleshooting issues
+
+**How dba.ai helps:**
+
+1. Evaluates current logging settings
+2. Recommends appropriate log levels
+3. Suggests log rotation strategies
+4. Creates log analysis dashboards
+
+**Example solution:**
+
+```
+# dba.ai recommended logging settings
+log_min_duration_statement = 1000
+log_checkpoints = on
+log_connections = on
+log_disconnections = on
+log_lock_waits = on
+log_temp_files = 0
+```
+
+## Availability Issues
+
+### Deadlocks
+
+**Symptoms:**
+
+- Deadlock errors in application logs
+- Transactions failing unexpectedly
+- Error messages in PostgreSQL logs
+
+**How dba.ai helps:**
+
+1. Analyzes deadlock patterns using logs
+2. Identifies transactions prone to deadlocks
+3. Recommends application-level changes
+4. Suggests row-level locking strategies
+
+**Example solution:**
+
+```sql
+-- dba.ai recommended application changes
+-- Use explicit row locking with SELECT FOR UPDATE
+BEGIN;
+SELECT * FROM inventory
+WHERE product_id = 123
+FOR UPDATE;
+-- Process inventory update
+COMMIT;
+```
+
+### Replication Lag
+
+**Symptoms:**
+
+- Growing replication delay
+- Stale data on read replicas
+- Backups falling behind
+
+**How dba.ai helps:**
+
+1. Monitors replication lag continuously
+2. Identifies causes of replication bottlenecks
+3. Recommends network, disk, or configuration improvements
+4. Suggests read workload distribution strategies
+
+**Example solution:**
+
+```
+# dba.ai recommended replication settings
+max_wal_senders = 10
+wal_keep_segments = 64
+hot_standby_feedback = on
+```
+
+### Unplanned Downtime
+
+**Symptoms:**
+
+- Database crashes
+- Connection failures
+- Data corruption reports
+
+**How dba.ai helps:**
+
+1. Analyzes crash logs for root causes
+2. Recommends configuration changes to prevent recurrence
+3. Suggests high availability improvements
+4. Creates recovery procedures
+
+**Example solution:**
+
+```
+# dba.ai recommended reliability settings
+synchronous_commit = on
+full_page_writes = on
+wal_log_hints = on
+```
+
+## Security Issues
+
+### Privilege Management
+
+**Symptoms:**
+
+- Permission errors in application logs
+- Overly permissive access patterns
+- Security audit concerns
+
+**How dba.ai helps:**
+
+1. Audits current user privileges
+2. Identifies principle of least privilege violations
+3. Recommends role-based access control improvements
+4. Suggests security best practices
+
+**Example solution:**
+
+```sql
+-- dba.ai recommended security improvements
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+CREATE ROLE app_readonly;
+GRANT USAGE ON SCHEMA public TO app_readonly;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO app_readonly;
+```
+
+### SQL Injection Vulnerabilities
+
+**Symptoms:**
+
+- Unusual query patterns
+- Unexpected database behavior
+- Security scanning alerts
+
+**How dba.ai helps:**
+
+1. Monitors for suspicious query patterns
+2. Identifies potential SQL injection attempts
+3. Recommends application-level mitigations
+4. Suggests database-level protections
+
+**Example solution:**
+
+```sql
+-- dba.ai recommended security measure
+REVOKE EXECUTE ON FUNCTION pg_read_file FROM PUBLIC;
+```
+
+### Unencrypted Connections
+
+**Symptoms:**
+
+- Plain text credentials in network traffic
+- Security compliance failures
+- Data privacy concerns
+
+**How dba.ai helps:**
+
+1. Analyzes connection security settings
+2. Identifies unencrypted connection patterns
+3. Recommends SSL/TLS configuration
+4. Suggests client-side security improvements
+
+**Example solution:**
+
+```
+# dba.ai recommended SSL settings
+ssl = on
+ssl_cert_file = 'server.crt'
+ssl_key_file = 'server.key'
+ssl_prefer_server_ciphers = on
+```
+
+## Database Maintenance
+
+### Regular Maintenance Tasks
+
+dba.ai helps establish regular maintenance routines:
+
+1. **Statistics Updates**
+
+   - Recommends optimal `ANALYZE` frequency
+   - Monitors statistics accuracy
+
+2. **Index Maintenance**
+
+   - Schedules regular index rebuilds
+   - Identifies unused indexes
+
+3. **Backup Verification**
+
+   - Monitors backup success/failure
+   - Tests recovery procedures
+
+4. **Vacuum Operations**
+   - Creates custom vacuum schedules
+   - Monitors effectiveness of routine maintenance
+
+## Getting Help
+
+If you encounter an issue not covered here:
+
+1. Use the dba.ai chat interface to describe your problem
+2. Review the database health dashboard for anomalies
+3. Check the AI agent's automatic issue detection
+4. Contact support@dba.ai for personalized assistance
+
+## Next Steps
+
+- Set up [issue detection](/solving/issue-detection) for proactive problem identification
+- Configure [alert preferences](/alerts) for timely issue notifications
+- Explore the [AI Chat](/ai-chat/overview) for interactive troubleshooting assistance
