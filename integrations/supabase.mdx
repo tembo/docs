@@ -1,0 +1,105 @@
+---
+title: "Supabase"
+description: "How to connect your Supabase Postgres database to dba.ai for AI-powered monitoring, optimization, and issue resolution."
+icon: "cloud"
+---
+
+## Overview
+
+The Supabase integration allows dba.ai to securely connect to your Supabase Postgres database. Once connected, dba.ai can:
+
+- Monitor database performance
+- Identify potential issues
+- Provide optimization recommendations
+- Generate solutions for common PostgreSQL problems
+
+## Prerequisites
+
+- A Supabase account with an active project
+- Administrator access to your Supabase project
+- Database connection details (available in your Supabase dashboard)
+
+## Setup Instructions
+
+### 1. Get Your Supabase Connection Information
+
+1. Log in to your [Supabase Dashboard](https://app.supabase.io/)
+2. Select your project
+3. Navigate to **Project Settings** > **Database**
+4. Under **Connection Info**, find your connection details:
+   - **Host**: The database host
+   - **Port**: Usually 5432 for PostgreSQL
+   - **Database name**: Your database name
+   - **User**: Database username
+   - **Password**: Database password
+
+### 2. Connect to dba.ai
+
+1. Log in to your dba.ai account
+2. Navigate to **Connections** > **Add Connection**
+3. Select **Supabase** as the connection type
+4. Enter your connection details:
+   - Connection name (for your reference)
+   - Host
+   - Port
+   - Database name
+   - Username
+   - Password
+5. Click **Test Connection** to verify everything works
+6. Click **Create Connection** to save
+
+### 3. Configure Access Permissions
+
+For optimal functionality, dba.ai requires certain permissions. We recommend creating a dedicated read-only user for dba.ai:
+
+```sql
+-- Create a dedicated user for dba.ai
+CREATE USER dba_ai WITH PASSWORD 'your_secure_password';
+
+-- Grant read permissions
+GRANT CONNECT ON DATABASE your_database TO dba_ai;
+GRANT USAGE ON SCHEMA public TO dba_ai;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO dba_ai;
+GRANT SELECT ON ALL SEQUENCES IN SCHEMA public TO dba_ai;
+GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO dba_ai;
+
+-- Set default privileges for future objects
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO dba_ai;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON SEQUENCES TO dba_ai;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT EXECUTE ON FUNCTIONS TO dba_ai;
+```
+
+## Security Considerations
+
+- dba.ai encrypts all connection information at rest
+- All database traffic is encrypted using TLS
+- You can limit dba.ai's access by using a read-only user
+- No sensitive data is extracted from your database without explicit permission
+
+## Troubleshooting
+
+### Connection Issues
+
+- Verify your Supabase project is active
+- Check if your IP is allowlisted in Supabase's security settings
+- Ensure the database user has sufficient permissions
+
+### Permission Errors
+
+If you encounter permission errors, run the following to view current permissions:
+
+```sql
+SELECT grantee, privilege_type
+FROM information_schema.table_privileges
+WHERE grantee = 'dba_ai';
+```
+
+## Next Steps
+
+After connecting your Supabase database:
+
+1. Set up [issue monitoring](/solving/issues) to receive alerts
+2. Configure [automatic pull requests](/solving/pull-requests) for suggested fixes
+3. Explore the AI-powered [database chat](/chat) to query your database using natural language
+
+For advanced configuration options, contact support@dba.ai.

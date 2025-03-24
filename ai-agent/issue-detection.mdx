@@ -1,0 +1,110 @@
+---
+title: "Issue Detection"
+description: "dba.ai uses AI to automatically detect, diagnose, and resolve PostgreSQL database issues."
+icon: "magnifying-glass"
+---
+
+## How Issue Detection Works
+
+dba.ai monitors your connected PostgreSQL databases, collecting key metrics and log data to identify potential problems. The system uses a combination of:
+
+1. **Metric Analysis**: Monitoring performance metrics like CPU usage, memory, I/O, and database-specific metrics
+2. **Log Analysis**: Scanning PostgreSQL logs for errors, warnings, and other signs of trouble
+3. **Query Performance**: Tracking slow queries and identifying optimization opportunities
+4. **Configuration Analysis**: Reviewing your PostgreSQL configuration for potential improvements
+
+When an issue is detected, dba.ai:
+
+1. Analyzes the root cause using AI
+2. Classifies the severity of the issue
+3. Generates potential solutions
+4. Creates a detailed report with actionable recommendations
+
+## Types of Issues Detected
+
+dba.ai can identify and help resolve a wide range of PostgreSQL issues, including:
+
+### Performance Issues
+
+- Slow queries
+- Index opportunities
+- Connection bottlenecks (coming soon)
+- Resource constraints (coming soon)
+
+### Configuration Issues
+
+- Suboptimal PostgreSQL parameters (coming soon)
+- Memory allocation problems (coming soon)
+- Inefficient work_mem or shared_buffers settings (coming soon)
+
+### Data Management Issues
+
+- Bloat in tables or indexes (coming soon)
+- Missing vacuum operations (coming soon)
+- Stale statistics (coming soon)
+
+### Security Issues
+
+- Exposed endpoints (coming soon)
+- Overly permissive roles (coming soon)
+- Missing encryption (coming soon)
+
+## Issue Resolution Workflow
+
+When dba.ai detects an issue, it follows this workflow:
+
+1. **Detection**: The issue is identified through metrics, logs, or other monitoring
+2. **Analysis**: AI analyzes the issue, considering your specific database context
+3. **Solution Generation**: Multiple potential solutions are developed
+4. **Recommendation**: The best solution is recommended, with explanations for why it's preferred
+5. **Implementation**: You can approve the fix for automatic implementation or apply it manually
+
+### Automated Pull Requests
+
+For GitHub-connected database repositories, dba.ai can:
+
+1. Generate a fix as code
+2. Create a branch in your repository
+3. Submit a pull request with the proposed fix
+4. Add detailed explanations for reviewers
+
+This allows your team to review the proposed changes using your normal code review process.
+
+## Setting Alert Preferences
+
+You can customize how and when you're notified about issues:
+
+1. Navigate to **Settings** > **Alert Preferences**
+2. Configure alert thresholds by severity
+3. Choose notification channels (email, Slack, etc.)
+4. Set quiet hours if needed
+
+## Issue History and Learning
+
+dba.ai maintains a history of all detected issues and their resolutions, which:
+
+1. Helps track recurring problems
+2. Allows the system to learn from previous solutions
+3. Provides documentation for audit purposes
+4. Informs proactive recommendations
+
+## Advanced Configuration
+
+### Custom Issue Rules
+
+You can create custom rules for your specific environment:
+
+1. Go to **Settings** > **Custom Rules**
+2. Define trigger conditions
+3. Set actions to take when conditions are met
+4. Save and activate your rule
+
+### Integration with Monitoring Tools
+
+dba.ai will soon integrate with existing monitoring tools.
+
+## Next Steps
+
+- Learn about [pull requests](/solving/pull-requests) for automated fixes
+- Set up [GitHub integration](/integrations/github) for code-based fixes
+- Explore the [issue dashboard](/dashboard) to see your database health

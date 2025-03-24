@@ -21,16 +21,30 @@
             "pages": ["welcome", "faq"]
           },
           {
+            "group": "AI Agent",
+            "pages": [
+              "ai-agent/overview",
+              "ai-agent/issue-detection",
+              "ai-agent/pull-requests"
+            ]
+          },
+          {
             "group": "Integrations",
             "pages": [
+              "integrations/connection-string",
               "integrations/aws",
               "integrations/github",
+              "integrations/supabase",
               "integrations/tembo-cloud"
             ]
           },
           {
-            "group": "Solving",
-            "pages": ["solving/issues", "solving/pull-requests"]
+            "group": "AI Chat",
+            "pages": [
+              "ai-chat/overview",
+              "ai-chat/knowledge-base",
+              "ai-chat/troubleshooting"
+            ]
           },
           {
             "group": "Account",

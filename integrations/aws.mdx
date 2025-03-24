@@ -1,8 +1,17 @@
 ---
 title: "AWS RDS"
-description: "Connect dba.ai to your AWS RDS Postgres instances"
+description: "Connect dba.ai to your AWS RDS PostgreSQL instances for automated monitoring, optimization, and issue resolution."
 icon: "aws"
 ---
+
+## Overview
+
+dba.ai integrates with AWS RDS to help you:
+
+- Monitor and optimize your PostgreSQL database performance
+- Detect and diagnose issues automatically
+- Receive AI-powered recommendations for improvements
+- Implement fixes with minimal effort
 
 <Frame>
   <img
@@ -11,3 +20,163 @@ icon: "aws"
     style={{ borderRadius: "0.5rem" }}
   />
 </Frame>
+
+## Prerequisites
+
+Before connecting, ensure you have:
+
+- An active AWS account with RDS PostgreSQL instances
+- IAM credentials with appropriate permissions
+- Network access between dba.ai and your RDS instances
+
+## Connection Methods
+
+You can connect dba.ai to your AWS RDS instances using one of two methods:
+
+### 1. Direct Database Connection
+
+Use this method for straightforward monitoring and basic optimizations:
+
+1. Navigate to **Connections** > **Add Connection** in dba.ai
+2. Select **AWS RDS** as the connection type
+3. Enter your RDS instance details:
+   - Endpoint (hostname)
+   - Port (typically 5432)
+   - Database name
+   - Username
+   - Password
+4. Click **Test Connection** to verify connectivity
+5. Click **Create Connection** to save
+
+### 2. AWS IAM Integration (Recommended)
+
+This method provides enhanced capabilities including automatic discovery of RDS instances and deeper integration:
+
+1. Create an IAM role with the following permissions:
+
+   ```json
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Effect": "Allow",
+         "Action": [
+           "rds:DescribeDBInstances",
+           "rds:DescribeDBClusters",
+           "rds:DescribeDBParameters",
+           "rds:DescribeDBParameterGroups",
+           "rds:DescribeDBLogFiles",
+           "rds:DownloadDBLogFilePortion",
+           "cloudwatch:GetMetricData",
+           "cloudwatch:GetMetricStatistics",
+           "cloudwatch:ListMetrics"
+         ],
+         "Resource": "*"
+       }
+     ]
+   }
+   ```
+
+2. Create a cross-account role trust relationship with dba.ai:
+
+   ```json
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Effect": "Allow",
+         "Principal": {
+           "AWS": "arn:aws:iam::ACCOUNT_ID:root"
+         },
+         "Action": "sts:AssumeRole",
+         "Condition": {}
+       }
+     ]
+   }
+   ```
+
+   (Replace ACCOUNT_ID with the account ID provided by dba.ai support)
+
+3. In dba.ai, navigate to **Connections** > **Add Connection**
+4. Select **AWS IAM Role** as the connection type
+5. Enter your AWS Account ID and Role name
+6. Click **Connect with AWS** to complete the setup
+
+## Enhanced Monitoring Setup
+
+For more comprehensive metrics, enable Enhanced Monitoring for your RDS instances:
+
+1. In the AWS Console, navigate to your RDS instance
+2. Select **Modify**
+3. Under **Monitoring**, set **Enhanced Monitoring** to **Enable enhanced monitoring**
+4. Choose a monitoring granularity (we recommend 15 seconds for optimal insight)
+5. Save changes
+
+dba.ai will automatically detect and use these enhanced metrics.
+
+## Network Configuration
+
+Ensure connectivity between dba.ai and your RDS instances:
+
+### Option 1: Public Access
+
+If your RDS instance has public access enabled, configure your security group to allow connections from dba.ai's IP ranges:
+
+- `52.0.0.0/8` (AWS US East)
+- `35.0.0.0/8` (AWS US West)
+
+### Option 2: Private VPC Access
+
+For enhanced security, configure AWS PrivateLink:
+
+1. Create an endpoint service in your VPC
+2. Share the endpoint service name with dba.ai support
+3. Accept the connection request from dba.ai
+
+## Permission Model
+
+dba.ai operates with the principle of least privilege. We recommend creating a dedicated database user for dba.ai with appropriate permissions:
+
+```sql
+-- Create dedicated user for monitoring
+CREATE USER dba_ai_monitor WITH PASSWORD 'strong-password-here';
+
+-- Grant permissions needed for monitoring
+GRANT pg_monitor TO dba_ai_monitor;
+GRANT CONNECT ON DATABASE your_database TO dba_ai_monitor;
+GRANT USAGE ON SCHEMA public TO dba_ai_monitor;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO dba_ai_monitor;
+```
+
+## Parameters and Configuration
+
+For optimal performance with dba.ai, we recommend the following PostgreSQL parameter settings:
+
+- `shared_preload_libraries`: Include `pg_stat_statements`
+- `track_activity_query_size`: Set to at least `2048`
+- `pg_stat_statements.track`: Set to `ALL`
+- `log_min_duration_statement`: Set to `1000` (milliseconds) or lower
+
+## Troubleshooting
+
+If you encounter connection issues:
+
+1. Verify security group rules allow traffic from dba.ai IPs
+2. Check that the database user has sufficient permissions
+3. Ensure your RDS instance is in the "Available" state
+4. Verify PostgreSQL version compatibility (dba.ai supports PostgreSQL 10+)
+
+For persistent issues, please contact support@dba.ai with:
+
+- RDS instance identifier
+- Error messages received
+- Connection method used
+
+## Next Steps
+
+After connecting your AWS RDS instance:
+
+- Configure [issue alerts](/solving/issues) to receive notifications
+- Set up [automated pull requests](/solving/pull-requests) for fixes
+- Explore your database [performance dashboard](/dashboard)
+- Review recommended [optimization opportunities](/optimization)
