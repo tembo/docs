@@ -31,9 +31,9 @@
           {
             "group": "Integrations",
             "pages": [
+              "integrations/github",
               "integrations/connection-string",
               "integrations/aws",
-              "integrations/github",
               "integrations/supabase",
               "integrations/tembo-cloud"
             ]
@@ -43,6 +43,7 @@
             "pages": [
               "ai-chat/overview",
               "ai-chat/knowledge-base",
+              "ai-chat/text-to-sql",
               "ai-chat/troubleshooting"
             ]
           },

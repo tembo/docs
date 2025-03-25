@@ -1,0 +1,58 @@
+---
+title: "Text-to-SQL"
+description: "The Text-to-SQL feature allows users to write natural language queries that are automatically converted into PostgreSQL SQL statements and executed against a PostgreSQL database. This feature leverages AI technology to interpret user intent and generate semantically correct SQL based on the database schema."
+icon: "code"
+---
+
+## Architecture
+
+The Text-to-SQL feature is implemented as a tool within the dba.ai platform with the following components:
+
+1. **LLM Integration**: Uses Anthropic's Claude model to convert natural language to SQL
+2. **SQL Validation**: Parses and validates the generated SQL to ensure it's safe to execute
+3. **Query Execution**: Executes the validated SQL against the specified database instance
+4. **Security**: Enforces read-only queries by default to prevent unintended data modifications
+
+## Implementation Details
+
+### SQL Generation Process
+
+1. The feature extracts the database schema (DDL) from the target database
+2. The natural language query and schema are sent to the LLM using a specialized prompt
+3. The LLM generates SQL code wrapped in `<sql>` tags
+4. The code is extracted, validated, and checked for read-only operations
+5. The SQL is executed against the database and results are returned to the user
+
+### Security Features
+
+- **Read-Only Enforcement**: By default, only read operations (SELECT statements) are allowed
+- **SQL Injection Prevention**: Generated SQL is parsed and validated before execution
+- **Permission Controls**: Users must have proper authorization for the organization and instance
+
+## Usage
+
+To use the Text-to-SQL feature:
+
+1. Select a PostgreSQL instance in the dba.ai interface
+2. Submit a natural language query describing what data you want to retrieve
+3. The system will convert your query to SQL, execute it, and display the results
+
+### Example Inputs
+
+- "Show me all users who signed up last month"
+- "What's the average transaction amount by product category?"
+- "Find the top 10 customers by order value"
+
+## Limitations
+
+- Requires SQL execution to be enabled for the instance
+- Limited to read-only operations by default
+- Works best with clear, concise queries that reference existing tables and columns
+- Complex queries may require refinement or manual SQL writing
+
+## Future Improvements
+
+- Support for controlled write operations with additional safeguards
+- Retry policy for invalid SQL generation
+- Enhanced schema understanding for more complex queries
+- Interactive query refinement
