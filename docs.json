@@ -32,6 +32,7 @@
             "group": "Integrations",
             "pages": [
               "integrations/github",
+              "integrations/sentry",
               "integrations/connection-string",
               "integrations/aws",
               "integrations/supabase",
