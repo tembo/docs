@@ -1,86 +1,77 @@
 {
-  "$schema": "https://mintlify.com/docs.json",
-  "theme": "palm",
-  "name": "dba.ai docs",
-  "colors": {
-    "primary": "#DF3021",
-    "light": "#DF3021",
-    "dark": "#DF3021"
-  },
-  "background": {
-    "color": { "light": "#F8F8F8", "dark": "#080808" }
-  },
-  "favicon": "/favicon.ico",
-  "navigation": {
-    "tabs": [
-      {
-        "tab": "Documentation",
-        "groups": [
-          {
-            "group": "Get Started",
-            "pages": ["welcome", "faq"]
-          },
-          {
-            "group": "AI Agent",
-            "pages": [
-              "ai-agent/overview",
-              "ai-agent/issue-detection",
-              "ai-agent/pull-requests"
-            ]
-          },
-          {
-            "group": "Integrations",
-            "pages": [
-              "integrations/github",
-              "integrations/sentry",
-              "integrations/connection-string",
-              "integrations/aws",
-              "integrations/supabase",
-              "integrations/tembo-cloud"
-            ]
-          },
-          {
-            "group": "AI Chat",
-            "pages": [
-              "ai-chat/overview",
-              "ai-chat/knowledge-base",
-              "ai-chat/text-to-sql",
-              "ai-chat/troubleshooting"
-            ]
-          },
-          {
-            "group": "Account",
-            "pages": [
-              "account/usage",
-              "account/plans",
-              "account/billing",
-              "account/security"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Get Help",
-        "href": "mailto:hi@dba.ai"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://dba.ai/alpha"
-    }
-  },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/ai-dba"
-    }
-  }
+	"$schema": "https://mintlify.com/docs.json",
+	"theme": "palm",
+	"name": "dba.ai docs",
+	"colors": {
+		"primary": "#DF3021",
+		"light": "#DF3021",
+		"dark": "#DF3021"
+	},
+	"background": {
+		"color": { "light": "#F8F8F8", "dark": "#080808" }
+	},
+	"favicon": "/favicon.ico",
+	"navigation": {
+		"tabs": [
+			{
+				"tab": "Documentation",
+				"groups": [
+					{
+						"group": "Get Started",
+						"pages": ["welcome", "faq"]
+					},
+					{
+						"group": "AI Agent",
+						"pages": ["ai-agent/overview", "ai-agent/issue-detection", "ai-agent/pull-requests"]
+					},
+					{
+						"group": "Integrations",
+						"pages": [
+							"integrations/github",
+							"integrations/sentry",
+							"integrations/connection-string",
+							"integrations/aws",
+							"integrations/supabase",
+							"integrations/tembo-cloud"
+						]
+					},
+					{
+						"group": "AI Chat",
+						"pages": [
+							"ai-chat/overview",
+							"ai-chat/knowledge-base",
+							"ai-chat/text-to-sql",
+							"ai-chat/troubleshooting"
+						]
+					},
+					{
+						"group": "Account",
+						"pages": ["account/usage", "account/plans", "account/billing", "account/security"]
+					}
+				]
+			}
+		]
+	},
+	"logo": {
+		"light": "/logo/light.svg",
+		"dark": "/logo/dark.svg"
+	},
+	"navbar": {
+		"links": [
+			{
+				"label": "Get Help",
+				"href": "mailto:hi@dba.ai"
+			}
+		],
+		"primary": {
+			"type": "button",
+			"label": "Dashboard",
+			"href": "https://dba.ai/alpha"
+		}
+	},
+	"footer": {
+		"socials": {
+			"x": "https://x.com/ai-dba"
+		}
+	}
 }

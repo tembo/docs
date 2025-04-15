@@ -1,0 +1,126 @@
+---
+title: 'Sentry'
+description: 'Connect dba to Sentry to automatically fix issues in your application'
+icon: 'cloud'
+---
+
+## Sentry integration
+
+dba seamlessly integrates with [Sentry](https://sentry.io), an industry-leading error monitoring platform, to provide automatic issue resolution for your applications.
+
+Sentry is an application monitoring platform that helps developers identify, diagnose, and fix software errors in real-time. It provides detailed error reports, stack traces, and context to help you understand what's happening when your application encounters issues.
+
+## How dba and Sentry work together
+
+When you connect Sentry to dba, our system:
+
+1. Receives error alerts from your Sentry projects
+2. Uses AI to analyze the error details and understand the root cause
+3. Creates actionable issues in dba with appropriate severity levels
+4. Generates solution recommendation and pull request if possible
+
+## Setup Instructions
+
+### Prerequisites
+
+- An active Sentry account with projects configured
+- A GitHub repository connected to your Sentry organization
+- Admin privileges in dba and Sentry
+
+### Connection Steps
+
+1. **Navigate to Integrations**
+
+   - In your dba dashboard, go to your organization settings
+   - Select the "Integrations" tab
+   - Click on the "Connect" button next to Sentry
+
+2. **Authorize Connection**
+
+   - You'll be redirected to Sentry to authorize dba
+   - Grant the required permissions to allow dba to:
+     - Read error data
+     - Access project information
+     - Receive webhook events
+
+3. **Configure Project Mappings**
+   - Once connected, you'll need to map your Sentry projects to GitHub repositories
+   - This mapping allows dba to create pull requests with fixes for your errors
+   - Select the appropriate GitHub repository for each Sentry project you want to monitor
+
+## Using the Integration
+
+After successfully connecting Sentry, dba will automatically:
+
+- Monitor incoming errors from your Sentry projects
+- Create new issues in dba when errors occur
+- Analyze errors to determine their severity and suggest fixes
+- Generate solution recommendations for fixing the underlying issues
+
+### Managing Project Mappings
+
+You can update your Sentry project to GitHub repository mappings at any time:
+
+1. Go to your organization settings
+2. Select the "Integrations" tab
+3. Click on "Sentry"
+4. Update the project-to-repository mappings as needed
+
+## Security and Permissions
+
+The Sentry integration uses secure OAuth2 authentication and all communication is encrypted. dba only requests the minimum permissions needed to function:
+
+- Read access to error data
+- Webhook event reception
+- Access to project information
+
+No sensitive application data beyond what's included in error reports is accessed or stored by dba.
+
+## Troubleshooting
+
+If you encounter issues with your Sentry integration:
+
+1. **Verify Webhook Status**
+
+   - In Sentry, check if the webhooks are being delivered successfully
+   - Sentry will show delivery status and any error messages
+
+2. **Check Project Mappings**
+
+   - Ensure each Sentry project is correctly mapped to a GitHub repository
+   - Without proper mapping, dba cannot create solution PRs.
+
+3. **Verify Permissions**
+
+   - Confirm that the integration has the necessary permissions in both Sentry and GitHub
+
+4. **Contact Support**
+   - If issues persist, contact our support team through the dba dashboard
+
+## Disconnecting Sentry
+
+To disconnect the Sentry integration:
+
+1. Go to your organization settings in dba
+2. Select the "Integrations" tab
+3. Find Sentry and click "Disconnect"
+
+You can also revoke access from the Sentry side:
+
+1. Go to your Sentry organization settings
+2. Navigate to Developer Settings > Installed Integrations
+3. Find dba and uninstall it
+
+## FAQs
+
+**Q: Is historical error data imported?**
+A: No, only new errors that occur after integration will be processed.
+
+**Q: Does dba need access to my source code?**
+A: dba needs access to your GitHub repository to understand the code context and to create pull requests with fixes.
+
+**Q: Can I control which types of errors trigger issues?**
+A: Currently, all error alerts from Sentry are processed. More granular control is planned for future updates.
+
+**Q: What programming languages are supported?**
+A: dba can analyze and suggest fixes for most popular programming languages, including JavaScript, Python, Ruby, Java, Go, and more.
