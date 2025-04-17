@@ -15,7 +15,7 @@ If you're new to recieving automated pull requests, this 5 minute read will help
    In the left sidebar, find the "Settings" icon. Go to "Connections" to hook up your desired could account. Note that you can connect as many cloud accounts as desired. GCP, Azure, and Neon cloud availability are coming soon.
    - **AWS Connection:** After clicking "Connect", you'll be redirected to your AWS authorization page. This installs a cloud formation template that allows dba fine-grained access to your desired instances. Complete authorization and **dba** will boot up all of the resources needed to monitor your database.
    - **Supabase Connection:** In the same way, hit "Connect" on the Supabase cloud option in the **dba** connection settings. When you're redirected to Supabase, allow API access to **dba** and make your way back to the app.
-   - \*\*Connection String: \*\*To connect directly to your PostgreSQL database, click the "Connection String" option in connection settings. Fill out the instance name and correct format (postgresql://username:password@hostname:port/database), hit "Connect Database", and you're all set.
+   - **Connection String: **To connect directly to your PostgreSQL database, click the "Connection String" option in connection settings. Fill out the instance name and correct format (postgresql://username:password@hostname:port/database), hit "Connect Database", and you're all set.
 3. **Connect GitHub**\
    Your GitHub connection will create a link between your repositories and your instances. We will also use this to open PRs with suggestions and fixes.
 
@@ -42,7 +42,7 @@ If you'd like to see issues from more instances, navigate to the "Instances" tab
 
 ## Recieving Pull Requests
 
-If **dba** has an intellignet fix to a performance issue in your database, it will generate a pull request. By clicking the "Open" button, you'll be redirected to GitHub, where you can view the automated pull request. We recommend skimming over your code fixes before merging to your main branch. 
+If **dba** has an intellignet fix to a performance issue in your database, it will generate a pull request. By clicking the "Open" button, you'll be redirected to GitHub, where you can view the automated pull request. We recommend skimming over your code fixes before merging to your main branch.
 
 ## Architecture
 
