@@ -1,17 +1,17 @@
 ---
 title: "FAQ"
-description: "Frequently asked questions about dba.ai"
+description: "Frequently asked questions about Tembo"
 ---
 
 <AccordionGroup>
-  <Accordion title="What is dba.ai?">
-    dba.ai is an AI-powered PostgreSQL database assistant that continuously monitors your database, detects issues, and provides solutions automatically. It combines deep PostgreSQL expertise with AI capabilities to help teams maintain optimal database performance without requiring dedicated database administrators.
+  <Accordion title="What is Tembo?">
+      Tembo is an AI agent that continuously monitors your database, detects issues, and provides solutions automatically. It combines deep PostgreSQL expertise with AI capabilities to help teams maintain optimal database performance without requiring dedicated database administrators.
   </Accordion>
 
 {" "}
 
 <Accordion title="What managed PostgreSQL providers do you support?">
-  dba.ai supports multiple PostgreSQL providers: - [AWS RDS for
+  Tembo supports multiple PostgreSQL providers: - [AWS RDS for
   PostgreSQL](https://aws.amazon.com/rds/postgresql/) - [Tembo
   Cloud](https://cloud.tembo.io) - [Supabase](https://supabase.com) -
   Self-hosted PostgreSQL via direct connection string We're constantly adding
@@ -20,8 +20,8 @@ description: "Frequently asked questions about dba.ai"
 
 {" "}
 
-<Accordion title="How does dba.ai connect to my database?">
-  dba.ai offers several secure connection methods: - **Direct connection** using
+<Accordion title="How does Tembo connect to my database?">
+  Tembo offers several secure connection methods: - **Direct connection** using
   a standard PostgreSQL connection string - **AWS IAM integration** for enhanced
   RDS capabilities - **GitHub integration** for code-based fixes - **Cloud
   provider API integrations** for deeper system-level insights All connections
@@ -31,8 +31,8 @@ description: "Frequently asked questions about dba.ai"
 
 {" "}
 
-<Accordion title="Is dba.ai secure?">
-  Yes, security is a core principle of dba.ai: - All connections are encrypted
+<Accordion title="Is Tembo secure?">
+  Yes, security is a core principle of Tembo: - All connections are encrypted
   using TLS - We recommend using read-only database users - No sensitive data is
   extracted from your database - We follow SOC 2 security best practices - Your
   database credentials are encrypted at rest - We never store query results
@@ -42,7 +42,7 @@ description: "Frequently asked questions about dba.ai"
 {" "}
 
 <Accordion title="What PostgreSQL versions are supported?">
-  dba.ai supports PostgreSQL versions 10 and above. We recommend using the
+  Tembo supports PostgreSQL versions 10 and above. We recommend using the
   latest stable version (currently PostgreSQL 16) for access to all features and
   optimizations. The AI agent adjusts its recommendations based on your specific
   PostgreSQL version.
@@ -56,7 +56,7 @@ description: "Frequently asked questions about dba.ai"
   great for new products and new features. Coding agents can fix performance
   issues too, if you specifically ask them to. But you likely won't, because
   you're consumed with building new features and (reluctantly) fixing bugs.
-  dba.ai handles performance engineering autonomously — detecting issues,
+  Tembo handles performance engineering autonomously — detecting issues,
   gathering context and best practices, and submitting code fixes to you. It's
   not magic, it's just a continuous engine with the right inputs that produces
   excellent PRs.
@@ -64,8 +64,8 @@ description: "Frequently asked questions about dba.ai"
 
 {" "}
 
-<Accordion title="How does dba.ai detect database issues?">
-  dba.ai uses multiple detection methods: 1. **Metric monitoring** - Tracking
+<Accordion title="How does Tembo detect database issues?">
+  Tembo uses multiple detection methods: 1. **Metric monitoring** - Tracking
   database performance metrics over time 2. **Log analysis** - Processing
   PostgreSQL logs for errors and warnings 3. **Query profiling** - Identifying
   slow or problematic queries 4. **Configuration analysis** - Checking for
@@ -76,8 +76,8 @@ description: "Frequently asked questions about dba.ai"
 
 {" "}
 
-<Accordion title="How does dba.ai implement fixes?">
-  dba.ai provides several implementation methods based on your preferences: 1.
+<Accordion title="How does Tembo implement fixes?">
+  Tembo provides several implementation methods based on your preferences: 1.
   **GitHub pull requests** - Code-based fixes submitted as PRs 2. **SQL script
   generation** - Ready-to-run SQL scripts with your approval 3. **Configuration
   recommendations** - Detailed guides for settings changes 4. **Manual
@@ -88,7 +88,7 @@ description: "Frequently asked questions about dba.ai"
 {" "}
 
 <Accordion title="How do you keep the AI models up-to-date with the latest documentation?">
-  dba.ai leverages powerful foundation models from Anthropic and OpenAI,
+  Tembo leverages powerful foundation models from Anthropic and OpenAI,
   combined with our specialized knowledge base. We continuously update our
   knowledge with: - Official PostgreSQL documentation - PostgreSQL mailing lists
   and forums - Academic research papers - Industry best practices - Real-world
@@ -98,19 +98,19 @@ description: "Frequently asked questions about dba.ai"
 
 {" "}
 
-<Accordion title="Can I use dba.ai with my existing monitoring tools?">
-  Yes, dba.ai complements your existing monitoring stack: -
+<Accordion title="Can I use Tembo with my existing monitoring tools?">
+  Yes, Tembo complements your existing monitoring stack: -
   **Prometheus/Grafana** - Extract additional insights from your metrics - **AWS
   CloudWatch** - Integrate with your existing AWS monitoring - **Application
   monitoring tools** - Correlate database issues with application performance
-  dba.ai doesn't replace your existing tools but adds AI-powered analysis and
+  Tembo doesn't replace your existing tools but adds AI-powered analysis and
   recommendations on top of them.
 </Accordion>
 
 {" "}
 
-<Accordion title="Do I need database expertise to use dba.ai?">
-  No, dba.ai is designed to be accessible to developers without specialized
+<Accordion title="Do I need database expertise to use Tembo?">
+  No, Tembo is designed to be accessible to developers without specialized
   database knowledge. The AI explains issues and solutions in clear language,
   providing educational context alongside recommendations. However, teams with
   database expertise can still benefit from the automation and continuous
@@ -121,7 +121,7 @@ description: "Frequently asked questions about dba.ai"
 {" "}
 
 <Accordion title="Can I bring my own LLM key?">
-  Not yet. LLM rate limits are dba.ai's primary product bottleneck. If you're
+  Not yet. LLM rate limits are Tembo's primary product bottleneck. If you're
   willing to bring your own Anthropic key, you'll get a fastpass through the
   waitlist and enhanced prioritization for operations.
 </Accordion>
@@ -129,16 +129,16 @@ description: "Frequently asked questions about dba.ai"
 {" "}
 
 <Accordion title="Is there a free trial?">
-  Yes, dba.ai offers a 14-day free trial with full access to all features. No
+  Yes, Tembo offers a 14-day free trial with full access to all features. No
   credit card is required to start your trial. After the trial period, you can
   choose from our flexible pricing plans based on your needs.
 </Accordion>
 
 {" "}
 
-<Accordion title="How is dba.ai different from managed PostgreSQL services?">
+<Accordion title="How is Tembo different from managed PostgreSQL services?">
   Managed PostgreSQL services provide the database infrastructure but still
-  require significant expertise to optimize. dba.ai works alongside these
+  require significant expertise to optimize. Tembo works alongside these
   services, adding: 1. **Proactive issue detection** before they impact users 2.
   **Autonomous problem-solving** without human intervention 3.
   **Database-specific AI chat** for natural language interaction 4. **Contextual
@@ -148,8 +148,8 @@ description: "Frequently asked questions about dba.ai"
 
 {" "}
 
-<Accordion title="Can dba.ai help with database migrations?">
-  Yes, dba.ai can assist with PostgreSQL migrations by: - Analyzing
+<Accordion title="Can Tembo help with database migrations?">
+  Yes, Tembo can assist with PostgreSQL migrations by: - Analyzing
   compatibility issues between versions - Recommending schema changes for new
   versions - Identifying deprecated features in your codebase - Suggesting
   performance optimizations for the new version - Monitoring post-migration
@@ -161,7 +161,7 @@ description: "Frequently asked questions about dba.ai"
 <Accordion title="Are there size limits for code indexing?">
   Code repositories are limited to 10,000 files per repository, though this can
   be adjusted for enterprise plans. To optimize indexing performance, you can
-  use .dbaignore to exclude unnecessary files (like node_modules, vendor
+  use .temboignore to exclude unnecessary files (like node_modules, vendor
   directories, etc.) from the indexing process.
 </Accordion>
 
@@ -175,23 +175,23 @@ description: "Frequently asked questions about dba.ai"
 
 {" "}
 
-<Accordion title="Does dba.ai work with PostgreSQL extensions?">
-  Yes, dba.ai supports common PostgreSQL extensions including: - PostGIS for
+<Accordion title="Does Tembo work with PostgreSQL extensions?">
+  Yes, Tembo supports common PostgreSQL extensions including: - PostGIS for
   geospatial data - pgvector for vector embeddings - TimescaleDB for time-series
   data - pg_stat_statements for query analysis - And many others The AI agent
   will provide extension-specific recommendations when appropriate.
-</Accordion>
+</Accordion>  
 
 {" "}
 
-<Accordion title="How often does dba.ai check my database?">
-  By default, dba.ai performs: - Real-time monitoring of critical metrics -
+<Accordion title="How often does Tembo check my database?">
+  By default, Tembo performs: - Real-time monitoring of critical metrics -
   Hourly checks for performance issues - Daily analysis for optimization
   opportunities - Weekly index and vacuum maintenance recommendations You can
   adjust these frequencies in your account settings based on your needs.
 </Accordion>
 
-  <Accordion title="What is the disposition of dba.ai? Is it cheerful or grumpy?">
-    😂 dba.ai has the demeanor of an experienced database professional: knowledgeable, slightly sarcastic at times, but ultimately helpful and focused on solving problems. You'll find it refreshingly direct, occasionally witty, and always informative.
+  <Accordion title="What is the disposition of Tembo? Is it cheerful or grumpy?">
+    😂 Tembo has the demeanor of an experienced database professional: knowledgeable, slightly sarcastic at times, but ultimately helpful and focused on solving problems. You'll find it refreshingly direct, occasionally witty, and always informative.
   </Accordion>
 </AccordionGroup>

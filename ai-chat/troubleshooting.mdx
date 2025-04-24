@@ -1,6 +1,6 @@
 ---
 title: "Troubleshooting Postgres"
-description: "Common PostgreSQL problems and how dba.ai helps solve them"
+description: "Common PostgreSQL problems and how Tembo helps solve them"
 icon: "wrench"
 ---
 
@@ -14,7 +14,7 @@ icon: "wrench"
 - Timeouts in application logs
 - Increasing response times
 
-**How dba.ai helps:**
+**How Tembo helps:**
 
 1. Identifies slow queries through PostgreSQL's `pg_stat_statements`
 2. Analyzes query execution plans with `EXPLAIN ANALYZE`
@@ -25,7 +25,7 @@ icon: "wrench"
 **Example solution:**
 
 ```sql
--- dba.ai recommended index for slow customer search query
+-- Tembo recommended index for slow customer search query
 CREATE INDEX idx_customers_last_name_first_name
 ON customers(last_name, first_name);
 ```
@@ -38,7 +38,7 @@ ON customers(last_name, first_name);
 - Connection timeouts
 - High CPU usage from connection establishment
 
-**How dba.ai helps:**
+**How Tembo helps:**
 
 1. Analyzes connection patterns using `pg_stat_activity`
 2. Recommends optimal connection pool settings
@@ -48,7 +48,7 @@ ON customers(last_name, first_name);
 **Example solution:**
 
 ```
-# dba.ai recommended PgBouncer settings
+# Tembo recommended PgBouncer settings
 max_client_conn = 500
 default_pool_size = 50
 pool_mode = transaction
@@ -62,7 +62,7 @@ pool_mode = transaction
 - Slow response times across all queries
 - Server performance degradation
 
-**How dba.ai helps:**
+**How Tembo helps:**
 
 1. Identifies CPU-intensive queries
 2. Analyzes query execution patterns
@@ -72,7 +72,7 @@ pool_mode = transaction
 **Example solution:**
 
 ```
-# dba.ai recommended PostgreSQL settings
+# Tembo recommended PostgreSQL settings
 max_worker_processes = 16
 max_parallel_workers_per_gather = 4
 max_parallel_workers = 12
@@ -88,7 +88,7 @@ max_parallel_workers = 12
 - Degrading performance after updates/deletes
 - Increasing storage costs
 
-**How dba.ai helps:**
+**How Tembo helps:**
 
 1. Detects bloated tables and indexes
 2. Recommends appropriate VACUUM settings
@@ -98,7 +98,7 @@ max_parallel_workers = 12
 **Example solution:**
 
 ```sql
--- dba.ai recommended autovacuum settings
+-- Tembo recommended autovacuum settings
 ALTER SYSTEM SET autovacuum_vacuum_scale_factor = 0.05;
 ALTER SYSTEM SET autovacuum_analyze_scale_factor = 0.02;
 ALTER SYSTEM SET autovacuum_vacuum_threshold = 50;
@@ -112,7 +112,7 @@ ALTER SYSTEM SET autovacuum_vacuum_threshold = 50;
 - Growing index size
 - Increasing query times
 
-**How dba.ai helps:**
+**How Tembo helps:**
 
 1. Identifies bloated indexes using diagnostic queries
 2. Recommends index rebuild strategies
@@ -122,7 +122,7 @@ ALTER SYSTEM SET autovacuum_vacuum_threshold = 50;
 **Example solution:**
 
 ```sql
--- dba.ai recommended maintenance script
+-- Tembo recommended maintenance script
 REINDEX TABLE CONCURRENTLY orders;
 ```
 
@@ -134,7 +134,7 @@ REINDEX TABLE CONCURRENTLY orders;
 - Database unable to grow
 - Failed operations due to disk full errors
 
-**How dba.ai helps:**
+**How Tembo helps:**
 
 1. Monitors disk space trends
 2. Identifies largest tables and indices
@@ -144,7 +144,7 @@ REINDEX TABLE CONCURRENTLY orders;
 **Example solution:**
 
 ```sql
--- dba.ai recommended partitioning strategy
+-- Tembo recommended partitioning strategy
 CREATE TABLE orders_partitioned (LIKE orders) PARTITION BY RANGE (order_date);
 ```
 
@@ -158,7 +158,7 @@ CREATE TABLE orders_partitioned (LIKE orders) PARTITION BY RANGE (order_date);
 - Swapping detected
 - Poor cache hit ratios
 
-**How dba.ai helps:**
+**How Tembo helps:**
 
 1. Analyzes current memory settings
 2. Monitors actual memory usage patterns
@@ -168,7 +168,7 @@ CREATE TABLE orders_partitioned (LIKE orders) PARTITION BY RANGE (order_date);
 **Example solution:**
 
 ```
-# dba.ai recommended memory settings
+# Tembo recommended memory settings
 shared_buffers = 8GB
 work_mem = 64MB
 maintenance_work_mem = 512MB
@@ -183,7 +183,7 @@ effective_cache_size = 24GB
 - I/O spikes during checkpoints
 - Slow transaction commit times
 
-**How dba.ai helps:**
+**How Tembo helps:**
 
 1. Analyzes WAL generation rates
 2. Monitors checkpoint behavior
@@ -193,7 +193,7 @@ effective_cache_size = 24GB
 **Example solution:**
 
 ```
-# dba.ai recommended WAL settings
+# Tembo recommended WAL settings
 max_wal_size = 4GB
 checkpoint_timeout = 15min
 checkpoint_completion_target = 0.9
@@ -207,7 +207,7 @@ checkpoint_completion_target = 0.9
 - Excessively large log files
 - Difficulty troubleshooting issues
 
-**How dba.ai helps:**
+**How Tembo helps:**
 
 1. Evaluates current logging settings
 2. Recommends appropriate log levels
@@ -217,7 +217,7 @@ checkpoint_completion_target = 0.9
 **Example solution:**
 
 ```
-# dba.ai recommended logging settings
+# Tembo recommended logging settings
 log_min_duration_statement = 1000
 log_checkpoints = on
 log_connections = on
@@ -236,7 +236,7 @@ log_temp_files = 0
 - Transactions failing unexpectedly
 - Error messages in PostgreSQL logs
 
-**How dba.ai helps:**
+**How Tembo helps:**
 
 1. Analyzes deadlock patterns using logs
 2. Identifies transactions prone to deadlocks
@@ -246,7 +246,7 @@ log_temp_files = 0
 **Example solution:**
 
 ```sql
--- dba.ai recommended application changes
+-- Tembo recommended application changes
 -- Use explicit row locking with SELECT FOR UPDATE
 BEGIN;
 SELECT * FROM inventory
@@ -264,7 +264,7 @@ COMMIT;
 - Stale data on read replicas
 - Backups falling behind
 
-**How dba.ai helps:**
+**How Tembo helps:**
 
 1. Monitors replication lag continuously
 2. Identifies causes of replication bottlenecks
@@ -274,7 +274,7 @@ COMMIT;
 **Example solution:**
 
 ```
-# dba.ai recommended replication settings
+# Tembo recommended replication settings
 max_wal_senders = 10
 wal_keep_segments = 64
 hot_standby_feedback = on
@@ -288,7 +288,7 @@ hot_standby_feedback = on
 - Connection failures
 - Data corruption reports
 
-**How dba.ai helps:**
+**How Tembo helps:**
 
 1. Analyzes crash logs for root causes
 2. Recommends configuration changes to prevent recurrence
@@ -298,7 +298,7 @@ hot_standby_feedback = on
 **Example solution:**
 
 ```
-# dba.ai recommended reliability settings
+# Tembo recommended reliability settings
 synchronous_commit = on
 full_page_writes = on
 wal_log_hints = on
@@ -314,7 +314,7 @@ wal_log_hints = on
 - Overly permissive access patterns
 - Security audit concerns
 
-**How dba.ai helps:**
+**How Tembo helps:**
 
 1. Audits current user privileges
 2. Identifies principle of least privilege violations
@@ -324,7 +324,7 @@ wal_log_hints = on
 **Example solution:**
 
 ```sql
--- dba.ai recommended security improvements
+-- Tembo recommended security improvements
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
 CREATE ROLE app_readonly;
 GRANT USAGE ON SCHEMA public TO app_readonly;
@@ -339,7 +339,7 @@ GRANT SELECT ON ALL TABLES IN SCHEMA public TO app_readonly;
 - Unexpected database behavior
 - Security scanning alerts
 
-**How dba.ai helps:**
+**How Tembo helps:**
 
 1. Monitors for suspicious query patterns
 2. Identifies potential SQL injection attempts
@@ -349,7 +349,7 @@ GRANT SELECT ON ALL TABLES IN SCHEMA public TO app_readonly;
 **Example solution:**
 
 ```sql
--- dba.ai recommended security measure
+-- Tembo recommended security measure
 REVOKE EXECUTE ON FUNCTION pg_read_file FROM PUBLIC;
 ```
 
@@ -361,7 +361,7 @@ REVOKE EXECUTE ON FUNCTION pg_read_file FROM PUBLIC;
 - Security compliance failures
 - Data privacy concerns
 
-**How dba.ai helps:**
+**How Tembo helps:**
 
 1. Analyzes connection security settings
 2. Identifies unencrypted connection patterns
@@ -371,7 +371,7 @@ REVOKE EXECUTE ON FUNCTION pg_read_file FROM PUBLIC;
 **Example solution:**
 
 ```
-# dba.ai recommended SSL settings
+# Tembo recommended SSL settings
 ssl = on
 ssl_cert_file = 'server.crt'
 ssl_key_file = 'server.key'
@@ -382,7 +382,7 @@ ssl_prefer_server_ciphers = on
 
 ### Regular Maintenance Tasks
 
-dba.ai helps establish regular maintenance routines:
+Tembo helps establish regular maintenance routines:
 
 1. **Statistics Updates**
 
@@ -407,10 +407,10 @@ dba.ai helps establish regular maintenance routines:
 
 If you encounter an issue not covered here:
 
-1. Use the dba.ai chat interface to describe your problem
+1. Use the Tembo chat interface to describe your problem
 2. Review the database health dashboard for anomalies
 3. Check the AI agent's automatic issue detection
-4. Contact support@dba.ai for personalized assistance
+4. Contact support@tembo.io for personalized assistance
 
 ## Next Steps
 

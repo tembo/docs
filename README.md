@@ -1,4 +1,4 @@
-# dba.ai docs
+#Tembo Docs
 
 ## Development
 

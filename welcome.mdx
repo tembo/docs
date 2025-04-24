@@ -1,51 +1,24 @@
 ---
-title: "Welcome to dba"
-description: "The end-to-end performance engineer for your production Postgres issues."
+title: "Welcome to Tembo"
+description: "The autonomous software maintenance engineer."
 ---
 
-**dba** is designed to support engineering teams by identifying and solving issues in production Postgres with specialized pull requests. Whether you're interested in improving database health, fixing slow queries, or navigating best practices, **dba** offers a straightforward way to get code fixes, fast. Our documentation walks you through quick setup, provides background on architecture and basic functionality, and describes key features that you'll want to leverage when optimizing database performance.
-
-## Start Guide
-
-If you're new to recieving automated pull requests, this 5 minute read will help you setup **dba**. Let's get started:
-
-1. [Sign up](https://tembo.io/auth/sign-up/dba/)
-2. **Connect your cloud account**
-
-   In the left sidebar, find the "Settings" icon. Go to "Connections" to hook up your desired could account. Note that you can connect as many cloud accounts as desired. GCP, Azure, and Neon cloud availability are coming soon.
-   - **AWS Connection:** After clicking "Connect", you'll be redirected to your AWS authorization page. This installs a cloud formation template that allows dba fine-grained access to your desired instances. Complete authorization and **dba** will boot up all of the resources needed to monitor your database.
-   - **Supabase Connection:** In the same way, hit "Connect" on the Supabase cloud option in the **dba** connection settings. When you're redirected to Supabase, allow API access to **dba** and make your way back to the app.
-   - **Connection String: **To connect directly to your PostgreSQL database, click the "Connection String" option in connection settings. Fill out the instance name and correct format (postgresql://username:password@hostname:port/database), hit "Connect Database", and you're all set.
-3. **Connect GitHub**\
-   Your GitHub connection will create a link between your repositories and your instances. We will also use this to open PRs with suggestions and fixes.
-
-   From **dba** settings, click on "Connections", find GitHub, and hit "Connect". From there, you'll be redirected to GitHub, where you can confirm access to **dba**.
-
-<CardGroup cols="2">
-  <Card title="AWS" icon="aws" href="integrations/aws">
-    Connect **dba** to your AWS account to start generating issues.
-  </Card>
-  <Card title="GitHub" icon="github" href="integrations/github">
-    Connect the GitHub repositories that will interact with your Postgres instances to generate pull requests.
-  </Card>
-</CardGroup>
-
-## Exploring Your Workspace
-
-Once your cloud provider and GitHub repos are connected, **dba** will begin to investigate your database. The agent will find any unpotimized queries, incorrect functions, or opportunities to improve workflow, and surface the performance concerns you should know about.
-
-To view your database health issues, go to the left sidebar and find the "Issues" tab. From there, you'll see all of the health concerns **dba** found during its preliminary investigation.
-
-## ![Screenshotofissues Pn](/images/screenshotofissues.png)
-
-If you'd like to see issues from more instances, navigate to the "Instances" tab in the left sidebar to confirm which instances **dba** can access.
-
-## Recieving Pull Requests
-
-If **dba** has an intellignet fix to a performance issue in your database, it will generate a pull request. By clicking the "Open" button, you'll be redirected to GitHub, where you can view the automated pull request. We recommend skimming over your code fixes before merging to your main branch.
+**Tembo** is designed to support engineering teams by identifying and solving issues in production with specialized pull requests. Whether you're interested in improving database health, fixing slow queries, or navigating best practices, **Tembo** offers a straightforward way to get code fixes, fast. Our documentation walks you through quick setup, provides background on architecture and basic functionality, and describes key features that you'll want to leverage when optimizing database performance.
 
 ## Architecture
 
-The dba workflow closes the gap between database monitoring and software engineering. ![](/dba-overview.png)
+Tembo is the first autonomous AI agent that closes the gap between database monitoring and software engineering![](/tembo-overview.png)By continuously detecting and solving issues, Tembo can help you quickly burn down your existing issues, detect regressions, and solve emergent issues before they become a problem.
 
-By continuously detecting and solving issues, dba can help you quickly burn down your existing database health problems, detect regressions, and solve emergent issues before they metastasize.
+## Get Started
+
+If you're new to Tembo, you can get started using the guides below:
+
+<CardGroup cols={2}>
+  <Card title="AWS" icon="aws" href="integrations/aws">
+    Get started with **Tembo** in minutes by connecting your AWS
+  </Card>
+
+  <Card title="Github" icon="github" href="integrations/github">
+    Connect your Github repositories that interact with your databases
+  </Card>
+</CardGroup>

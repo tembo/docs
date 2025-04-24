@@ -1,10 +1,10 @@
 ---
 title: "Connection String"
-description: "Connect any PostgreSQL database to dba.ai using standard connection strings for maximum flexibility."
+description: "Connect any PostgreSQL database to Tembo using standard connection strings for maximum flexibility."
 icon: "database"
 ---
 
-The connection string method allows you to connect virtually any PostgreSQL database to dba.ai, including:
+The connection string method allows you to connect virtually any PostgreSQL database to Tembo, including:
 
 - Self-hosted PostgreSQL servers
 - Cloud databases without dedicated integrations
@@ -36,26 +36,26 @@ Before connecting your database, ensure:
 
 ## Setup Instructions
 
-### 1. Create a Database User for dba.ai
+### 1. Create a Database User for Tembo
 
-For security, create a dedicated user for dba.ai with appropriate permissions:
+For security, create a dedicated user for Tembo with appropriate permissions:
 
 ```sql
 -- Create a dedicated user with a strong password
-CREATE USER dba_ai_user WITH PASSWORD 'strong-unique-password';
+CREATE USER tembo_user WITH PASSWORD 'strong-unique-password';
 
 -- Grant minimum necessary permissions
-GRANT CONNECT ON DATABASE your_database TO dba_ai_user;
-GRANT USAGE ON SCHEMA public TO dba_ai_user;
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO dba_ai_user;
-GRANT SELECT ON ALL SEQUENCES IN SCHEMA public TO dba_ai_user;
+GRANT CONNECT ON DATABASE your_database TO tembo_user;
+GRANT USAGE ON SCHEMA public TO tembo_user;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO tembo_user;
+GRANT SELECT ON ALL SEQUENCES IN SCHEMA public TO tembo_user;
 
 -- For monitoring statistics
-GRANT pg_monitor TO dba_ai_user;
+GRANT pg_monitor TO tembo_user;
 
 -- For future tables
 ALTER DEFAULT PRIVILEGES IN SCHEMA public
-GRANT SELECT ON TABLES TO dba_ai_user;
+GRANT SELECT ON TABLES TO tembo_user;
 ```
 
 ### 2. Configure Connection Parameters
@@ -66,7 +66,7 @@ Common connection parameters include:
 | -------------------- | ---------------------------------- | ------------------------- |
 | sslmode              | SSL connection requirement         | require (or verify-full)  |
 | connect_timeout      | Connection timeout in seconds      | 10                        |
-| application_name     | Identifies the application in logs | dba_ai_monitor            |
+| application_name     | Identifies the application in logs | tembo_monitor            |
 | target_session_attrs | Session characteristics            | read-only (if applicable) |
 
 ### 3. Build Your Connection String
@@ -74,12 +74,12 @@ Common connection parameters include:
 Combine your database details and parameters into a connection string:
 
 ```
-postgresql://dba_ai_user:your-password@db.example.com:5432/your_database?sslmode=require&application_name=dba_ai_monitor
+postgresql://tembo_user:your-password@db.example.com:5432/your_database?sslmode=require&application_name=tembo_monitor
 ```
 
-### 4. Add the Connection in dba.ai
+### 4. Add the Connection in Tembo
 
-1. Log in to your dba.ai account
+1. Log in to your Tembo account
 2. Navigate to **Connections** > **Add Connection**
 3. Select **Connection String** as the connection type
 4. Paste your connection string into the field
@@ -104,7 +104,7 @@ To check your current PostgreSQL server connections:
 
 ```sql
 SELECT * FROM pg_stat_activity
-WHERE application_name = 'dba_ai_monitor';
+WHERE application_name = 'tembo_monitor';
 ```
 
 ### Common SSL/TLS Issues
@@ -122,15 +122,15 @@ If you're having SSL/TLS issues:
 For high-traffic databases, consider using connection pooling:
 
 ```
-postgresql://dba_ai_user:password@pgbouncer.example.com:6432/your_database?pool=true
+postgresql://tembo_user:password@pgbouncer.example.com:6432/your_database?pool=true
 ```
 
 ### Read-Only Connections
 
-To ensure dba.ai never modifies data, use the read-only parameter:
+To ensure Tembo never modifies data, use the read-only parameter:
 
 ```
-postgresql://dba_ai_user:password@db.example.com:5432/your_database?target_session_attrs=read-only
+postgresql://tembo_user:password@db.example.com:5432/your_database?target_session_attrs=read-only
 ```
 
 ### Multiple Schemas
@@ -138,17 +138,17 @@ postgresql://dba_ai_user:password@db.example.com:5432/your_database?target_sessi
 If your database uses multiple schemas, grant permissions appropriately:
 
 ```sql
-GRANT USAGE ON SCHEMA schema1, schema2 TO dba_ai_user;
-GRANT SELECT ON ALL TABLES IN SCHEMA schema1, schema2 TO dba_ai_user;
+GRANT USAGE ON SCHEMA schema1, schema2 TO tembo_user;
+GRANT SELECT ON ALL TABLES IN SCHEMA schema1, schema2 TO tembo_user;
 ```
 
 ## Security Best Practices
 
-- Rotate the dba.ai user password regularly
+- Rotate the Tembo user password regularly
 - Use SSL/TLS with certificate validation
 - Grant only the minimum required permissions
 - Consider IP-based restrictions for additional security
-- Monitor all connections from dba.ai in your database logs
+- Monitor all connections from Tembo in your database logs
 
 ## Next Steps
 

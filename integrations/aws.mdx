@@ -1,12 +1,12 @@
 ---
 title: "AWS RDS"
-description: "Connect dba.ai to your AWS RDS and Aurora PostgreSQL instances for automated monitoring, optimization, and issue resolution."
+description: "Connect Tembo to your AWS RDS and Aurora PostgreSQL instances for automated monitoring, optimization, and issue resolution."
 icon: "aws"
 ---
 
 ## Overview
 
-dba.ai integrates with PostgreSQL to help you:
+  Tembo integrates with PostgreSQL to help you:
 
 - Monitor and optimize your PostgreSQL database performance
 - Detect and diagnose issues automatically
@@ -23,13 +23,13 @@ dba.ai integrates with PostgreSQL to help you:
 
 ## Connection Methods
 
-You can connect dba.ai to your AWS RDS instances using one of two methods:
+You can connect Tembo to your AWS RDS instances using one of two methods:
 
 ### 1. AWS IAM Integration (Recommended)
 
-This method creates a role in your AWS Account that the dba.ai service is able to assume.
+This method creates a role in your AWS Account that the Tembo service is able to assume.
  It also creates all the necessary AWS resources to make cross account access secure.
- dba.ai will use a Cloudformation to create the necessary resources to connect to your AWS account and discover Postgres instances.
+ Tembo will use a Cloudformation to create the necessary resources to connect to your AWS account and discover Postgres instances.
  You can view the Cloudformation template [here](https://cdb-plat-use1-prod-dbaai-prod-cf-templates.s3.us-east-1.amazonaws.com/cross-account-cf-template.yaml).
 
 Requirements:
@@ -86,28 +86,28 @@ ec2:DescribeVpcs - For VPC verification
 ```
 
 1. Open a browser and login to your AWS account using a role with the permissions listed above.
-2. In the same browser navigate to dba.ai and login. Click on your user icon (lower left corner), then navigate to **Settings** > **Connection** -> **Amazon Web Services** -> __Connect__
+2. In the same browser navigate to Tembo and login. Click on your user icon (lower left corner), then navigate to **Settings** > **Connection** -> **Amazon Web Services** -> __Connect__
 3. Click **Open AWS Authorization Page** in the popup. This will take you to the Cloudformation page within your AWS account
 4. Accept the Capabilities then click **Create Stack** and wait for the account to synchronize.
 
 ### 2. Direct Database Connection
 
-A simpler method is to provide your database connection url directly to dba.ai.
+A simpler method is to provide your database connection url directly to Tembo.
  It is recommended to create a new role for this.
 
 ```sql
 -- Create dedicated user for monitoring
-CREATE USER dba_ai_monitor WITH PASSWORD 'strong-password-here';
+CREATE USER tembo_monitor WITH PASSWORD 'strong-password-here';
 
-GRANT pg_monitor TO dba_ai_monitor;
-GRANT CONNECT ON DATABASE <your_database> TO dba_ai_monitor;
+GRANT pg_monitor TO tembo_monitor;
+GRANT CONNECT ON DATABASE <your_database> TO tembo_monitor;
 
 -- add privileges to public and any other schemas that you want dba to be able to read
-GRANT USAGE ON SCHEMA public TO dba_ai_monitor;
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO dba_ai_monitor;
+GRANT USAGE ON SCHEMA public TO tembo_monitor;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO tembo_monitor;
 ```
 
-1. Login with your browser at dba.ai, then click on your user icon (lower left corner) and navigate to **Settings** > **Connections** -> **Amazon Web Services** -> __Connect__
+1. Login with your browser at Tembo, then click on your user icon (lower left corner) and navigate to **Settings** > **Connections** -> **Amazon Web Services** -> __Connect__
 2. Give the instance a name and provide the connection string using the user and password created above.
 3. Click **Connect Database**
 
@@ -115,7 +115,7 @@ GRANT SELECT ON ALL TABLES IN SCHEMA public TO dba_ai_monitor;
 
 ## Parameters and Configuration
 
-For optimal performance with dba.ai, we recommend the following PostgreSQL parameter settings:
+For optimal performance with Tembo, we recommend the following PostgreSQL parameter settings:
 
 - `shared_preload_libraries`: Include `pg_stat_statements`
 - `track_activity_query_size`: Set to at least `2048`
@@ -129,7 +129,7 @@ If you encounter connection issues:
 1. Check that the database user has sufficient permissions
 2. Ensure your RDS instance is in the "Available" state
 
-For persistent issues, please contact support@dba.ai with:
+For persistent issues, please contact support@tembo.io with:
 
 - RDS instance identifier
 - Error messages received

@@ -1,7 +1,7 @@
 {
 	"$schema": "https://mintlify.com/docs.json",
 	"theme": "palm",
-	"name": "dba.ai docs",
+	"name": "Tembo Docs",
 	"colors": {
 		"primary": "#DF3021",
 		"light": "#DF3021",
@@ -31,8 +31,7 @@
 							"integrations/sentry",
 							"integrations/connection-string",
 							"integrations/aws",
-							"integrations/supabase",
-							"integrations/tembo-cloud"
+							"integrations/supabase"
 						]
 					},
 					{
@@ -60,18 +59,18 @@
 		"links": [
 			{
 				"label": "Get Help",
-				"href": "mailto:hi@dba.ai"
+				"href": "mailto:hi@tembo.io"
 			}
 		],
 		"primary": {
 			"type": "button",
 			"label": "Dashboard",
-			"href": "https://dba.ai/alpha"
+			"href": "https://app.tembo.io"
 		}
 	},
 	"footer": {
 		"socials": {
-			"x": "https://x.com/ai-dba"
+			"x": "https://x.com/tembo_io"
 		}
 	}
 }

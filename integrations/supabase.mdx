@@ -1,12 +1,12 @@
 ---
 title: "Supabase"
-description: "How to connect your Supabase Postgres database to dba.ai for AI-powered monitoring, optimization, and issue resolution."
+description: "How to connect your Supabase Postgres database to Tembo for AI-powered monitoring, optimization, and issue resolution."
 icon: "cloud"
 ---
 
 ## Overview
 
-The Supabase integration allows dba.ai to securely connect to your Supabase Postgres database. Once connected, dba.ai can:
+The Supabase integration allows Tembo to securely connect to your Supabase Postgres database. Once connected, Tembo can:
 
 - Monitor database performance
 - Identify potential issues
@@ -33,9 +33,9 @@ The Supabase integration allows dba.ai to securely connect to your Supabase Post
    - **User**: Database username
    - **Password**: Database password
 
-### 2. Connect to dba.ai
+### 2. Connect to Tembo
 
-1. Log in to your dba.ai account
+1. Log in to your Tembo account
 2. Navigate to **Connections** > **Add Connection**
 3. Select **Supabase** as the connection type
 4. Enter your connection details:
@@ -50,30 +50,30 @@ The Supabase integration allows dba.ai to securely connect to your Supabase Post
 
 ### 3. Configure Access Permissions
 
-For optimal functionality, dba.ai requires certain permissions. We recommend creating a dedicated read-only user for dba.ai:
+For optimal functionality, Tembo requires certain permissions. We recommend creating a dedicated read-only user for Tembo:
 
 ```sql
--- Create a dedicated user for dba.ai
-CREATE USER dba_ai WITH PASSWORD 'your_secure_password';
+-- Create a dedicated user for Tembo
+CREATE USER tembo WITH PASSWORD 'your_secure_password';
 
 -- Grant read permissions
-GRANT CONNECT ON DATABASE your_database TO dba_ai;
-GRANT USAGE ON SCHEMA public TO dba_ai;
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO dba_ai;
-GRANT SELECT ON ALL SEQUENCES IN SCHEMA public TO dba_ai;
-GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO dba_ai;
+GRANT CONNECT ON DATABASE your_database TO tembo;
+GRANT USAGE ON SCHEMA public TO tembo;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO tembo;
+GRANT SELECT ON ALL SEQUENCES IN SCHEMA public TO tembo;
+GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO tembo;
 
 -- Set default privileges for future objects
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO dba_ai;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON SEQUENCES TO dba_ai;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT EXECUTE ON FUNCTIONS TO dba_ai;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO tembo;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON SEQUENCES TO tembo;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT EXECUTE ON FUNCTIONS TO tembo;
 ```
 
 ## Security Considerations
 
-- dba.ai encrypts all connection information at rest
+- Tembo encrypts all connection information at rest
 - All database traffic is encrypted using TLS
-- You can limit dba.ai's access by using a read-only user
+- You can limit Tembo's access by using a read-only user
 - No sensitive data is extracted from your database without explicit permission
 
 ## Troubleshooting
@@ -91,7 +91,7 @@ If you encounter permission errors, run the following to view current permission
 ```sql
 SELECT grantee, privilege_type
 FROM information_schema.table_privileges
-WHERE grantee = 'dba_ai';
+WHERE grantee = 'tembo';
 ```
 
 ## Next Steps
@@ -102,4 +102,4 @@ After connecting your Supabase database:
 2. Configure [automatic pull requests](/solving/pull-requests) for suggested fixes
 3. Explore the AI-powered [database chat](/chat) to query your database using natural language
 
-For advanced configuration options, contact support@dba.ai.
+For advanced configuration options, contact support@tembo.io.
