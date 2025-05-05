@@ -1,110 +1,69 @@
 ---
-title: "Issue Detection"
-description: "Tembo uses AI to automatically detect, diagnose, and resolve PostgreSQL database issues."
+title: "Maintenance Detection"
+description: "Tembo turns noisy alerts into high quality pull requests — automatically. "
 icon: "magnifying-glass"
 ---
 
-## How Issue Detection Works
+## How Maintenance Detection Works 
 
-Tembo monitors your connected PostgreSQL databases, collecting key metrics and log data to identify potential problems. The system uses a combination of:
+Tembo connects directly to the tools already monitoring your stack — like **Sentry**, **Datadog**, and **Postgres logs** — and listens for issues as they arise. Instead of pinging engineers with alerts, it triages problems, traces root causes, and writes PRs to fix them.
 
-1. **Metric Analysis**: Monitoring performance metrics like CPU usage, memory, I/O, and database-specific metrics
-2. **Log Analysis**: Scanning PostgreSQL logs for errors, warnings, and other signs of trouble
-3. **Query Performance**: Tracking slow queries and identifying optimization opportunities
-4. **Configuration Analysis**: Reviewing your PostgreSQL configuration for potential improvements
+**Tembo’s pipeline looks like this:**
 
-When an issue is detected, Tembo:
+1. **Ingest signals**\
+   Pulls real-time errors, performance metrics, and traces from your observability stack.
+2. **Analyze context**\
+   Uses your application code, stack traces, and past issue patterns to understand what’s going wrong — and why.
+3. **Generate solutions**\
+   Writes potential code-level fixes tailored to your actual tech stack and repo structure.
+4. **Submit a pull request**\
+   Pushes clean, review-ready PRs into your existing Git workflows for approval.
 
-1. Analyzes the root cause using AI
-2. Classifies the severity of the issue
-3. Generates potential solutions
-4. Creates a detailed report with actionable recommendations
+## Types of Maintenance Opportunities
 
-## Types of Issues Detected
+The superhuman developer reacts to production issues wherever they surface.
 
-Tembo can identify and help resolve a wide range of PostgreSQL issues, including:
+### Application Bugs
 
-### Performance Issues
+- Errors from tools like Sentry (e.g. null references, uncaught exceptions)
+- Stack traces from crashes and exceptions
+- Runtime issues like type mismatches or broken logic
 
-- Slow queries
-- Index opportunities
-- Connection bottlenecks (coming soon)
-- Resource constraints (coming soon)
+### Performance Problems
 
-### Configuration Issues
+- Slow database queries from Postgres (via logs or `pg_stat_statements`)
+- Inefficient endpoints
+- N\+1 queries and redundant computation
+- Memory or CPU spikes (via Datadog or OpenTelemetry)
 
-- Suboptimal PostgreSQL parameters (coming soon)
-- Memory allocation problems (coming soon)
-- Inefficient work_mem or shared_buffers settings (coming soon)
+### Configuration & Best Practices
 
-### Data Management Issues
+- Misused libraries or deprecated patterns
+- Unsafe or unscalable defaults in app or infra code
+- Repetitive patterns Tembo can refactor or improve
 
-- Bloat in tables or indexes (coming soon)
-- Missing vacuum operations (coming soon)
-- Stale statistics (coming soon)
+## Pull Request Generation
 
-### Security Issues
+Once an issue is detected, Tembo:
 
-- Exposed endpoints (coming soon)
-- Overly permissive roles (coming soon)
-- Missing encryption (coming soon)
+- Builds a clear, code-based fix
+- Writes a detailed pull request
+- Routes it through your GitHub workflows
+- Awaits your approval, just like a junior engineer would
 
-## Issue Resolution Workflow
+## Customizing Tembo's Workflow
 
-When Tembo detects an issue, it follows this workflow:
+Tembo learns from your repo, team preferences, and past approvals. Your team can:
 
-1. **Detection**: The issue is identified through metrics, logs, or other monitoring
-2. **Analysis**: AI analyzes the issue, considering your specific database context
-3. **Solution Generation**: Multiple potential solutions are developed
-4. **Recommendation**: The best solution is recommended, with explanations for why it's preferred
-5. **Implementation**: You can approve the fix for automatic implementation or apply it manually
+- Set thresholds for which issues Tembo acts on
+- Enable/disable categories of issues (e.g. performance only, not style)
+- Define approval paths and codeowners for sensitive areas
+- Filter by severity or business impact
 
-### Automated Pull Requests
+## Coming Soon: Unified Signal Ingestion
 
-For GitHub-connected database repositories, Tembo can:
+We’re working on deeper integrations with tools like:
 
-1. Generate a fix as code
-2. Create a branch in your repository
-3. Submit a pull request with the proposed fix
-4. Add detailed explanations for reviewers
-
-This allows your team to review the proposed changes using your normal code review process.
-
-## Setting Alert Preferences
-
-You can customize how and when you're notified about issues:
-
-1. Navigate to **Settings** > **Alert Preferences**
-2. Configure alert thresholds by severity
-3. Choose notification channels (email, Slack, etc.)
-4. Set quiet hours if needed
-
-## Issue History and Learning
-
-Tembo maintains a history of all detected issues and their resolutions, which:
-
-1. Helps track recurring problems
-2. Allows the system to learn from previous solutions
-3. Provides documentation for audit purposes
-4. Informs proactive recommendations
-
-## Advanced Configuration
-
-### Custom Issue Rules
-
-You can create custom rules for your specific environment:
-
-1. Go to **Settings** > **Custom Rules**
-2. Define trigger conditions
-3. Set actions to take when conditions are met
-4. Save and activate your rule
-
-### Integration with Monitoring Tools
-
-Tembo will soon integrate with existing monitoring tools.
-
-## Next Steps
-
-- Learn about [pull requests](/solving/pull-requests) for automated fixes
-- Set up [GitHub integration](/integrations/github) for code-based fixes
-- Explore the [issue dashboard](/dashboard) to see your database health
+- Datadog, OpenTelemetry, Prometheus (infra & app perf)
+- Jira, Linear (ticket-based tracking)
+- AWS, GCP, and other cloud telemetry systems
