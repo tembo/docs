@@ -18,7 +18,7 @@
 				"groups": [
 					{
 						"group": "Get Started",
-						"pages": ["welcome", "faq"]
+						"pages": ["welcome", "faq", "billing"]
 					},
 					{
 						"group": "AI Agent",
@@ -29,23 +29,10 @@
 						"pages": [
 							"integrations/github",
 							"integrations/sentry",
-							"integrations/connection-string",
+							"integrations/postgres",
 							"integrations/aws",
 							"integrations/supabase"
 						]
-					},
-					{
-						"group": "AI Chat",
-						"pages": [
-							"ai-chat/overview",
-							"ai-chat/knowledge-base",
-							"ai-chat/text-to-sql",
-							"ai-chat/troubleshooting"
-						]
-					},
-					{
-						"group": "Account",
-						"pages": ["account/usage", "account/plans", "account/billing", "account/security"]
 					}
 				]
 			}

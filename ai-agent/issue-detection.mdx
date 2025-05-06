@@ -1,12 +1,12 @@
 ---
-title: "Maintenance Detection"
-description: "Tembo turns noisy alerts into high quality pull requests — automatically. "
-icon: "magnifying-glass"
+title: 'Maintenance Detection'
+description: 'Tembo turns noisy alerts into high quality pull requests — automatically. '
+icon: 'magnifying-glass'
 ---
 
-## How Maintenance Detection Works 
+## How Maintenance Detection Works
 
-Tembo connects directly to the tools already monitoring your stack — like **Sentry**, **Datadog**, and **Postgres logs** — and listens for issues as they arise. Instead of pinging engineers with alerts, it triages problems, traces root causes, and writes PRs to fix them.
+Tembo connects directly to the tools already monitoring your stack — like **Sentry**, **Github**, and **Postgres logs** — and listens for issues as they arise. Instead of pinging engineers with alerts, it triages problems, traces root causes, and writes PRs to fix them.
 
 **Tembo’s pipeline looks like this:**
 
@@ -59,11 +59,3 @@ Tembo learns from your repo, team preferences, and past approvals. Your team can
 - Enable/disable categories of issues (e.g. performance only, not style)
 - Define approval paths and codeowners for sensitive areas
 - Filter by severity or business impact
-
-## Coming Soon: Unified Signal Ingestion
-
-We’re working on deeper integrations with tools like:
-
-- Datadog, OpenTelemetry, Prometheus (infra & app perf)
-- Jira, Linear (ticket-based tracking)
-- AWS, GCP, and other cloud telemetry systems

@@ -1,8 +1,14 @@
 ---
-title: "Connection String"
-description: "Connect any PostgreSQL database to Tembo using standard connection strings for maximum flexibility."
-icon: "database"
+title: 'Postgres'
+description: 'Connect any PostgreSQL database to Tembo using standard connection strings for maximum flexibility.'
+icon: 'database'
 ---
+
+<img
+	src="/images/connect-postgres.png"
+	alt="Connect Postgres"
+	style={{ width: '300px', borderRadius: '0.5rem' }}
+/>
 
 The connection string method allows you to connect virtually any PostgreSQL database to Tembo, including:
 
@@ -66,7 +72,7 @@ Common connection parameters include:
 | -------------------- | ---------------------------------- | ------------------------- |
 | sslmode              | SSL connection requirement         | require (or verify-full)  |
 | connect_timeout      | Connection timeout in seconds      | 10                        |
-| application_name     | Identifies the application in logs | tembo_monitor            |
+| application_name     | Identifies the application in logs | tembo_monitor             |
 | target_session_attrs | Session characteristics            | read-only (if applicable) |
 
 ### 3. Build Your Connection String

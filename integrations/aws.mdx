@@ -1,25 +1,21 @@
 ---
-title: "AWS RDS"
-description: "Connect Tembo to your AWS RDS and Aurora PostgreSQL instances for automated monitoring, optimization, and issue resolution."
-icon: "aws"
+title: 'AWS RDS'
+description: 'Connect Tembo to your AWS RDS and Aurora PostgreSQL instances for automated monitoring, optimization, and issue resolution.'
+icon: 'aws'
 ---
 
-## Overview
+<img
+	src="/images/connect-aws-rds.png"
+	alt="Connect AWS RDS"
+	style={{ width: '300px', borderRadius: '0.5rem' }}
+/>
 
-  Tembo integrates with PostgreSQL to help you:
+Tembo integrates with PostgreSQL to help you:
 
 - Monitor and optimize your PostgreSQL database performance
 - Detect and diagnose issues automatically
 - Receive AI-powered recommendations for improvements
 - Implement fixes with minimal effort
-
-<Frame>
-  <img
-    src="/images/connect_aws_rds.png"
-    alt="Connect AWS RDS and Aurora"
-    style={{ borderRadius: "0.5rem" }}
-  />
-</Frame>
 
 ## Connection Methods
 
@@ -28,11 +24,12 @@ You can connect Tembo to your AWS RDS instances using one of two methods:
 ### 1. AWS IAM Integration (Recommended)
 
 This method creates a role in your AWS Account that the Tembo service is able to assume.
- It also creates all the necessary AWS resources to make cross account access secure.
- Tembo will use a Cloudformation to create the necessary resources to connect to your AWS account and discover Postgres instances.
- You can view the Cloudformation template [here](https://cdb-plat-use1-prod-dbaai-prod-cf-templates.s3.us-east-1.amazonaws.com/cross-account-cf-template.yaml).
+It also creates all the necessary AWS resources to make cross account access secure.
+Tembo will use a Cloudformation to create the necessary resources to connect to your AWS account and discover Postgres instances.
+You can view the Cloudformation template [here](https://cdb-plat-use1-prod-dbaai-prod-cf-templates.s3.us-east-1.amazonaws.com/cross-account-cf-template.yaml).
 
 Requirements:
+
 - AWS Secrets Manager enabled for your Postgres instance
 - an AWS role with select permissions
 
@@ -86,14 +83,14 @@ ec2:DescribeVpcs - For VPC verification
 ```
 
 1. Open a browser and login to your AWS account using a role with the permissions listed above.
-2. In the same browser navigate to Tembo and login. Click on your user icon (lower left corner), then navigate to **Settings** > **Connection** -> **Amazon Web Services** -> __Connect__
+2. In the same browser navigate to Tembo and login. Click on your user icon (lower left corner), then navigate to **Settings** > **Connection** -> **Amazon Web Services** -> **Connect**
 3. Click **Open AWS Authorization Page** in the popup. This will take you to the Cloudformation page within your AWS account
 4. Accept the Capabilities then click **Create Stack** and wait for the account to synchronize.
 
 ### 2. Direct Database Connection
 
 A simpler method is to provide your database connection url directly to Tembo.
- It is recommended to create a new role for this.
+It is recommended to create a new role for this.
 
 ```sql
 -- Create dedicated user for monitoring
@@ -107,7 +104,7 @@ GRANT USAGE ON SCHEMA public TO tembo_monitor;
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO tembo_monitor;
 ```
 
-1. Login with your browser at Tembo, then click on your user icon (lower left corner) and navigate to **Settings** > **Connections** -> **Amazon Web Services** -> __Connect__
+1. Login with your browser at Tembo, then click on your user icon (lower left corner) and navigate to **Settings** > **Connections** -> **Amazon Web Services** -> **Connect**
 2. Give the instance a name and provide the connection string using the user and password created above.
 3. Click **Connect Database**
 
