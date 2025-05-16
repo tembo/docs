@@ -48,7 +48,7 @@ For security, create a dedicated user for Tembo with appropriate permissions:
 
 ```sql
 -- Create a dedicated user with a strong password
-CREATE USER tembo_user WITH PASSWORD 'strong-unique-password';
+CREATE USER tembo_user WITH PASSWORD '<use-a-secure-generated-password>';
 
 -- Grant minimum necessary permissions
 GRANT CONNECT ON DATABASE your_database TO tembo_user;
@@ -80,7 +80,7 @@ Common connection parameters include:
 Combine your database details and parameters into a connection string:
 
 ```
-postgresql://tembo_user:your-password@db.example.com:5432/your_database?sslmode=require&application_name=tembo_monitor
+postgresql://tembo_user:<use-a-secure-generated-password>@db.example.com:5432/your_database?sslmode=require&application_name=tembo_monitor
 ```
 
 ### 4. Add the Connection in Tembo
@@ -128,7 +128,7 @@ If you're having SSL/TLS issues:
 For high-traffic databases, consider using connection pooling:
 
 ```
-postgresql://tembo_user:password@pgbouncer.example.com:6432/your_database?pool=true
+postgresql://tembo_user:<use-a-secure-generated-password>@pgbouncer.example.com:6432/your_database?pool=true
 ```
 
 ### Read-Only Connections
@@ -136,7 +136,7 @@ postgresql://tembo_user:password@pgbouncer.example.com:6432/your_database?pool=t
 To ensure Tembo never modifies data, use the read-only parameter:
 
 ```
-postgresql://tembo_user:password@db.example.com:5432/your_database?target_session_attrs=read-only
+postgresql://tembo_user:<use-a-secure-generated-password>@db.example.com:5432/your_database?target_session_attrs=read-only
 ```
 
 ### Multiple Schemas
