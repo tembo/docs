@@ -1,11 +1,11 @@
 {
 	"$schema": "https://mintlify.com/docs.json",
-	"theme": "palm",
+	"theme": "maple",
 	"name": "Tembo Docs",
 	"colors": {
 		"primary": "#DF3021",
-		"light": "#DF3021",
-		"dark": "#DF3021"
+		"light": "#FFFFFF",
+		"dark": "#000000"
 	},
 	"background": {
 		"color": { "light": "#F8F8F8", "dark": "#080808" }
@@ -18,7 +18,7 @@
 				"groups": [
 					{
 						"group": "Get Started",
-						"pages": ["welcome", "faq", "billing"]
+						"pages": ["welcome", "workflows", "billing"]
 					},
 					{
 						"group": "AI Agent",
