@@ -22,12 +22,7 @@
 					},
 					{
 						"group": "AI Agent",
-						"pages": [
-							"ai-agent/overview",
-							"ai-agent/workflows",
-							"ai-agent/issue-detection",
-							"ai-agent/pull-requests"
-						]
+						"pages": ["ai-agent/overview", "ai-agent/issue-detection", "ai-agent/pull-requests"]
 					},
 					{
 						"group": "Integrations",
