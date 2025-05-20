@@ -94,7 +94,7 @@ It is recommended to create a new role for this.
 
 ```sql
 -- Create dedicated user for monitoring
-CREATE USER tembo_monitor WITH PASSWORD 'strong-password-here';
+CREATE USER tembo_monitor WITH PASSWORD '<use-a-secure-generated-password>';
 
 GRANT pg_monitor TO tembo_monitor;
 GRANT CONNECT ON DATABASE <your_database> TO tembo_monitor;
