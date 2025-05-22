@@ -28,8 +28,10 @@ postgresql://[username]:[password]@[host]:[port]/[database]?[parameters]
 Example:
 
 ```
-postgresql://dbuser:<use-a-secure-generated-password>@localhost:5432/mydb?sslmode=require
+postgresql://[YOUR_USERNAME]:[YOUR_PASSWORD]@[YOUR_HOST]:5432/[YOUR_DATABASE]?sslmode=require
 ```
+
+> ⚠️ **Important**: Replace the bracketed values with your actual credentials. Never use example credentials in production.
 
 ## Prerequisites
 
@@ -48,7 +50,7 @@ For security, create a dedicated user for Tembo with appropriate permissions:
 
 ```sql
 -- Create a dedicated user with a strong password
-CREATE USER tembo_user WITH PASSWORD '<use-a-secure-generated-password>';
+CREATE USER [YOUR_TEMBO_USER] WITH PASSWORD '[YOUR_STRONG_PASSWORD]';
 
 -- Grant minimum necessary permissions
 GRANT CONNECT ON DATABASE your_database TO tembo_user;
@@ -80,7 +82,7 @@ Common connection parameters include:
 Combine your database details and parameters into a connection string:
 
 ```
-postgresql://tembo_user:<use-a-secure-generated-password>@db.example.com:5432/your_database?sslmode=require&application_name=tembo_monitor
+postgresql://[YOUR_TEMBO_USER]:[YOUR_PASSWORD]@[YOUR_HOST]:5432/[YOUR_DATABASE]?sslmode=require&application_name=tembo_monitor
 ```
 
 ### 4. Add the Connection in Tembo
@@ -128,7 +130,7 @@ If you're having SSL/TLS issues:
 For high-traffic databases, consider using connection pooling:
 
 ```
-postgresql://tembo_user:<use-a-secure-generated-password>@pgbouncer.example.com:6432/your_database?pool=true
+postgresql://[YOUR_TEMBO_USER]:[YOUR_PASSWORD]@[YOUR_POOLER_HOST]:6432/[YOUR_DATABASE]?pool=true
 ```
 
 ### Read-Only Connections
@@ -136,7 +138,7 @@ postgresql://tembo_user:<use-a-secure-generated-password>@pgbouncer.example.com:
 To ensure Tembo never modifies data, use the read-only parameter:
 
 ```
-postgresql://tembo_user:<use-a-secure-generated-password>@db.example.com:5432/your_database?target_session_attrs=read-only
+postgresql://[YOUR_TEMBO_USER]:[YOUR_PASSWORD]@[YOUR_HOST]:5432/[YOUR_DATABASE]?target_session_attrs=read-only
 ```
 
 ### Multiple Schemas
