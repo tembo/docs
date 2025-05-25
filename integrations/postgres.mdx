@@ -50,7 +50,7 @@ For security, create a dedicated user for Tembo with appropriate permissions:
 
 ```sql
 -- Create a dedicated user with a strong password
-CREATE USER [YOUR_TEMBO_USER] WITH PASSWORD '[YOUR_STRONG_PASSWORD]';
+CREATE USER [YOUR_TEMBO_USER] WITH PASSWORD '${TEMBO_USER_PASSWORD}';
 
 -- Grant minimum necessary permissions
 GRANT CONNECT ON DATABASE your_database TO tembo_user;
