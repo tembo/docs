@@ -80,12 +80,33 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT EXECUTE ON FUNCTIONS TO tembo;
 - You can limit Tembo's access by using a read-only user
 - No sensitive data is extracted from your database without explicit permission
 
+### IP Allowlisting
+
+IP allowlisting is a critical security measure that restricts database access to trusted IP addresses only. To properly configure IP allowlisting in Supabase:
+
+1. Log in to your [Supabase Dashboard](https://app.supabase.io/)
+2. Select your project
+3. Navigate to **Project Settings** > **Database**
+4. Find the **Connection Pooling** section
+5. Under **IP Allow List**, add Tembo's IP addresses:
+   - For production environments: Add Tembo's static IPs (contact support@tembo.io for the current list)
+   - For development: Only add IPs when necessary and remove them when not in use
+
+**Best Practices:**
+
+- Follow the principle of least privilege - only allowlist the specific IPs that need access
+- Regularly audit your IP allowlist and remove unused entries
+- Use additional authentication methods alongside IP allowlisting
+- Never use broad IP ranges (e.g., 0.0.0.0/0) which effectively disables IP filtering
+- Document all allowlisted IPs with descriptions and expiration dates if temporary
+- Set up alerts for changes to your IP allowlist configuration
+
 ## Troubleshooting
 
 ### Connection Issues
 
 - Verify your Supabase project is active
-- Check if your IP is allowlisted in Supabase's security settings
+- Check if Tembo's IP addresses are properly allowlisted in Supabase's security settings (see Security Considerations > IP Allowlisting section)
 - Ensure the database user has sufficient permissions
 
 ### Permission Errors
