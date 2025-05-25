@@ -55,15 +55,30 @@ CREATE USER [YOUR_TEMBO_USER] WITH PASSWORD '[YOUR_STRONG_PASSWORD]';
 -- Grant minimum necessary permissions
 GRANT CONNECT ON DATABASE your_database TO tembo_user;
 GRANT USAGE ON SCHEMA public TO tembo_user;
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO tembo_user;
-GRANT SELECT ON ALL SEQUENCES IN SCHEMA public TO tembo_user;
+
+-- Apply principle of least privilege by granting access only to necessary tables
+-- Replace these with the specific tables your monitoring needs access to
+GRANT SELECT ON TABLE pg_stat_statements TO tembo_user;
+GRANT SELECT ON TABLE pg_stat_activity TO tembo_user;
+GRANT SELECT ON TABLE pg_stat_database TO tembo_user;
+GRANT SELECT ON TABLE pg_stat_user_tables TO tembo_user;
+GRANT SELECT ON TABLE pg_stat_user_indexes TO tembo_user;
+GRANT SELECT ON TABLE pg_locks TO tembo_user;
+GRANT SELECT ON TABLE pg_class TO tembo_user;
+GRANT SELECT ON TABLE pg_index TO tembo_user;
+GRANT SELECT ON TABLE pg_settings TO tembo_user;
+
+-- Grant access to specific sequences if needed
+GRANT SELECT ON SEQUENCE seq_name1, seq_name2 TO tembo_user;
 
 -- For monitoring statistics
 GRANT pg_monitor TO tembo_user;
 
--- For future tables
-ALTER DEFAULT PRIVILEGES IN SCHEMA public
-GRANT SELECT ON TABLES TO tembo_user;
+-- For future tables, consider adding individual grants as new tables are created
+-- instead of granting blanket permissions
+-- For example:
+-- CREATE TABLE new_table (...);
+-- GRANT SELECT ON TABLE new_table TO tembo_user;
 ```
 
 ### 2. Configure Connection Parameters
@@ -147,16 +162,25 @@ If your database uses multiple schemas, grant permissions appropriately:
 
 ```sql
 GRANT USAGE ON SCHEMA schema1, schema2 TO tembo_user;
-GRANT SELECT ON ALL TABLES IN SCHEMA schema1, schema2 TO tembo_user;
+
+-- Grant access only to specific tables in each schema
+GRANT SELECT ON TABLE schema1.table1, schema1.table2 TO tembo_user;
+GRANT SELECT ON TABLE schema2.table1, schema2.metrics_table TO tembo_user;
+
+-- Grant access to system tables needed for monitoring
+GRANT SELECT ON TABLE schema1.pg_stat_statements TO tembo_user;
 ```
 
 ## Security Best Practices
 
 - Rotate the Tembo user password regularly
 - Use SSL/TLS with certificate validation
-- Grant only the minimum required permissions
+- Follow the principle of least privilege - grant access only to the specific tables needed for monitoring
+- Avoid granting `SELECT ON ALL TABLES` which may expose sensitive data
+- Regularly audit permissions to ensure they remain appropriate
 - Consider IP-based restrictions for additional security
 - Monitor all connections from Tembo in your database logs
+- For production databases containing sensitive data, create a dedicated monitoring schema with filtered views
 
 ## Next Steps
 

@@ -101,7 +101,21 @@ GRANT CONNECT ON DATABASE <your_database> TO tembo_monitor;
 
 -- add privileges to public and any other schemas that you want dba to be able to read
 GRANT USAGE ON SCHEMA public TO tembo_monitor;
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO tembo_monitor;
+
+-- Apply principle of least privilege by granting access only to necessary tables
+-- Replace these with the specific tables your monitoring needs access to
+GRANT SELECT ON TABLE pg_stat_statements TO tembo_monitor;
+GRANT SELECT ON TABLE pg_stat_activity TO tembo_monitor;
+GRANT SELECT ON TABLE pg_stat_database TO tembo_monitor;
+GRANT SELECT ON TABLE pg_stat_user_tables TO tembo_monitor;
+GRANT SELECT ON TABLE pg_stat_user_indexes TO tembo_monitor;
+GRANT SELECT ON TABLE pg_locks TO tembo_monitor;
+GRANT SELECT ON TABLE pg_class TO tembo_monitor;
+GRANT SELECT ON TABLE pg_index TO tembo_monitor;
+GRANT SELECT ON TABLE pg_settings TO tembo_monitor;
+
+-- Note: Add additional tables as needed, following the principle of least privilege
+-- Instead of granting SELECT on ALL TABLES which can expose sensitive data
 ```
 
 1. Login with your browser at Tembo, then click on your user icon (lower left corner) and navigate to **Settings** > **Connections** -> **Amazon Web Services** -> **Connect**

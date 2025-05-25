@@ -63,22 +63,40 @@ CREATE USER tembo WITH PASSWORD '<use-a-secure-generated-password>';
 -- Grant read permissions
 GRANT CONNECT ON DATABASE your_database TO tembo;
 GRANT USAGE ON SCHEMA public TO tembo;
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO tembo;
-GRANT SELECT ON ALL SEQUENCES IN SCHEMA public TO tembo;
-GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO tembo;
 
--- Set default privileges for future objects
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO tembo;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON SEQUENCES TO tembo;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT EXECUTE ON FUNCTIONS TO tembo;
+-- Apply principle of least privilege by granting access only to necessary tables
+-- Replace these with the specific tables your monitoring needs access to
+GRANT SELECT ON TABLE pg_stat_statements TO tembo;
+GRANT SELECT ON TABLE pg_stat_activity TO tembo;
+GRANT SELECT ON TABLE pg_stat_database TO tembo;
+GRANT SELECT ON TABLE pg_stat_user_tables TO tembo;
+GRANT SELECT ON TABLE pg_stat_user_indexes TO tembo;
+GRANT SELECT ON TABLE pg_locks TO tembo;
+GRANT SELECT ON TABLE pg_class TO tembo;
+GRANT SELECT ON TABLE pg_index TO tembo;
+GRANT SELECT ON TABLE pg_settings TO tembo;
+
+-- Grant access to specific sequences if needed
+GRANT SELECT ON SEQUENCE seq_name1, seq_name2 TO tembo;
+
+-- Grant access to specific functions if needed
+GRANT EXECUTE ON FUNCTION func_name1, func_name2 TO tembo;
+
+-- Instead of setting broad default privileges, explicitly grant permissions
+-- to new objects as they are created:
+-- CREATE TABLE new_table (...);
+-- GRANT SELECT ON TABLE new_table TO tembo;
 ```
 
 ## Security Considerations
 
 - Tembo encrypts all connection information at rest
 - All database traffic is encrypted using TLS
-- You can limit Tembo's access by using a read-only user
+- Follow the principle of least privilege - grant access only to the specific tables needed for monitoring
+- Avoid granting `SELECT ON ALL TABLES` which may expose sensitive data
+- Regularly review and audit permissions to ensure they remain appropriate
 - No sensitive data is extracted from your database without explicit permission
+- For additional security, consider creating filtered views of sensitive tables
 
 ## Troubleshooting
 
