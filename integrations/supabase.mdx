@@ -58,7 +58,7 @@ For optimal functionality, Tembo requires certain permissions. We recommend crea
 
 ```sql
 -- Create a dedicated user for Tembo
-CREATE USER tembo WITH PASSWORD '<use-a-secure-generated-password>';
+CREATE USER tembo WITH PASSWORD 'your_secure_password_here'; -- Generate a strong unique password (min. 16 chars with mixed case, numbers, and symbols)
 
 -- Grant read permissions
 GRANT CONNECT ON DATABASE your_database TO tembo;
