@@ -35,6 +35,7 @@
 						"pages": [
 							"integrations/github",
 							"integrations/sentry",
+							"integrations/linear",
 							"integrations/postgres",
 							"integrations/aws",
 							"integrations/supabase"

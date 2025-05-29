@@ -1,0 +1,248 @@
+---
+title: 'Linear Integration'
+description: 'Connect your Linear workspace to Tembo for automated issue management and AI-powered solutions'
+---
+
+The Linear integration allows Tembo to automatically detect and solve issues from your Linear workspace. Once connected, Tembo can respond to issue assignments and label changes to provide AI-powered code solutions.
+
+## Features
+
+- **Automatic Issue Detection**: Tembo monitors your Linear workspace for new issues and updates
+- **AI-Powered Solutions**: When issues are assigned to Tembo or labeled with "tembo", the AI agent analyzes the issue and provides code solutions
+- **Repository Linking**: Connect specific Linear issues to GitHub repositories for targeted solutions
+- **Webhook Support**: Real-time updates through Linear webhooks for immediate response
+- **Credit Management**: Integrated billing system to manage AI solution credits
+
+## Setup
+
+### 1. OAuth Configuration
+
+The Linear integration uses OAuth 2.0 for secure authentication. Configure the following environment variables:
+
+```bash
+LINEAR_CLIENT_ID=your_linear_client_id
+LINEAR_CLIENT_SECRET=your_linear_client_secret
+LINEAR_WEBHOOK_SECRET=your_webhook_secret
+LINEAR_API_KEY=your_api_key  # For feature requests
+```
+
+### 2. OAuth Scopes
+
+The integration requires the following Linear API scopes:
+
+- `read` - Read access to workspace data
+- `write` - Write access for creating comments and updating issues
+- `app:assignable` - Allows the app to be assigned to issues
+- `app:mentionable` - Allows the app to be mentioned in comments
+
+### 3. Webhook Configuration
+
+Configure Linear webhooks to send notifications to:
+
+```
+POST /webhook/linear
+```
+
+Required webhook events:
+
+- Issue updates (label changes, assignments)
+- OAuth app revocation
+
+## Usage
+
+### Issue Assignment Method
+
+1. Assign any Linear issue to the Tembo app
+2. Tembo will automatically:
+   - Create a comment confirming the assignment
+   - Queue the issue for AI analysis (if credits available)
+   - Update the issue status to "In Progress" when solving begins
+
+### Label Method
+
+1. Add the "tembo" label to any Linear issue
+2. Tembo will automatically:
+   - Create a comment acknowledging the label
+   - Queue the issue for AI analysis (if credits available)
+
+### Repository Linking
+
+1. Connect GitHub repositories during setup
+2. Linear labels are automatically created for each repository
+3. Add a repository label to an issue to link it to that specific codebase
+4. Tembo will focus solutions on the linked repository
+
+## Issue Processing
+
+### Issue States
+
+Tembo syncs with the following Linear workflow states:
+
+- All non-completed and non-canceled states are monitored
+- Issues in "completed" or "canceled" states are skipped
+
+### Priority Mapping
+
+Linear priorities are mapped to Tembo severity levels:
+
+| Linear Priority | Tembo Level  | Description       |
+| --------------- | ------------ | ----------------- |
+| Urgent (1)      | 5 (Critical) | Highest priority  |
+| High (2)        | 4 (High)     | High priority     |
+| Normal (3)      | 3 (Medium)   | Standard priority |
+| Low (4)         | 2 (Low)      | Lower priority    |
+| No Priority (0) | 2 (Low)      | Default level     |
+
+### Data Structure
+
+Issues are stored with the following structure:
+
+```typescript
+interface LinearIssueData {
+	task: string; // Issue title
+	description: string; // Issue description
+	status: string; // Current workflow state
+	data: {
+		issue: object; // Full Linear issue object
+	};
+	context?: object; // Additional context
+}
+```
+
+## Automatic Labels
+
+### System Labels
+
+Tembo automatically creates the following labels in your Linear workspace:
+
+- **"Tembo"** - Used to trigger AI solutions (alternative to assignment)
+- **"Tembo Git Repositories"** - Parent group for repository labels
+
+### Repository Labels
+
+For each connected GitHub repository, Tembo creates:
+
+- A child label under "Tembo Git Repositories"
+- Named after the repository
+- Linked to the specific codebase for targeted solutions
+
+## API Endpoints
+
+### Feature Requests
+
+Create feature requests directly in Linear:
+
+```http
+POST /api/linear
+Content-Type: application/json
+
+{
+  "summary": "Feature title",
+  "description": "Detailed description",
+  "user": {
+    "id": "user_id",
+    "name": "User Name",
+    "email": "user@example.com"
+  }
+}
+```
+
+## Webhook Events
+
+### Issue Updates
+
+Triggered when:
+
+- Labels are added/removed (especially "tembo" label)
+- Repository labels are added
+- Issue assignments change
+
+### Issue Assignments
+
+Triggered when:
+
+- Issues are assigned to the Tembo app
+- Automatic comment creation and queuing
+
+### OAuth Revocation
+
+Triggered when:
+
+- OAuth access is revoked
+- Automatic cleanup of integration data
+
+## Comments and Notifications
+
+Tembo automatically creates comments in Linear for:
+
+### Assignment/Label Comments
+
+```
+@user I am starting work on this task now! [View issue on Tembo](link)
+```
+
+### Repository Link Comments
+
+```
+@user I have linked the [repository-name](repo-url) repository to this task.
+```
+
+### Insufficient Credits
+
+```
+@user Insufficient credits. [Buy credits here](billing-link)
+```
+
+## Integration Management
+
+### Sync Process
+
+The integration periodically syncs:
+
+- Workflow states → Issue sources
+- Labels → Issue sources
+- Repository connections → Label relationships
+
+### Credit System
+
+- Each AI solution consumes credits
+- Credit balance is checked before queuing issues
+- Users are notified when credits are insufficient
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Webhook not receiving events**
+
+   - Verify webhook URL is accessible
+   - Check webhook secret configuration
+   - Ensure required events are enabled
+
+2. **OAuth authentication failures**
+
+   - Verify client ID and secret
+   - Check redirect URI configuration
+   - Ensure required scopes are granted
+
+3. **Issues not being processed**
+
+   - Verify "tembo" label exists
+   - Check credit balance
+   - Review issue assignment to Tembo app
+
+4. **Repository labels not working**
+   - Ensure GitHub integration is connected
+   - Verify repository permissions
+   - Check label creation in Linear workspace
+
+### Debug Information
+
+The integration logs detailed information for troubleshooting:
+
+- Webhook payload processing
+- Issue upsert operations
+- Credit balance checks
+- Label and assignment handling
+
+For additional support, check the application logs for detailed error messages and processing status.
