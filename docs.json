@@ -18,11 +18,17 @@
 				"groups": [
 					{
 						"group": "Get Started",
-						"pages": ["welcome", "workflows", "billing"]
+						"pages": ["welcome", "workflows", "faq", "billing", "troubleshooting"]
 					},
 					{
 						"group": "AI Agent",
-						"pages": ["ai-agent/overview", "ai-agent/issue-detection", "ai-agent/pull-requests"]
+						"pages": [
+							"ai-agent/overview",
+							"ai-agent/workflows",
+							"ai-agent/issue-detection",
+							"ai-agent/pull-requests",
+							"ai-agent/monitoring"
+						]
 					},
 					{
 						"group": "Integrations",

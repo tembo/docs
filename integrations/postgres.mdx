@@ -33,6 +33,23 @@ postgresql://[YOUR_USERNAME]:[YOUR_PASSWORD]@[YOUR_HOST]:5432/[YOUR_DATABASE]?ss
 
 > ⚠️ **Important**: Replace the bracketed values with your actual credentials. Never use example credentials in production.
 
+## What Tembo Monitors
+
+Once connected, Tembo continuously monitors your PostgreSQL database for:
+
+### Performance Issues
+
+- **Slow Queries** - Analyzes `pg_stat_statements` for queries with >100ms execution time and >5 calls
+- **Missing Indexes** - Identifies tables that would benefit from indexing based on query patterns
+- **Unused Indexes** - Detects indexes consuming space without being utilized
+
+### Database Health
+
+- Connection counts and session activity
+- Lock contention and blocking queries
+- Table and index bloat
+- Autovacuum performance
+
 ## Prerequisites
 
 Before connecting your database, ensure:
@@ -41,6 +58,7 @@ Before connecting your database, ensure:
 - You have valid database credentials with appropriate permissions
 - The PostgreSQL port (typically 5432) is open in your firewall/security group
 - SSL/TLS is properly configured if required
+- `pg_stat_statements` extension is enabled for query monitoring
 
 ## Setup Instructions
 

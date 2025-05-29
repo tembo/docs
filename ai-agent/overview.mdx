@@ -29,18 +29,36 @@ Tembo turns noisy alerts and performance signals into real code fixes:
 4. **Seeks Approval**\
    You stay in control — approve, reject, or modify the fix before it merges
 
-## Tembo's Favorite Fixes
+## What Tembo Can Fix
 
-Tembo starts where your backlog ends — with bugs your team doesn't have time to fix:
+Tembo specializes in database performance and application reliability issues:
 
-- Sentry errors and stack traces
-- Slow or inefficient queries
-- Missing or misused indexes
-- Broken windows and recurring alerts
-- Misconfigured settings or parameters
-- Bad default behaviors that hurt performance
+### Database Performance Issues
 
-> Tembo is designed to clean up AI-generated and human-generated code that contains bugs and performance issues.
+- **Slow Queries** - Identifies queries with high execution times (>100ms by default) and optimizes them
+- **Missing Indexes** - Detects tables that would benefit from indexing and creates appropriate indexes
+- **Unused Indexes** - Finds indexes that aren't being used and removes them to improve write performance
+
+### Application Errors
+
+- **Sentry Errors** - Automatically pulls application errors from Sentry and fixes the underlying code issues
+- **Stack Traces** - Analyzes error patterns and implements proper error handling
+
+### Code Quality Issues
+
+- **TODO Comments** - Finds TODO items in your codebase and implements the requested functionality
+- **Code Bugs** - Uses AI to scan code files and detect potential bugs or performance issues
+- **Linear Tickets** - Syncs with Linear project management to implement features and fixes
+
+### Integration Support
+
+Tembo connects to your existing tools:
+- PostgreSQL databases (including AWS RDS and Supabase)
+- GitHub repositories for pull request creation
+- Sentry for error monitoring
+- Linear for project management
+
+> Tembo focuses on production issues that impact performance and reliability, automatically creating pull requests with the fixes your team needs.
 
 ## Tembo Adapts to Your Workflow
 

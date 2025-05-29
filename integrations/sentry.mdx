@@ -18,10 +18,24 @@ Sentry is an application monitoring platform that helps developers identify, dia
 
 When you connect Sentry to Tembo, our system:
 
-1. Receives error alerts from your Sentry projects
-2. Uses AI to analyze the error details and understand the root cause
-3. Creates actionable issues in Tembo with appropriate severity levels
-4. Generates solution recommendation and pull request if possible
+1. **Monitors Error Patterns** - Tracks errors seen more than once (`times_seen:>1`) to focus on recurring issues
+2. **Analyzes Error Context** - Examines stack traces, error messages, and request context
+3. **Creates Targeted Issues** - Automatically creates issues in Tembo with AI-generated severity levels
+4. **Generates Code Fixes** - Creates pull requests with specific fixes for the underlying code problems
+
+### Example Error Fixes
+
+**Null Pointer Exceptions**
+- Identifies missing null checks in your code
+- Adds proper validation and error handling
+
+**Database Connection Issues**
+- Detects connection timeouts and pool exhaustion
+- Implements connection retry logic and proper resource cleanup
+
+**API Endpoint Errors**
+- Finds unhandled edge cases in request processing
+- Adds input validation and error responses
 
 ## Setup Instructions
 
