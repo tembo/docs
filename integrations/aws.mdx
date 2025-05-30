@@ -1,14 +1,8 @@
 ---
-title: 'AWS RDS'
-description: 'Connect Tembo to your AWS RDS and Aurora PostgreSQL instances for automated monitoring, optimization, and issue resolution.'
-icon: 'aws'
+title: "AWS RDS"
+description: "Connect Tembo to your AWS RDS and Aurora PostgreSQL instances for automated monitoring, optimization, and issue resolution."
+icon: "aws"
 ---
-
-<img
-	src="/images/connect-aws-rds.png"
-	alt="Connect AWS RDS"
-	style={{ width: '300px', borderRadius: '0.5rem' }}
-/>
 
 Tembo integrates with PostgreSQL to help you:
 
@@ -83,7 +77,7 @@ ec2:DescribeVpcs - For VPC verification
 ```
 
 1. Open a browser and login to your AWS account using a role with the permissions listed above.
-2. In the same browser navigate to Tembo and login. Click on your user icon (lower left corner), then navigate to **Settings** > **Connection** -> **Amazon Web Services** -> **Connect**
+2. In the same browser navigate to Tembo and login. Click on your user icon (lower left corner), then navigate to **Settings** \> **Connection** -\> **Amazon Web Services** -\> **Connect**
 3. Click **Open AWS Authorization Page** in the popup. This will take you to the Cloudformation page within your AWS account
 4. Accept the Capabilities then click **Create Stack** and wait for the account to synchronize.
 
@@ -104,7 +98,7 @@ GRANT USAGE ON SCHEMA public TO tembo_monitor;
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO tembo_monitor;
 ```
 
-1. Login with your browser at Tembo, then click on your user icon (lower left corner) and navigate to **Settings** > **Connections** -> **Amazon Web Services** -> **Connect**
+1. Login with your browser at Tembo, then click on your user icon (lower left corner) and navigate to **Settings** \> **Connections** -\> **Amazon Web Services** -\> **Connect**
 2. Give the instance a name and provide the connection string using the user and password created above.
 3. Click **Connect Database**
 
@@ -126,7 +120,7 @@ If you encounter connection issues:
 1. Check that the database user has sufficient permissions
 2. Ensure your RDS instance is in the "Available" state
 
-For persistent issues, please contact support@tembo.io with:
+For persistent issues, please contact [support@tembo.io](mailto:support@tembo.io) with:
 
 - RDS instance identifier
 - Error messages received

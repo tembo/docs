@@ -1,14 +1,8 @@
 ---
-title: 'Postgres'
-description: 'Connect any PostgreSQL database to Tembo using standard connection strings for maximum flexibility.'
-icon: 'database'
+title: "Postgres"
+description: "Connect any PostgreSQL database to Tembo using standard connection strings for maximum flexibility."
+icon: "database"
 ---
-
-<img
-	src="/images/connect-postgres.png"
-	alt="Connect Postgres"
-	style={{ width: '300px', borderRadius: '0.5rem' }}
-/>
 
 The connection string method allows you to connect virtually any PostgreSQL database to Tembo, including:
 
@@ -39,7 +33,7 @@ Once connected, Tembo continuously monitors your PostgreSQL database for:
 
 ### Performance Issues
 
-- **Slow Queries** - Analyzes `pg_stat_statements` for queries with >100ms execution time and >5 calls
+- **Slow Queries** - Analyzes `pg_stat_statements` for queries with \>100ms execution time and \>5 calls
 - **Missing Indexes** - Identifies tables that would benefit from indexing based on query patterns
 - **Unused Indexes** - Detects indexes consuming space without being utilized
 
@@ -106,7 +100,7 @@ postgresql://[YOUR_TEMBO_USER]:[YOUR_PASSWORD]@[YOUR_HOST]:5432/[YOUR_DATABASE]?
 ### 4. Add the Connection in Tembo
 
 1. Log in to your Tembo account
-2. Navigate to **Connections** > **Add Connection**
+2. Navigate to **Connections** \> **Add Connection**
 3. Select **Connection String** as the connection type
 4. Paste your connection string into the field
 5. Give your connection a descriptive name
