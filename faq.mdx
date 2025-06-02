@@ -8,8 +8,6 @@ description: 'Frequently asked questions about Tembo'
       Tembo is an AI agent that continuously monitors your database, detects issues, and provides solutions automatically. It combines deep PostgreSQL expertise with AI capabilities to help teams maintain optimal database performance without requiring dedicated database administrators.
   </Accordion>
 
-{" "}
-
 <Accordion title="What managed PostgreSQL providers do you support?">
 	Tembo supports multiple PostgreSQL providers: 
 	- [AWS RDS for PostgreSQL](https://aws.amazon.com/rds/postgresql/) 
@@ -18,8 +16,6 @@ description: 'Frequently asked questions about Tembo'
 	
 	We're constantly adding more cloud providers. Contact us if your provider isn't listed.
 </Accordion>
-
-{" "}
 
 <Accordion title="How does Tembo connect to my database?">
 	Tembo offers several secure connection methods: 
@@ -31,8 +27,6 @@ description: 'Frequently asked questions about Tembo'
 	All connections use TLS encryption and follow the principle of least privilege with read-only access by default.
 </Accordion>
 
-{" "}
-
 <Accordion title="Is Tembo secure?">
 	Yes, security is a core principle of Tembo: 
 	- All connections are encrypted using TLS 
@@ -43,15 +37,11 @@ description: 'Frequently asked questions about Tembo'
 	- We never store query results.
 </Accordion>
 
-{" "}
-
 <Accordion title="What PostgreSQL versions are supported?">
 	Tembo supports PostgreSQL versions 10 and above. We recommend using the latest stable version
 	(currently PostgreSQL 16) for access to all features and optimizations. The AI agent adjusts its
 	recommendations based on your specific PostgreSQL version.
 </Accordion>
-
-{" "}
 
 <Accordion title="Can't <Cursor|Lovable|Github Copilot> just do this?">
 	Yes and no. Horizontal AI engineers are designed to handle any coding task you throw at them. But
@@ -62,8 +52,6 @@ description: 'Frequently asked questions about Tembo'
 	practices, and submitting code fixes to you. It's not magic, it's just a continuous engine with
 	the right inputs that produces excellent PRs.
 </Accordion>
-
-{" "}
 
 <Accordion title="How does Tembo detect database issues?">
 	Tembo uses multiple detection methods: 
@@ -76,8 +64,6 @@ description: 'Frequently asked questions about Tembo'
 	When an issue is detected, the AI analyzes the root cause and generates appropriate solutions.
 </Accordion>
 
-{" "}
-
 <Accordion title="How does Tembo implement fixes?">
 	Tembo provides several implementation methods based on your preferences: 
 	1. **GitHub pull requests** - Code-based fixes submitted as PRs 
@@ -87,8 +73,6 @@ description: 'Frequently asked questions about Tembo'
 	
 	You always have full control to review and approve any changes before they're applied.
 </Accordion>
-
-{" "}
 
 <Accordion title="How do you keep the AI models up-to-date with the latest documentation?">
 	Tembo leverages powerful foundation models from Anthropic and OpenAI, combined with our
@@ -103,8 +87,6 @@ description: 'Frequently asked questions about Tembo'
 	This ensures our recommendations reflect the latest PostgreSQL techniques and best practices.
 </Accordion>
 
-{" "}
-
 <Accordion title="Can I use Tembo with my existing monitoring tools?">
 	Yes, Tembo complements your existing monitoring stack: 
 	- **Prometheus/Grafana** - Extract additional insights from your metrics 
@@ -114,8 +96,6 @@ description: 'Frequently asked questions about Tembo'
 	Tembo doesn't replace your existing tools but adds AI-powered analysis and recommendations on top of them.
 </Accordion>
 
-{" "}
-
 <Accordion title="Do I need database expertise to use Tembo?">
 	No, Tembo is designed to be accessible to developers without specialized database knowledge. The
 	AI explains issues and solutions in clear language, providing educational context alongside
@@ -123,23 +103,17 @@ description: 'Frequently asked questions about Tembo'
 	continuous monitoring capabilities while maintaining full control over implementation decisions.
 </Accordion>
 
-{" "}
-
 <Accordion title="Can I bring my own LLM key?">
 	Not yet. LLM rate limits are Tembo's primary product bottleneck. If you're willing to bring your
 	own Anthropic key, you'll get a fastpass through the waitlist and enhanced prioritization for
 	operations.
 </Accordion>
 
-{" "}
-
 <Accordion title="Is there a free trial?">
 	Yes, Tembo offers a 14-day free trial with full access to all features. No credit card is required
 	to start your trial. After the trial period, you can choose from our flexible pricing plans based
 	on your needs.
 </Accordion>
-
-{" "}
 
 <Accordion title="How is Tembo different from managed PostgreSQL services?">
 	Managed PostgreSQL services provide the database infrastructure but still require significant
@@ -150,8 +124,6 @@ description: 'Frequently asked questions about Tembo'
 	4. **Contextual recommendations** tailored to your specific database 
 	5. **Code-level fixes** submitted directly to your repositories
 </Accordion>
-
-{" "}
 
 <Accordion title="Can Tembo help with database migrations?">
 	Yes, Tembo can assist with PostgreSQL migrations by: 
@@ -164,23 +136,17 @@ description: 'Frequently asked questions about Tembo'
 	Contact us for specialized assistance with complex migrations.
 </Accordion>
 
-{" "}
-
 <Accordion title="Are there size limits for code indexing?">
 	Code repositories are limited to 10,000 files per repository, though this can be adjusted for
 	enterprise plans. To optimize indexing performance, you can use .temboignore to exclude
 	unnecessary files (like node_modules, vendor directories, etc.) from the indexing process.
 </Accordion>
 
-{" "}
-
 <Accordion title="Can one database be linked to multiple code repos?">
 	Yes, you can map databases to multiple code repositories, and vice versa. It's a many-to-many
 	relationship, which is particularly useful for microservices architectures where multiple services
 	interact with the same database.
 </Accordion>
-
-{" "}
 
 <Accordion title="Does Tembo work with PostgreSQL extensions?">
 	Yes, Tembo supports common PostgreSQL extensions including: 
@@ -191,9 +157,7 @@ description: 'Frequently asked questions about Tembo'
 	- And many others 
 	
 	The AI agent will provide extension-specific recommendations when appropriate.
-</Accordion>{' '}
-
-{" "}
+</Accordion>
 
 <Accordion title="How often does Tembo check my database?">
 	By default, Tembo performs: 
