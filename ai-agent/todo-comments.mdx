@@ -1,0 +1,85 @@
+---
+title: 'TODO Comments'
+icon: 'magnifying-glass'
+---
+
+Tembo actively scans your codebase for TODO comments and implements the requested functionality, helping you clear technical debt without manual intervention.
+
+## How It Works
+
+1. **Discovery Phase**
+
+   - Tembo scans your entire codebase to locate TODO comments
+   - Supports multiple TODO formats (`// TODO:`, `# TODO:`, `<!-- TODO -->`, etc.)
+   - Prioritizes TODOs based on age, importance markers, and context
+
+2. **Analysis Phase**
+
+   - Parses the TODO description to understand the requested implementation
+   - Examines surrounding code context to grasp the intended functionality
+   - Builds a mental model of how the feature should be implemented
+
+3. **Implementation Phase**
+
+   - Writes code that fulfills the TODO request
+   - Follows your project's coding standards and patterns
+   - Integrates with existing functionality seamlessly
+
+4. **Review Phase**
+   - Creates a pull request with the implemented solution
+   - Provides explanations for the implementation choices
+   - Awaits your approval before merging
+
+## Supported TODO Formats
+
+Tembo recognizes various TODO comment formats across different programming languages:
+
+```javascript
+// TODO: Implement caching for expensive operations
+```
+
+```python
+# TODO: Add validation for user input
+```
+
+```html
+<!-- TODO: Make this component responsive -->
+```
+
+```java
+/* TODO: Add error handling for edge cases */
+```
+
+## Configuration Options
+
+You can customize Tembo's TODO comment handling:
+
+- **Prioritization** - Tag TODOs with priority markers (e.g., `TODO(high):`, `TODO(P1):`)
+- **Assignees** - Specify ownership with `TODO(username):` format
+- **Exclusions** - Configure patterns or directories to exclude from TODO scanning
+- **Custom Formats** - Define project-specific TODO formats for Tembo to recognize
+
+## Best Practices for Writing Actionable TODOs
+
+For optimal results with Tembo's automation:
+
+1. **Be Specific** - Clearly state what needs to be implemented
+2. **Provide Context** - Include relevant details about the expected behavior
+3. **Reference Resources** - Link to documentation or examples when applicable
+4. **Set Boundaries** - Define constraints or limitations for the implementation
+
+## Example TODOs That Tembo Can Implement
+
+```javascript
+// TODO: Add pagination to this API endpoint to handle large result sets
+```
+
+```python
+# TODO: Implement rate limiting middleware to prevent abuse (max 100 requests per minute)
+```
+
+```html
+<!-- TODO: Add form validation for email field with proper error messaging -->
+```
+
+Tembo turns these comments into working code, helping you maintain momentum and reduce technical debt without manual intervention.
