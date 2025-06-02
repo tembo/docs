@@ -24,9 +24,9 @@
 						"group": "AI Agent",
 						"pages": [
 							"ai-agent/overview",
-							"ai-agent/workflows",
-							"ai-agent/issue-detection",
+														"ai-agent/issue-detection",
 							"ai-agent/pull-requests",
+								"ai-agent/feedback-loop",
 							"ai-agent/monitoring"
 						]
 					},
