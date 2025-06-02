@@ -24,11 +24,11 @@
 						"group": "AI Agent",
 						"pages": [
 							"ai-agent/overview",
-														"ai-agent/issue-detection",
+							"ai-agent/issue-detection",
+							"ai-agent/todo-comments",
 							"ai-agent/pull-requests",
-								"ai-agent/feedback-loop",
-							"ai-agent/monitoring",
-							"ai-agent/todo-comments"
+							"ai-agent/feedback-loop",
+							"ai-agent/monitoring"
 						]
 					},
 					{
