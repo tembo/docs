@@ -27,7 +27,8 @@
 														"ai-agent/issue-detection",
 							"ai-agent/pull-requests",
 								"ai-agent/feedback-loop",
-							"ai-agent/monitoring"
+							"ai-agent/monitoring",
+							"ai-agent/todo-comments"
 						]
 					},
 					{
