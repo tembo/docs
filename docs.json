@@ -34,6 +34,7 @@
               "ai-agent/todo-comments",
               "ai-agent/pull-requests",
               "ai-agent/feedback-loop",
+              "ai-agent/tembo-md",
               "ai-agent/monitoring"
             ]
           },
