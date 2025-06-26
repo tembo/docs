@@ -1,0 +1,128 @@
+---
+title: 'Rule Files'
+description: 'Configure Tembo with project-specific context and conventions'
+icon: 'file-code'
+---
+
+A configuration file is essentially a set of instructions that Tembo reads to understand your project's context, conventions, and requirements when solving tasks and generating pull requests.
+
+## Supported Configuration Files
+
+Tembo supports configuration files at the top level of your repository that act as project-level instructions included in all interactions with the agent. Multiple file names are supported for compatibility with other agents, but the first file that matches in this list will be used:
+
+- `tembo.md`
+- `CLAUDE.md`
+- `.rules`
+- `.cursorrules`
+- `.windsurfrules`
+- `.clinerules`
+- `.github/copilot-instructions.md`
+- `AGENT.md`
+- `AGENTS.md`
+
+## How it works
+
+### Automatic context loading
+- When Tembo solves an issue, it automatically searches for and loads rule files
+- These files provide persistent context that helps Tembo understand your codebase and preferences
+- The content becomes part of Tembo's context for generating solutions and processing feedback
+
+## What to Include
+
+### Common Commands and Scripts
+Document frequently used commands that Tembo should know about:
+
+```markdown
+# Build commands
+- npm run build: Build the project
+- npm run dev: Start development server
+- npm run test: Run test suite
+- npm run lint: Run linter and fix issues
+```
+
+### Code Style and Conventions
+Define your project's coding standards:
+
+```markdown
+# Code style
+- Use TypeScript interfaces instead of any types
+- Prefer functional components over class components
+- Use async/await instead of Promise chains
+- Import statements should be sorted alphabetically
+- Use descriptive variable names
+
+# File naming conventions
+- Components: PascalCase (e.g., UserProfile.tsx)
+- Utilities: camelCase (e.g., formatDate.ts)
+- Constants: UPPER_SNAKE_CASE (e.g., API_ENDPOINTS.ts)
+```
+
+### Architecture Guidelines
+Explain your project's architectural decisions:
+
+```markdown
+# Architecture principles
+- Follow Clean Architecture patterns
+- Separate business logic from UI components
+- Use dependency injection for services
+- Keep components focused on single responsibilities
+
+# Directory structure
+- `/src/components` - Reusable UI components
+- `/src/services` - Business logic and API calls
+- `/src/utils` - Helper functions and utilities
+- `/src/types` - TypeScript type definitions
+```
+
+### Testing Requirements
+Specify testing expectations:
+
+```markdown
+# Testing guidelines
+- Write unit tests for all business logic
+- Use React Testing Library for component tests
+- Mock external API calls in tests
+- Aim for 80%+ code coverage
+- Include error handling test cases
+
+# Test file naming
+- Unit tests: `*.test.ts`
+- Integration tests: `*.integration.test.ts`
+- Component tests: `*.component.test.tsx`
+```
+
+### Documentation Standards
+Define documentation requirements:
+
+```markdown
+# Documentation
+- Add JSDoc comments to all public functions
+- Update README.md when adding new features
+- Document API endpoints in OpenAPI format
+- Include examples in function documentation
+
+# Comment guidelines
+- Explain why, not what
+- Use TODO comments for future improvements
+- Remove commented-out code before committing
+```
+
+### Error Handling Patterns
+Specify how errors should be handled:
+
+```markdown
+# Error handling
+- Use custom error classes for different error types
+- Log errors with appropriate severity levels
+- Provide user-friendly error messages
+- Include error boundaries in React components
+- Handle async errors with try-catch blocks
+```
+
+### Context Optimization
+
+- The file content becomes part of Tembo's prompts
+- Keep it focused and relevant
+- Remove outdated information regularly
+- Use emphasis (IMPORTANT, NOTE, WARNING) for critical points
+
