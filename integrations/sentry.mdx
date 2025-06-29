@@ -1,131 +1,28 @@
 ---
 title: "Sentry"
-description: "Connect Tembo to Sentry to automatically fix issues in your application"
-icon: "bars-staggered"
+icon: "gear"
 ---
 
-Tembo seamlessly integrates with [Sentry](https://sentry.io), an industry-leading error monitoring platform, to provide automatic issue resolution for your applications.
+Connect Sentry to Tembo for automatic error detection and code fixes.
 
-Sentry is an application monitoring platform that helps developers identify, diagnose, and fix software errors in real-time. It provides detailed error reports, stack traces, and context to help you understand what's happening when your application encounters issues.
+# Features
 
-## How Tembo and Sentry work together
+- Monitor errors and analyzes stack traces
+- Generate pull requests with specific code fixes
+- Auto-fix issues in your codebase
 
-When you connect Sentry to Tembo, our system:
+# Installation
 
-1. **Monitors Error Patterns** - Tracks errors seen more than once (`times_seen:>1`) to focus on recurring issues
-2. **Analyzes Error Context** - Examines stack traces, error messages, and request context
-3. **Creates Targeted Issues** - Automatically creates issues in Tembo with AI-generated severity levels
-4. **Generates Code Fixes** - Creates pull requests with specific fixes for the underlying code problems
-
-### Example Error Fixes
-
-**Null Pointer Exceptions**
-
-- Identifies missing null checks in your code
-- Adds proper validation and error handling
-
-**Database Connection Issues**
-
-- Detects connection timeouts and pool exhaustion
-- Implements connection retry logic and proper resource cleanup
-
-**API Endpoint Errors**
-
-- Finds unhandled edge cases in request processing
-- Adds input validation and error responses
-
-## Setup Instructions
-
-### Prerequisites
-
-- An active Sentry account with projects configured
-- A GitHub repository connected to your Sentry organization
-- Admin privileges in Tembo and Sentry
-
-### Connection Steps
-
-1. **Navigate to Integrations**
-   - In your Tembo dashboard, go to your organization settings
-   - Select the "Integrations" tab
-   - Click on the "Connect" button next to Sentry
-2. **Authorize Connection**
-   - You'll be redirected to Sentry to authorize Tembo
-   - Grant the required permissions to allow Tembo to:
-     - Read error data
-     - Access project information
-     - Receive webhook events
-3. **Configure Project Mappings**
-   - Once connected, you'll need to map your Sentry projects to GitHub repositories
-   - This mapping allows Tembo to create pull requests with fixes for your errors
-   - Select the appropriate GitHub repository for each Sentry project you want to monitor
-
-## Using the Integration
-
-After successfully connecting Sentry, Tembo will automatically:
-
-- Monitor incoming errors from your Sentry projects
-- Create new issues in Tembo when errors occur
-- Analyze errors to determine their severity and suggest fixes
-- Generate solution recommendations for fixing the underlying issues
-
-### Managing Project Mappings
-
-You can update your Sentry project to GitHub repository mappings at any time:
-
-1. Go to your organization settings
-2. Select the "Integrations" tab
-3. Click on "Sentry"
-4. Update the project-to-repository mappings as needed
-
-## Security and Permissions
-
-The Sentry integration uses secure OAuth2 authentication and all communication is encrypted. Tembo only requests the minimum permissions needed to function:
-
-- Read access to error data
-- Webhook event reception
-- Access to project information
-
-No sensitive application data beyond what's included in error reports is accessed or stored by Tembo.
-
-## Troubleshooting
-
-If you encounter issues with your Sentry integration:
-
-1. **Verify Webhook Status**
-   - In Sentry, check if the webhooks are being delivered successfully
-   - Sentry will show delivery status and any error messages
-2. **Check Project Mappings**
-   - Ensure each Sentry project is correctly mapped to a GitHub repository
-   - Without proper mapping, Tembo cannot create solution PRs.
-3. **Verify Permissions**
-   - Confirm that the integration has the necessary permissions in both Sentry and GitHub
-4. **Contact Support**
-   - If issues persist, contact our support team through the Tembo dashboard
-
-## Disconnecting Sentry
-
-To disconnect the Sentry integration:
-
-1. Go to your organization settings in Tembo
-2. Select the "Integrations" tab
-3. Find Sentry and click "Disconnect"
-
-You can also revoke access from the Sentry side:
-
-1. Go to your Sentry organization settings
-2. Navigate to Developer Settings \> Installed Integrations
-3. Find Tembo and uninstall it
-
-## FAQs
-
-**Q: Is historical error data imported?**
-A: No, only new errors that occur after integration will be processed.
-
-**Q: Does Tembo need access to my source code?**
-A: Tembo needs access to your GitHub repository to understand the code context and to create pull requests with fixes.
-
-**Q: Can I control which types of errors trigger issues?**
-A: Currently, all error alerts from Sentry are processed. More granular control is planned for future updates.
-
-**Q: What programming languages are supported?**
-A: Tembo can analyze and suggest fixes for most popular programming languages, including JavaScript, Python, Ruby, Java, Go, and more.
+<Steps>
+  <Step title="Connect">
+    Navigate to the [Integrations page](https://app.tembo.io/integrations) in Tembo and click the `Connect` button next to Sentry.
+  </Step>
+  <Step title="Authorize">
+    Authorize Tembo to access your Sentry account with permissions to read error data and receive webhook events. You'll be redirected back to the Integrations page when complete.
+  </Step>
+  <Step title="Map Projects">
+    Map your Sentry projects to GitHub repositories under "Projects" on the Integrations page.
+    
+    Only mapped projects will generate pull requests with code fixes.
+  </Step>
+</Steps>

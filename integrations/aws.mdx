@@ -1,125 +1,28 @@
 ---
 title: 'AWS RDS'
-description: 'Connect Tembo to your AWS RDS and Aurora PostgreSQL instances for automated monitoring, optimization, and issue resolution.'
-icon: 'database'
+icon: 'gear'
 ---
 
-Tembo integrates with PostgreSQL to help you:
+Connect AWS RDS PostgreSQL instances to Tembo for performance monitoring and optimization.
 
-- Monitor and optimize your PostgreSQL database performance
+# Features
+
+- Monitor and optimize PostgreSQL database performance
 - Detect and diagnose issues automatically
-- Receive AI-powered recommendations for improvements
-- Implement fixes with minimal effort
+- AI-powered recommendations for improvements
+- Support for RDS and Aurora PostgreSQL instances
+- Secure cross-account access via AWS IAM
 
-## Connection Methods
+# Installation
 
-You can connect Tembo to your AWS RDS instances using one of two methods:
-
-### 1. AWS IAM Integration (Recommended)
-
-This method creates a role in your AWS Account that the Tembo service is able to assume.
-It also creates all the necessary AWS resources to make cross account access secure.
-Tembo will use a Cloudformation to create the necessary resources to connect to your AWS account and discover Postgres instances.
-You can view the Cloudformation template [here](https://cdb-plat-use1-prod-dbaai-prod-cf-templates.s3.us-east-1.amazonaws.com/cross-account-cf-template.yaml).
-
-Requirements:
-
-- AWS Secrets Manager enabled for your Postgres instance
-- an AWS role with select permissions
-
-In order to do this, you will need to have access to an AWS role with the following permissions:
-
-```plaintext
-s3:CreateBucket - To create the LambdaZipsBucket
-s3:PutBucketVersioning - For enabling versioning on the LambdaZipsBucket
-s3:PutEncryptionConfiguration - For setting up bucket encryption
-s3:PutBucketPublicAccessBlock - To configure the public access block settings
-s3:GetObject - To retrieve lambda code from the source bucket
-s3:PutObject - To copy objects to the destination bucket
-s3:DeleteObject - For cleanup during stack operations
-
-iam:CreateRole - To create the various IAM roles (CopyZipsRole, CrossAccountRole, LambdaExRoleForDBAI, RegistrationFunctionRole)
-iam:PutRolePolicy - To attach inline policies to the roles
-iam:AttachRolePolicy - To attach managed policies to the roles
-iam:PassRole - Required for passing IAM roles to services like Lambda
-iam:GetRole - To check if roles exist during resource creation or updates
-iam:DeleteRole - For stack deletion operations
-iam:DeleteRolePolicy - For removing policies during stack deletion
-iam:DetachRolePolicy - For detaching managed policies during stack deletion
-
-lambda:CreateFunction - To create Lambda functions (CopyZipsFunction, RegistrationFunction)
-lambda:DeleteFunction - For stack deletion operations
-lambda:UpdateFunctionCode - For stack updates
-lambda:UpdateFunctionConfiguration - For stack updates
-lambda:GetFunction - To check if functions exist during creation or updates
-lambda:InvokeFunction - To invoke the custom resource functions
-
-cloudformation:CreateStack - To create the stack initially
-cloudformation:DescribeStacks - To check stack status
-cloudformation:DescribeStackResource - To check resource status
-cloudformation:DescribeStackResources - To get information about stack resources
-cloudformation:GetTemplate - To retrieve the template
-cloudformation:DeleteStack - To delete the stack if needed
-cloudformation:UpdateStack - To update the stack if needed
-
-sts:AssumeRole - When cross-account operations are performed
-
-organizations:DescribeAccount - For organization-related operations (referenced in policies)
-organizations:DescribeOrganization - For organization-related operations
-organizations:ListAccounts - For organization-related operations
-organizations:ListTagsForResource - For organization-related operations
-ec2:CreateNetworkInterface - For Lambda network configurations
-ec2:DescribeNetworkInterfaces - For Lambda network configurations
-ec2:DeleteNetworkInterface - For Lambda network configurations
-ec2:DescribeSecurityGroups - For security group verification
-ec2:DescribeSubnets - For subnet verification
-ec2:DescribeVpcs - For VPC verification
-```
-
-1. Open a browser and login to your AWS account using a role with the permissions listed above.
-2. In the same browser navigate to Tembo and login. Click on your user icon (lower left corner), then navigate to **Settings** \> **Connection** -\> **Amazon Web Services** -\> **Connect**
-3. Click **Open AWS Authorization Page** in the popup. This will take you to the Cloudformation page within your AWS account
-4. Accept the Capabilities then click **Create Stack** and wait for the account to synchronize.
-
-### 2. Direct Database Connection
-
-A simpler method is to provide your database connection url directly to Tembo.
-It is recommended to create a new role for this.
-
-```sql
--- Create dedicated user for monitoring
-CREATE USER tembo_monitor WITH PASSWORD '<use-a-secure-generated-password>';
-
-GRANT pg_monitor TO tembo_monitor;
-GRANT CONNECT ON DATABASE <your_database> TO tembo_monitor;
-
--- add privileges to public and any other schemas that you want dba to be able to read
-GRANT USAGE ON SCHEMA public TO tembo_monitor;
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO tembo_monitor;
-```
-
-1. Login with your browser at Tembo, then click on your user icon (lower left corner) and navigate to **Settings** \> **Connections** -\> **Amazon Web Services** -\> **Connect**
-2. Give the instance a name and provide the connection string using the user and password created above.
-3. Click **Connect Database**
-
-## Parameters and Configuration
-
-For optimal performance with Tembo, we recommend the following PostgreSQL parameter settings:
-
-- `shared_preload_libraries`: Include `pg_stat_statements`
-- `track_activity_query_size`: Set to at least `2048`
-- `pg_stat_statements.track`: Set to `ALL`
-- `log_min_duration_statement`: Set to `1000` (milliseconds) or lower
-
-## Troubleshooting
-
-If you encounter connection issues:
-
-1. Check that the database user has sufficient permissions
-2. Ensure your RDS instance is in the "Available" state
-
-For persistent issues, please contact [support@tembo.io](mailto:support@tembo.io) with:
-
-- RDS instance identifier
-- Error messages received
-- Connection method used
+<Steps>
+  <Step title="Connect">
+    Navigate to the Integrations page in Tembo and click the `Connect` button next to AWS RDS.
+  </Step>
+  <Step title="AWS Authorization">
+    Click "Open AWS Authorization Page" to create necessary AWS resources via CloudFormation. Accept the capabilities and click "Create Stack".
+  </Step>
+  <Step title="Sync Complete">
+    Wait for account synchronization to complete. Your RDS instances will automatically be discovered and monitoring will begin.
+  </Step>
+</Steps> 

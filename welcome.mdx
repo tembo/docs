@@ -2,40 +2,33 @@
 title: 'What is Tembo?'
 ---
 
+**Tembo is your engineering agent – always watching, always working.** It can work from your existing tickets, find bugs, fix broken pipelines, and open PRs to improve your codebase through a variety of integrations – and it works from anywhere you are.
+
 ![How Tembo Works](/images/how-tembo-works.png)
 
-Tembo is a proactive AI software engineer that accelerates your team's productivity to the max.
+## What does Tembo do?
 
-It executes engineering tickets, fixes bugs in production, improves database performance, and generally enhances your codebase — while your engineers focus on building new features and reviewing PRs from anywhere.
+- **Fixes production bugs** — Monitors error tracking tools like Sentry and Datadog and automatically fixes errors with simple code commits.
 
-## What Tembo does:
+- **Implements from tickets** — Assign tickets from Linear, Jira, etc. to Tembo and it writes code to solve the ticket, whether it's a bug, a feature, or a refactor.
 
-- **Executes engineering tickets** — You can assign tickets from Linear, Jira, etc to Tembo (or it can watch for specific tags), and it will take a first crack at writing code to solve the ticket.
+- **Reduces technical debt** — Weekly analysis of your codebase to identify technical debt, security vulnerabilities, and refactoring opportunities, then submits PRs for quick wins.
 
-- **Fixes bugs in production** — It will watch your error tracking tools (like Sentry and Datadog) continuously — for errors that can be fixed easily by a simple code commit.
+All these are optional, but Tembo can do them all.
 
-- **Writes code to improve database performance** — It will watch your database query performance, and suggest changes to the code or indexing to speed up your applications.
+## What about my team?
 
-- **Improves your codebase** — Once a week, it will look at each of your repos, to identify technical debt, security vulnerabilities, and opportunities for refactoring — and send in a few PRs for the low hanging fruit.
+Your team will review, approve, improve and merge PRs from anywhere. Whether you are using GitHub or GitLab, Tembo will work with you.
 
-## What your engineers do:
+We have a [Feedback Loop](/features/feedback-loop) for reviewing Tembo's work from your source control provider. If you use AI PR review tools like Graphite, Tembo will validate and commit relevant changes if you enable this feature.
 
-- **Review, approve, improve and merge PRs—from anywhere** 🙂 No text editor needed (sometimes you can just click a button to approve the PR).
+## Setting up integrations
 
-## How it works
+Getting started with Tembo is straightforward - connect the tools your team already uses:
 
-Tembo works 24/7 across your entire development stack:
+- **Source control** (GitHub, GitLab) for creating PRs
+- **Issue tracking** (Linear, Jira) for ticket assignments  
+- **Monitoring** (Sentry, Datadog) for automatic error detection
+- **Databases** (PostgreSQL, Supabase, AWS RDS) for performance optimization
 
-1. **Monitor continuously** - Watch your code, database, and error tracking tools
-2. **Detect and prioritize** - Identify issues that can be fixed with code changes
-3. **Generate solutions** - Write clean, tested code that follows your repo's patterns
-4. **Submit for review** - Create production-ready PRs for your team to approve
-
-Tembo operates in two modes:
-
-- **Autonomous**: Detects and fixes issues automatically
-- **Assigned**: Takes on specific tickets you assign from Linear, Jira, etc.
-
-## Get started
-
-[Sign up with this link](https://app.tembo.io/sign-up) and receive 5 credits to use Tembo for free.
+Most integrations use OAuth for secure connection. After authorization, Tembo syncs your data and you can activate the repositories or projects you want monitored. Once active, Tembo immediately starts scanning and can begin working on assigned tickets or detected issues.

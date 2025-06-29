@@ -3,6 +3,32 @@ title: 'Changelog'
 description: 'Keep track of changes and updates to Tembo'
 ---
 
+<Update label="2025-06-27" tags={["Sentry", "Tasks", "Rule Files"]}>
+
+## Auto-fix for Sentry errors
+Tembo now opens a pull request as soon as a Sentry error is detected — no delay between error and fix.
+
+![Improved Sentry integration](/images/temo-sentry.png)
+
+## Custom tasks
+You can now create tasks directly in Tembo without relying on external tools like Jira or Linear. Just describe the task in plain English and Tembo will take it from there.
+
+![Custom tasks](/images/custom-tasks.png)
+
+## Rule file support
+Tembo now reads rule files to better understand your project’s structure and conventions. Supported files include:
+
+- `tembo.md`
+- `CLAUDE.md`
+- `.cursorrules`
+- `.windsurfrules`
+- `.clinerules`
+- `.github/copilot-instructions.md`
+
+[Read more here](/features/rule-files)
+
+</Update>
+
 <Update label="2025-06-20" tags={["Task Prioritization", "CI/CD", "Automation"]}>
 
 ## Task Prioritization

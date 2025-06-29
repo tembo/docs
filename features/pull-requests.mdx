@@ -1,0 +1,38 @@
+---
+title: 'Pull Requests'
+icon: 'code-pull-request'
+---
+
+Tembo automatically creates a pull request when its work is complete. You can trigger its work automatically through integrations like [Sentry](/integrations/sentry) or database monitoring, or through manual assignment with a ticket in [Linear](/integrations/linear).
+
+## How It Works
+
+1. **Issue Triggered** - Either automatically detected from Sentry/database monitoring, or manually assigned via Linear tickets
+2. **Generates Solution** - Analyzes your codebase and creates appropriate fixes
+3. **Creates PR** - Submits with clear descriptions and context
+4. **You Review** - Standard GitHub workflow with [Feedback Loop](/features/feedback-loop)
+
+## What Triggers Tembo PRs
+
+**Automatic Detection:**
+- **Sentry errors** and application crashes
+- **Database performance issues** like slow queries or missing indexes
+- **Code quality problems** detected through analysis
+
+**Manual Assignment:**
+- **Linear tickets** assigned to Tembo
+- **Jira issues** with Tembo labels or assignments
+- **Direct requests** for specific improvements
+
+## Tembo's Pull Requests
+
+Tembo's pull requests are created with the following characteristics:
+
+- **Clear descriptions** of the problem and solution approach
+- **Focused changes** that follow your coding standards through [Rule Files](/features/rule-files)
+- **Context links** to original errors, tickets, or performance metrics
+- **Tests** when appropriate for the change type
+
+---
+
+You maintain complete control - Tembo provides solutions, you decide what gets merged.

@@ -1,23 +1,30 @@
 ---
-title: "Github"
-description: "Connect Tembo to your Github code repos"
-icon: "github"
+title: "GitHub"
+icon: "gear"
 ---
 
-- Click into settings, and click the `Connect` button next to Github in the Integrations section.
-- Select which code repositories that you would like help maintaining.
+Connect GitHub to Tembo to open pull requests to improve your codebase.
 
-<Info>
-  Providing access to the repo where you create database migrations is especially important.
-</Info>
+# Features
 
-## Link instances and repos
+- Scan for TODO comments in your codebase
+- Scan for security issues
+- Scan for performance issues
+- Scan for technical debt
+- Scan for refactoring opportunities
 
-Once you've authorized repos:
+# Installation
 
-- Click into each Postgres instance and link it with one or more code repos.
-
-<Info>
-  We will only look to make PRs for database issues discovered in the repos that you have expressly
-  linked to each Postgres instance.
-</Info>
+<Steps>
+  <Step title="Install">
+    Navigate to the [Integrations page](https://app.tembo.io/integrations) in Tembo and click the `Install` button next to GitHub.
+  </Step>
+  <Step title="Authorize">
+    Authorize Tembo to access your GitHub account. You can select specific repositories or all repositories. You'll be redirected back to the Integrations page when complete.
+  </Step>
+  <Step title="Activate Repositories">
+    After syncing completes (may take a few minutes), select which repositories you want Tembo to scan under "Active Repositories" on the Integrations page.
+    
+    Only repositories you activate here will be scanned for issues and receive improvement PRs.
+  </Step>
+</Steps>

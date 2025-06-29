@@ -1,93 +1,25 @@
 ---
 title: 'Supabase'
-description: 'How to connect your Supabase Postgres database to Tembo for AI-powered monitoring, optimization, and issue resolution.'
-icon: 'database'
+icon: 'gear'
 ---
 
-The Supabase integration allows Tembo to securely connect to your Supabase Postgres database. Once connected, Tembo can:
+Connect Supabase PostgreSQL databases to Tembo for performance monitoring and optimization.
 
-- Monitor database performance
-- Identify potential issues
-- Provide optimization recommendations
+# Features
+
+- Monitor database performance and identify issues
 - Generate solutions for common PostgreSQL problems
 
-## Prerequisites
+# Installation
 
-- A Supabase account with an active project
-- Administrator access to your Supabase project
-- Database connection details (available in your Supabase dashboard)
-
-## Setup Instructions
-
-### 1. Get Your Supabase Connection Information
-
-1. Log in to your [Supabase Dashboard](https://app.supabase.io/)
-2. Select your project
-3. Navigate to **Project Settings** \> **Database**
-4. Under **Connection Info**, find your connection details:
-   - **Host**: The database host
-   - **Port**: Usually 5432 for PostgreSQL
-   - **Database name**: Your database name
-   - **User**: Database username
-   - **Password**: Database password
-
-### 2. Connect to Tembo
-
-1. Log in to your Tembo account
-2. Navigate to **Connections** \> **Add Connection**
-3. Select **Supabase** as the connection type
-4. Enter your connection details:
-   - Connection name (for your reference)
-   - Host
-   - Port
-   - Database name
-   - Username
-   - Password
-5. Click **Test Connection** to verify everything works
-6. Click **Create Connection** to save
-
-### 3. Configure Access Permissions
-
-For optimal functionality, Tembo requires certain permissions. We recommend creating a dedicated read-only user for Tembo:
-
-```sql
--- Create a dedicated user for Tembo
-CREATE USER tembo WITH PASSWORD '<use-a-secure-generated-password>';
-
--- Grant read permissions
-GRANT CONNECT ON DATABASE your_database TO tembo;
-GRANT USAGE ON SCHEMA public TO tembo;
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO tembo;
-GRANT SELECT ON ALL SEQUENCES IN SCHEMA public TO tembo;
-GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO tembo;
-
--- Set default privileges for future objects
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO tembo;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON SEQUENCES TO tembo;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT EXECUTE ON FUNCTIONS TO tembo;
-```
-
-## Security Considerations
-
-- Tembo encrypts all connection information at rest
-- All database traffic is encrypted using TLS
-- You can limit Tembo's access by using a read-only user
-- No sensitive data is extracted from your database without explicit permission
-
-## Troubleshooting
-
-### Connection Issues
-
-- Verify your Supabase project is active
-- Check if your IP is allowlisted in Supabase's security settings
-- Ensure the database user has sufficient permissions
-
-### Permission Errors
-
-If you encounter permission errors, run the following to view current permissions:
-
-```sql
-SELECT grantee, privilege_type
-FROM information_schema.table_privileges
-WHERE grantee = 'tembo';
-```
+<Steps>
+  <Step title="Get Connection Info">
+    In your Supabase dashboard, go to Project Settings → Database and copy your connection details (host, port, database name, username, password).
+  </Step>
+  <Step title="Connect">
+    Navigate to the [Integrations page](https://app.tembo.io/integrations) in Tembo and click the `Connect` button next to Supabase. Enter your connection details.
+  </Step>
+  <Step title="Test Connection">
+    Click "Test Connection" to verify Tembo can access your database. Once verified, monitoring begins immediately.
+  </Step>
+</Steps> 

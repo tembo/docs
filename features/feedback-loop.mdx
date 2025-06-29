@@ -1,0 +1,66 @@
+---
+title: "Feedback Loop"
+icon: "message"
+---
+
+Iterate on Tembo's pull requests using natural language feedback directly in GitHub or GitLab.
+
+![How Tembo Works](/images/feedback-loop.png)
+
+## How it works
+
+1. **Initial Solution** - Tembo creates a pull request to solve an issue
+2. **Review & Comment** - You review the PR and leave feedback mentioning "@tembo"  
+3. **Automatic Retry** - Tembo processes your feedback and updates the PR with improvements
+4. **Iteration** - Continue providing feedback until you're satisfied
+
+## Using Feedback
+
+**Option 1: Use GitHub's PR Review function**
+- Submit a normal PR review - no need to mention "@tembo"
+- Tembo automatically processes all review feedback
+
+**Option 2: Comment in threads**
+- Mention "@tembo" in your comment for detection
+
+```
+@tembo Add error handling for the database connection
+```
+
+```
+@tembo Use TypeScript interfaces instead of any types
+```
+
+**Tembo responds with:**
+- **👀** Acknowledges your feedback
+- **🚀** Starts processing changes
+- **New commits** with improvements
+
+## Best Practices
+
+**✅ Be specific:**
+```
+@tembo Add input validation for the email field using regex
+```
+
+**❌ Too vague:**
+```
+@tembo fix the validation
+```
+
+**Types of improvements Tembo can make:**
+- Performance optimization
+- Error handling and logging
+- Code structure and refactoring
+- Type safety improvements
+- Testing and documentation
+
+## Configuration
+
+**Feedback Loop:** Enabled by default
+
+**External PR tools:** If you use tools like [Diamond](https://diamond.graphite.dev/), enable integration in your [Workspace settings](https://app.tembo.io/settings/organization).
+
+---
+
+You are responsible for all merged code. Read our [AI First Software Development](https://github.com/tembo/aifsd) guide for more information.
