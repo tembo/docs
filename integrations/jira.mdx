@@ -4,9 +4,45 @@ description: 'Connect your Jira workspace to Tembo for automated issue managemen
 icon: 'list-check'
 ---
 
-The Jira integration allows Tembo to automatically detect and solve issues from your Jira workspace. Simply add the "tembo" label to any issue and Tembo will start working on it.
+# Assign Jira tickets to Tembo and turn them into PRs
 
-## Setup
+## Setting up the integration
 
-1. First, install the Jira integration from the [Tembo integrations page](https://app.tembo.io/integrations)
-2. Add the "tembo" label to any Jira issue and Tembo will automatically start working on it. That's it!
+### First, create a new Jira account just for Tembo to use
+You have 2 options:
+
+- **Use an email alias**: Invite yourself using a modified email like `youremail+tembo@company_domain.com`.
+- **Create a dedicated account**: Ask your IT administrator to set up a new email like `tembo@company_domain.com`.
+
+Click "Invite people to Jira" and invite the new account.
+
+After some time, you'll receive an email invite from Jira.
+
+Accept the email invite and complete the sign-up process. Make sure to use the name "Tembo". This name will show up in all the comments the integration makes.
+
+### Next, connect your Tembo org to your new Jira account
+For Non-Enterprise Accounts: In your Tembo account at app.tembo.io, go to Settings > Integrations
+For Enterprise Accounts: In your Tembo account at app.tembo.io, go to Enterprise Settings > Connected Accounts
+Then, click the "Connect" button under the Jira section.
+
+Make sure that you're logged into the Jira account you created for Tembo earlier (not your own Jira account), when you complete this step.
+
+### Finally, add the Tembo label to an issue!
+Add the 'Tembo' label to any issue - you may need to create this label yourself the first time.
+
+Refresh to see Tembo's immediate response. Come back in ~5 minutes for Tembo's full analysis!
+
+To start a session from an issue, click on the link Tembo provides in the comments. Tembo won't start any sessions until you kicked off the session yourself.
+
+Bulk edit and apply the 'Tembo' label to start ticket scoping in parallel.
+
+## Why integrate Tembo with Jira?
+Since Tembo has access to your codebase, Tembo can comment on tickets with:
+
+- A summary of the relevant code
+- An implementation plan
+- Edge cases or questions about the ticket
+
+Use Tembo's analysis to get up to speed, or just click the provided link to have Tembo take a first pass at the PR. Tembo has the self-awareness to report 🔴/🟠/🟢 confidence estimates too.
+
+Open the toggles in Tembo's comment for additional information!
