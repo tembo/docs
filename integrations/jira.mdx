@@ -1,0 +1,31 @@
+---
+title: 'Jira'
+icon: 'gear'
+---
+
+Assign Jira tickets to Tembo and turn them into PRs.
+
+# Features
+
+- Add the "Tembo" label to issues to trigger analysis
+- Tembo comments on tickets with relevant code summaries, implementation plans, and edge cases
+- Confidence estimates (🔴/🟠/🟢) for implementation difficulty
+- Bulk label application for parallel ticket scoping
+- Click provided links to start coding sessions and create PRs
+
+# Installation
+
+<Steps>
+  <Step title="Create Tembo Account">
+    Create a dedicated Jira account for Tembo using either an email alias (`youremail+tembo@company.com`) or a dedicated email (`tembo@company.com`). Invite this account to your Jira workspace and complete the sign-up process using the name "Tembo".
+  </Step>
+  <Step title="Connect">
+    Navigate to the [Integrations page](https://app.tembo.io/integrations) in Tembo and click the `Connect` button next to Jira. Make sure you're logged into the Tembo Jira account (not your personal account) when completing this step.
+  </Step>
+  <Step title="Add Labels">
+    Create a "Tembo" label in your Jira project if it doesn't exist. Add this label to any issue you want Tembo to analyze and work on.
+  </Step>
+  <Step title="Start Sessions">
+    After labeling tickets, Tembo will comment with analysis and provide a link to start a coding session. Click the link to have Tembo create a pull request for the issue.
+  </Step>
+</Steps>
