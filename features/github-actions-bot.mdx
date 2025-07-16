@@ -1,0 +1,105 @@
+---
+title: 'GitHub Actions Bot Integration'
+icon: 'github'
+---
+
+The `Enable GithubActionsBot` feature allows GitHub Actions to interact with Tembo's pull requests and issue management system.
+
+## Overview
+
+When enabled, this feature allows GitHub Actions bot (`github-actions[bot]`) to:
+
+- Comment on pull requests created by Tembo
+- Trigger Tembo responses through mentions (@tembo)
+- Provide automated feedback and status updates
+- Participate in the pull request review process
+
+## How It Works
+
+### Bot Recognition
+
+Tembo maintains a list of accepted bots that can interact with Tembo per Organization. When `Github Actions Bot` is enabled, the `github-actions[bot]` user is added to this accepted list.
+
+### Webhook Processing
+
+When GitHub Actions creates comments or performs actions on pull requests, the webhook handler checks if the action comes from an accepted bot. If `Github Actions Bot` is enabled, GitHub Actions comments are processed and can trigger Tembo responses.
+
+### Permission Model
+
+GitHub Actions bot interactions are subject to the same permission model as other bots:
+
+- Must mention @tembo or @tembo-io to trigger responses
+- Only works on pull requests created by Tembo
+- Respects the `maxBotReviews` setting to prevent excessive automated interactions
+
+## Configuration
+
+### Default Setting
+
+- **Default Value:** `true`
+- **Type:** Boolean
+- **Scope:** Organization-level setting
+
+### Web Interface
+
+The setting can be configured through the web interface:
+
+1. Navigate to **Settings** → **Pull Requests**
+2. Find the **Bot Interactions** section
+3. Toggle the **GitHub Actions** switch
+
+## Use Cases
+
+### CI/CD Integration
+
+- GitHub Actions can report build status on Tembo PRs
+- Automated test results can be communicated to Tembo
+- Deployment status updates can trigger follow-up actions
+
+### Quality Assurance
+
+- Automated code quality checks can provide feedback
+- Security scans can report vulnerabilities
+- Performance benchmarks can be shared
+
+### Workflow Automation
+
+- GitHub Actions can trigger additional Tembo reviews
+- Status updates can influence PR prioritization
+- Automated approvals for low-risk changes
+
+## Security Considerations
+
+### Bot Verification
+
+The system specifically checks for the `github-actions[bot]` username to ensure only legitimate GitHub Actions can interact with Tembo.
+
+### Rate Limiting
+
+The `maxBotReviews` setting prevents excessive automated interactions, protecting against potential spam or infinite loops.
+
+### Permission Inheritance
+
+GitHub Actions bot inherits the same permission model as other automated systems, ensuring consistent security policies.
+
+## Troubleshooting
+
+### GitHub Actions Not Responding
+
+1. Verify `Github Actions Bot` is set to `true`
+2. Check that comments mention @tembo or @tembo-io
+3. Ensure the PR was created by Tembo
+4. Verify the `maxBotReviews` limit hasn't been exceeded
+
+### Unexpected Behavior
+
+1. Check webhook logs for processing errors
+2. Verify GitHub Actions permissions in the repository
+3. Ensure the GitHub App installation has proper permissions
+
+## Related Settings
+
+- `Enable GraphiteBot`: Controls Graphite bot interactions
+- `Enable CursorBot`: Controls Cursor bot interactions
+- `Enable CodeRabbitBot`: Controls CodeRabbit bot interactions
+- `maxBotReviews`: Limits automated bot interactions per PR
