@@ -55,11 +55,49 @@ Iterate on Tembo's pull requests using natural language feedback directly in Git
 - Type safety improvements
 - Testing and documentation
 
+## GitLab Integration
+
+Tembo works seamlessly with GitLab repositories and merge requests, providing the same powerful feedback loop capabilities as GitHub.
+
+### Setting up GitLab Integration
+
+1. **Connect your GitLab repository** in your [Workspace settings](https://app.tembo.io/settings/organization)
+2. **Grant necessary permissions** for Tembo to access your GitLab project
+3. **Enable merge request integration** to allow Tembo to create and update MRs
+
+### GitLab-Specific Features
+
+**Merge Request Comments**
+- Comment on merge requests mentioning "@tembo" for feedback processing
+- Tembo automatically detects and responds to MR discussions
+
+**GitLab CI/CD Integration**
+- Tembo respects your GitLab CI pipeline requirements
+- Automatically triggers pipeline runs after code updates
+- Works with GitLab's merge request approval rules
+
+**GitLab Issues Integration**
+- Link feedback to specific GitLab issues using issue references (#123)
+- Tembo can create MRs directly from GitLab issue descriptions
+
+### Example GitLab Workflow
+
+```
+# In a GitLab merge request comment:
+@tembo Optimize this database query for better performance and add proper indexing
+
+# Tembo will:
+# 1. Analyze the query in the MR
+# 2. Apply optimizations
+# 3. Update the MR with new commits
+# 4. Trigger GitLab CI pipeline
+```
+
 ## Configuration
 
-**Feedback Loop:** Enabled by default
+**Feedback Loop:** Enabled by default for both GitHub and GitLab
 
-**External PR tools:** If you use AI-powered code review tools, enable integration in your [Workspace settings](https://app.tembo.io/settings/organization) and Tembo will respond to these AI reviewers:
+**External PR/MR tools:** If you use AI-powered code review tools, enable integration in your [Workspace settings](https://app.tembo.io/settings/organization) and Tembo will respond to these AI reviewers:
 
 - **[Graphite](https://withgraphite.dev/)** - AI-powered code review and workflow optimization
 - **[CodeRabbit](https://www.coderabbit.ai/)** - Automated code review with AI-driven insights
