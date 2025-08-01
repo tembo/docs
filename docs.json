@@ -27,6 +27,7 @@
 							"features/pull-requests",
 							"features/feedback-loop",
 							"features/rule-files",
+							"features/tembo-hooks",
 							"features/todo-comments"
 						]
 					},

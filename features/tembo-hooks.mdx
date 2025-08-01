@@ -1,0 +1,305 @@
+---
+title: 'Tembo Hooks'
+icon: 'hook'
+---
+
+Automate custom commands during Tembo's workflow with configurable hooks.
+
+Tembo Hooks allow you to execute custom commands at specific points during the AI agent's workflow when solving issues and creating pull requests. This enables you to integrate custom build processes, testing, linting, or any other automated tasks into Tembo's workflow.
+
+## How It Works
+
+Tembo Hooks are defined in a `.tembo.json` configuration file at the root of your repository. When Tembo processes an issue, it automatically loads this configuration and executes the specified commands at designated points in the workflow.
+
+## Configuration File
+
+Create a `.tembo.json` file in the root of your repository:
+
+```json
+{
+  "hooks": {
+    "postClone": [
+      "npm install",
+      "npm run build"
+    ],
+    "prePush": [
+      "npm run lint",
+      "npm run test"
+    ],
+    "onFinish": [
+      "echo 'Pull request creation completed'"
+    ]
+  }
+}
+```
+
+## Available Hooks
+
+Tembo supports three distinct hook types that execute at different stages of the workflow:
+
+### `postClone`
+
+Executes immediately after Tembo clones your repository and before it begins analyzing or making changes.
+
+**Common use cases:**
+- Install dependencies (`npm install`, `yarn install`, `pip install -r requirements.txt`)
+- Set up the development environment
+- Generate required files or configurations
+- Download external assets or dependencies
+
+**Example:**
+```json
+{
+  "hooks": {
+    "postClone": [
+      "npm ci",
+      "npm run generate-types",
+      "cp .env.example .env"
+    ]
+  }
+}
+```
+
+### `prePush`
+
+Executes after Tembo has made code changes but before pushing the changes to the remote repository.
+
+**Common use cases:**
+- Run linters and code formatters
+- Execute test suites
+- Perform build validation
+- Run security checks
+- Generate documentation
+
+**Example:**
+```json
+{
+  "hooks": {
+    "prePush": [
+      "npm run lint:fix",
+      "npm run test:ci",
+      "npm run build",
+      "npm run security-audit"
+    ]
+  }
+}
+```
+
+### `onFinish`
+
+Executes after the pull request has been successfully created.
+
+**Common use cases:**
+- Send notifications
+- Update tracking systems
+- Clean up temporary files
+- Log completion metrics
+- Trigger downstream workflows
+
+**Example:**
+```json
+{
+  "hooks": {
+    "onFinish": [
+      "echo 'PR created successfully'",
+      "curl -X POST $WEBHOOK_URL -d '{\"status\": \"completed\"}'",
+      "npm run cleanup"
+    ]
+  }
+}
+```
+
+## Hook Execution
+
+### Execution Environment
+
+- All hooks run in the repository's root directory
+- Commands have access to the same environment variables as Tembo
+- Each command in a hook array executes sequentially
+- If any command fails, the hook execution stops and the workflow may fail
+
+### Command Format
+
+Commands are executed as shell commands and support:
+
+- Environment variable expansion
+- Pipe operations
+- Multiple commands with `&&` or `;`
+- Background processes with `&`
+
+```json
+{
+  "hooks": {
+    "postClone": [
+      "export NODE_ENV=development && npm install",
+      "echo $USER > .last-modified-by",
+      "npm run build && npm run test"
+    ]
+  }
+}
+```
+
+## Best Practices
+
+### Error Handling
+
+Ensure your commands handle errors gracefully to prevent workflow failures:
+
+```json
+{
+  "hooks": {
+    "prePush": [
+      "npm run lint || echo 'Linting failed but continuing'",
+      "npm run test || (echo 'Tests failed' && exit 1)"
+    ]
+  }
+}
+```
+
+### Performance Considerations
+
+- Keep hook commands lightweight and fast
+- Use caching when possible (`npm ci` instead of `npm install`)
+- Avoid long-running processes in hooks
+- Consider running tests in parallel when supported
+
+### Security
+
+- Avoid exposing sensitive information in hook commands
+- Use environment variables for secrets and configuration
+- Be cautious with external network calls
+- Validate inputs when processing dynamic data
+
+### Debugging
+
+Add logging to understand hook execution:
+
+```json
+{
+  "hooks": {
+    "postClone": [
+      "echo 'Starting postClone hook'",
+      "npm install",
+      "echo 'Dependencies installed successfully'"
+    ],
+    "prePush": [
+      "echo 'Running pre-push validation'",
+      "npm run test -- --verbose",
+      "echo 'All tests passed'"
+    ]
+  }
+}
+```
+
+## Example Configurations
+
+### Node.js Project
+
+```json
+{
+  "hooks": {
+    "postClone": [
+      "node --version",
+      "npm ci",
+      "npm run generate-schema"
+    ],
+    "prePush": [
+      "npm run lint:check",
+      "npm run type-check",
+      "npm run test:coverage",
+      "npm run build"
+    ],
+    "onFinish": [
+      "echo 'Build completed successfully'"
+    ]
+  }
+}
+```
+
+### Python Project
+
+```json
+{
+  "hooks": {
+    "postClone": [
+      "python --version",
+      "pip install -r requirements.txt",
+      "python manage.py migrate --check"
+    ],
+    "prePush": [
+      "black --check .",
+      "flake8 .",
+      "pytest --cov=.",
+      "mypy ."
+    ],
+    "onFinish": [
+      "echo 'Python project validation completed'"
+    ]
+  }
+}
+```
+
+### Full-Stack Project
+
+```json
+{
+  "hooks": {
+    "postClone": [
+      "npm install",
+      "cd backend && pip install -r requirements.txt",
+      "npm run db:migrate"
+    ],
+    "prePush": [
+      "npm run lint:frontend",
+      "cd backend && flake8 .",
+      "npm run test:unit",
+      "npm run test:integration",
+      "npm run build:production"
+    ],
+    "onFinish": [
+      "npm run notify-team",
+      "echo 'Full-stack deployment ready'"
+    ]
+  }
+}
+```
+
+## Troubleshooting
+
+### Hook Failures
+
+If a hook fails:
+
+1. Check the Tembo logs for specific error messages
+2. Ensure all required dependencies are available
+3. Verify file permissions and paths
+4. Test commands locally in the same environment
+
+### Common Issues
+
+**Command not found:**
+- Ensure the command is installed and available in PATH
+- Use absolute paths when necessary
+- Check that the execution environment has required tools
+
+**Permission denied:**
+- Verify file and directory permissions
+- Use appropriate user context for command execution
+
+**Environment variables not available:**
+- Ensure required environment variables are set
+- Check variable names and values
+- Use default values when appropriate
+
+## Integration with CI/CD
+
+Tembo Hooks complement your existing CI/CD pipeline:
+
+- Use hooks for immediate validation before push
+- Let your CI/CD handle comprehensive testing and deployment
+- Coordinate between Tembo hooks and pipeline triggers
+- Avoid duplicating work between hooks and CI/CD
+
+---
+
+Tembo Hooks provide powerful customization for integrating the AI agent into your specific development workflow while maintaining code quality and project standards.
