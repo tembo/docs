@@ -27,7 +27,8 @@
 							"features/pull-requests",
 							"features/feedback-loop",
 							"features/rule-files",
-							"features/todo-comments"
+							"features/todo-comments",
+							"features/hooks"
 						]
 					},
 					{

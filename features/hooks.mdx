@@ -1,0 +1,254 @@
+---
+title: 'Tembo Hooks'
+icon: 'webhook'
+---
+
+Tembo Hooks allow you to customize and extend Tembo's behavior by running custom commands at certain points during execution of a task. This powerful feature enables you to integrate your existing development practices, CI/CD processes, and quality checks directly into Tembo's automated workflow.
+
+## Overview
+
+Tembo Hooks are configured through a `.tembo.json` file in your repository root. These hooks execute shell commands at predefined lifecycle events, giving you full control over how Tembo interacts with your codebase and development environment.
+
+## Configuration
+
+Create a `.tembo.json` file in your repository root with the following structure:
+
+```json
+{
+  "hooks": {
+    "postClone": [
+      "npm install",
+      "echo 'Repository cloned and dependencies installed'"
+    ],
+    "prePush": [
+      "npm run lint",
+      "npm run test",
+      "npm run build"
+    ],
+    "onFinish": [
+      "echo 'Solution completed successfully'",
+      "npm run cleanup"
+    ]
+  }
+}
+```
+
+## Available Hooks
+
+### `postClone`
+
+Executes immediately after Tembo clones your repository and before it begins working on the issue.
+
+**Common use cases:**
+- Install dependencies (`npm install`, `pip install -r requirements.txt`)
+- Set up development environment
+- Download required assets or configurations
+- Initialize database connections or test data
+
+**Example:**
+```json
+{
+  "hooks": {
+    "postClone": [
+      "npm ci",
+      "cp .env.example .env.local",
+      "npm run db:migrate"
+    ]
+  }
+}
+```
+
+### `prePush`
+
+Runs after Tembo has made changes to your code but before pushing the changes and creating a pull request.
+
+**Common use cases:**
+- Run linting and formatting (`eslint`, `prettier`, `black`)
+- Execute test suites
+- Build the project to ensure no compilation errors
+- Run security scans or code quality checks
+- Generate documentation or update version files
+
+**Example:**
+```json
+{
+  "hooks": {
+    "prePush": [
+      "npm run lint:fix",
+      "npm run test:unit",
+      "npm run build",
+      "npm run security:scan"
+    ]
+  }
+}
+```
+
+### `onFinish`
+
+Executes after the pull request has been successfully created.
+
+**Common use cases:**
+- Send notifications to team channels
+- Update project management tools
+- Run additional CI/CD processes
+- Clean up temporary files or resources
+- Generate reports or metrics
+
+**Example:**
+```json
+{
+  "hooks": {
+    "onFinish": [
+      "slack-notify 'Tembo created PR: {{PR_URL}}'",
+      "update-jira-ticket {{ISSUE_ID}}",
+      "npm run cleanup"
+    ]
+  }
+}
+```
+
+## Hook Execution Details
+
+### Execution Environment
+
+- Hooks run in the same Docker sandbox environment as Tembo
+- Commands execute in the repository's root directory
+- All environment variables available to Tembo are also available to hooks
+- Commands run with the same permissions as the Tembo process
+
+### Error Handling
+
+- If any command in a hook fails (returns non-zero exit code), the hook execution stops
+- For `postClone` and `prePush` hooks, failures will cause the entire issue resolution process to fail
+- For `onFinish` hooks, failures are logged but don't affect the overall success of the solution
+
+### Command Execution
+
+- Commands are executed sequentially in the order they appear in the array
+- Each command runs in a separate shell session
+- Commands support shell features like piping, redirects, and environment variables
+- Multi-line commands can be written as single strings with semicolons or `&&` operators
+
+## Advanced Configuration Examples
+
+### Full Stack Application
+
+```json
+{
+  "hooks": {
+    "postClone": [
+      "npm install",
+      "pip install -r requirements.txt",
+      "docker-compose up -d postgres redis",
+      "npm run db:migrate",
+      "npm run seed:test-data"
+    ],
+    "prePush": [
+      "npm run lint",
+      "npm run test:unit",
+      "python -m pytest tests/",
+      "npm run build",
+      "docker-compose run --rm app npm run test:integration"
+    ],
+    "onFinish": [
+      "docker-compose down",
+      "npm run cleanup",
+      "echo 'Tembo solution completed for {{ISSUE_TITLE}}'"
+    ]
+  }
+}
+```
+
+### Monorepo with Multiple Services
+
+```json
+{
+  "hooks": {
+    "postClone": [
+      "npm install --frozen-lockfile",
+      "npx lerna bootstrap",
+      "npm run build:shared"
+    ],
+    "prePush": [
+      "npx lerna run lint",
+      "npx lerna run test --since origin/main",
+      "npx lerna run build --since origin/main",
+      "npm run test:integration"
+    ],
+    "onFinish": [
+      "npx lerna run cleanup",
+      "npm run generate:changelog"
+    ]
+  }
+}
+```
+
+### Go Application with Custom Tooling
+
+```json
+{
+  "hooks": {
+    "postClone": [
+      "go mod download",
+      "go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest",
+      "make setup"
+    ],
+    "prePush": [
+      "go fmt ./...",
+      "golangci-lint run",
+      "go test ./...",
+      "go build -o bin/app ./cmd/app",
+      "make security-scan"
+    ],
+    "onFinish": [
+      "make clean",
+      "echo 'Go application solution completed'"
+    ]
+  }
+}
+```
+
+## Best Practices
+
+### Keep Commands Fast
+- Avoid long-running processes in hooks as they extend the overall solution time
+- Use caching mechanisms where possible (`npm ci` instead of `npm install`)
+- Consider running only essential checks in `prePush` hooks
+
+### Error Handling
+- Include commands that verify successful execution where critical
+- Use `set -e` in shell scripts to fail fast on errors
+- Provide meaningful error messages for debugging
+
+### Security Considerations
+- Don't include sensitive information directly in hook commands
+- Use environment variables for credentials and API keys
+- Be cautious with commands that modify system-level configurations
+
+### Testing Hooks
+- Test your hooks locally before committing the `.tembo.json` file
+- Start with simple commands and gradually add complexity
+- Monitor Tembo's execution logs to verify hooks run as expected
+
+## Troubleshooting
+
+### Common Issues
+
+**Hook Commands Not Found**
+- Ensure required tools are installed in the `postClone` hook
+- Verify the command exists in the Docker environment Tembo uses
+
+**Permission Errors**
+- Check that commands don't require elevated privileges
+- Ensure file permissions allow the operations you're trying to perform
+
+**Timeout Issues**
+- Long-running commands may cause timeouts
+- Consider moving lengthy processes to background tasks or separate CI/CD pipelines
+
+### Debugging
+
+- Check Tembo's execution logs in your dashboard for hook output
+- Add `echo` statements to track hook progress
+- Test commands individually in a similar environment before adding to hooks
+
