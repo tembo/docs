@@ -1,91 +1,91 @@
 {
-	"$schema": "https://mintlify.com/docs.json",
-	"theme": "palm",
-	"name": "Tembo Docs",
-	"colors": {
-		"primary": "#DF3021",
-		"light": "#FFFFFF",
-		"dark": "#000000"
-	},
-	"background": {
-		"color": { "light": "#F8F8F8", "dark": "#080808" }
-	},
-	"favicon": "/favicon.ico",
-	"navigation": {
-		"tabs": [
-			{
-				"tab": "Documentation",
-				"groups": [
-					{
-						"group": "Get Started",
-						"pages": ["welcome", "pwa-installation", "billing"]
-					},
-					{
-						"group": "Features",
-						"pages": [
-							"features/overview",
-							"features/pull-requests",
-							"features/feedback-loop",
-							"features/rule-files",
-							"features/todo-comments",
-							"features/hooks"
-						]
-					},
-					{
-						"group": "Integrations",
-						"pages": [
-							"integrations/github",
-							"integrations/sentry",
-							"integrations/linear",
-							"integrations/jira",
-							"integrations/postgres",
-							"integrations/aws",
-							"integrations/supabase"
-						]
-					}
-				]
-			},
-			{
-				"tab": "Changelog",
-				"groups": [
-					{
-						"group": "Updates",
-						"pages": ["changelog"]
-					}
-				]
-			}
-		]
-	},
-	"logo": {
-		"light": "/logo/light.svg",
-		"dark": "/logo/dark.svg"
-	},
-	"navbar": {
-		"links": [
-			{
-				"label": "Get Help",
-				"href": "mailto:hi@tembo.io"
-			}
-		],
-		"primary": {
-			"type": "button",
-			"label": "Dashboard",
-			"href": "https://app.tembo.io"
-		}
-	},
-	"footer": {
-		"socials": {
-			"x": "https://x.com/tembo_io"
-		}
-	},
-	"redirects": [
-		{
-			"source": "/ai-agent/:slug*",
-			"destination": "/features/:slug*"
-		},
-		{
-			"source": "/ai-agent/tembo-md",
-			"destination": "/features/rule-files"
-		}
-	]
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "palm",
+  "name": "Tembo Docs",
+  "colors": {
+    "primary": "#DF3021",
+    "light": "#FFFFFF",
+    "dark": "#000000"
+  },
+  "background": {
+    "color": { "light": "#F8F8F8", "dark": "#080808" }
+  },
+  "favicon": "/favicon.ico",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": ["welcome", "pwa", "billing"]
+          },
+          {
+            "group": "Features",
+            "pages": [
+              "features/overview",
+              "features/pull-requests",
+              "features/feedback-loop",
+              "features/rule-files",
+              "features/todo-comments",
+              "features/hooks"
+            ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "integrations/github",
+              "integrations/sentry",
+              "integrations/linear",
+              "integrations/jira",
+              "integrations/postgres",
+              "integrations/aws",
+              "integrations/supabase"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Changelog",
+        "groups": [
+          {
+            "group": "Updates",
+            "pages": ["changelog"]
+          }
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Get Help",
+        "href": "mailto:hi@tembo.io"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://app.tembo.io"
+    }
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/tembo_io"
+    }
+  },
+  "redirects": [
+    {
+      "source": "/ai-agent/:slug*",
+      "destination": "/features/:slug*"
+    },
+    {
+      "source": "/ai-agent/tembo-md",
+      "destination": "/features/rule-files"
+    }
+  ]
 }
