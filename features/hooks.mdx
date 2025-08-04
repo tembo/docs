@@ -18,7 +18,8 @@ Create a `.tembo.json` file in your repository root with the following structure
   "hooks": {
     "postClone": [
       "npm install",
-      "echo 'Repository cloned and dependencies installed'"
+      "echo 'Repository cloned and dependencies installed'",
+      "node -e \"console.log('Tembo hooks postClone completed successfully')\""
     ],
     "prePush": [
       "npm run lint",
