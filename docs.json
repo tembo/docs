@@ -18,7 +18,7 @@
 				"groups": [
 					{
 						"group": "Get Started",
-						"pages": ["welcome", "billing"]
+						"pages": ["welcome", "pwa-installation", "billing"]
 					},
 					{
 						"group": "Features",
