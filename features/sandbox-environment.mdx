@@ -1,0 +1,133 @@
+---
+title: 'Tembo Sandbox Environment'
+icon: 'box'
+---
+
+The Tembo Sandbox provides a secure, isolated environment where Tembo operates to analyze and modify your code. This environment comes pre-installed with a comprehensive set of development tools and runtime environments to support a wide variety of programming languages and frameworks.
+
+## Pre-installed Tools and Runtimes
+
+The Tembo Sandbox includes the following base dependencies and their versions:
+
+### System Tools
+
+| Tool | Version | Description |
+|------|---------|-------------|
+| **curl** | 8.14.1 | Command-line tool for transferring data with URLs |
+| **lsof** | 4.99.4 | Lists open files and network connections |
+| **strace** | 6.15 | System call tracer for debugging and monitoring |
+
+### Version Control and Authentication
+
+| Tool | Version | Description |
+|------|---------|-------------|
+| **git-credential-tembo** | unknown | Tembo-specific Git credential helper |
+
+### Code Quality and Analysis
+
+| Tool | Version | Description |
+|------|---------|-------------|
+| **ShellCheck** | 0.10.0 | Static analysis tool for shell scripts |
+
+### HTTP and API Tools
+
+| Tool | Version | Description |
+|------|---------|-------------|
+| **httpie** | 3.2.4 | Modern, user-friendly HTTP client for API testing |
+
+### JavaScript/Node.js Ecosystem
+
+| Tool | Version | Description |
+|------|---------|-------------|
+| **nodejs** | 22.17.0 | JavaScript runtime built on Chrome's V8 engine |
+| **bun** | 1.2.18 | Fast all-in-one JavaScript runtime and toolkit |
+| **pnpm** | 10.12.4 | Fast, disk space efficient package manager |
+
+### Python Ecosystem
+
+| Tool | Version | Description |
+|------|---------|-------------|
+| **python3** | 3.12.11 | Modern Python programming language |
+| **pipx** | 1.7.1 | Install and run Python applications in isolated environments |
+
+### Ruby Ecosystem
+
+| Tool | Version | Description |
+|------|---------|-------------|
+| **ruby** | 3.3.6 | Dynamic, object-oriented programming language |
+| **bundler-2.6.9** | 2.6.9 | Manages Ruby gem dependencies |
+| **ruby3.3-rubocop-1.75.2** | 1.75.2 | Ruby static code analyzer and formatter |
+
+### Elixir/Erlang Ecosystem
+
+| Tool | Version | Description |
+|------|---------|-------------|
+| **erlang-28.0.1** | 28.0.1 | Concurrent, fault-tolerant programming platform |
+| **elixir** | 1.18.4 | Dynamic, functional programming language |
+| **hex** | 2.2.2 | Package manager for the Erlang ecosystem |
+| **rebar3** | 3.25.0 | Erlang build tool and package manager |
+| **erlfmt** | 1.7.0 | Erlang code formatter |
+
+### Go Ecosystem
+
+| Tool | Version | Description |
+|------|---------|-------------|
+| **go** | 1.24.4 | Open source programming language from Google |
+
+### Rust Ecosystem
+
+| Tool | Version | Description |
+|------|---------|-------------|
+| **rustup** | 1.28.2 | Rust toolchain installer and version management tool |
+
+## Environment Characteristics
+
+### Isolation and Security
+
+The Tembo Sandbox operates in a containerized Docker environment that provides:
+
+- **Process isolation**: Each task runs in its own isolated container
+- **File system isolation**: Changes are contained within the sandbox
+- **Network security**: Controlled network access for security
+- **Resource limits**: CPU and memory constraints to ensure stability
+
+### Development Workflow Integration
+
+The sandbox environment is designed to integrate seamlessly with your development workflow:
+
+- **Hook support**: Execute custom commands at different stages via [Tembo Hooks](/features/hooks)
+- **Repository access**: Full access to your repository contents and history
+- **Build tool compatibility**: Support for common build systems and package managers
+- **Testing frameworks**: Compatible with popular testing tools and frameworks
+
+## Best Practices
+
+When working with the Tembo Sandbox environment:
+
+### Dependency Management
+
+- **Use existing tools**: Leverage the pre-installed package managers and tools when possible
+- **Specify versions**: When installing additional dependencies, pin to specific versions for reproducibility
+- **Cache efficiently**: Use package manager caching features to improve build times
+
+### Resource Optimization
+
+- **Minimize installations**: Avoid installing large dependencies unless necessary
+- **Clean up**: Remove temporary files and build artifacts when possible
+- **Use lightweight alternatives**: Choose lighter-weight tools when multiple options are available
+
+### Compatibility Considerations
+
+- **Version awareness**: Be aware of the pre-installed tool versions when writing build scripts
+- **Cross-language support**: Take advantage of the multi-language environment for polyglot projects
+- **Tool conflicts**: Be mindful of potential conflicts between different language ecosystems
+
+## Support and Updates
+
+The Tembo Sandbox environment is regularly updated to include:
+
+- Security patches for all installed tools
+- Updates to major language runtimes and package managers  
+- New tools based on community feedback and usage patterns
+
+If you need a specific tool or version that isn't currently available, please reach out to the Tembo team through your dashboard or contact support.

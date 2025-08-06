@@ -28,7 +28,8 @@
               "features/feedback-loop",
               "features/rule-files",
               "features/todo-comments",
-              "features/hooks"
+              "features/hooks",
+              "features/sandbox-environment"
             ]
           },
           {
