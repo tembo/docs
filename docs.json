@@ -45,15 +45,6 @@
 				]
 			},
 			{
-				"tab": "Blog",
-				"groups": [
-					{
-						"group": "Articles",
-						"pages": ["blog/devin-vs-tembo"]
-					}
-				]
-			},
-			{
 				"tab": "Changelog",
 				"groups": [
 					{
@@ -61,7 +52,7 @@
 						"pages": ["changelog"]
 					}
 				]
-			}
+			},
 		]
 	},
 	"logo": {
