@@ -1,0 +1,181 @@
+---
+title: 'GitLab'
+description: 'Connect GitLab repositories for automated merge request creation'
+icon: 'gitlab'
+---
+
+<Warning>
+GitLab integration is currently in beta and marked as "coming soon" in the codebase. Full functionality may not be available yet.
+</Warning>
+
+## Overview
+
+The GitLab integration allows Tembo to connect with your GitLab repositories and automatically create merge requests when issues are detected and resolved.
+
+Similar to the GitHub integration, GitLab provides source control capabilities that enable Tembo to:
+
+- Access repository code for analysis
+- Create merge requests with proposed fixes
+- Integrate with GitLab's webhook system for real-time updates
+- Support both GitLab.com and self-hosted GitLab instances
+
+## Features
+
+### Repository Access
+- OAuth-based authentication with GitLab
+- Access to repository code and metadata
+- Support for private and public repositories
+- Automatic repository discovery and synchronization
+
+### Merge Request Creation
+- Automated merge request creation for detected issues
+- Proper branch management and naming conventions
+- Detailed descriptions explaining the proposed changes
+- Integration with GitLab's review process
+
+### Webhook Integration
+- Real-time notifications of repository events
+- Automatic synchronization of repository changes
+- Support for merge request lifecycle events
+
+## Setup Instructions
+
+<Info>
+GitLab integration setup follows the same OAuth pattern as other integrations but may have limited functionality during the beta period.
+</Info>
+
+### Prerequisites
+
+- GitLab account with appropriate repository access
+- Repository owner or maintainer permissions
+- Tembo account with integration permissions
+
+### Authentication Setup
+
+1. **OAuth Configuration**: The integration uses GitLab's OAuth 2.0 flow
+2. **Scope Requirements**: Tembo requires read access to repositories and write access for merge requests
+3. **Webhook Setup**: Automatic webhook configuration for repository events
+
+### Repository Selection
+
+After authentication:
+1. Tembo syncs available repositories from your GitLab account
+2. Select which repositories you want Tembo to monitor
+3. Enable monitoring for specific repositories through the dashboard
+
+## Supported Issue Types
+
+The GitLab integration supports the same issue detection and resolution as GitHub:
+
+### Code Quality Issues
+- TODO comments implementation
+- Code bug detection and fixes
+- Performance optimization opportunities
+
+### Database Performance
+- Slow query detection (when connected to database integrations)
+- Index optimization suggestions
+- Query performance improvements
+
+### Application Errors
+- Integration with error monitoring tools
+- Automated error resolution via merge requests
+
+## Configuration Options
+
+### Branch Management
+- Configurable target branch (typically `main` or `develop`)
+- Automatic feature branch creation for fixes
+- Branch naming conventions following GitLab best practices
+
+### Merge Request Settings
+- Automatic merge request creation
+- Configurable merge request templates
+- Integration with GitLab's approval workflows
+
+### Webhook Configuration
+- Automatic webhook setup for repository events
+- Configurable event filtering
+- Real-time synchronization with GitLab
+
+## Technical Implementation
+
+### OAuth Provider Configuration
+- **Base URL**: `https://gitlab.com` (configurable for self-hosted)
+- **Authorization URL**: `https://gitlab.com/oauth/authorize`
+- **Token URL**: `https://gitlab.com/oauth/token`
+- **Required Scopes**: `api`, `read_repository`, `write_repository`
+
+### API Integration
+- GitLab REST API v4 for repository operations
+- GraphQL API for advanced queries (where supported)
+- Webhook API for real-time event processing
+
+### Git Operations
+- Repository cloning and branch management
+- Commit creation with proper attribution
+- Merge request creation and management
+
+## Limitations (Beta)
+
+<Warning>
+As this integration is in beta, be aware of potential limitations:
+</Warning>
+
+- May have reduced functionality compared to GitHub integration
+- Some advanced features might not be fully implemented
+- Self-hosted GitLab instances may require additional configuration
+- Webhook reliability may vary during beta period
+
+## Best Practices
+
+### Repository Setup
+- Ensure proper branch protection rules are configured
+- Set up appropriate approval workflows for automated merge requests
+- Configure merge request templates for consistency
+
+### Security Considerations
+- Review OAuth scopes and permissions carefully
+- Monitor automated merge requests for security implications
+- Use branch protection rules to prevent unauthorized changes
+
+### Team Workflow
+- Communicate with your team about automated merge requests
+- Establish review processes for Tembo's contributions
+- Configure notifications to stay informed of automated changes
+
+## Troubleshooting
+
+### Common Issues
+
+**OAuth Authentication Fails**:
+- Verify GitLab account permissions
+- Check if OAuth application is properly configured
+- Ensure network connectivity to GitLab
+
+**Repository Not Syncing**:
+- Confirm repository permissions
+- Check webhook configuration
+- Verify integration is enabled for the repository
+
+**Merge Requests Not Created**:
+- Verify write permissions to the repository
+- Check branch protection settings
+- Ensure target branch exists and is accessible
+
+### Getting Help
+
+For GitLab integration issues:
+1. Check the integration status in your Tembo dashboard
+2. Review webhook delivery logs in GitLab settings
+3. Contact support with specific error messages and repository details
+
+## Future Enhancements
+
+As the GitLab integration moves out of beta, planned enhancements include:
+
+- Enhanced support for GitLab CI/CD integration
+- Advanced merge request templates and automation
+- Improved support for self-hosted GitLab instances
+- Better integration with GitLab's issue tracking system
+- Support for GitLab's security and compliance features

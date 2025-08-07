@@ -1,30 +1,201 @@
 ---
-title: "GitHub"
-icon: "gear"
+title: 'GitHub'
+description: 'Connect GitHub repositories for automated pull request creation and code improvement'
+icon: 'github'
 ---
 
-Connect GitHub to Tembo to open pull requests to improve your codebase.
+## Overview
 
-# Features
+The GitHub integration allows Tembo to connect with your GitHub repositories and automatically create pull requests when issues are detected and resolved.
 
-- Scan for TODO comments in your codebase
-- Scan for security issues
-- Scan for performance issues
-- Scan for technical debt
-- Scan for refactoring opportunities
+GitHub serves as Tembo's primary source control integration, enabling:
 
-# Installation
+- Repository code analysis and scanning
+- Automated pull request creation with proposed fixes
+- Real-time webhook integration for repository events
+- Git operations for branch and commit management
+
+## Features
+
+### Repository Access
+- OAuth-based authentication with GitHub
+- Access to both public and private repositories
+- Automatic repository discovery and synchronization
+- Support for organizations and personal accounts
+
+### Pull Request Creation
+- Automated pull request creation for detected issues
+- Proper branch management with descriptive names
+- Detailed PR descriptions explaining proposed changes
+- Integration with GitHub's review and approval process
+
+### Issue Detection & Resolution
+- **TODO Comments**: Finds and implements TODO items in your codebase
+- **Code Quality**: Detects potential bugs and performance issues
+- **Database Performance**: Identifies slow queries and suggests optimizations
+- **Security Issues**: Scans for common security vulnerabilities
+- **Technical Debt**: Identifies refactoring opportunities
+
+### Webhook Integration
+- Real-time notifications of repository events
+- Automatic synchronization when repositories change
+- Support for push, pull request, and issue events
+
+## Setup Instructions
+
+### Prerequisites
+
+- GitHub account with repository access
+- Repository owner or admin permissions for private repos
+- Tembo account with integration permissions
+
+### Installation Steps
 
 <Steps>
-  <Step title="Install">
-    Navigate to the [Integrations page](https://app.tembo.io/integrations) in Tembo and click the `Install` button next to GitHub.
+  <Step title="Navigate to Integrations">
+    Go to the [Integrations page](https://app.tembo.io/integrations) in your Tembo dashboard and locate the GitHub integration card.
   </Step>
-  <Step title="Authorize">
-    Authorize Tembo to access your GitHub account. You can select specific repositories or all repositories. You'll be redirected back to the Integrations page when complete.
-  </Step>
-  <Step title="Activate Repositories">
-    After syncing completes (may take a few minutes), select which repositories you want Tembo to scan under "Active Repositories" on the Integrations page.
+  <Step title="Authorize GitHub Access">
+    Click **Install** and authorize Tembo to access your GitHub account. You can choose to:
+    - Grant access to all repositories
+    - Select specific repositories only
     
-    Only repositories you activate here will be scanned for issues and receive improvement PRs.
+    You'll be redirected back to Tembo after authorization.
+  </Step>
+  <Step title="Repository Synchronization">
+    Tembo will automatically sync your available repositories. This process may take a few minutes depending on the number of repositories.
+  </Step>
+  <Step title="Activate Repository Monitoring">
+    Once syncing completes:
+    1. Review the list of discovered repositories
+    2. Enable monitoring for repositories where you want Tembo to create PRs
+    3. Configure any repository-specific settings
+  </Step>
+  <Step title="Configure Webhook (Automatic)">
+    Tembo automatically configures webhooks for enabled repositories to receive real-time updates about repository changes.
   </Step>
 </Steps>
+
+## Supported Issue Types
+
+### Code Analysis Issues
+- **TODO Comments**: Implements functionality marked with TODO comments
+- **Code Bugs**: Detects and fixes common programming errors
+- **Performance Issues**: Identifies inefficient code patterns
+
+### Database Integration Issues
+When combined with database integrations (PostgreSQL, AWS RDS, Supabase):
+- **Slow Queries**: Optimizes database queries with poor performance
+- **Missing Indexes**: Suggests and implements database indexes
+- **Unused Indexes**: Removes unnecessary database indexes
+
+### Error Monitoring Integration
+When combined with error monitoring (Sentry):
+- **Application Errors**: Fixes code issues causing runtime errors
+- **Exception Handling**: Improves error handling and recovery
+
+## Configuration Options
+
+### Repository Settings
+- **Target Branch**: Configure the main branch for pull requests (typically `main` or `master`)
+- **Branch Naming**: Automatic feature branch creation with descriptive names
+- **PR Templates**: Use repository's pull request templates when available
+
+### Issue Scanning
+- **File Types**: Configure which file types to scan for issues
+- **Scan Frequency**: Set how often repositories are scanned for new issues
+- **Issue Prioritization**: Configure which types of issues to prioritize
+
+### Pull Request Behavior
+- **Auto-merge**: Configure whether PRs should be automatically merged (not recommended)
+- **Review Requirements**: Respect repository's branch protection and review settings
+- **Labels and Assignments**: Automatically add labels and assign reviewers
+
+## Technical Implementation
+
+### OAuth Configuration
+- **Scopes**: `repo` (for private repos) or `public_repo` (for public repos)
+- **Permissions**: Read repository content, create branches, create pull requests
+- **Webhook Events**: `push`, `pull_request`, `issues`, `repository`
+
+### Git Operations
+- Repository cloning and local analysis
+- Feature branch creation with consistent naming (`tembo/fix-issue-description`)
+- Commit creation with proper author attribution
+- Pull request creation with detailed descriptions
+
+### API Integration
+- GitHub REST API v3 for repository operations
+- GitHub GraphQL API v4 for efficient data querying
+- Webhook API for real-time event processing
+
+## Security & Permissions
+
+### Required GitHub Permissions
+- **Repository Access**: Read repository content and metadata
+- **Branch Management**: Create and manage feature branches
+- **Pull Request Creation**: Create and update pull requests
+- **Webhook Management**: Configure repository webhooks
+
+### Security Best Practices
+- Tembo only accesses repositories you explicitly authorize
+- All code analysis happens in secure, isolated environments
+- No sensitive data is stored permanently
+- OAuth tokens are securely managed and can be revoked at any time
+
+### Branch Protection Compatibility
+- Respects existing branch protection rules
+- Works with required status checks
+- Compatible with required reviews and approval workflows
+- Honors dismiss stale reviews and restrict push settings
+
+## Troubleshooting
+
+### Common Issues
+
+**Repository Not Appearing**:
+- Verify you have appropriate permissions
+- Check if repository is private and proper scopes are granted
+- Try manually syncing integrations
+
+**Pull Requests Not Created**:
+- Confirm Tembo has write access to the repository
+- Check branch protection settings
+- Verify webhook configuration is active
+
+**Webhook Delivery Issues**:
+- Check webhook delivery logs in GitHub repository settings
+- Verify webhook URL is accessible
+- Check for webhook secret configuration
+
+### Best Practices
+
+**Repository Management**:
+- Enable repository monitoring selectively based on your team's needs
+- Configure appropriate branch protection rules
+- Set up code review requirements for automated PRs
+
+**Team Workflow**:
+- Communicate with your team about automated PRs
+- Establish review processes for Tembo's contributions
+- Use labels and assignments to manage automated PRs
+
+**Performance Optimization**:
+- Focus monitoring on active development repositories
+- Configure scan frequency based on development activity
+- Prioritize issue types that provide the most value
+
+## Limitations
+
+- Tembo requires write access to create pull requests
+- Large repositories may take longer to sync and analyze
+- Some advanced Git features may not be supported
+- Webhook delivery depends on GitHub's reliability
+
+## Integration Updates
+
+The GitHub integration is regularly updated with new features:
+- Enhanced issue detection algorithms
+- Better pull request descriptions and formatting
+- Improved webhook reliability and error handling
+- Support for additional GitHub features and APIs
