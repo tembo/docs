@@ -4,7 +4,7 @@ icon: 'magnifying-glass'
 ---
 
 <Warning>
-Supported by [GitHub](/integrations/github) only.
+Supported by [GitHub](/integrations/github) and [GitLab](/integrations/gitlab).
 </Warning>
 
 Tembo actively scans your codebase for TODO comments and implements the requested functionality, helping you clear technical debt without manual intervention.
@@ -56,12 +56,7 @@ Tembo recognizes various TODO comment formats across different programming langu
 
 ## Configuration Options
 
-You can customize Tembo's TODO comment handling:
-
-- **Prioritization** - Tag TODOs with priority markers (e.g., `TODO(high):`, `TODO(P1):`)
-- **Assignees** - Specify ownership with `TODO(username):` format
-- **Exclusions** - Configure patterns or directories to exclude from TODO scanning
-- **Custom Formats** - Define project-specific TODO formats for Tembo to recognize
+No additional configuration is required. Tembo detects lines containing "TODO" across supported repositories and turns them into actionable tasks.
 
 ## Best Practices for Writing Actionable TODOs
 
