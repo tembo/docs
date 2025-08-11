@@ -14,15 +14,37 @@ Tembo automatically creates a pull request when its work is complete. You can tr
 
 ## What Triggers Tembo PRs
 
-**Automatic Detection:**
+### Automatic Detection
+
 - **Sentry errors** and application crashes
 - **Database performance issues** like slow queries or missing indexes
 - **Code quality problems** detected through analysis
 
-**Manual Assignment:**
-- **[Linear](/integrations/linear) issues** assigned to Tembo
-- **[Jira](/integrations/jira) issues** with Tembo labels or assignments
-- **Direct requests** for specific improvements
+### Manual Assignment
+
+#### Direct Requests
+
+Create tasks directly through the Tembo dashboard for specific improvements.
+
+![Task input](/images/task-input-component.png)
+
+- **Single repository**: Select a specific repository from the dropdown, or use **Auto detect** to have Tembo automatically identify the most appropriate repository for your task using AI
+- **Multiple repositories**: Select multiple repositories from the dropdown when your task spans across different codebases (e.g., frontend and backend changes)
+
+#### Linear Issues
+
+Assign [Linear](/integrations/linear) issues using Tembo labels.
+
+![Linear label selection](/images/linear-label-selection.png)
+
+- **Default repository**: Use the `Tembo` label to work with your default repository (set in Tembo settings)
+- **Auto-detect repository**: Use the `tembo/auto` label to have Tembo automatically identify the most appropriate repository using AI
+- **Specific repositories**: Use `tembo/{repo}` labels (e.g., `tembo/frontend`, `tembo/backend`) to target specific repositories
+- **Multiple repositories**: Add multiple `tembo/{repo}` labels to work across several repositories simultaneously
+
+#### Jira Issues
+
+Assign [Jira](/integrations/jira) issues to Tembo with appropriate labels or assignments.
 
 ## Tembo's Pull Requests
 
