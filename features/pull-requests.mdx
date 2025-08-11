@@ -37,7 +37,7 @@ Assign [Linear](/integrations/linear) issues using Tembo labels.
 
 ![Linear label selection](/images/linear-label-selection.png)
 
-- **Default repository**: Use the `Tembo` label to work with your default repository (set in Tembo settings)
+- **Default repository**: Use the `Tembo` label to work with your default repository (set in Tembo settings). This label is primarily needed when you can't directly assign issues to Tembo (non-Pro Linear plans)
 - **Auto-detect repository**: Use the `tembo/auto` label to have Tembo automatically identify the most appropriate repository using AI
 - **Specific repositories**: Use `tembo/{repo}` labels (e.g., `tembo/frontend`, `tembo/backend`) to target specific repositories
 - **Multiple repositories**: Add multiple `tembo/{repo}` labels to work across several repositories simultaneously
@@ -45,6 +45,8 @@ Assign [Linear](/integrations/linear) issues using Tembo labels.
 #### Jira Issues
 
 Assign [Jira](/integrations/jira) issues to Tembo with appropriate labels or assignments.
+
+*Note: Repository detection and multi-repository tasks are not yet supported for Jira integration. Tembo will use your default repository setting.*
 
 ## Tembo's Pull Requests
 
