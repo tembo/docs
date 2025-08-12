@@ -3,61 +3,121 @@ title: "Feedback Loop"
 icon: "message"
 ---
 
-Iterate on Tembo's pull requests using natural language feedback directly in GitHub or GitLab.
 
 ![How Tembo Works](/images/feedback-loop.png)
+
+Refine, iterate, and improve on Tembo's [pull requests](/features/pull-requests) using natural language feedback directly in your Git provider.
+
+## Prerequisites
+
+The Feedback Loop works automatically once you have:
+- [GitHub integration](/integrations/github) enabled in your Tembo workspace
+- The feedback loop for [GitLab](/integrations/gitlab) is coming soon!
+- At least one pull request created by Tembo (from error detection, manual assignment, etc.)
+
+That's it! No additional setup required.
+
 
 ## How it works
 
 1. **Initial Solution** - Tembo creates a pull request to solve an issue
-2. **Review & Comment** - You review the PR and leave feedback mentioning "@tembo"  
+2. **Review & Comment** - You review the PR and leave feedback (via GitHub review or @tembo comments)  
 3. **Automatic Retry** - Tembo processes your feedback and updates the PR with improvements
-4. **Iteration** - Continue providing feedback until you're satisfied
+4. **Iteration** - Continue providing feedback until you're satisfied with the solution
 
-## Using Feedback
+## Providing Feedback
 
-**Option 1: Use GitHub's PR Review function**
-- Submit a normal PR review - no need to mention "@tembo"
-- Tembo automatically processes all review feedback
+### Option 1: Use GitHub's PR Review function
 
-**Option 2: Comment in threads**
-- Mention "@tembo" in your comment for detection
+![GitHub Review Interface](/images/request-review.png)
 
-```
-@tembo Add error handling for the database connection
-```
+- Submit a formal PR review using GitHub's built-in review feature
+- Tembo automatically processes all review feedback - no need to mention "@tembo"
+- **Advantages:**
+  - Tembo knows exactly which lines you're commenting on for precise fixes
+  - You can batch multiple feedback points in a single review
+  - Cleaner conversation thread with organized feedback
+  - Standard GitHub workflow that integrates with your team's process
 
-```
-@tembo Use TypeScript interfaces instead of any types
-```
+### Option 2: Add comments
+- Leave regular comments in the PR conversation
+- Mention "@tembo" in your comment so Tembo knows to process it
 
-**Tembo responds with:**
-- **👀** Acknowledges your feedback
-- **🚀** Starts processing changes
-- **New commits** with improvements
+![Comment Review Example](/images/comment-review.png)
+
+## Example Workflow
+
+Here's how a typical feedback loop works in practice:
+
+### Step 1: Tembo Creates Initial PR
+Tembo detects a Sentry error about unhandled database timeouts and creates a PR with a basic try-catch solution.
+
+### Step 2: You Provide Feedback via GitHub Review
+Using GitHub's review feature, you add multiple comments:
+- Line 15: "Add retry logic with exponential backoff"
+- Line 22: "Log the timeout duration for monitoring"  
+- Line 30: "Consider connection pooling optimization"
+- General comment: "Add unit tests for the timeout scenarios"
+
+### Step 3: Tembo Updates the PR
+Tembo processes all feedback points together and pushes a new commit that:
+- Implements retry logic with exponential backoff
+- Adds comprehensive logging with timeout metrics
+- Optimizes connection pooling configuration
+- Includes unit tests covering timeout edge cases
+
+### Step 4: Continue Iterating
+If you need further refinements, simply add another review or comment with "@tembo" and the cycle continues.
+
+## What to Expect
+
+**Response Time:**
+- Tembo typically acknowledges feedback within 1-2 minutes (👀 reaction)
+- Processing and implementing changes usually takes 3-10 minutes depending on complexity
+- You'll see new commits appear in the PR once changes are complete
+
+**Processing Indicators:**
+- **👀** = Tembo has seen your feedback and is analyzing it
+- **🚀** = Tembo is actively working on implementing changes
+- **New commits** = Changes are complete and ready for your review
 
 ## Best Practices
 
-**✅ Be specific:**
+### Writing Effective Feedback
+
+**✅ Be specific and actionable:**
 ```
 @tembo Add input validation for the email field using regex
+@tembo Implement retry logic with exponential backoff for API calls
 ```
 
 **❌ Too vague:**
 ```
 @tembo fix the validation
+@tembo make it better
 ```
 
-**Types of improvements Tembo can make:**
-- Performance optimization
-- Error handling and logging
-- Code structure and refactoring
-- Type safety improvements
-- Testing and documentation
+**✅ Batch feedback in a single review:**
+- Add multiple comments to different lines in one GitHub review
+- Tembo processes all points together for cohesive improvements
+- Cleaner conversation thread and better context awareness
+
+### What Tembo's Feedback Loop Handles Well
+
+- **Code improvements:** Performance, error handling, refactoring, type safety
+- **Testing and documentation:** Unit tests, code comments, README updates  
+- **Security and bugs:** Vulnerability fixes, edge cases, error handling
+- **Alignment:** Changes that follow your existing code patterns
+
+### Limitations
+
+- Complex architectural changes may need multiple iterations
+- Very large-scope changes are better as separate issues
+- Works best on code within the current PR scope
 
 ## Configuration
 
-**Feedback Loop:** Enabled by default on GitHub (GitLab support in progress)
+**Feedback Loop:** Always active on Tembo-created PRs in GitHub (GitLab support in progress)
 
 **External PR tools:** If you use AI-powered code review tools, enable integration in your [Workspace settings](https://app.tembo.io/settings/organization) and Tembo will respond to these AI reviewers:
 
