@@ -37,6 +37,7 @@
             "pages": [
               "integrations/github",
               "integrations/gitlab",
+              "integrations/bitbucket",
               "integrations/sentry",
               "integrations/linear",
               "integrations/jira",
