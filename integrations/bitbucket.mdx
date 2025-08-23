@@ -1,0 +1,110 @@
+---
+title: "Bitbucket"
+icon: "gear"
+---
+
+Connect your Bitbucket repositories so that Tembo can open pull requests directly in your workspace.
+
+# Features
+
+- Automatically sync repositories from your Bitbucket workspaces
+- Create and manage pull requests with AI-generated code changes
+- Support for both draft and regular pull requests
+- Repository selection for targeted automation
+
+# Installation
+
+<Steps>
+  <Step title="Create Service User">
+    Create a dedicated Bitbucket account for Tembo using either an email alias
+    (`youremail+tembo@company.com`) or a dedicated email (`tembo@company.com`).
+    Invite this account to your Bitbucket workspace and complete the sign-up process
+    using the name "Tembo". This ensures that PRs are opened as "Tembo" rather than
+    your personal account.
+  </Step>
+  <Step title="Connect Integration">
+    Navigate to the [Integrations page](https://app.tembo.io/integrations) in
+    Tembo and click the `Install` button next to Bitbucket. Make sure you're logged
+    into the Tembo Bitbucket account (not your personal account) when completing this
+    step.
+  </Step>
+  <Step title="OAuth Authorization">
+    Complete the OAuth flow to grant Tembo access to your Bitbucket account.
+    This will allow Tembo to:
+    - Read your repositories and workspaces
+    - Create branches and pull requests
+    - Access repository metadata
+  </Step>
+  <Step title="Select Repositories">
+    After connecting, Tembo will sync all accessible repositories from your
+    Bitbucket workspaces. Choose the repositories you want Tembo to work with,
+    including both your monorepo and docs repositories for full coverage.
+  </Step>
+</Steps>
+
+# Configuration
+
+## Repository Settings
+
+Once connected, you can configure which repositories Tembo should monitor:
+
+1. **Workspace Selection**: Tembo automatically discovers all workspaces your service user has access to
+2. **Repository Selection**: Choose specific repositories from each workspace
+3. **Default Branch**: Tembo will use the repository's default branch as the base for PRs
+
+## Pull Request Settings
+
+Configure how Tembo creates pull requests:
+
+- **Draft PRs**: Enable to create pull requests as drafts by default
+- **Branch Cleanup**: Pull requests automatically delete source branches when merged
+- **PR Templates**: Use your repository's existing PR template if configured
+
+# Usage
+
+## Automatic Repository Sync
+
+Tembo periodically syncs with your Bitbucket account to discover new repositories and update existing ones. The sync process:
+
+1. Fetches all workspaces accessible to the connected account
+2. Lists repositories within each workspace
+3. Creates or updates repository records in Tembo
+4. Maintains metadata about workspace and repository relationships
+
+## Pull Request Creation
+
+When Tembo creates a pull request:
+
+1. **Branch Creation**: Creates a new branch from the default branch
+2. **Code Changes**: Applies AI-generated changes to the branch
+3. **PR Creation**: Opens a pull request with generated title and description
+4. **Draft Status**: Respects your draft PR settings
+5. **Source Branch Cleanup**: Automatically deletes the source branch when merged
+
+# Troubleshooting
+
+## Common Issues
+
+### Authentication Errors
+- Ensure the service user has proper permissions in the Bitbucket workspace
+- Check that OAuth tokens haven't expired (Tembo handles automatic refresh)
+- Verify the service user is a member of all required workspaces
+
+### Repository Access
+- Confirm the service user has read/write access to target repositories
+- Check that repositories aren't archived or have restricted permissions
+- Ensure the workspace has the correct access levels configured
+
+### Pull Request Creation
+- Verify branch protection rules don't prevent Tembo from creating PRs
+- Check that the default branch is correctly configured
+- Ensure the repository allows pull requests from the connected account
+
+## Token Management
+
+Bitbucket access tokens are automatically managed by Tembo:
+- Tokens are refreshed before expiration
+- New tokens are securely stored and encrypted
+- Manual token refresh is handled transparently
+
+If you encounter persistent authentication issues, try disconnecting and reconnecting the Bitbucket integration.
