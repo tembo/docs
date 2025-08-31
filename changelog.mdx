@@ -3,6 +3,31 @@ title: 'Changelog'
 description: 'Keep track of changes and updates to Tembo'
 ---
 
+<Update label="2025-08-31" tags={["API Keys", "Authentication", "Infrastructure"]}>
+
+## API Key Management System
+Introduced a comprehensive API Key management system to support secure programmatic access to Tembo services.
+
+Key features include:
+- **APIKey Model with Token Support**: New database model for managing organization-scoped API keys with secure token generation
+- **Token-based Authentication**: Support for JWT-based authentication alongside existing auth methods
+- **Organization-scoped Access**: API keys are tied to specific organizations with proper access controls
+- **Revocation Support**: Ability to revoke API keys when needed for security management
+- **Database Migration**: Clean migration system to add API key support to existing installations
+
+## Enhanced Authentication Infrastructure
+- Improved token validation and management across the platform
+- Better integration with existing Anthropic and OpenAI API key validation systems
+- Enhanced security model for API-based access to Tembo services
+
+## Development Infrastructure Improvements
+- Complete monorepo structure setup with proper workspace configuration
+- Enhanced CI/CD pipelines for deployment and testing
+- Improved development tooling and configuration management
+- Better code organization and project structure standards
+
+</Update>
+
 <Update label="2025-08-22" tags={["BitBucket", "GitLab", "Linear", "Integrations"]}>
 
 ## BitBucket Integration
