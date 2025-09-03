@@ -18,7 +18,7 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": ["welcome", "pwa", "billing"]
+            "pages": ["welcome", "local-development", "pwa", "billing"]
           },
           {
             "group": "Features",

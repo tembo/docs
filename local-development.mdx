@@ -1,0 +1,245 @@
+---
+title: "Local Development Setup"
+description: "Complete guide to setting up and running the Tembo monorepo locally for development"
+---
+
+# Local Development Setup
+
+This guide explains how to set up and run the Tembo monorepo locally for development. The monorepo contains multiple applications and services that work together to provide the full Tembo experience.
+
+## Requirements
+
+Before getting started, ensure you have the following tools installed:
+
+- **Node.js** ≥18 
+- **pnpm** (Package manager - required, do not use npm or yarn)
+- **bun** (JavaScript runtime)
+- **Docker** (For database and containerized services)
+
+## Repository Structure
+
+The monorepo is organized as follows:
+
+```
+tembo-v2/
+├── apps/
+│   ├── admin/          # Admin dashboard (Next.js)
+│   ├── api/            # Backend API (Node.js/TypeScript)
+│   ├── cdk/            # AWS CDK infrastructure
+│   ├── web/            # Main web application (Next.js)
+│   └── ...
+├── packages/
+│   ├── database/       # Database schema and migrations (Prisma/ZenStack)
+│   ├── eslint-config/  # Shared ESLint configuration
+│   └── typescript-config/ # Shared TypeScript configuration
+└── ...
+```
+
+## Setup Instructions
+
+### 1. Clone and Install Dependencies
+
+```bash
+# Clone the repository
+git clone [repository-url]
+cd tembo-v2
+
+# Install dependencies (must use pnpm)
+pnpm install
+```
+
+<Warning>
+**Important**: Always use `pnpm` for package management. Using `npm` or `yarn` will create conflicting lock files and cause build issues.
+</Warning>
+
+### 2. Generate Database Code
+
+Generate the ZenStack and Prisma code:
+
+```bash
+pnpm run zen:generate
+```
+
+### 3. Environment Variables
+
+Create environment files for the applications that need them:
+
+**For the web app** (`apps/web/.env`):
+```env
+# You'll need access to the 1Password vault for actual secrets
+# See: https://start.1password.com/open/i?a=KYNEJSMBGZC6TIY54ULDZTMXY4&v=nt6wd3rl7u5dvkkzmidz3n5fei&i=t6yt72toybh5nbmzezluk2e7ra&h=tembo-io.1password.com
+
+# Example variables (replace with actual values):
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/postgres
+NEXT_PUBLIC_API_URL=http://localhost:3000
+# ... other environment variables
+```
+
+**For the API** (`apps/api/.env`):
+```env
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/postgres
+# ... other API-specific variables
+```
+
+<Info>
+Contact your team to get access to the 1Password vault containing the actual environment variable values needed for development.
+</Info>
+
+### 4. Database Setup
+
+Start the database and run migrations:
+
+```bash
+# Run database migrations
+pnpm run db:migrate
+
+# If migrations fail, try resetting the database
+pnpm run db:reset
+
+# Seed the database with initial data
+export DATABASE_URL=postgresql://postgres:postgres@localhost:5432/postgres
+pnpm run db:seed
+```
+
+## Running the Application
+
+### Start All Services
+
+To run all services in development mode:
+
+```bash
+pnpm run dev
+```
+
+This will start:
+- **API server**: http://localhost:3000
+- **Web application**: http://localhost:3001  
+- **Database**: postgresql://postgres:postgres@localhost:5432/postgres
+
+### Run Individual Services
+
+You can also run services individually:
+
+```bash
+# Run only the API
+pnpm run dev --filter=api
+
+# Run only the web app  
+pnpm run dev --filter=web
+
+# Run only the admin dashboard
+pnpm run dev --filter=admin
+```
+
+### Run with Worker
+
+To run everything including the TypeScript worker (for background processing):
+
+```bash
+pnpm run dev:all
+```
+
+<Note>
+The standard `pnpm run dev` command does not include the worker. Use `pnpm run dev:all` if you need background job processing.
+</Note>
+
+## Available Scripts
+
+The monorepo provides several useful scripts:
+
+### Build and Development
+- `pnpm run build` - Build all applications
+- `pnpm run dev` - Start all services in development mode
+- `pnpm run dev:all` - Start all services + worker
+
+### Code Quality
+- `pnpm run lint` - Run ESLint across all packages
+- `pnpm run check-types` - Run TypeScript type checking
+- `pnpm run pretty:check` - Check code formatting
+- `pnpm run pretty` - Fix code formatting
+
+### Database
+- `pnpm run zen:generate` - Generate ZenStack/Prisma code
+- `pnpm run db:migrate` - Run database migrations
+- `pnpm run db:reset` - Reset database schema
+- `pnpm run db:seed` - Seed database with initial data
+- `pnpm run db:studio` - Open Prisma Studio (database GUI)
+
+### Utilities
+- `pnpm run cli` - Run the Tembo CLI
+- `pnpm run clean` - Clean build artifacts
+
+## Development Workflow
+
+### Making Schema Changes
+
+1. Modify the schema in `packages/database/schema.zmodel`
+2. Generate the updated code: `pnpm run zen:generate`
+3. Create and run migrations: `pnpm run db:migrate`
+
+### Code Style and Quality
+
+Before committing code, ensure it passes quality checks:
+
+```bash
+# Check and fix formatting
+pnpm run pretty:check
+pnpm run pretty
+
+# Run linting
+pnpm run lint
+
+# Check TypeScript types
+pnpm run check-types
+```
+
+### Adding Dependencies
+
+Always use `pnpm` to add dependencies:
+
+```bash
+# Add to root workspace
+pnpm add package-name
+
+# Add to specific app/package
+pnpm add package-name --filter=web
+pnpm add package-name --filter=api
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**Dependencies not installing properly**
+- Make sure you're using `pnpm`, not `npm` or `yarn`
+- Delete `node_modules` and `pnpm-lock.yaml`, then run `pnpm install`
+
+**Database connection issues**
+- Ensure Docker is running
+- Check that the DATABASE_URL environment variable is correct
+- Try resetting the database with `pnpm run db:reset`
+
+**TypeScript errors after schema changes**
+- Run `pnpm run zen:generate` to regenerate types
+- Restart your TypeScript language server
+
+**Build failures**
+- Check that all environment variables are set
+- Run `pnpm run clean` to clear build cache
+- Ensure all dependencies are installed with `pnpm install`
+
+### Getting Help
+
+If you encounter issues:
+
+1. Check the application-specific README files in `apps/*/README.md`
+2. Review the existing documentation in this repository
+3. Contact the development team for assistance
+
+## Next Steps
+
+Once you have the local development environment running:
+
+1. Explore the [Features](/features/overview) documentation to understand the application capabilities
+2. Review the [Integrations](/integrations/github) guides to understand how external services connect
+3. Check out the individual app README files for app-specific development details
