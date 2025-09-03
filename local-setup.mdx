@@ -1,0 +1,184 @@
+# Local Monorepo Setup
+
+This guide will help you set up and run the Tembo monorepo locally for development.
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed on your system:
+
+- **Node.js** (>= 18)
+- **pnpm** (>= 9.0.0)
+- **bun**
+- **Docker**
+- **Git**
+
+## Quick Start
+
+### 1. Clone the Repository
+
+```bash
+git clone <repository-url>
+cd tembo-v2
+```
+
+### 2. Install Dependencies
+
+From the root directory, install all dependencies using pnpm:
+
+```bash
+pnpm install
+```
+
+**Important**: This monorepo uses pnpm exclusively. Do not use npm or yarn as they will create lock files that interfere with the build process.
+
+### 3. Generate ZenStack + Prisma Code
+
+Generate the necessary database schema code:
+
+```bash
+pnpm run zen:generate
+```
+
+### 4. Environment Variables
+
+Create a `.env` file in the `apps/web` directory with the required environment variables. You'll need access to the 1Password vault to get the secrets:
+
+```env
+# See the 1Password vault for complete environment variables
+# https://start.1password.com/open/i?a=KYNEJSMBGZC6TIY54ULDZTMXY4&v=nt6wd3rl7u5dvkkzmidz3n5fei&i=t6yt72toybh5nbmzezluk2e7ra&h=tembo-io.1password.com
+```
+
+### 5. Start Development Servers
+
+Run all services locally:
+
+```bash
+pnpm run dev
+```
+
+This will start:
+- **API server** at http://localhost:3000
+- **Web application** at http://localhost:3000  
+- **Database** at postgresql://postgres:postgres@localhost:5432/postgres
+
+## Running Individual Services
+
+### API Only
+```bash
+pnpm run dev --filter=api
+```
+
+### Web App Only
+```bash
+pnpm run dev --filter=web
+```
+
+### All Services + TypeScript Worker
+```bash
+pnpm run dev:all
+```
+
+## Database Setup
+
+### Database Migrations and Seeding
+
+1. Run database migrations:
+```bash
+# From packages/database directory
+pnpm run db:migrate
+```
+
+2. If migrations fail, reset the database:
+```bash
+pnpm run db:reset
+```
+
+3. Seed the database with initial data:
+```bash
+export DATABASE_URL=postgresql://postgres:postgres@localhost:5432/postgres
+pnpm run db:seed
+```
+
+### Adding New Migrations
+
+1. Modify the schema in `packages/database/schema.zmodel`
+2. Generate the changes: `pnpm run zen:generate`
+3. Run the migration: `pnpm run db:migrate`
+
+## Available Scripts
+
+The monorepo provides several useful scripts:
+
+| Command | Description |
+|---------|-------------|
+| `pnpm run build` | Build all projects |
+| `pnpm run dev` | Start development servers |
+| `pnpm run dev:all` | Start development servers + worker |
+| `pnpm run lint` | Run linting across all projects |
+| `pnpm run pretty:check` | Check code formatting |
+| `pnpm run pretty` | Fix code formatting |
+| `pnpm run check-types` | Run TypeScript type checking |
+| `pnpm run db:studio` | Open Prisma Studio |
+| `pnpm run cli` | Run the CLI tool |
+
+## Code Quality
+
+Before committing changes, ensure your code passes quality checks:
+
+```bash
+# Check and fix linting issues
+pnpm run lint
+
+# Check formatting
+pnpm run pretty:check
+
+# Auto-fix formatting
+pnpm run pretty
+
+# Type checking
+pnpm run check-types
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Package installation fails**: Ensure you're using pnpm, not npm or yarn
+2. **Database connection issues**: Make sure Docker is running and the database container is started
+3. **Environment variables missing**: Check that your `.env` file is in the correct location (`apps/web/.env`)
+4. **Port conflicts**: Ensure ports 3000 and 5432 are available
+
+### Agent Dependencies (Nix users)
+
+If you encounter this error when building the agent:
+```
+ERR_PNPM_NO_OFFLINE_TARBALL A package is missing from the store but cannot download it in offline mode
+```
+
+Update the Nix hash for PNPM dependencies:
+```bash
+nix build .#tsAgent.hashUpdate
+```
+
+Take the "got: sha256-XXXXX" value and update `npmDepsHash.json`.
+
+## Architecture Overview
+
+The monorepo contains several key applications:
+
+- **apps/web**: Next.js web application
+- **apps/api**: Bun-based API server
+- **apps/admin**: Administrative interface
+- **apps/cdk**: AWS CDK infrastructure code
+- **packages/**: Shared packages and utilities
+
+## Next Steps
+
+Once you have the development environment running:
+
+1. Explore the codebase structure
+2. Check out the individual app READMEs for specific setup instructions
+3. Review the contributing guidelines
+4. Set up your preferred development tools and extensions
+
+For more detailed information about specific components, refer to the individual README files in each application directory.
