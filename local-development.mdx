@@ -1,0 +1,245 @@
+---
+title: 'Local Development Setup'
+description: 'Complete guide to setting up the Tembo monorepo for local development'
+icon: 'code'
+---
+
+This guide walks you through setting up the complete Tembo monorepo for local development. The Tembo monorepo contains multiple applications and packages that work together to provide the full Tembo experience.
+
+## Prerequisites
+
+Before starting, ensure you have the following installed:
+
+- **Node.js** (>=18) - We recommend using version 22.18.0 or later
+- **pnpm** (version 9.0.0+) - This project uses pnpm exclusively
+- **Bun** - Required for certain scripts and operations
+- **Docker** - For running databases and containerized services
+- **Git** - For version control
+
+<Warning>
+**Important:** This project uses pnpm exclusively. Never use npm or yarn as they will create lock files that interfere with the build process.
+</Warning>
+
+## Repository Structure
+
+The Tembo monorepo is organized as follows:
+
+### Applications (`apps/`)
+
+- **`api/`** - Backend API server (Node.js/TypeScript)
+- **`web/`** - Frontend web application (Next.js)
+- **`admin/`** - Admin dashboard (Next.js)
+- **`cdk/`** - AWS CDK infrastructure code
+- **`registration-lambda/`** - Lambda function for user registration (Rust)
+- **`sql-executor-lambda/`** - Lambda for SQL operations (TypeScript)
+- **`ts-auth-proxy/`** - Authentication proxy service
+
+### Packages (`packages/`)
+
+- **`database/`** - Prisma schema and database utilities
+- **`shared/`** - Shared utilities across applications
+- **`eslint-config/`** - Shared ESLint configuration
+- **`typescript-config/`** - Shared TypeScript configurations
+
+## Quick Start
+
+### 1. Clone and Install Dependencies
+
+```bash
+git clone <repository-url>
+cd tembo-monorepo
+pnpm install
+```
+
+The installation process will:
+- Install all dependencies for the monorepo
+- Run post-install scripts to fix library types
+- Set up workspace dependencies
+
+### 2. Generate Database Schema
+
+Generate Prisma client and ZenStack code:
+
+```bash
+pnpm run zen:generate
+```
+
+### 3. Environment Variables
+
+Create environment variables for the applications that need them:
+
+**For the web application**, create `.env` in `apps/web/`:
+```env
+# Get these values from the 1Password vault
+# https://start.1password.com/open/i?a=KYNEJSMBGZC6TIY54ULDZTMXY4&v=nt6wd3rl7u5dvkkzmidz3n5fei&i=t6yt72toybh5nbmzezluk2e7ra&h=tembo-io.1password.com
+```
+
+<Note>
+You'll need access to the Tembo 1Password vault to get the complete environment configuration.
+</Note>
+
+### 4. Database Setup
+
+The monorepo includes database migrations and seeding scripts:
+
+```bash
+# Run database migrations
+pnpm run db:migrate
+
+# If migrations fail, reset the database
+pnpm run db:reset
+
+# Seed the database with initial data
+export DATABASE_URL=postgresql://postgres:postgres@localhost:5432/postgres
+pnpm run db:seed
+```
+
+### 5. Start Development Servers
+
+**Option 1: Run all services**
+```bash
+pnpm run dev
+```
+
+This starts:
+- API server at http://localhost:3000
+- Web application at http://localhost:3001
+- Database at postgresql://postgres:postgres@localhost:5432/postgres
+
+**Option 2: Run individual services**
+```bash
+# API only
+pnpm run dev --filter=api
+
+# Web app only  
+pnpm run dev --filter=web
+```
+
+**Option 3: Run everything including the worker**
+```bash
+pnpm run dev:all
+```
+
+## Development Workflows
+
+### Database Changes
+
+When modifying the database schema:
+
+1. Edit the schema in `packages/database/schema.zmodel`
+2. Generate the new schema: `pnpm run zen:generate`
+3. Create and run migration: `pnpm run db:migrate`
+
+### Adding Dependencies
+
+Always use pnpm to add dependencies:
+
+```bash
+# Add to root workspace
+pnpm add <package-name>
+
+# Add to specific app
+pnpm add <package-name> --filter=web
+
+# Add dev dependency
+pnpm add -D <package-name>
+```
+
+### Code Quality
+
+Before committing changes, run:
+
+```bash
+# Check linting
+pnpm run lint
+
+# Check formatting
+pnpm run pretty:check
+
+# Fix formatting issues
+pnpm run pretty
+
+# Type checking
+pnpm run check-types
+```
+
+### Building
+
+Build all applications:
+
+```bash
+pnpm run build
+```
+
+## Available Scripts
+
+### Root Level Scripts
+
+| Script | Description |
+|--------|-------------|
+| `pnpm run dev` | Start all development servers |
+| `pnpm run dev:all` | Start all servers including worker |
+| `pnpm run build` | Build all applications |
+| `pnpm run lint` | Run linting on all packages |
+| `pnpm run pretty:check` | Check code formatting |
+| `pnpm run pretty` | Fix code formatting |
+| `pnpm run check-types` | Run TypeScript type checking |
+
+### Database Scripts
+
+| Script | Description |
+|--------|-------------|
+| `pnpm run zen:generate` | Generate Prisma/ZenStack code |
+| `pnpm run db:migrate` | Run database migrations |
+| `pnpm run db:deploy` | Deploy migrations to production |
+| `pnpm run db:reset` | Reset database |
+| `pnpm run db:seed` | Seed database with data |
+| `pnpm run db:studio` | Open Prisma Studio |
+
+### Utility Scripts
+
+| Script | Description |
+|--------|-------------|
+| `pnpm run cli` | Run the Tembo CLI |
+| `pnpm run clean` | Clean CDK output |
+
+## Troubleshooting
+
+### Common Issues
+
+**Package installation fails:**
+- Ensure you're using pnpm, not npm or yarn
+- Delete `node_modules` and `pnpm-lock.yaml`, then run `pnpm install`
+
+**Database connection issues:**
+- Make sure Docker is running
+- Check if PostgreSQL container is healthy
+- Verify DATABASE_URL environment variable
+
+**Build errors:**
+- Run `pnpm run zen:generate` to regenerate schema
+- Check TypeScript errors with `pnpm run check-types`
+
+**Agent dependencies missing:**
+If you see `ERR_PNPM_NO_OFFLINE_TARBALL`, update the Nix hash:
+```bash
+nix build .#tsAgent.hashUpdate
+```
+Take the "got: sha256-XXXXX" value and put it in `npmDepsHash.json`.
+
+### Getting Help
+
+- Check application-specific README files in `apps/*/README.md`
+- Review the database documentation in `packages/database/docs.md`
+- For infrastructure issues, see `apps/cdk/README.md`
+
+## Next Steps
+
+After setup is complete:
+
+1. **Explore the codebase** - Each application has its own README with specific details
+2. **Set up integrations** - Configure connections to GitHub, Sentry, Linear, etc.
+3. **Run tests** - Each package may have its own test suite
+4. **Review contribution guidelines** - Check for any team-specific development practices
+
+The Tembo monorepo is designed to be modular - you can focus on specific applications while the rest of the system continues to work.
