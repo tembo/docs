@@ -3,7 +3,7 @@ title: 'Changelog'
 description: 'Keep track of changes and updates to Tembo'
 ---
 
-<Update label="2025-09-05" tags={["Image Support", "File Mentions", "Claude Code", "Pull Requests"]}>
+<Update label="2025-09-05" tags={["Image Support", "File Mentions", "Claude Code", "Pull Requests", "Settings", "Branch Management"]}>
 
 ## Image Support
 Tembo's sandboxes now support images - works with all the major coding agents and allows them to read images but also push them to your repos. Images inside of Linear are also detected and downloaded to the sandboxes automatically. Learn more about our [sandbox environment](/features/sandbox-environment).
@@ -18,6 +18,15 @@ Features include:
 - Visual indicators for different mention types
 - Context awareness in conversations
 
+## Branch Deletion Setting
+
+Added a new setting to control automatic branch deletion when pull requests are closed or merged.
+
+![Branch Deletion Setting](/images/branch-deletion-setting.png)
+
+When enabled, Tembo will automatically delete the branch after its pull request is closed or merged. This helps keep your repository clean by removing feature branches that are no longer needed.
+
+The setting can be found in your pull request configuration and is disabled by default, giving you full control over branch cleanup behavior.
 
 ## Pull Request Settings
 Support for [Gemini code assist](https://codeassist.google/) as a review bot.
