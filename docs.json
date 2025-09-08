@@ -45,15 +45,12 @@
               "integrations/aws",
               "integrations/supabase"
             ]
-          }
-        ]
-      },
-      {
-        "tab": "Changelog",
-        "groups": [
+          },
           {
-            "group": "Updates",
-            "pages": ["changelog"]
+            "group": "Resources",
+            "pages": [
+              "changelog"
+            ]
           }
         ]
       }
