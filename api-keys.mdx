@@ -1,0 +1,273 @@
+---
+title: "API Keys"
+description: "Learn how to create and manage API keys for authenticating with Tembo's API"
+---
+
+# API Keys
+
+API keys provide a secure way to authenticate with Tembo's API endpoints. They allow you to programmatically interact with Tembo from external applications, scripts, or integrations.
+
+## What are API Keys?
+
+API keys in Tembo are authentication tokens that:
+
+- **Authenticate requests** to Tembo's public API endpoints
+- **Belong to an organization** and inherit that organization's permissions
+- **Are secure** - generated using cryptographically secure random tokens
+- **Can be revoked** at any time for security
+
+## Creating API Keys
+
+### Through the Web Interface
+
+1. Navigate to **Settings** → **API Keys** in your Tembo dashboard
+2. Click **"Create API Key"**
+3. Copy the generated API key immediately - it won't be shown again for security reasons
+4. Store the API key securely in your application or password manager
+
+<Warning>
+API keys are only displayed once after creation. Make sure to copy and store them securely before closing the creation dialog.
+</Warning>
+
+### Key Limits
+
+Each organization can have up to **10 active API keys** at a time. If you need more, contact support.
+
+## Using API Keys
+
+### Authentication Methods
+
+You can authenticate API requests using your API key in two ways:
+
+#### Bearer Token (Recommended)
+
+Include your API key in the `Authorization` header:
+
+```bash
+curl -H "Authorization: Bearer your_api_key_here" \
+  https://api.tembo.io/public-api/task/list
+```
+
+#### Query Parameter
+
+Pass the API key as a query parameter:
+
+```bash
+curl "https://api.tembo.io/public-api/task/list?apiKey=your_api_key_here"
+```
+
+<Note>
+The Bearer token method is recommended as it's more secure - query parameters can be logged in server access logs.
+</Note>
+
+## Available API Endpoints
+
+API keys provide access to Tembo's public API endpoints:
+
+### Task Management
+
+- **Create Task**: `POST /public-api/task/create`
+- **List Tasks**: `GET /public-api/task/list`
+- **Search Tasks**: `GET /public-api/task/search`
+
+### Repository Management
+
+- **List Repositories**: `GET /public-api/repository/list`
+
+## Creating Tasks via API
+
+Here's how to create a new task using the API:
+
+```bash
+curl -X POST https://api.tembo.io/public-api/task/create \
+  -H "Authorization: Bearer your_api_key_here" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "description": "Fix the login bug in user authentication",
+    "json": "{\"priority\": \"high\", \"type\": \"bug\"}",
+    "queueRightAway": true,
+    "codeRepoIds": ["repo-id-1", "repo-id-2"],
+    "branch": "main"
+  }'
+```
+
+### Request Parameters
+
+- `description` (string, required): A clear description of the task
+- `json` (string, required): Additional task metadata in JSON format
+- `queueRightAway` (boolean, optional): Whether to queue the task immediately (default: false)
+- `codeRepoIds` (array, optional): Array of repository IDs to associate with the task
+- `branch` (string, optional): Target branch for the task
+
+## Listing Tasks
+
+Retrieve a paginated list of tasks for your organization:
+
+```bash
+curl "https://api.tembo.io/public-api/task/list?limit=20&page=1" \
+  -H "Authorization: Bearer your_api_key_here"
+```
+
+### Query Parameters
+
+- `limit` (number, optional): Number of tasks per page (1-100, default: 10)
+- `page` (number, optional): Page number (default: 1)
+
+## Searching Tasks
+
+Search for tasks by title or description:
+
+```bash
+curl "https://api.tembo.io/public-api/task/search?q=authentication&limit=10" \
+  -H "Authorization: Bearer your_api_key_here"
+```
+
+### Query Parameters
+
+- `q` (string, required): Search query to match against task titles and descriptions
+- `limit` (number, optional): Number of results per page (1-100, default: 10)
+- `page` (number, optional): Page number (default: 1)
+
+## Managing API Keys
+
+### Viewing Active Keys
+
+In the Tembo dashboard, go to **Settings** → **API Keys** to see:
+
+- All active API keys for your organization
+- Creation dates for each key
+- Truncated key values (first and last 8 characters)
+- Key status (Active/Revoked)
+
+### Revoking API Keys
+
+To revoke an API key:
+
+1. Go to **Settings** → **API Keys**
+2. Find the key you want to revoke
+3. Click the trash icon next to the key
+4. Confirm the revocation
+
+<Warning>
+Revoking an API key is immediate and irreversible. Any applications using the revoked key will stop working immediately.
+</Warning>
+
+## Security Best Practices
+
+### Storage
+- **Never commit API keys** to version control
+- **Use environment variables** to store API keys in applications
+- **Use secure credential management** systems in production environments
+
+### Rotation
+- **Rotate API keys regularly** as part of your security practices
+- **Create new keys** before revoking old ones to prevent service interruptions
+- **Audit key usage** periodically to ensure only necessary keys are active
+
+### Access Control
+- **Use separate keys** for different applications or environments
+- **Revoke unused keys** immediately
+- **Monitor API key usage** through your application logs
+
+## Example Integrations
+
+### Node.js
+
+```javascript
+const TEMBO_API_KEY = process.env.TEMBO_API_KEY;
+
+async function createTask(description, metadata) {
+  const response = await fetch('https://api.tembo.io/public-api/task/create', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${TEMBO_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      description,
+      json: JSON.stringify(metadata),
+      queueRightAway: true,
+    }),
+  });
+  
+  return response.json();
+}
+```
+
+### Python
+
+```python
+import os
+import requests
+
+TEMBO_API_KEY = os.environ.get('TEMBO_API_KEY')
+
+def create_task(description, metadata):
+    response = requests.post(
+        'https://api.tembo.io/public-api/task/create',
+        headers={
+            'Authorization': f'Bearer {TEMBO_API_KEY}',
+            'Content-Type': 'application/json',
+        },
+        json={
+            'description': description,
+            'json': json.dumps(metadata),
+            'queueRightAway': True,
+        }
+    )
+    return response.json()
+```
+
+### cURL Script
+
+```bash
+#!/bin/bash
+TEMBO_API_KEY="your_api_key_here"
+
+create_task() {
+  local description="$1"
+  local metadata="$2"
+  
+  curl -X POST https://api.tembo.io/public-api/task/create \
+    -H "Authorization: Bearer $TEMBO_API_KEY" \
+    -H "Content-Type: application/json" \
+    -d "{
+      \"description\": \"$description\",
+      \"json\": \"$metadata\",
+      \"queueRightAway\": true
+    }"
+}
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**401 Unauthorized**
+- Verify your API key is correct and hasn't been revoked
+- Ensure you're using the correct authentication method
+- Check that your organization has access to the API
+
+**400 Bad Request**
+- Validate your request payload matches the expected format
+- Ensure required fields are included
+- Check that JSON is properly formatted
+
+**Rate Limiting**
+- API keys may be subject to rate limiting
+- Implement exponential backoff in your applications
+- Contact support if you need higher rate limits
+
+### Getting Help
+
+If you're having trouble with API keys:
+
+1. Check the Tembo dashboard to verify your key is active
+2. Review the API endpoint documentation
+3. Contact support at [hi@tembo.io](mailto:hi@tembo.io)
+
+## Next Steps
+
+- [Set up integrations](/integrations/github) to connect your repositories
+- [Learn about pull request automation](/features/pull-requests)
+- [Configure webhooks](/features/hooks) for real-time updates
