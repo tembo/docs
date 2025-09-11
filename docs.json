@@ -41,6 +41,7 @@
               "integrations/sentry",
               "integrations/linear",
               "integrations/jira",
+              "integrations/plane",
               "integrations/postgres",
               "integrations/aws",
               "integrations/supabase"
