@@ -43,7 +43,8 @@
               "integrations/jira",
               "integrations/postgres",
               "integrations/aws",
-              "integrations/supabase"
+              "integrations/supabase",
+              "integrations/raycast"
             ]
           },
           {
