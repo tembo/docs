@@ -24,7 +24,8 @@ API keys in Tembo are authentication tokens that:
 4. Store the API key securely in your application or password manager
 
 <Warning>
-API keys are only displayed once after creation. Make sure to copy and store them securely before closing the creation dialog.
+  API keys are only displayed once after creation. Make sure to copy and store
+  them securely before closing the creation dialog.
 </Warning>
 
 ### Key Limits
@@ -55,7 +56,8 @@ curl "https://api.tembo.io/public-api/task/list?apiKey=your_api_key_here"
 ```
 
 <Note>
-The Bearer token method is recommended as it's more secure - query parameters can be logged in server access logs.
+  The Bearer token method is recommended as it's more secure - query parameters
+  can be logged in server access logs.
 </Note>
 
 ## Available API Endpoints
@@ -147,94 +149,51 @@ To revoke an API key:
 4. Confirm the revocation
 
 <Warning>
-Revoking an API key is immediate and irreversible. Any applications using the revoked key will stop working immediately.
+  Revoking an API key is immediate and irreversible. Any applications using the
+  revoked key will stop working immediately.
 </Warning>
 
 ## Security Best Practices
 
 ### Storage
+
 - **Never commit API keys** to version control
 - **Use environment variables** to store API keys in applications
 - **Use secure credential management** systems in production environments
 
 ### Rotation
+
 - **Rotate API keys regularly** as part of your security practices
 - **Create new keys** before revoking old ones to prevent service interruptions
 - **Audit key usage** periodically to ensure only necessary keys are active
 
 ### Access Control
+
 - **Use separate keys** for different applications or environments
 - **Revoke unused keys** immediately
 - **Monitor API key usage** through your application logs
 
 ## Example Integrations
 
-### Node.js
+### TypeScript
 
-```javascript
-const TEMBO_API_KEY = process.env.TEMBO_API_KEY;
+```typescript
+const TEMBO_API_KEY = process.env.TEMBO_API_KEY
 
-async function createTask(description, metadata) {
-  const response = await fetch('https://api.tembo.io/public-api/task/create', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${TEMBO_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      description,
-      json: JSON.stringify(metadata),
-      queueRightAway: true,
-    }),
-  });
-  
-  return response.json();
-}
-```
-
-### Python
-
-```python
-import os
-import requests
-
-TEMBO_API_KEY = os.environ.get('TEMBO_API_KEY')
-
-def create_task(description, metadata):
-    response = requests.post(
-        'https://api.tembo.io/public-api/task/create',
-        headers={
-            'Authorization': f'Bearer {TEMBO_API_KEY}',
-            'Content-Type': 'application/json',
-        },
-        json={
-            'description': description,
-            'json': json.dumps(metadata),
-            'queueRightAway': True,
-        }
-    )
-    return response.json()
-```
-
-### cURL Script
-
-```bash
-#!/bin/bash
-TEMBO_API_KEY="your_api_key_here"
-
-create_task() {
-  local description="$1"
-  local metadata="$2"
-  
-  curl -X POST https://api.tembo.io/public-api/task/create \
-    -H "Authorization: Bearer $TEMBO_API_KEY" \
-    -H "Content-Type: application/json" \
-    -d "{
-      \"description\": \"$description\",
-      \"json\": \"$metadata\",
-      \"queueRightAway\": true
-    }"
-}
+const response = await fetch("https://api.tembo.io/task/create", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${TEMBO_API_KEY}`,
+  },
+  body: JSON.stringify({
+    description: "Fix authentication bug in login flow",
+    queueRightAway: true,
+    codeRepoIds: ["repo-abc123"],
+    branch: "main",
+    agent: "claudeCode:claude-4-sonnet",
+  }),
+})
 ```
 
 ## Troubleshooting
@@ -242,16 +201,19 @@ create_task() {
 ### Common Issues
 
 **401 Unauthorized**
+
 - Verify your API key is correct and hasn't been revoked
 - Ensure you're using the correct authentication method
 - Check that your organization has access to the API
 
 **400 Bad Request**
+
 - Validate your request payload matches the expected format
 - Ensure required fields are included
 - Check that JSON is properly formatted
 
 **Rate Limiting**
+
 - API keys may be subject to rate limiting
 - Implement exponential backoff in your applications
 - Contact support if you need higher rate limits
