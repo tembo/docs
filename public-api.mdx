@@ -10,10 +10,7 @@ Tembo's Public API is available at [api.tembo.io](https://api.tembo.io) and prov
 
 ### Through the Web Interface
 
-1. Navigate to **Settings** → **API Keys** in your Tembo dashboard
-2. Click **"Create API Key"**
-3. Copy the generated API key immediately - it won't be shown again for security reasons
-4. Store the API key securely in your application or password manager
+To create an API key, visit [app.tembo.io/settings/api-keys](https://app.tembo.io/settings/api-keys).
 
 <Warning>
   API keys are only displayed once after creation. Make sure to copy and store
@@ -157,26 +154,6 @@ To revoke an API key:
   Revoking an API key is immediate and irreversible. Any applications using the
   revoked key will stop working immediately.
 </Warning>
-
-## Security Best Practices
-
-### Storage
-
-- **Never commit API keys** to version control
-- **Use environment variables** to store API keys in applications
-- **Use secure credential management** systems in production environments
-
-### Rotation
-
-- **Rotate API keys regularly** as part of your security practices
-- **Create new keys** before revoking old ones to prevent service interruptions
-- **Audit key usage** periodically to ensure only necessary keys are active
-
-### Access Control
-
-- **Use separate keys** for different applications or environments
-- **Revoke unused keys** immediately
-- **Monitor API key usage** through your application logs
 
 
 ## Troubleshooting
