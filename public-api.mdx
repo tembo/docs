@@ -37,7 +37,7 @@ const response = await fetch("https://api.tembo.io/task/create", {
     Authorization: `Bearer ${TEMBO_API_KEY}`,
   },
   body: JSON.stringify({
-    description: "Fix authentication bug in login flow",
+    prompt: "Fix authentication bug in login flow",
     queueRightAway: true,
     codeRepoIds: ["repo-abc123"],
     branch: "main",
@@ -85,7 +85,7 @@ curl -X POST https://api.tembo.io/task/create \
   -H "Authorization: Bearer your_api_key_here" \
   -H "Content-Type: application/json" \
   -d '{
-    "description": "Fix the login bug in user authentication",
+    "prompt": "Fix the login bug in user authentication",
     "json": "{\"priority\": \"high\", \"type\": \"bug\"}",
     "queueRightAway": true,
     "codeRepoIds": ["repo-id-1", "repo-id-2"],
@@ -95,7 +95,7 @@ curl -X POST https://api.tembo.io/task/create \
 
 ### Request Parameters
 
-- `description` (string, required): A clear description of the task
+- `prompt` (string, required): A clear description of the task
 - `json` (string, required): Additional task metadata in JSON format
 - `queueRightAway` (boolean, optional): Whether to queue the task immediately (default: false)
 - `codeRepoIds` (array, optional): Array of repository IDs to associate with the task
