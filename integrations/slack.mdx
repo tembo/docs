@@ -3,16 +3,15 @@ title: "Slack"
 icon: "gear"
 ---
 
-Connect Slack to Tembo to create tasks and receive updates directly in your team's chat workspace.
+Connect Slack to Tembo to create development tasks and receive updates directly in your team's chat workspace.
 
 # Features
 
 - **Direct Messages**: Work with Tembo in private DMs for individual task creation
-- **@tembo Mentions**: Use `@tembo <task description>` to create development tasks
-- **Repository Selection**: Specify which repository and branch to target for tasks
-- **Real-time Updates**: Get instant feedback with ⌛ reactions and "task created successfully" messages
-- **Task Completion Notifications**: Receive ✅ reactions and "task completed" messages when PRs are ready
-- **PR Cards**: View generated PR change summaries alongside completion notifications
+- **@tembo Mentions**: Use `@tembo [your task description]` to create development tasks
+- **Repository Selection**: Specify which repository, branch, and agent to target for tasks
+- **Background Execution**: Tasks are executed in the background with notifications when completed
+- **Task Completion Notifications**: Get notified when your tasks are completed with PR summaries
 
 # Installation
 
@@ -30,61 +29,47 @@ Connect Slack to Tembo to create tasks and receive updates directly in your team
 
 # Usage
 
-## Creating Tasks with @tembo
+## Create a Task
 
-You can create development tasks by mentioning Tembo in any channel or DM:
-
-```
-@tembo fix the login bug in the authentication module
-```
-
-When you create a task, Tembo will:
-1. React with ⌛ to acknowledge the request
-2. Send a "task created successfully" message with a "View on Tembo" button
-3. Begin working on the task
-
-## Repository and Branch Selection
-
-Tembo can automatically detect the appropriate repository, or you can specify it explicitly:
+Make Tembo start working on a new task:
 
 ```
-@tembo fix the login bug agent:senior-engineer repo:frontend branch:develop
+@tembo [your task description]
+```
+
+**Example:**
+```
+@tembo Fix the authentication bug in the login flow
+```
+
+## Use Different Agent, Repository, or Branch
+
+For a single task, you can specify different parameters:
+
+```
+@tembo [branch=dev, agent=claudeCode:claude-4-sonnet, repo=torvalds/linux] [your task description]
+```
+
+**Example:**
+```
+@tembo [branch=feature/auth, repo=myorg/webapp] Add password strength validation
 ```
 
 ### Available Parameters:
-- `agent:` - Specify which Tembo agent to use (e.g., `senior-engineer`, `junior-developer`)
-- `repo:` - Target repository name
-- `branch:` - Target branch for the PR
+- `branch=` - Target branch for the PR (e.g., `branch=dev`, `branch=feature/auth`)
+- `agent=` - Specify which Tembo agent to use (e.g., `agent=claudeCode:claude-4-sonnet`)
+- `repo=` - Target repository (e.g., `repo=myorg/webapp`, `repo=torvalds/linux`)
 
 ## Working in Direct Messages
 
 Tembo works seamlessly in private DMs, allowing you to:
-- Create personal development tasks
+- Create personal development tasks without sharing with your team
 - Receive private notifications about task progress
-- Review PR summaries before sharing with your team
+- Review completed tasks before sharing results
 
-## Task Completion Flow
+## Task Execution
 
-When Tembo completes a task:
-
-1. **Status Update**: The ⌛ reaction changes to ✅
-2. **Completion Message**: Receive a "task completed" notification in the thread
-3. **PR Card**: View a summary of the changes made in the pull request
-4. **Creator Tagging**: The original task creator is automatically tagged (can be disabled in settings)
-5. **Clean Messages**: The initial "task created" message is automatically deleted
-
-## Getting Help
-
-Use `@tembo help` or just `@tembo` with no arguments to see available commands and usage examples.
-
-# Settings
-
-## Notification Preferences
-
-You can customize your Slack integration behavior in the Tembo dashboard:
-
-- **Creator Tagging**: Enable/disable tagging the task creator when tasks complete
-- **Channel Preferences**: Configure which channels Tembo can respond in
-- **Agent Selection**: Set default agents for different types of tasks
-
-Navigate to your [Tembo dashboard](https://app.tembo.io) → Settings → Integrations → Slack to modify these preferences.
+Tembo tasks will be executed in the background, and you'll be notified when they're completed. This means:
+- You can continue working while Tembo handles your task
+- Multiple tasks can run simultaneously
+- You'll receive updates when tasks finish with PR summaries
