@@ -1,0 +1,90 @@
+---
+title: "Slack"
+icon: "gear"
+---
+
+Connect Slack to Tembo to create tasks and receive updates directly in your team's chat workspace.
+
+# Features
+
+- **Direct Messages**: Work with Tembo in private DMs for individual task creation
+- **@tembo Mentions**: Use `@tembo <task description>` to create development tasks
+- **Repository Selection**: Specify which repository and branch to target for tasks
+- **Real-time Updates**: Get instant feedback with ⌛ reactions and "task created successfully" messages
+- **Task Completion Notifications**: Receive ✅ reactions and "task completed" messages when PRs are ready
+- **PR Cards**: View generated PR change summaries alongside completion notifications
+
+# Installation
+
+<Steps>
+  <Step title="Install">
+    Navigate to the [Integrations page](https://app.tembo.io/integrations) in Tembo and click the `Install` button next to Slack.
+  </Step>
+  <Step title="Authorize">
+    Authorize Tembo to access your Slack workspace. You'll be redirected back to the Integrations page when complete.
+  </Step>
+  <Step title="Configure Repositories">
+    Ensure you have connected your GitHub, GitLab, or Bitbucket repositories to Tembo first, as these will be available for selection in Slack commands.
+  </Step>
+</Steps>
+
+# Usage
+
+## Creating Tasks with @tembo
+
+You can create development tasks by mentioning Tembo in any channel or DM:
+
+```
+@tembo fix the login bug in the authentication module
+```
+
+When you create a task, Tembo will:
+1. React with ⌛ to acknowledge the request
+2. Send a "task created successfully" message with a "View on Tembo" button
+3. Begin working on the task
+
+## Repository and Branch Selection
+
+Tembo can automatically detect the appropriate repository, or you can specify it explicitly:
+
+```
+@tembo fix the login bug agent:senior-engineer repo:frontend branch:develop
+```
+
+### Available Parameters:
+- `agent:` - Specify which Tembo agent to use (e.g., `senior-engineer`, `junior-developer`)
+- `repo:` - Target repository name
+- `branch:` - Target branch for the PR
+
+## Working in Direct Messages
+
+Tembo works seamlessly in private DMs, allowing you to:
+- Create personal development tasks
+- Receive private notifications about task progress
+- Review PR summaries before sharing with your team
+
+## Task Completion Flow
+
+When Tembo completes a task:
+
+1. **Status Update**: The ⌛ reaction changes to ✅
+2. **Completion Message**: Receive a "task completed" notification in the thread
+3. **PR Card**: View a summary of the changes made in the pull request
+4. **Creator Tagging**: The original task creator is automatically tagged (can be disabled in settings)
+5. **Clean Messages**: The initial "task created" message is automatically deleted
+
+## Getting Help
+
+Use `@tembo help` or just `@tembo` with no arguments to see available commands and usage examples.
+
+# Settings
+
+## Notification Preferences
+
+You can customize your Slack integration behavior in the Tembo dashboard:
+
+- **Creator Tagging**: Enable/disable tagging the task creator when tasks complete
+- **Channel Preferences**: Configure which channels Tembo can respond in
+- **Agent Selection**: Set default agents for different types of tasks
+
+Navigate to your [Tembo dashboard](https://app.tembo.io) → Settings → Integrations → Slack to modify these preferences.

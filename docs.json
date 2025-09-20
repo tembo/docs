@@ -38,6 +38,7 @@
               "integrations/github",
               "integrations/gitlab",
               "integrations/bitbucket",
+              "integrations/slack",
               "integrations/sentry",
               "integrations/linear",
               "integrations/jira",
