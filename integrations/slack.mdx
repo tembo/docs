@@ -1,17 +1,16 @@
 ---
 title: "Slack"
-icon: "gear"
+icon: "slack"
 ---
 
-Connect Slack to Tembo to create development tasks and receive updates directly in your team's chat workspace.
+Connect Slack to Tembo to create development tasks and receive updates directly in your team's chat workspace. Tembo's Slack bot enables seamless integration with your development workflow, allowing you to initiate and manage tasks without leaving your team communication platform.
 
-# Features
-
-- **Direct Messages**: Work with Tembo in private DMs for individual task creation
-- **@tembo Mentions**: Use `@tembo [your task description]` to create development tasks
-- **Repository Selection**: Specify which repository, branch, and agent to target for tasks
-- **Background Execution**: Tasks are executed in the background with notifications when completed
-- **Task Completion Notifications**: Get notified when your tasks are completed with PR summaries
+<video
+  controls
+  className="w-full aspect-video rounded-xl"
+  src="/images/slack-task.mp4"
+>
+</video>
 
 # Installation
 
@@ -19,20 +18,45 @@ Connect Slack to Tembo to create development tasks and receive updates directly 
   <Step title="Install">
     Navigate to the [Integrations page](https://app.tembo.io/integrations) in Tembo and click the `Install` button next to Slack.
   </Step>
-  <Step title="Authorize">
-    Authorize Tembo to access your Slack workspace. You'll be redirected back to the Integrations page when complete.
+  <Step title="Authorize Slack Permissions">
+    Authorize Tembo to access your Slack workspace. The bot requires the following permissions:
+    
+    | Permission | Purpose |
+    |------------|---------|
+    | `app_mentions:read` | Detect when users mention @tembo |
+    | `channels:history` | Read messages in public channels for context |
+    | `channels:read` | Access basic channel information |
+    | `chat:write` | Send messages and status updates |
+    | `commands` | Handle slash commands |
+    | `files:write` | Share diff images and code snippets |
+    | `groups:history` | Read messages in private channels for context |
+    | `groups:read` | Access private channel information |
+    | `im:history` | Read direct messages for context |
+    | `im:read` | Access direct message information |
+    | `im:write` | Send direct messages |
+    | `mpim:history` | Read group direct messages for context |
+    | `mpim:read` | Access group direct message information |
+    | `mpim:write` | Send group direct messages |
+    | `reactions:write` | Add status indicators to messages |
+    | `users:read` | Access user information for personalization |
+    
+    You'll be redirected back to the Integrations page when authorization is complete.
   </Step>
   <Step title="Configure Repositories">
     Ensure you have connected your GitHub, GitLab, or Bitbucket repositories to Tembo first, as these will be available for selection in Slack commands.
+  </Step>
+  <Step title="Set Preferences">
+    After installation, you can select a default repository for Slack tasks.
+    
+    ![Select Model](/images/slack-integration-settings.png)
   </Step>
 </Steps>
 
 # Usage
 
-## Create a Task
+## Basic Commands
 
-Make Tembo start working on a new task:
-
+### Start a Background Agent
 ```
 @tembo [your task description]
 ```
@@ -42,34 +66,51 @@ Make Tembo start working on a new task:
 @tembo Fix the authentication bug in the login flow
 ```
 
-## Use Different Agent, Repository, or Branch
+## Advanced Command Options
 
-For a single task, you can specify different parameters:
+Tembo supports flexible command syntax with multiple options. You can use either bracket format or inline format:
 
+### Bracket Format
 ```
-@tembo [branch=dev, agent=claudeCode:claude-4-sonnet, repo=torvalds/linux] [your task description]
+@tembo [option1=value1, option2=value2] [your task description]
 ```
 
 **Example:**
 ```
-@tembo [branch=feature/auth, repo=myorg/webapp] Add password strength validation
+@tembo [branch=dev, repo=owner/webapp] Add password strength validation
 ```
 
-### Available Parameters:
-- `branch=` - Target branch for the PR (e.g., `branch=dev`, `branch=feature/auth`)
-- `agent=` - Specify which Tembo agent to use (e.g., `agent=claudeCode:claude-4-sonnet`)
-- `repo=` - Target repository (e.g., `repo=myorg/webapp`, `repo=torvalds/linux`)
+### Available Options
 
-## Working in Direct Messages
+- **`branch=`** - Specify the base branch for the PR
+  - Example: `branch=main`, `branch=develop`, `branch=feature/auth`
 
-Tembo works seamlessly in private DMs, allowing you to:
-- Create personal development tasks without sharing with your team
-- Receive private notifications about task progress
-- Review completed tasks before sharing results
+- **`repo=`** - Target a specific repository
+  - Example: `repo=owner/repository`, `repo=myorg/webapp`
 
-## Task Execution
+### Thread Context Utilization
+When you mention `@tembo` in a thread, the agent automatically:
+- Reads the entire conversation history
+- Understands the context from previous messages
+- Incorporates team discussions into the solution
 
-Tembo tasks will be executed in the background, and you'll be notified when they're completed. This means:
-- You can continue working while Tembo handles your task
-- Multiple tasks can run simultaneously
-- You'll receive updates when tasks finish with PR summaries
+## Data Security
+- All communications are encrypted in transit
+- Repository access follows your existing GitHub/GitLab permissions
+- No code is stored permanently on Tembo servers
+- Slack thread context is processed securely and not retained
+
+## Task Execution and Notifications
+
+Tembo agents execute tasks in the background with comprehensive status tracking:
+
+### Execution Flow
+1. **Context Analysis** - Agent reads thread history and understands requirements
+2. **Background Processing** - Task executes without blocking your workflow
+3. **Real-time Updates** - Status notifications keep you informed of progress
+4. **Completion Summary** - Detailed results with PR links and change summaries
+5. **Follow-up Support** - Easy handoff to GitHub for review and merging
+
+### Simultaneous Tasks
+- Multiple agents can run concurrently
+- Each agent maintains its own context and progress
