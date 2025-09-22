@@ -1,0 +1,75 @@
+---
+title: "Slack"
+icon: "gear"
+---
+
+Connect Slack to Tembo to create development tasks and receive updates directly in your team's chat workspace.
+
+# Features
+
+- **Direct Messages**: Work with Tembo in private DMs for individual task creation
+- **@tembo Mentions**: Use `@tembo [your task description]` to create development tasks
+- **Repository Selection**: Specify which repository, branch, and agent to target for tasks
+- **Background Execution**: Tasks are executed in the background with notifications when completed
+- **Task Completion Notifications**: Get notified when your tasks are completed with PR summaries
+
+# Installation
+
+<Steps>
+  <Step title="Install">
+    Navigate to the [Integrations page](https://app.tembo.io/integrations) in Tembo and click the `Install` button next to Slack.
+  </Step>
+  <Step title="Authorize">
+    Authorize Tembo to access your Slack workspace. You'll be redirected back to the Integrations page when complete.
+  </Step>
+  <Step title="Configure Repositories">
+    Ensure you have connected your GitHub, GitLab, or Bitbucket repositories to Tembo first, as these will be available for selection in Slack commands.
+  </Step>
+</Steps>
+
+# Usage
+
+## Create a Task
+
+Make Tembo start working on a new task:
+
+```
+@tembo [your task description]
+```
+
+**Example:**
+```
+@tembo Fix the authentication bug in the login flow
+```
+
+## Use Different Agent, Repository, or Branch
+
+For a single task, you can specify different parameters:
+
+```
+@tembo [branch=dev, agent=claudeCode:claude-4-sonnet, repo=torvalds/linux] [your task description]
+```
+
+**Example:**
+```
+@tembo [branch=feature/auth, repo=myorg/webapp] Add password strength validation
+```
+
+### Available Parameters:
+- `branch=` - Target branch for the PR (e.g., `branch=dev`, `branch=feature/auth`)
+- `agent=` - Specify which Tembo agent to use (e.g., `agent=claudeCode:claude-4-sonnet`)
+- `repo=` - Target repository (e.g., `repo=myorg/webapp`, `repo=torvalds/linux`)
+
+## Working in Direct Messages
+
+Tembo works seamlessly in private DMs, allowing you to:
+- Create personal development tasks without sharing with your team
+- Receive private notifications about task progress
+- Review completed tasks before sharing results
+
+## Task Execution
+
+Tembo tasks will be executed in the background, and you'll be notified when they're completed. This means:
+- You can continue working while Tembo handles your task
+- Multiple tasks can run simultaneously
+- You'll receive updates when tasks finish with PR summaries
