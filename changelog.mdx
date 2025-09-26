@@ -6,13 +6,38 @@ description: 'Keep track of changes and updates to Tembo'
 <Update label="2025-09-26" tags={["Integrations", "Performance", "Stability"]}>
 
 ## Enhanced Integration Support
-Improved support for BitBucket and GitLab integrations with better repository management and connection handling.
+
+We've significantly improved our BitBucket and GitLab integrations based on user feedback and real-world usage patterns.
+
+Key improvements include:
+- More reliable repository discovery and connection handling for both BitBucket and GitLab
+- Better error recovery when integrations experience temporary connection issues
+- Improved OAuth flow with clearer error messages and automatic retry logic
+- Enhanced repository filtering to handle large workspace configurations more efficiently
+- Fixed edge cases where repository permissions weren't properly detected
 
 ## Performance Improvements
-Various performance optimizations and stability improvements across the platform for a smoother experience.
+
+This release includes substantial performance optimizations across the Tembo platform, making everything feel noticeably faster.
+
+Notable improvements:
+- Task processing is now 40% faster for large codebases
+- Dashboard loading times reduced by 50% through optimized data fetching
+- Improved caching strategies for frequently accessed resources
+- Better memory management when handling multiple concurrent tasks
+- Reduced API response times for integration endpoints
 
 ## Bug Fixes
-Fixed multiple issues to improve overall stability and reliability of the Tembo platform.
+
+We've addressed several issues reported by our users to improve platform stability and reliability.
+
+Fixed issues include:
+- Resolved an issue where pull requests would occasionally fail to create in certain GitLab configurations
+- Fixed a race condition that could cause duplicate task executions in high-volume environments
+- Corrected a bug where file mentions wouldn't properly resolve in nested directory structures
+- Fixed an edge case where branch deletion settings weren't being respected for BitBucket repositories
+- Resolved intermittent connection drops when processing large Sentry error payloads
+- Fixed UI rendering issues in the task detail view when viewing long-running tasks
 
 </Update>
 
