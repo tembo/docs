@@ -3,6 +3,79 @@ title: 'Changelog'
 description: 'Keep track of changes and updates to Tembo'
 ---
 
+<Update label="2025-09-28" tags={["Query Performance", "Task Management", "GitHub Integration", "Linear Integration", "Bug Fixes"]}>
+
+## Query Performance Improvements
+Fixed active query performance issues to improve overall system responsiveness and database efficiency.
+
+## Task Management Enhancements
+- Added archive functionality to clear retrying task states and improve task queue management
+- Improved task cancellation display to correctly show cancelled status instead of queued
+- Enhanced task log display to prevent new lines from fragmenting log entries
+- Fixed task review description text handling
+
+## GitHub Integration Improvements
+- Enhanced GitHub dropdown design consistency in repository selection interface
+- Improved repository filtering and selection workflow
+- Fixed flash of "syncing GitHub repos" during onboarding process
+
+## Linear Integration Fixes
+- Improved repository wait logic for better webhook coordination
+- Enhanced Linear task agent session management
+
+## UI/UX Polish
+- Fixed file name overflow in dashboard file tagging with ellipsis truncation and wider popover
+- Improved profile picture dropdown visibility on mobile devices
+- Enhanced navigation with source-based back button functionality
+- Fixed sidebar spacing for dropdown open buttons
+
+## Bug Fixes & Stability
+- Resolved Discord @mention issues with trailing punctuation
+- Fixed onboarding redirect flash issues
+- Improved PR diff stats calculation in feedback loop
+- Enhanced overall system stability and error handling
+
+</Update>
+
+<Update label="2025-09-21" tags={["API Improvements", "Raycast Integration", "Authentication", "Testing", "UI Polish"]}>
+
+## API & Backend Enhancements
+- Implemented pagination for GET /api/projects endpoint to improve performance
+- Enhanced provider references and property access in project APIs
+- Fixed authentication token refresh failure handling for OAuth integrations
+- Improved prisma client validation and error handling
+
+## Raycast Integration
+- Enhanced Raycast extension functionality with better greeting and interaction flows
+- Improved CLI integration for Tyler and other team member workflows
+- Added Raycast integration testing capabilities
+
+## Authentication & Security
+- Improved JWT and user upsert logic for more reliable authentication
+- Enhanced auth middleware routing with simplified public routes
+- Fixed login bug in authentication service with better error serialization
+- Strengthened user authentication flow and session management
+
+## Testing Infrastructure
+- Added comprehensive test verification implementations
+- Enhanced Slack issue data validation tests
+- Improved testing utility functions and basic test suite coverage
+- Better task verification testing capabilities
+
+## UI & Documentation
+- Multiple README improvements with development guidelines and setup instructions
+- Enhanced console.log examples and humor additions for better developer experience
+- Improved branch changes summary documentation
+- Added Node.js and pnpm version specifications to README
+
+## Developer Experience
+- Enhanced solution settings title styling
+- Improved helper functions and string utilities
+- Better development workflow documentation
+- Enhanced debugging and troubleshooting capabilities
+
+</Update>
+
 <Update label="2025-09-05" tags={["Image Support", "File Mentions", "Claude Code", "Pull Requests", "Settings", "Branch Management"]}>
 
 ## Image Support
