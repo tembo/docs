@@ -21,15 +21,7 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": [
-              "welcome",
-              "pwa",
-              {
-                "tab": "Public API",
-                "openapi": "https://app.stainless.com/api/spec/documented/tembo/openapi.documented.yml"
-              },
-              "billing"
-            ]
+            "pages": ["welcome", "pwa", "billing"]
           },
           {
             "group": "Features",
