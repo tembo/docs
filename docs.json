@@ -56,6 +56,10 @@
             "pages": ["changelog"]
           }
         ]
+      },
+      {
+        "tab": "Public API",
+        "openapi": "https://app.stainless.com/api/spec/documented/tembo/openapi.documented.yml"
       }
     ]
   },
