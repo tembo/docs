@@ -66,10 +66,6 @@
   "navbar": {
     "links": [
       {
-        "label": "SDK",
-        "href": "https://app.stainless.com/api/spec/documented/tembo/openapi.documented.yml"
-      },
-      {
         "label": "Get Help",
         "href": "mailto:hi@tembo.io"
       }
