@@ -17,6 +17,11 @@
   "navigation": {
     "tabs": [
       {
+        "tab": "API Reference",
+        "icon": "code",
+        "openapi": "https://app.stainless.com/api/spec/documented/tembo/openapi.documented.yml"
+      },
+      {
         "tab": "Documentation",
         "groups": [
           {
