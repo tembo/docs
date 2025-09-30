@@ -17,16 +17,19 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "API Reference",
-        "icon": "code",
-        "openapi": "https://app.stainless.com/api/spec/documented/tembo/openapi.documented.yml"
-      },
-      {
         "tab": "Documentation",
         "groups": [
           {
             "group": "Get Started",
-            "pages": ["welcome", "pwa", "public-api", "billing"]
+            "pages": [
+              "welcome",
+              "pwa",
+              {
+                "tab": "Public API",
+                "openapi": "https://app.stainless.com/api/spec/documented/tembo/openapi.documented.yml"
+              },
+              "billing"
+            ]
           },
           {
             "group": "Features",
