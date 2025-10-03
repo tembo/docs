@@ -28,6 +28,7 @@
             "group": "Features",
             "pages": [
               "features/overview",
+              "features/agents",
               "features/pull-requests",
               "features/feedback-loop",
               "features/rule-files",

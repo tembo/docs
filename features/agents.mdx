@@ -1,0 +1,104 @@
+---
+title: 'Agents'
+icon: 'robot-astromech'
+---
+
+Tembo supports multiple AI agents to solve your software engineering tasks. Each agent has different capabilities, models, and configuration options.
+
+## Available Agents
+
+### Claude Code (Default)
+
+Claude Code is Tembo's default agent, powered by Anthropic's Claude models. It provides the most reliable and battle-tested experience for solving software engineering tasks.
+
+**Supported Models:**
+- `claude-4-5-sonnet` (Default)
+- `claude-4.1-opus`
+- `claude-4-sonnet`
+- `claude-3-7-sonnet`
+
+**Features:**
+- Full MCP (Model Context Protocol) server support
+- Debug mode with detailed logging
+- Automatic permission management
+- Custom system prompt support
+- Configuration file support (CLAUDE.md)
+
+**Best For:**
+- General software engineering tasks
+- Complex debugging and problem-solving
+- Working with large codebases
+- Tasks requiring reasoning and planning
+
+### Codex
+
+Codex is an agent powered by OpenAI's latest GPT-5 models with varying reasoning levels.
+
+**Supported Models:**
+- `gpt-5-medium` (Default)
+- `gpt-5-minimal`
+- `gpt-5-low`
+- `gpt-5-high`
+
+**Features:**
+- Multiple reasoning effort levels
+- Configuration file support (AGENTS.md)
+- Profile-based configuration
+- Custom provider settings
+
+**Best For:**
+- Tasks requiring different reasoning depths
+- Performance-sensitive operations
+- Teams preferring OpenAI models
+
+### Opencode
+
+Opencode is an alternative agent supporting both Anthropic Claude models and OpenAI GPT models.
+
+**Supported Models:**
+- `claude-4-5-sonnet` (Default)
+- `claude-4.1-opus`
+- `claude-4-sonnet`
+- `claude-3-7-sonnet`
+
+**Features:**
+- MCP (Model Context Protocol) server support
+- Custom provider configuration
+- Flexible model selection
+- Configuration file support (AGENTS.md)
+
+**Best For:**
+- Teams wanting flexibility in model choice
+- Experimenting with different AI providers
+- Custom integration requirements
+
+## Selecting an Agent
+
+Agents are specified using an agent key format: `agentType:model`
+
+**Examples:**
+- `claudeCode:claude-4-5-sonnet`
+- `codex:gpt-5-medium`
+- `opencode:claude-4-5-sonnet`
+
+If no agent is specified, Tembo defaults to `claudeCode:claude-4-5-sonnet`.
+
+## Configuration Files
+
+Each agent can read configuration from rule files in your repository:
+
+- **Claude Code** looks for `CLAUDE.md` or `claude.md`
+- **Codex** looks for `AGENTS.md` or `agents.md`
+- **Opencode** looks for `AGENTS.md` or `agents.md`
+
+These files allow you to provide agent-specific instructions and coding standards. Learn more about [rule files](/features/rule-files).
+
+## Switching Between Agents
+
+You can configure which agent to use for your organization or specific tasks through:
+
+1. **Dashboard Settings** - Set a default agent for all tasks
+2. **API Configuration** - Specify an agent key when creating tasks via API
+3. **Integration Settings** - Configure per-integration agent preferences
+
+Contact your Tembo administrator or check the [API documentation](/api-reference) for details on agent configuration.
