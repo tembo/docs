@@ -14,7 +14,7 @@ components:
       name: Authorization
   schemas: {}
 paths:
-  /task/create:
+  /task/test:
     post:
       responses:
         "200":
@@ -122,7 +122,24 @@ paths:
       x-codeSamples:
         - lang: JavaScript
           source: |-
+            import Tembo from '@tembo-io/sdk';
 
+            const client = new Tembo({
+              apiKey: 'My API Key',
+            });
+
+            const task = await client.task.create({
+              prompt: 'Fix the authentication bug in the login component',
+              agent: 'claudeCode:claude-4-5-sonnet',
+              repositories: [
+                'https://github.com/org/repo',
+                'https://gitlab.com/org/repo-2',
+              ],
+              branch: 'feature/auth-fix',
+              queueRightAway: false,
+            });
+
+            console.log(task.id);
   /task/list:
     get:
       responses:
