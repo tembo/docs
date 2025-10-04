@@ -12,7 +12,7 @@
   },
   "favicon": "/favicon.ico",
   "api": {
-    "openapi": "https://app.stainless.com/api/spec/documented/tembo/openapi.documented.yml"
+    "openapi": "/openapi.documented.yml"
   },
   "navigation": {
     "tabs": [
