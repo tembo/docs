@@ -135,8 +135,7 @@ paths:
                 'https://github.com/org/repo',
                 'https://gitlab.com/org/repo-2',
               ],
-              branch: 'feature/auth-fix',
-              queueRightAway: false,
+              branch: 'dev',
             });
 
             console.log(task.id);
