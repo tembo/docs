@@ -1,19 +1,40 @@
 ---
-title: 'Changelog'
-description: 'Keep track of changes and updates to Tembo'
+title: "Changelog"
+description: "Keep track of changes and updates to Tembo"
 ---
+
+<Update label="2025-09-26" tags={["Agents", "Design", "Settings"]}>
+
+## Agents
+
+- Tembo now works with [OpenCode](https://opencode.ai)! Only supports Anthropic models as of now with all opencode supported providers coming soon. Codex is also now supported in the new API but not form UI yet. You can view the supported agents here: [Agents](/features/agents).
+- Support for the new Claude 4.5 Sonnet model
+
+## Design
+
+All new beautifully redesigned dashboard along with new settings pages
+
+## Bug fixes and improvements
+
+- Feedback loop on Github is now much faster
+- Tagging is now required when leaving comments. This handles the scenario where you dont want tembo to respond to a comment meant for somone on your team or even a different bot user.
+
+</Update>
 
 <Update label="2025-09-05" tags={["Image Support", "File Mentions", "Claude Code", "Pull Requests", "Settings", "Branch Management"]}>
 
 ## Image Support
+
 Tembo's sandboxes now support images - works with all the major coding agents and allows them to read images but also push them to your repos. Images inside of Linear are also detected and downloaded to the sandboxes automatically. Learn more about our [sandbox environment](/features/sandbox-environment).
 
 ## File Mentions & Smart References
+
 Introduced @mention functionality for referencing files, integrations, and documents directly in task descriptions and comments.
 
 ![File Mentions Autocomplete](/images/file-mentions-autocomplete.png)
 
 Features include:
+
 - @mention support for integrations (GitHub, Linear, Sentry)
 - File and document reference system
 - Smart autocomplete
@@ -31,6 +52,7 @@ When enabled, Tembo will automatically delete the branch after its pull request 
 The setting can be found in your pull request configuration and is disabled by default, giving you full control over branch cleanup behavior.
 
 ## Pull Request Settings
+
 Support for [Gemini code assist](https://codeassist.google/) as a review bot.
 
 ![Gemini Code Assist](/images/gemini-code-assist.png)
@@ -40,24 +62,29 @@ Support for [Gemini code assist](https://codeassist.google/) as a review bot.
 <Update label="2025-08-22" tags={["BitBucket", "GitLab", "Linear", "Integrations"]}>
 
 ## BitBucket Integration
+
 Full BitBucket support is now live! Connect your BitBucket workspaces and let Tembo create pull requests directly in your repositories.
 
 Key features include:
+
 - Automatic workspace and repository discovery
 - Draft PR support with automatic branch cleanup
 - Service user setup for cleaner PR attribution
 - Support for multiple workspaces and repository selection
 
 ## GitLab Integration
+
 GitLab integration is officially here! Tembo can now scan your GitLab repositories and open merge requests for improvements.
 
 Features include:
+
 - Repository scanning for TODO comments, security issues, and technical debt
 - Automatic merge request creation
 - Selective repository activation
 - Full OAuth integration with GitLab
 
 ## Enhanced Linear Integration
+
 Improved Linear workflow with better status tracking and repository management.
 
 - Enhanced issue assignment workflow
@@ -65,6 +92,7 @@ Improved Linear workflow with better status tracking and repository management.
 - Streamlined integration setup process
 
 ## UI & Performance Improvements
+
 - Enhanced workspace filtering and pagination for better issue and PR management
 - Improved task log loading with skeleton states
 - Various performance optimizations across the dashboard
@@ -74,28 +102,32 @@ Improved Linear workflow with better status tracking and repository management.
 
 <Update label="2025-07-04" tags={["Jira", "UI", "Logs", "Bug Fixes"]}>
 
-## Jira Integration  
-You can now assign Tembo to Jira issues — just like with Linear. 
+## Jira Integration
+
+You can now assign Tembo to Jira issues — just like with Linear.
 
 This was one of our most requested features by larger teams, and it’s finally live!
 
 ![Jira Integration](/images/introducing-jira.png)
 
-## Revamped UI  
+## Revamped UI
+
 The dashboard got a full redesign — it's now much faster and way cleaner.
 
 We're also actively redesigning all app flows. You'll start seeing those changes roll out soon :)
 
 ![New UI](/images/product-screenshot.png)
 
-## Historical Task Logs  
+## Historical Task Logs
+
 You can now view logs directly on the task page.
 
 The new format makes it way easier to understand what actually happened.
 
 ![Task Logs](/images/historical-task-logs.png)
 
-## Credit Burn Bug + Fixes  
+## Credit Burn Bug + Fixes
+
 We fixed a bug where the GitHub scanner was burning credits in the background.
 
 Also shipped a bunch of smaller polish and fixes across the app.
@@ -105,16 +137,19 @@ Also shipped a bunch of smaller polish and fixes across the app.
 <Update label="2025-06-27" tags={["Sentry", "Tasks", "Rule Files"]}>
 
 ## Auto-fix for Sentry errors
+
 Tembo now opens a pull request as soon as a Sentry error is detected — no delay between error and fix.
 
 ![Improved Sentry integration](/images/temo-sentry.png)
 
 ## Custom tasks
+
 You can now create tasks directly in Tembo without relying on external tools like Jira or Linear. Just describe the task in plain English and Tembo will take it from there.
 
 ![Custom tasks](/images/custom-tasks.png)
 
 ## Rule file support
+
 Tembo now reads rule files to better understand your project’s structure and conventions. Supported files include:
 
 - `tembo.md`
