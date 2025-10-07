@@ -5,19 +5,48 @@ description: "Keep track of changes and updates to Tembo"
 
 <Update label="2025-09-26" tags={["Agents", "Design", "Settings"]}>
 
-## Agents
+## Multi-Agent Support
 
-- Tembo now works with [OpenCode](https://opencode.ai)! Only supports Anthropic models as of now with all opencode supported providers coming soon. Codex is also now supported in the new API but not form UI yet. You can view the supported agents here: [Agents](/features/agents).
-- Support for the new Claude 4.5 Sonnet model
+Tembo now supports multiple AI coding agents, giving you the flexibility to work with your preferred development environment while leveraging Tembo's autonomous task management capabilities.
 
-## Design
+### New Agent Integrations
 
-All new beautifully redesigned dashboard along with new settings pages
+- **[OpenCode](https://opencode.ai)** - Full integration with OpenCode using Anthropic models. Support for additional OpenCode providers coming soon.
+- **Codex** - Now supported via API (UI support in progress)
+- **Claude Code** - Enhanced support for the latest Claude models
+- **Additional Agents** - Support for popular agents including Cursor, Gemini, and Amp
 
-## Bug fixes and improvements
+![Agent Support](/images/agent-support.png)
 
-- Feedback loop on Github is now much faster
-- Tagging is now required when leaving comments. This handles the scenario where you dont want tembo to respond to a comment meant for somone on your team or even a different bot user.
+You can view all supported agents and their configurations here: [Agents](/features/agents).
+
+### Claude 4.5 Sonnet
+
+Added support for the new Claude 4.5 Sonnet model, bringing enhanced code understanding and generation capabilities to all supported agents.
+
+## Redesigned Dashboard & Settings
+
+We've completely reimagined the Tembo dashboard with a focus on clarity and efficiency:
+
+- **Modern Interface** - Clean, intuitive design that makes task management effortless
+- **Enhanced Settings Pages** - Streamlined configuration with better organization and improved discoverability
+- **Improved Navigation** - Faster access to the features you use most
+- **Better Visual Hierarchy** - Clearer presentation of task status, agent activity, and system state
+
+## Performance & Stability
+
+### GitHub Feedback Loop
+
+The feedback cycle for GitHub pull requests and comments is now significantly faster. Tembo responds more quickly to code reviews, comments, and status changes, reducing wait times and accelerating your development workflow.
+
+### Comment Tagging System
+
+Introduced required tagging when leaving comments on pull requests. This prevents Tembo from responding to:
+- Internal team discussions
+- Comments directed at other team members
+- Messages intended for other bot integrations
+
+Simply tag `@tembo` when you want Tembo to take action, ensuring cleaner communication and more precise automation.
 
 </Update>
 
