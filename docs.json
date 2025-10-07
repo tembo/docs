@@ -8,7 +8,10 @@
     "dark": "#000000"
   },
   "background": {
-    "color": { "light": "#F8F8F8", "dark": "#080808" }
+    "color": {
+      "light": "#F8F8F8",
+      "dark": "#080808"
+    }
   },
   "favicon": "/favicon.ico",
   "api": {
@@ -22,7 +25,11 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": ["welcome", "pwa", "billing"]
+            "pages": [
+              "welcome",
+              "pwa",
+              "billing"
+            ]
           },
           {
             "group": "Features",
@@ -55,7 +62,9 @@
           },
           {
             "group": "Resources",
-            "pages": ["changelog"]
+            "pages": [
+              "changelog"
+            ]
           }
         ]
       },
@@ -75,6 +84,10 @@
       {
         "label": "Get Help",
         "href": "mailto:hi@tembo.io"
+      },
+      {
+        "label": "Book a Demo",
+        "href": "https://book.avoma.com/tembo/tembo-demo/"
       }
     ],
     "primary": {
