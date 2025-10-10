@@ -21,9 +21,15 @@ Assign Linear issues to Tembo and turn them into PRs.
     Authorize Tembo to access your Linear workspace. You'll be redirected back to the Integrations page when complete.
   </Step>
   <Step title="Repository Labels">
-    Tembo automatically creates a "Tembo Git Repositories" label group with all your GitHub repositories. Use these labels to specify which repository Tembo should target for each issue.
-    
-    You can set a default repository to avoid adding labels to every issue.
+    Tembo automatically creates a "Tembo Git Repositories" label group with labels for all your GitHub repositories. Each label is prefixed with `tembo/` followed by your repository name (e.g., `tembo/frontend`, `tembo/backend`).
+
+    **Selecting repositories:**
+    - Add one or more repository labels to specify which repositories Tembo should work on
+    - For multi-repo tasks (e.g., full-stack features), add multiple labels before assigning to Tembo
+    - Example: Add both `tembo/frontend` and `tembo/backend` labels for a task that requires changes to both repositories
+
+    **Default repository:**
+    You can set a default repository in your settings to avoid adding labels to every issue when working primarily in one repository.
   </Step>
   <Step title="Assignment">
     Now you can assign Linear issues to Tembo to trigger solutions.
