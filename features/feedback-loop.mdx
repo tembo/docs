@@ -21,7 +21,7 @@ That's it! No additional setup required.
 ## How it works
 
 1. **Initial Solution** - Tembo creates a pull request to solve an issue
-2. **Review & Comment** - You review the PR and leave feedback (via GitHub review or @tembo comments)  
+2. **Review & Comment** - You review the PR and leave feedback (tag @tembo in your GitHub review or comments)  
 3. **Automatic Retry** - Tembo processes your feedback and updates the PR with improvements
 4. **Iteration** - Continue providing feedback until you're satisfied with the solution
 
@@ -32,7 +32,7 @@ That's it! No additional setup required.
 ![GitHub Review Interface](/images/request-review.png)
 
 - Submit a formal PR review using GitHub's built-in review feature
-- Tembo automatically processes all review feedback - no need to mention "@tembo"
+- Tag "@tembo" in your review summary or in any specific comments you want Tembo to act on (untagged feedback is ignored)
 - **Advantages:**
   - Tembo knows exactly which lines you're commenting on for precise fixes
   - You can batch multiple feedback points in a single review
@@ -41,7 +41,7 @@ That's it! No additional setup required.
 
 ### Option 2: Add comments
 - Leave regular comments in the PR conversation
-- Mention "@tembo" in your comment so Tembo knows to process it
+- You must mention "@tembo" in the comment to trigger processing (untagged comments are ignored)
 
 ![Comment Review Example](/images/comment-review.png)
 
@@ -99,8 +99,12 @@ If you need further refinements, simply add another review or comment with "@tem
 
 **✅ Batch feedback in a single review:**
 - Add multiple comments to different lines in one GitHub review
-- Tembo processes all points together for cohesive improvements
+- Tag "@tembo" on the review summary or individual comments you want addressed; Tembo processes all tagged points together for cohesive improvements
 - Cleaner conversation thread and better context awareness
+
+**ℹ️ Tagging is required:**
+- Tembo only acts on PR feedback that mentions "@tembo" (in reviews or regular comments)
+- This prevents accidental triggers from internal team discussions or other bot messages
 
 ### What Tembo's Feedback Loop Handles Well
 
