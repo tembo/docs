@@ -63,6 +63,7 @@
           {
             "group": "Resources",
             "pages": [
+              "blog/2025-10-whats-new",
               "changelog"
             ]
           }
