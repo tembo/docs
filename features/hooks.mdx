@@ -24,10 +24,6 @@ Create a `.tembo.json` file in your repository root with the following structure
       "npm run lint",
       "npm run test",
       "npm run build"
-    ],
-    "onFinish": [
-      "echo 'Task completed successfully'",
-      "npm run cleanup"
     ]
   }
 }
@@ -83,29 +79,6 @@ Runs after Tembo has made changes to your code but before pushing the changes an
 }
 ```
 
-### `onFinish`
-
-Executes after the pull request has been successfully created.
-
-**Common use cases:**
-- Send notifications to team channels
-- Update project management tools
-- Run additional CI/CD processes
-- Clean up temporary files or resources
-- Generate reports or metrics
-
-**Example:**
-```json
-{
-  "hooks": {
-    "onFinish": [
-      "slack-notify 'Tembo created PR: {{PR_URL}}'",
-      "update-jira-ticket {{ISSUE_ID}}",
-      "npm run cleanup"
-    ]
-  }
-}
-```
 
 ## Hook Execution Details
 
@@ -120,7 +93,6 @@ Executes after the pull request has been successfully created.
 
 - If any command in a hook fails (returns non-zero exit code), the hook execution stops
 - For `postClone` and `prePush` hooks, failures will cause the entire issue resolution process to fail
-- For `onFinish` hooks, failures are logged but don't affect the overall success of the solution
 
 ### Command Execution
 
@@ -149,11 +121,6 @@ Executes after the pull request has been successfully created.
       "python -m pytest tests/",
       "npm run build",
       "docker-compose run --rm app npm run test:integration"
-    ],
-    "onFinish": [
-      "docker-compose down",
-      "npm run cleanup",
-      "echo 'Tembo solution completed for {{ISSUE_TITLE}}'"
     ]
   }
 }
@@ -174,10 +141,6 @@ Executes after the pull request has been successfully created.
       "npx lerna run test --since origin/main",
       "npx lerna run build --since origin/main",
       "npm run test:integration"
-    ],
-    "onFinish": [
-      "npx lerna run cleanup",
-      "npm run generate:changelog"
     ]
   }
 }
@@ -199,10 +162,6 @@ Executes after the pull request has been successfully created.
       "go test ./...",
       "go build -o bin/app ./cmd/app",
       "make security-scan"
-    ],
-    "onFinish": [
-      "make clean",
-      "echo 'Go application solution completed'"
     ]
   }
 }
