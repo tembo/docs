@@ -14,6 +14,12 @@ Run the following command at the root of your documentation (where mint.json is)
 mintlify dev
 ```
 
+Example:
+
+```javascript
+console.log('Hello from Tembo Docs!');
+```
+
 ## Publishing Changes
 
 Install our Github App to auto propagate changes from your repo to your deployment. Changes will be deployed to production automatically after pushing to the default branch. Find the link to install on your dashboard.
