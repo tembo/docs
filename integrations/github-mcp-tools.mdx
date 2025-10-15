@@ -1,0 +1,68 @@
+---
+title: "GitHub MCP Tools"
+description: "Documentation of GitHub MCP (Model Context Protocol) tool access for Tembo"
+icon: "code"
+---
+
+# GitHub MCP Tools Access
+
+This document provides information about GitHub MCP (Model Context Protocol) tool availability in Tembo's environment.
+
+## MCP Server Configuration
+
+Based on the task metadata, Tembo has MCP server configurations available:
+- MCP Server ID: `b76a26cd-cec4-4d28-8c17-7118c0ff3899`
+- MCP Executable: Available at `/nix/store/s84hdj0x60kpvz05z6w95km3n6vbglss-tembo-1.0.0/bin/tembo`
+
+## What is MCP?
+
+Model Context Protocol (MCP) is a standardized protocol that allows AI models to interact with external tools and services. MCP tools typically:
+- Start with the `mcp__` prefix
+- Provide specialized functionality for specific services
+- Offer enhanced capabilities compared to standard tool implementations
+
+## GitHub Integration Context
+
+Tembo's GitHub integration currently provides:
+- Pull request creation and management
+- Repository scanning capabilities
+- Code analysis features
+- Security and performance issue detection
+
+## MCP Tool Detection
+
+MCP-provided tools are prefixed with `mcp__` and are designed to provide enhanced functionality. The system architecture indicates:
+
+1. **Tool Preference**: When MCP-provided tools are available (e.g., `mcp__web_fetch`), they should be preferred over standard implementations as they may have fewer restrictions.
+
+2. **GitHub Operations**: Standard GitHub operations are currently handled through the `gh` CLI tool via Bash commands, which provides:
+   - Issue management
+   - Pull request operations
+   - GitHub API access
+   - Repository checks and releases
+
+## Current Capabilities
+
+While direct enumeration of all available MCP tools is not exposed through the standard tool interface, Tembo's environment includes:
+
+- GitHub CLI (`gh`) integration for repository operations
+- Environment configured for MCP server connectivity
+- Standard tool suite optimized for code analysis and repository management
+
+## Usage Notes
+
+When working with GitHub in Tembo:
+- Use `gh` commands via the Bash tool for GitHub-related tasks
+- MCP tools, when available, provide enhanced capabilities
+- The system automatically selects the most appropriate tool for each operation
+
+## Related Documentation
+
+For more information about Tembo's GitHub integration, see:
+- [GitHub Integration Setup](./github.mdx)
+- Standard GitHub operations documentation
+
+---
+
+*Document generated: 2025-10-15*
+*Environment: Tembo MCP-enabled workspace*
