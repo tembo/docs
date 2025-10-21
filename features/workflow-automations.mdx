@@ -1,0 +1,134 @@
+---
+title: "Workflow Automations"
+icon: "repeat"
+---
+
+# Workflow Automations
+
+Tembo Workflows let you automate multi-step tasks that Tembo executes on your behalf. You define workflows as JSON in your repo, schedule them or trigger them from events, and Tembo runs them reliably in the background.
+
+## How It Works
+
+- Workflow definition lives in your code repository under `/.tembo/workflows/*.json`.
+- Tembo scans your repository and imports each workflow into your organization.
+- A workflow can be started by a schedule (cron) or a trigger (an event), which enqueues a background job.
+- The job records a Workflow Run and converts your workflow JSON into a Tembo “Workflow Issue”, then Tembo executes it using the same engine that powers issue solving.
+
+## Defining Workflows in Your Repo
+
+Add one or more JSON files in `/.tembo/workflows/`. Each file should contain at least a `name` and `jsonContent` (the editor JSON for your workflow).
+
+Example:
+
+```json
+{
+  "name": "Nightly Maintenance",
+  "jsonContent": {
+    "type": "doc",
+    "content": [
+      { "type": "paragraph", "content": [{ "type": "text", "text": "Run nightly tasks" }] }
+    ]
+  }
+}
+```
+
+Sync occurs when Tembo walks your repository, or you can run the CLI:
+
+```bash
+pnpm run cli workflow sync-code-repository <codeRepositoryId>
+```
+
+This scans `/.tembo/workflows` and upserts workflows in your org.
+
+## Ways to Run a Workflow
+
+### 1) Scheduled (Cron)
+Create schedules that enqueue your workflow at specific times using standard cron expressions.
+
+- Create: `POST /workflowSchedules` with `{ "workflowId": "...", "cron": "0 2 * * *" }`
+- List: `GET /workflowSchedules?workflowId=...`
+- Update: `PUT /workflowSchedules/:id` with `{ "cron": "*/15 * * * *" }`
+- Delete: `DELETE /workflowSchedules/:id`
+
+Notes:
+- Tembo checks schedules every minute and enqueues the workflow when due.
+- Each schedule tracks `lastRunAt` and `nextRunAt` for visibility.
+
+### 2) Event Triggers
+Create triggers that tie a workflow to an event. Triggers can be scoped to an integration (e.g., GitHub, GitLab, Bitbucket, Linear, Slack).
+
+- Create: `POST /workflowTriggers` with `{ "workflowId": "...", "triggerName": "my.event", "integrationId": "optional" }`
+- List: `GET /workflowTriggers?workflowId=...`
+- Update: `PUT /workflowTriggers/:id` with `{ "triggerName": "new.event", "integrationId": "optional" }`
+- Delete: `DELETE /workflowTriggers/:id`
+
+Notes:
+- `triggerName` is a free-form identifier you use consistently from your integration/webhook to fire the workflow.
+- `integrationId` is optional; use it to associate a trigger with a specific connected provider.
+
+## What Happens During a Run
+
+1. A schedule or trigger enqueues a `run_workflow` job with the workflow ID.
+2. Tembo creates a Workflow Run record for traceability (status + runtime).
+3. Tembo opens a “Workflow Issue” that stores your `jsonContent` and a link to the run.
+4. Tembo enqueues a `solve_issue` job for that Workflow Issue. Your automation executes using the same robust agent pipeline as normal issues.
+5. The run status is updated to finished or failed when processing completes.
+
+## Monitoring & Visibility
+
+- View workflows and runs in the Tembo UI.
+- Admins can also inspect queued/scheduled jobs in the admin tools.
+- Use the Public API’s Queue endpoints to inspect general queue state if needed.
+
+## Tips & Conventions
+
+- Name uniqueness: Workflows are unique per organization by name; re-sync updates the `jsonContent` for the same-name workflow.
+- Schedules and triggers are also unique per org by their generated names (Tembo adds short hashes under the hood).
+- Credits: Workflows ultimately execute through the same engine that solves issues. Standard credit checks apply when execution reaches issue-solving.
+
+## Example API Calls
+
+Create a daily schedule at 2 AM UTC:
+
+```bash
+curl -X POST \
+  "$API_BASE/workflowSchedules" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "workflowId": "wf_123",
+    "cron": "0 2 * * *"
+  }'
+```
+
+Create an event trigger connected to a GitHub integration:
+
+```bash
+curl -X POST \
+  "$API_BASE/workflowTriggers" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "workflowId": "wf_123",
+    "triggerName": "github.pull_request.opened",
+    "integrationId": "int_gh_456"
+  }'
+```
+
+List schedules for a workflow:
+
+```bash
+curl -s "$API_BASE/workflowSchedules?workflowId=wf_123" \
+  -H "Authorization: Bearer $TOKEN"
+```
+
+List triggers for a workflow:
+
+```bash
+curl -s "$API_BASE/workflowTriggers?workflowId=wf_123" \
+  -H "Authorization: Bearer $TOKEN"
+```
+
+---
+
+If you need help modeling workflow JSON or wiring a custom event to a trigger, reach out at hi@tembo.io.
