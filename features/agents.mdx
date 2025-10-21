@@ -37,6 +37,16 @@ Opencode is an alternative agent supporting both Anthropic Claude models and Ope
 - `claude-4-sonnet`
 - `claude-3-7-sonnet`
 
+### Amp
+
+Amp is a powerful AI coding agent powered by Anthropic's Claude models, designed for interactive development workflows.
+
+**Supported Models:**
+- `claude-4-5-sonnet` (Default)
+- `claude-4.1-opus`
+- `claude-4-sonnet`
+- `claude-3-7-sonnet`
+
 ## Selecting an Agent
 
 Agents are specified using an agent key format: `agentType:model`
@@ -45,6 +55,7 @@ Agents are specified using an agent key format: `agentType:model`
 - `claudeCode:claude-4-5-sonnet`
 - `codex:gpt-5-medium`
 - `opencode:claude-4-5-sonnet`
+- `amp:claude-4-5-sonnet`
 
 If no agent is specified, Tembo defaults to `claudeCode:claude-4-5-sonnet`.
 
@@ -55,6 +66,7 @@ Each agent can read configuration from rule files in your repository:
 - **Claude Code** looks for `CLAUDE.md` or `claude.md`
 - **Codex** looks for `AGENTS.md` or `agents.md`
 - **Opencode** looks for `AGENTS.md` or `agents.md`
+- **Amp** looks for `AGENTS.md` or `AGENT.md`
 
 These files allow you to provide agent-specific instructions and coding standards. Learn more about [rule files](/features/rule-files).
 
