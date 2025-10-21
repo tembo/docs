@@ -66,6 +66,37 @@ Notes:
 - `triggerName` is a free-form identifier you use consistently from your integration/webhook to fire the workflow.
 - `integrationId` is optional; use it to associate a trigger with a specific connected provider.
 
+### Supported Triggers & Webhooks
+
+Tembo workflows can be triggered from provider webhooks. Use a consistent `triggerName` (we recommend `provider.event` style, e.g., `github.pull_request.opened`).
+
+GitHub:
+
+- `pull_request.opened`
+- `pull_request.closed`
+- `pull_request.reopened`
+- `pull_request.ready_for_review`
+- `pull_request.converted_to_draft`
+- `pull_request.edited`
+- `pull_request_review.submitted`
+- `issue_comment.created`
+- `installation.created`
+- `installation.deleted`
+- `installation.new_permissions_accepted`
+- `installation_repositories.added`
+- `installation_repositories.removed`
+
+Other integrations with webhook-based triggers:
+
+- Slack — app mentions and slash commands. See `integrations/slack.mdx`.
+- Linear — assignment to Tembo and repository label application. See `integrations/linear.mdx`.
+- GitLab — merge request and comment events. See `integrations/gitlab.mdx`.
+- Bitbucket — pull request and comment events. See `integrations/bitbucket.mdx`.
+- Jira — issue label application (e.g., “Tembo”). See `integrations/jira.mdx`.
+- Sentry — error/issue events mapped to repositories. See `integrations/sentry.mdx`.
+
+We’ll continue expanding these lists in the integration docs as new events are added. If you need a specific provider event wired to a workflow, contact hi@tembo.io.
+
 ## What Happens During a Run
 
 1. A schedule or trigger enqueues a `run_workflow` job with the workflow ID.

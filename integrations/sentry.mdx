@@ -26,3 +26,13 @@ Connect Sentry to Tembo for automatic error detection and code fixes.
     Only mapped projects will generate pull requests with code fixes.
   </Step>
 </Steps>
+
+# Supported Webhooks
+
+Tembo listens to Sentry issue lifecycle events and maps them to workflow triggers (reference them as `sentry.<event>` in your `triggerName`). Common events include:
+
+- New issue created
+- Issue regression
+- Issue resolved/ignored
+
+See Workflow Automations for creating triggers from these events.

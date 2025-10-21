@@ -106,3 +106,13 @@ When you mention `@tembo` in a thread, the agent automatically:
 - Reads the entire conversation history
 - Understands the context from previous messages
 - Incorporates team discussions into the solution
+
+# Supported Triggers
+
+Tembo reacts to Slack interactions and maps them to workflow triggers (use them under a `slack.*` naming convention in your `triggerName`, e.g., `slack.app_mention`). Common trigger sources include:
+
+- App mentions (e.g., `@tembo ...`)
+- Slash commands (configured in your Slack app)
+- Message actions and thread replies (contextual follow-ups)
+
+See Workflow Automations for how to create triggers from Slack events.
