@@ -29,3 +29,13 @@ Connect GitLab to Tembo to open merge requests to improve your codebase.
     Only repositories you activate here will be scanned for issues and receive improvement merge requests.
   </Step>
 </Steps>
+
+# Supported Webhooks
+
+Tembo listens to common GitLab events and maps them to workflow triggers (reference them as `gitlab.<category>` in your `triggerName`, e.g., `gitlab.merge_request.opened`). Supported categories include:
+
+- Merge request events: opened, closed, reopened, draft/ready, edits
+- Comments on merge requests (notes)
+- Review/approval submissions
+
+See Workflow Automations for creating triggers from these events.
