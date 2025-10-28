@@ -1,0 +1,260 @@
+---
+title: 'Workflows & Automations'
+icon: 'robot'
+---
+
+Tembo Workflows (also called Automations) allow you to create custom, repeatable tasks that run automatically based on schedules or triggers. Think of workflows as your personal AI agents that can execute complex engineering tasks on a recurring basis or in response to specific events.
+
+## Overview
+
+Workflows extend Tembo's capabilities beyond reactive issue-solving to proactive, scheduled engineering work. You can configure workflows to:
+
+- Run routine maintenance tasks on a schedule
+- Execute custom analysis or refactoring
+- Generate reports or documentation updates
+- Respond to specific events in your integrations
+
+Each workflow consists of:
+- **A prompt** - Natural language instructions describing what the workflow should do
+- **Code repositories** - The repos the workflow can access and modify
+- **An agent** - The AI model that will execute the workflow (optional, uses your default if not specified)
+- **MCP servers** - Model Context Protocol servers for additional capabilities (optional)
+- **Triggers or schedules** - When and how the workflow runs
+
+## Creating a Workflow
+
+### Via the Dashboard
+
+1. Navigate to the **Automations** page in your Tembo dashboard
+2. Click **New Automation**
+3. Fill in the workflow details:
+   - **Name** - A descriptive name for your workflow
+   - **Prompt** - Natural language instructions for what the workflow should do
+   - **Code Repositories** - Select which repos this workflow can access (use @ mentions)
+   - **Agent** (optional) - Choose a specific AI agent if you don't want to use your default
+   - **MCP Servers** (optional) - Add Model Context Protocol servers for additional capabilities
+
+4. Set up execution:
+   - **Schedule** - Use cron syntax to run the workflow on a recurring basis
+   - **Triggers** - Configure event-based execution from your integrations
+
+5. Click **Create** to save your workflow
+
+### Via Configuration Files
+
+You can also define workflows in your repository using JSON files in the `.tembo/workflows/` directory:
+
+```json
+{
+  "name": "Weekly Documentation Update",
+  "prompt": "Review the recent commits in the monorepo and update the documentation in the docs repo to reflect any new features or changes. Focus on user-facing features and API changes."
+}
+```
+
+Tembo will automatically sync these workflows when it clones your repository.
+
+## Workflow Schedules
+
+Schedules allow workflows to run automatically at specified intervals using cron expressions.
+
+### Cron Syntax
+
+Tembo uses standard cron syntax with 5 fields:
+
+```
+* * * * *
+│ │ │ │ │
+│ │ │ │ └─ Day of week (0-7, both 0 and 7 represent Sunday)
+│ │ │ └─── Month (1-12)
+│ │ └───── Day of month (1-31)
+│ └─────── Hour (0-23)
+└───────── Minute (0-59)
+```
+
+### Common Schedule Examples
+
+- **Every hour**: `0 * * * *`
+- **Every day at midnight**: `0 0 * * *`
+- **Every Monday at 9 AM**: `0 9 * * 1`
+- **Every weekday at 6 PM**: `0 18 * * 1-5`
+- **First day of every month**: `0 0 1 * *`
+- **Every 15 minutes**: `*/15 * * * *`
+
+### Managing Schedules
+
+You can create, update, and delete schedules through:
+
+- The Tembo dashboard UI
+- The Public API endpoints:
+  - `GET /workflowSchedules` - List all schedules
+  - `POST /workflowSchedules` - Create a new schedule
+  - `GET /workflowSchedules/:id` - Get a specific schedule
+  - `PATCH /workflowSchedules/:id` - Update a schedule
+  - `DELETE /workflowSchedules/:id` - Delete a schedule
+
+## Workflow Triggers
+
+Triggers allow workflows to run in response to specific events from your integrations.
+
+### Available Triggers
+
+Different integrations support different trigger types:
+
+- **GitHub/GitLab/Bitbucket**:
+  - Pull request opened, merged, or closed
+  - Issue created or updated
+  - Push to specific branches
+  - Release published
+
+- **Linear/Jira**:
+  - Issue created or updated
+  - Issue assigned or status changed
+  - Label added or removed
+
+- **Slack**:
+  - Message posted to specific channels
+  - Reaction added to messages
+  - User mentions
+
+- **Sentry**:
+  - New error detected
+  - Error threshold exceeded
+  - Issue assigned
+
+### Configuring Triggers
+
+Triggers can be configured through:
+
+- The Tembo dashboard UI
+- The Public API endpoints:
+  - `GET /workflowTriggers` - List all triggers
+  - `POST /workflowTriggers` - Create a new trigger
+  - `GET /workflowTriggers/:id` - Get a specific trigger
+  - `PATCH /workflowTriggers/:id` - Update a trigger
+  - `DELETE /workflowTriggers/:id` - Delete a trigger
+
+## Example Workflows
+
+### Documentation Sync
+
+Keep your documentation up-to-date with your codebase:
+
+```json
+{
+  "name": "Weekly Docs Sync",
+  "prompt": "Review commits from the past week in @monorepo and update @docs to reflect any new features, API changes, or important updates. Ensure all public APIs are documented and examples are current."
+}
+```
+
+Schedule: `0 9 * * 1` (Every Monday at 9 AM)
+
+### Security Audit
+
+Regular security checks across your codebase:
+
+```json
+{
+  "name": "Monthly Security Audit",
+  "prompt": "Perform a comprehensive security audit of @api and @web. Check for: 1) Hardcoded secrets or credentials, 2) Vulnerable dependencies, 3) Insecure API endpoints, 4) Missing authentication checks. Create issues for any findings."
+}
+```
+
+Schedule: `0 0 1 * *` (First day of each month at midnight)
+
+### Performance Monitoring
+
+Proactive performance optimization:
+
+```json
+{
+  "name": "Performance Analysis",
+  "prompt": "Analyze the codebase for performance issues: 1) Identify N+1 queries, 2) Find missing database indexes, 3) Detect inefficient algorithms, 4) Check for memory leaks. Submit PRs for quick wins."
+}
+```
+
+Schedule: `0 3 * * 0` (Every Sunday at 3 AM)
+
+### Dependency Updates
+
+Keep dependencies fresh and secure:
+
+```json
+{
+  "name": "Dependency Update Check",
+  "prompt": "Check for outdated dependencies across all repos. Prioritize security updates and major version updates for key packages. Create separate PRs for each major update with detailed change notes."
+}
+```
+
+Schedule: `0 10 * * 3` (Every Wednesday at 10 AM)
+
+## Workflow Runs
+
+Every time a workflow executes, Tembo creates a `WorkflowRun` record that tracks:
+
+- **Status** - Whether the workflow succeeded, failed, or is still running
+- **Run time** - How long the workflow took to execute
+- **Error details** - If the workflow failed, detailed error information
+- **Output** - The results of the workflow execution
+
+You can view workflow run history in the Tembo dashboard under each workflow's details page.
+
+## Best Practices
+
+### Writing Effective Workflow Prompts
+
+1. **Be specific** - Clearly describe what you want the workflow to accomplish
+2. **Set boundaries** - Specify which files, directories, or types of changes to focus on
+3. **Define success criteria** - Explain what a successful outcome looks like
+4. **Use context** - Reference your coding standards, style guides, or architectural decisions
+5. **Break down complex tasks** - Consider creating multiple workflows for complex processes
+
+### Scheduling Considerations
+
+1. **Off-peak hours** - Schedule intensive workflows during low-traffic periods
+2. **Stagger schedules** - Avoid running multiple heavy workflows simultaneously
+3. **Allow buffer time** - Don't schedule workflows too close together
+4. **Consider dependencies** - If workflows depend on each other, schedule them sequentially
+
+### Repository Access
+
+1. **Principle of least privilege** - Only grant access to repos the workflow needs
+2. **Separate concerns** - Create different workflows for different repos or tasks
+3. **Use read-only access** - When a workflow only needs to analyze, not modify code
+
+### Monitoring and Maintenance
+
+1. **Review workflow runs regularly** - Check for failures and adjust prompts as needed
+2. **Update prompts as your codebase evolves** - Workflows may need refinement over time
+3. **Archive unused workflows** - Keep your workflow list clean and manageable
+4. **Test with manual runs** - Before scheduling, manually trigger workflows to verify behavior
+
+## Troubleshooting
+
+### Workflow Not Running
+
+- Verify the cron expression is correct using a cron validator
+- Check that the workflow is not archived
+- Ensure the workflow has access to the required repositories
+- Review recent workflow runs for error messages
+
+### Workflow Failing Consistently
+
+- Review the workflow prompt for clarity and specificity
+- Check if the repository structure or dependencies have changed
+- Verify that any mentioned integrations are still connected
+- Try running the workflow manually to see detailed error output
+
+### Workflow Taking Too Long
+
+- Break complex workflows into smaller, focused tasks
+- Limit the scope of files or directories the workflow should process
+- Consider running the workflow less frequently
+- Review the agent model - some models are faster than others
+
+## API Reference
+
+For programmatic access to workflows, see the [Public API documentation](/api-reference/workflows) for detailed endpoint information.
+
+---
+
+Workflows give you the power to create a truly automated engineering team. Start with simple, focused workflows and gradually build more sophisticated automation as you learn what works best for your team.

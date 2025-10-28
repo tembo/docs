@@ -37,6 +37,7 @@
               "features/overview",
               "features/agents",
               "features/pull-requests",
+              "features/workflows",
               "features/feedback-loop",
               "features/rule-files",
               "features/todo-comments",
