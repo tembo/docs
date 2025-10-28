@@ -38,10 +38,12 @@ Assign Linear issues to Tembo and turn them into PRs.
 
 # Supported Triggers
 
-Tembo maps Linear activity to workflow triggers (use a `linear.*` naming convention in your `triggerName`). Common trigger sources include:
+Tembo maps Linear activity to workflow triggers (use a `linear.*` naming convention in your `triggerName`). Supported events:
 
-- Issue assignment to Tembo
-- Adding repository labels (e.g., `tembo/<repo>` or `tembo/auto`)
-- Label changes related to repository selection
+- `issue.created`
+- `issue.updated`
+- `issue.labeled`
+- `issue.assigned`
+- `comment.created`
 
 See Workflow Automations for how to create triggers from these events.

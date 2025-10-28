@@ -45,9 +45,13 @@ Assign Jira tickets to Tembo and turn them into PRs.
 
 # Supported Triggers
 
-Tembo maps Jira activity to workflow triggers (use a `jira.*` naming convention in your `triggerName`). Common trigger sources include:
+Tembo maps Jira activity to workflow triggers (use a `jira.*` naming convention in your `triggerName`). Supported events:
 
-- Issue assignment or label application (e.g., a `Tembo` label)
-- Status transitions when paired with labels/assignment
+- `issue.created`
+- `issue.updated`
+- `issue.labeled`
+- `issue.assigned`
+- `transition.changed`
+- `comment.created`
 
 See Workflow Automations for how to create triggers from these events.

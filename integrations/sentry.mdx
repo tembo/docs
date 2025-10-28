@@ -29,10 +29,12 @@ Connect Sentry to Tembo for automatic error detection and code fixes.
 
 # Supported Webhooks
 
-Tembo listens to Sentry issue lifecycle events and maps them to workflow triggers (reference them as `sentry.<event>` in your `triggerName`). Common events include:
+Tembo listens to Sentry issue lifecycle events and maps them to workflow triggers (reference them as `sentry.<event>` in your `triggerName`). Supported events:
 
-- New issue created
-- Issue regression
-- Issue resolved/ignored
+- `issue.created`
+- `issue.regression`
+- `issue.resolved`
+- `issue.ignored`
+- `issue.assigned`
 
 See Workflow Automations for creating triggers from these events.

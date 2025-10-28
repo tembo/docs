@@ -68,7 +68,7 @@ Notes:
 
 ### Supported Triggers & Webhooks
 
-Tembo workflows can be triggered from provider webhooks. Use a consistent `triggerName` (we recommend `provider.event` style, e.g., `github.pull_request.opened`).
+Tembo workflows can be triggered from provider webhooks. Use a consistent `triggerName` (we recommend `provider.category.event`, for example `github.pull_request.opened`). The GitHub list below is definitive based on our current implementation; for other providers, see each integration page for the most up-to-date events. If you need an additional event (e.g., GitHub tag creation), reach out to hi@tembo.io.
 
 GitHub:
 
@@ -86,16 +86,42 @@ GitHub:
 - `installation_repositories.added`
 - `installation_repositories.removed`
 
-Other integrations with webhook-based triggers:
+GitLab (examples):
 
-- Slack — app mentions and slash commands. See `integrations/slack.mdx`.
-- Linear — assignment to Tembo and repository label application. See `integrations/linear.mdx`.
-- GitLab — merge request and comment events. See `integrations/gitlab.mdx`.
-- Bitbucket — pull request and comment events. See `integrations/bitbucket.mdx`.
-- Jira — issue label application (e.g., “Tembo”). See `integrations/jira.mdx`.
-- Sentry — error/issue events mapped to repositories. See `integrations/sentry.mdx`.
+- `merge_request.opened`
+- `merge_request.closed`
+- `note.created` (comments on merge requests)
 
-We’ll continue expanding these lists in the integration docs as new events are added. If you need a specific provider event wired to a workflow, contact hi@tembo.io.
+Bitbucket (examples):
+
+- `pull_request.opened`
+- `pull_request.merged`
+- `pull_request.comment_created`
+
+Slack:
+
+- `app_mention`
+- `slash_command`
+- `message_action`
+- `thread_reply`
+
+Linear (examples):
+
+- `issue.assigned`
+- `issue.labeled`
+
+Jira (examples):
+
+- `issue.updated`
+- `issue.labeled`
+
+Sentry (examples):
+
+- `issue.created`
+- `issue.regression`
+
+See the integration pages for details and any provider-specific notes:
+`integrations/github.mdx`, `integrations/gitlab.mdx`, `integrations/bitbucket.mdx`, `integrations/slack.mdx`, `integrations/linear.mdx`, `integrations/jira.mdx`, `integrations/sentry.mdx`.
 
 ## What Happens During a Run
 

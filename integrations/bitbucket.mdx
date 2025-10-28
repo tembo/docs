@@ -104,9 +104,15 @@ If you encounter persistent authentication issues, try disconnecting and reconne
 
 # Supported Webhooks
 
-Tembo listens to common Bitbucket events and maps them to workflow triggers (reference them as `bitbucket.<category>` in your `triggerName`, e.g., `bitbucket.pull_request.opened`). Supported categories include:
+Tembo listens to common Bitbucket events and maps them to workflow triggers (reference them as `bitbucket.<category>` in your `triggerName`, e.g., `bitbucket.pull_request.opened`). Supported events:
 
-- Pull request events: opened, closed/merged, reopened, draft/ready, edits
-- Comments on pull requests
+- `pull_request.opened`
+- `pull_request.updated`
+- `pull_request.reopened`
+- `pull_request.approved`
+- `pull_request.unapproved`
+- `pull_request.merged`
+- `pull_request.closed`
+- `pull_request.comment_created`
 
 See Workflow Automations for creating triggers from these events.

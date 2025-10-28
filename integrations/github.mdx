@@ -31,7 +31,7 @@ Connect GitHub to Tembo to open pull requests to improve your codebase.
 
 # Supported Webhooks
 
-Tembo listens to the following GitHub events and maps them to workflow triggers (you can reference them as `github.<event>` in your `triggerName`, e.g., `github.pull_request.opened`):
+Tembo listens to the following GitHub events and maps them to workflow triggers (reference them as `github.<event>` in your `triggerName`, e.g., `github.pull_request.opened`). Tembo subscribes only to the events listed here (not every GitHub webhook). If you need an additional event (for example, tag creation), contact hi@tembo.io.
 
 - `pull_request.opened`
 - `pull_request.closed`
@@ -47,4 +47,4 @@ Tembo listens to the following GitHub events and maps them to workflow triggers 
 - `installation_repositories.added`
 - `installation_repositories.removed`
 
-See Workflow Automations for how to create triggers that start workflows from these events.
+See Workflow Automations for how to create triggers that start workflows from these events, and for the cross-integration trigger list.
