@@ -80,6 +80,39 @@ The Tembo Sandbox includes the following base dependencies and their versions:
 |------|---------|-------------|
 | **rustup** | 1.28.2 | Rust toolchain installer and version management tool |
 
+### Nix Ecosystem
+
+| Tool | Version | Description |
+|------|---------|-------------|
+| **nix** | latest | Reproducible package manager and build system |
+
+The Nix package manager provides reproducible builds and declarative development environments through Nix flakes:
+
+- **Automatic detection**: If your repository contains a `flake.nix` file, Tembo can automatically detect and use your Nix development shell
+- **Reproducible environments**: Ensure consistent tooling across development, CI/CD, and Tembo's sandbox
+- **Custom tooling**: Install project-specific tools and dependencies that aren't available by default
+
+**Example flake.nix for a project:**
+```nix
+{
+  description = "My project development environment";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  };
+
+  outputs = { self, nixpkgs }: {
+    devShells.x86_64-linux.default = nixpkgs.legacyPackages.x86_64-linux.mkShell {
+      packages = with nixpkgs.legacyPackages.x86_64-linux; [
+        nodejs
+        python3
+        # Add any other tools your project needs
+      ];
+    };
+  };
+}
+```
+
 ## Environment Characteristics
 
 ### Isolation and Security
@@ -177,4 +210,7 @@ Go Ecosystem:
 
 Rust Ecosystem:
 - rustup: 1.28.2
+
+Nix Ecosystem:
+- nix: latest
 ```
