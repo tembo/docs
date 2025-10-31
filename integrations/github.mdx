@@ -24,7 +24,39 @@ Connect GitHub to Tembo to open pull requests to improve your codebase.
   </Step>
   <Step title="Activate Repositories">
     After syncing completes (may take a few minutes), select which repositories you want Tembo to scan under "Active Repositories" on the Integrations page.
-    
+
     Only repositories you activate here will be scanned for issues and receive improvement PRs.
   </Step>
 </Steps>
+
+# Usage
+
+## Automated Scanning
+
+Once you've activated repositories, Tembo automatically scans for:
+
+- **TODO Comments** - Finds and implements requested functionality from TODO items
+- **Security Issues** - Identifies potential security vulnerabilities in your code
+- **Performance Issues** - Detects slow queries, inefficient algorithms, and optimization opportunities
+- **Technical Debt** - Discovers areas that need refactoring or modernization
+- **Code Quality** - Spots potential bugs, unused code, and anti-patterns
+
+## Pull Requests
+
+When Tembo finds an issue it can address, it will:
+
+1. **Create a Pull Request** - Opens a PR with the proposed fix or improvement
+2. **Add Context** - Includes a detailed description of what was changed and why
+3. **Request Review** - Assigns the PR for team review following your repository's workflow
+
+## Working with Tembo PRs
+
+**Reviewing Pull Requests:**
+- Review Tembo's PRs just like any other team member's work
+- Leave comments directly on the code if you need changes
+- Use the [Feedback Loop](/features/feedback-loop) feature to have Tembo address your review comments automatically
+
+**Best Practices:**
+- Configure repository settings to match your team's preferences
+- Use [Rule Files](/features/rule-files) to help Tembo understand your coding standards
+- Set up [Hooks](/features/hooks) to customize Tembo's behavior for your workflow
