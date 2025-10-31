@@ -99,6 +99,18 @@ The sandbox environment is designed to integrate seamlessly with your developmen
 - **Repository access**: Full access to your repository contents and history
 - **Build tool compatibility**: Support for common build systems and package managers
 - **Testing frameworks**: Compatible with popular testing tools and frameworks
+- **Nix dev shell support**: Automatically detects and uses Nix flakes for reproducible development environments
+
+### Nix Development Shells
+
+Tembo's sandbox environment now supports Nix flakes, enabling reproducible development environments for your projects. When working with a repository that contains a `flake.nix` file:
+
+- **Automatic detection**: The sandbox automatically discovers your root `flake.nix` file
+- **Package building**: Build and use packages defined in your Nix flake
+- **Reproducible environments**: Ensure consistent tooling across different development environments
+- **Version management**: Lock dependency versions for predictable builds
+
+This feature is particularly useful for projects that require specific tool versions or have complex dependency requirements that are managed through Nix.
 
 ## Best Practices
 
