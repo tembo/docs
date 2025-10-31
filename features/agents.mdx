@@ -7,45 +7,58 @@ Tembo supports agents to solve your software engineering tasks. Each agent has d
 
 ## Available Agents
 
+| Agent           | Provider         | Default Model       |
+| --------------- | ---------------- | ------------------- |
+| **Claude Code** | Anthropic        | `claude-4-5-sonnet` |
+| **Codex**       | OpenAI           | `gpt-5-medium`      |
+| **Opencode**    | Anthropic/OpenAI | `claude-4-5-sonnet` |
+| **Amp**         | Anthropic        | `claude-4-5-sonnet` |
+
 ### Claude Code (Default)
 
-Claude Code is Tembo's default agent, powered by Anthropic's Claude models. It provides the most reliable and battle-tested experience for solving software engineering tasks.
+Claude Code is Tembo's default agent, powered by Anthropic's Claude models.
 
 **Supported Models:**
-- `claude-4-5-sonnet` (Default)
-- `claude-4.1-opus`
-- `claude-4-sonnet`
-- `claude-3-7-sonnet`
+
+- `claude-4-5-sonnet` (Default) - Balanced performance and cost
+- `claude-4-5-haiku` - Fastest, lightweight reasoning
+- `claude-4.1-opus` - Maximum capability for complex tasks
+- `claude-4-sonnet` - Fast and efficient
 
 ### Codex
 
-Codex is an agent powered by OpenAI's latest GPT-5 models with varying reasoning levels.
+Codex is an agent powered by OpenAI's latest GPT-5 models with varying reasoning levels, allowing you to choose the right balance of speed and thoroughness.
 
 **Supported Models:**
-- `gpt-5-medium` (Default)
-- `gpt-5-minimal`
-- `gpt-5-low`
-- `gpt-5-high`
+
+- `gpt-5-medium` (Default) - Balanced reasoning
+- `gpt-5-minimal` - Fastest, lightweight reasoning
+- `gpt-5-low` - Quick reasoning
+- `gpt-5-high` - Deep reasoning for complex problems
 
 ### Opencode
 
-Opencode is an alternative agent supporting both Anthropic Claude models and OpenAI GPT models.
+Opencode is an alternative agent supporting both Anthropic Claude models and OpenAI GPT models, providing flexibility in model selection.
 
 **Supported Models:**
-- `claude-4-5-sonnet` (Default)
-- `claude-4.1-opus`
-- `claude-4-sonnet`
-- `claude-3-7-sonnet`
+
+- `claude-4-5-sonnet` (Default) - Balanced performance and cost
+- `claude-4-5-haiku` - Fastest, lightweight reasoning
+- `claude-4.1-opus` - Maximum capability for complex tasks
+- `claude-4-sonnet` - Fast and efficient
 
 ### Amp
 
-Amp is a powerful AI coding agent powered by Anthropic's Claude models, designed for interactive development workflows. Amp uses smart model detection and currently uses [Sonnet 4.5](https://ampcode.com/news/claude-sonnet-4-5) as its main model.
+Amp is a powerful AI coding agent powered by Anthropic's Claude models.
+
+Amp uses smart model detection and currently uses [Sonnet 4.5](https://ampcode.com/news/claude-sonnet-4-5) as its main model.
 
 ## Selecting an Agent
 
 Agents are specified using an agent key format: `agentType:model`
 
 **Examples:**
+
 - `claudeCode:claude-4-5-sonnet`
 - `codex:gpt-5-medium`
 - `opencode:claude-4-5-sonnet`
@@ -53,16 +66,18 @@ Agents are specified using an agent key format: `agentType:model`
 
 If no agent is specified, Tembo defaults to `claudeCode:claude-4-5-sonnet`.
 
-## Configuration Files
+## Using Rule Files
 
-Each agent can read configuration from rule files in your repository:
+Rule files allow you to provide agent-specific instructions and coding standards. Each agent reads from its designated configuration file in your repository root (see **Rule File** listed above for each agent).
 
-- **Claude Code** looks for `CLAUDE.md` or `claude.md`
-- **Codex** looks for `AGENTS.md` or `agents.md`
-- **Opencode** looks for `AGENTS.md` or `agents.md`
-- **Amp** looks for `AGENTS.md` or `AGENT.md`
+These files can include:
 
-These files allow you to provide agent-specific instructions and coding standards. Learn more about [rule files](/features/rule-files).
+- Coding standards and style guidelines
+- Project-specific conventions
+- Commands to run before or after certain operations
+- Context about your architecture and patterns
+
+Learn more about [rule files](/features/rule-files).
 
 ## Switching Between Agents
 
