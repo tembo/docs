@@ -13,6 +13,7 @@ Tembo supports agents to solve your software engineering tasks. Each agent has d
 | **Codex**       | OpenAI           | `gpt-5-medium`      |
 | **Opencode**    | Anthropic/OpenAI | `claude-4-5-sonnet` |
 | **Amp**         | Anthropic        | `claude-4-5-sonnet` |
+| **Cursor**      | Anthropic/OpenAI | `gpt-5-medium`      |
 
 ### Claude Code (Default)
 
@@ -53,6 +54,17 @@ Amp is a powerful AI coding agent powered by Anthropic's Claude models.
 
 Amp uses smart model detection and currently uses [Sonnet 4.5](https://ampcode.com/news/claude-sonnet-4-5) as its main model.
 
+### Cursor
+
+Cursor is an AI coding agent supporting both Anthropic Claude models and OpenAI GPT models through the Cursor CLI.
+
+**Supported Models:**
+
+- `claude-4-5-sonnet` - Balanced performance and cost
+- `claude-4.1-opus` - Maximum capability for complex tasks
+- `gpt-5` - Powerful reasoning and code generation
+- `composer-1` - OpenAI's composer model
+
 ## Selecting an Agent
 
 Agents are specified using an agent key format: `agentType:model`
@@ -63,6 +75,7 @@ Agents are specified using an agent key format: `agentType:model`
 - `codex:gpt-5-medium`
 - `opencode:claude-4-5-sonnet`
 - `amp:claude-4-5-sonnet`
+- `cursor:gpt-5`
 
 If no agent is specified, Tembo defaults to `claudeCode:claude-4-5-sonnet`.
 
