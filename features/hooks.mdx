@@ -25,9 +25,20 @@ Create a `.tembo.json` file in your repository root with the following structure
       "npm run test",
       "npm run build"
     ]
-  }
+  },
+  "mcpServers": ["playwright", "context7"]
 }
 ```
+
+### MCP Servers
+
+The optional `mcpServers` array allows you to enable [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) servers that provide additional tools and context to Tembo's AI agents during task execution.
+
+**Available MCP Servers:**
+- `playwright` - Browser automation and testing capabilities
+- `context7` - Additional context and tooling support
+
+MCP servers are automatically configured and available to the agent throughout the task execution. The `tembo` MCP server is always enabled by default and provides core Tembo functionality.
 
 ## Available Hooks
 
