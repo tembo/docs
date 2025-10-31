@@ -106,3 +106,41 @@ When you mention `@tembo` in a thread, the agent automatically:
 - Reads the entire conversation history
 - Understands the context from previous messages
 - Incorporates team discussions into the solution
+
+## Status Updates
+
+Tembo keeps you informed throughout the task lifecycle:
+
+**Reaction indicators on your message:**
+- 👀 **Eyes** - Task received and processing
+- ✅ **Check mark** - Task completed successfully
+- ❌ **X mark** - Task failed or encountered an error
+
+**Direct messages for longer tasks:**
+- Progress updates as the agent works
+- Pull request links when code changes are ready
+- Error details if the task cannot be completed
+
+**Channel updates when complete:**
+- Links to generated pull requests with summary of changes
+
+## Best Practices
+
+**Write clear, specific task descriptions:**
+
+Good examples:
+```
+@tembo Add error handling to the user registration endpoint
+@tembo Optimize the product search query by adding an index on the name column
+```
+
+Less effective:
+```
+@tembo Fix the bug
+@tembo Make it faster
+```
+
+**Use threads for collaboration:**
+1. Team discusses the problem and potential approaches in a thread
+2. When ready, mention `@tembo` with the final task description
+3. Tembo reads the full thread context and incorporates the discussion
