@@ -41,7 +41,8 @@
               "features/rule-files",
               "features/todo-comments",
               "features/hooks",
-              "features/sandbox-environment"
+              "features/sandbox-environment",
+              "features/mcp-servers"
             ]
           },
           {
