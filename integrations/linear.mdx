@@ -28,8 +28,15 @@ Assign Linear issues to Tembo and turn them into PRs.
     - For multi-repo tasks (e.g., full-stack features), add multiple labels before assigning to Tembo
     - Example: Add both `tembo/frontend` and `tembo/backend` labels for a task that requires changes to both repositories
 
-    **Default repository:**
-    You can set a default repository in your settings to avoid adding labels to every issue when working primarily in one repository.
+    **Setting a default repository:**
+
+    If you work primarily in one repository, you can configure a default repository in the [Linear integration settings](https://app.tembo.io/integrations). This eliminates the need to add repository labels to every issue.
+
+    - Navigate to Settings → Integrations → Linear
+    - Select your default repository from the dropdown
+    - All issues assigned to Tembo without repository labels will use this default
+
+    **Note:** Repository labels on individual issues always take precedence over the default repository setting.
   </Step>
   <Step title="Assignment">
     Now you can assign Linear issues to Tembo to trigger solutions.
