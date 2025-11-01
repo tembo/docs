@@ -45,30 +45,23 @@ This scans `/.tembo/workflows` and upserts workflows in your org.
 ### 1) Scheduled (Cron)
 Create schedules that enqueue your workflow at specific times using standard cron expressions.
 
-- Create: `POST /workflowSchedules` with `{ "workflowId": "...", "cron": "0 2 * * *" }`
-- List: `GET /workflowSchedules?workflowId=...`
-- Update: `PUT /workflowSchedules/:id` with `{ "cron": "*/15 * * * *" }`
-- Delete: `DELETE /workflowSchedules/:id`
-
-Notes:
+- Use the Tembo UI to create, edit, and delete schedules for a workflow.
 - Tembo checks schedules every minute and enqueues the workflow when due.
 - Each schedule tracks `lastRunAt` and `nextRunAt` for visibility.
 
 ### 2) Event Triggers
 Create triggers that tie a workflow to an event. Triggers can be scoped to an integration (e.g., GitHub, GitLab, Bitbucket, Linear, Slack).
 
-- Create: `POST /workflowTriggers` with `{ "workflowId": "...", "triggerName": "my.event", "integrationId": "optional" }`
-- List: `GET /workflowTriggers?workflowId=...`
-- Update: `PUT /workflowTriggers/:id` with `{ "triggerName": "new.event", "integrationId": "optional" }`
-- Delete: `DELETE /workflowTriggers/:id`
-
-Notes:
+- Use the Tembo UI to create, list, update, and delete triggers for a workflow.
 - `triggerName` is a free-form identifier you use consistently from your integration/webhook to fire the workflow.
 - `integrationId` is optional; use it to associate a trigger with a specific connected provider.
 
 ### Supported Triggers & Webhooks
 
-Tembo workflows can be triggered from provider webhooks. Use a consistent `triggerName` (we recommend `provider.category.event`, for example `github.pull_request.opened`). The GitHub list below is definitive based on our current implementation; for other providers, see each integration page for the most up-to-date events. If you need an additional event (e.g., GitHub tag creation), reach out to hi@tembo.io.
+Tembo workflows can be triggered from provider webhooks. Use a consistent `triggerName` (we recommend `provider.category.event`, for example `github.pull_request.opened`).
+
+- The exact event set comes from our current webhook handlers in the monorepo and may evolve. The Integrations page in the app shows the live list for your org.
+- The GitHub list below reflects our current implementation; for other providers, see each integration page for the most up-to-date events. If you need an additional event (e.g., GitHub tag creation), reach out to hi@tembo.io.
 
 GitHub:
 
@@ -143,48 +136,11 @@ See the integration pages for details and any provider-specific notes:
 - Schedules and triggers are also unique per org by their generated names (Tembo adds short hashes under the hood).
 - Credits: Workflows ultimately execute through the same engine that solves issues. Standard credit checks apply when execution reaches issue-solving.
 
-## Example API Calls
+## Managing via UI
 
-Create a daily schedule at 2 AM UTC:
-
-```bash
-curl -X POST \
-  "$API_BASE/workflowSchedules" \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "workflowId": "wf_123",
-    "cron": "0 2 * * *"
-  }'
-```
-
-Create an event trigger connected to a GitHub integration:
-
-```bash
-curl -X POST \
-  "$API_BASE/workflowTriggers" \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "workflowId": "wf_123",
-    "triggerName": "github.pull_request.opened",
-    "integrationId": "int_gh_456"
-  }'
-```
-
-List schedules for a workflow:
-
-```bash
-curl -s "$API_BASE/workflowSchedules?workflowId=wf_123" \
-  -H "Authorization: Bearer $TOKEN"
-```
-
-List triggers for a workflow:
-
-```bash
-curl -s "$API_BASE/workflowTriggers?workflowId=wf_123" \
-  -H "Authorization: Bearer $TOKEN"
-```
+- Create and manage schedules from the workflow’s page in the Tembo UI.
+- Create and manage event triggers from the workflow’s page or the Integration settings.
+- Public API endpoints for schedules and triggers may not be available for your account yet; check the Public API tab or contact support for access.
 
 ---
 
