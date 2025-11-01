@@ -41,6 +41,19 @@ Assign Linear issues to Tembo and turn them into PRs.
   <Step title="Assignment">
     Now you can assign Linear issues to Tembo to trigger solutions.
   </Step>
+</Steps> 
+
+# Supported Triggers
+
+Tembo maps Linear activity to workflow triggers (use a `linear.*` naming convention in your `triggerName`). The Integrations page in the app shows the live set enabled for your org. Supported events:
+
+- `issue.created`
+- `issue.updated`
+- `issue.labeled`
+- `issue.assigned`
+- `comment.created`
+
+See Workflow Automations for how to create triggers from these events.
 </Steps>
 
 # Usage
