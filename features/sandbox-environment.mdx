@@ -101,6 +101,17 @@ The sandbox environment is designed to integrate seamlessly with your developmen
 - **Testing frameworks**: Compatible with popular testing tools and frameworks
 - **Nix dev shell support**: Automatically detects and uses Nix flakes for reproducible development environments
 
+### Model Context Protocol (MCP) Support
+
+Tembo supports the Model Context Protocol (MCP), allowing AI agents to access custom tools, resources, and integrations during task execution. MCP servers can be configured to provide agents with additional capabilities such as:
+
+- **Custom API integrations**: Connect to internal tools and services
+- **Database access**: Query and interact with databases directly
+- **File system operations**: Extended file manipulation capabilities
+- **External data sources**: Access to documentation, wikis, or knowledge bases
+
+To configure MCP servers for your organization, add them to your organization settings in the Tembo dashboard. Agents will automatically have access to configured MCP servers when working on tasks.
+
 ### Nix Development Shells
 
 Tembo's sandbox environment supports Nix flakes for reproducible development environments. To use this feature, your repository must have a `flake.nix` file in the root directory that defines a development shell named `default` for the `x86_64-linux` platform.
