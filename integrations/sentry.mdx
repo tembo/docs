@@ -10,6 +10,7 @@ Connect Sentry to Tembo for automatic error detection and code fixes.
 - Monitor errors and analyzes stack traces
 - Generate pull requests with specific code fixes
 - Auto-fix issues in your codebase
+- Automatic pull request creation when errors are detected
 
 # Installation
 
@@ -22,7 +23,46 @@ Connect Sentry to Tembo for automatic error detection and code fixes.
   </Step>
   <Step title="Map Projects">
     Map your Sentry projects to GitHub repositories under "Projects" on the Integrations page.
-    
+
     Only mapped projects will generate pull requests with code fixes.
   </Step>
 </Steps>
+
+# Usage
+
+## How It Works
+
+Once connected, Tembo monitors your Sentry projects for errors:
+
+1. **Error Detection** - When a new error is detected in Sentry, Tembo receives a webhook notification
+2. **Stack Trace Analysis** - Tembo analyzes the error message, stack trace, and related context
+3. **Code Investigation** - Tembo examines the relevant code in your repository to understand the root cause
+4. **Fix Generation** - A pull request is automatically created with a proposed fix for the issue
+5. **Review & Merge** - Review the fix in your normal PR workflow, provide feedback if needed, and merge when ready
+
+## What Gets Fixed
+
+Tembo can automatically address common error patterns including:
+
+- **Null/undefined reference errors** - Missing null checks, optional chaining opportunities
+- **Type errors** - Type mismatches, incorrect function signatures
+- **Logic errors** - Off-by-one errors, incorrect conditionals
+- **API errors** - Incorrect API usage, missing error handling
+- **Configuration errors** - Environment variable issues, missing config values
+
+## Best Practices
+
+**Keep your Sentry projects organized:**
+- Map each Sentry project to the correct GitHub repository
+- Use consistent naming between Sentry and GitHub for easier management
+- Ensure error grouping in Sentry is configured appropriately
+
+**Write helpful error messages:**
+- Include context in your error logs to help Tembo understand the issue
+- Add relevant variables and state information when logging errors
+- Use structured logging when possible
+
+**Review fixes carefully:**
+- While Tembo's fixes are generally accurate, always review the changes
+- Provide feedback through PR comments if the fix needs adjustments
+- Merge fixes promptly to resolve production issues quickly
