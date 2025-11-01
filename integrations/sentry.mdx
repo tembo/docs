@@ -10,6 +10,7 @@ Connect Sentry to Tembo for automatic error detection and code fixes.
 - Monitor errors and analyzes stack traces
 - Generate pull requests with specific code fixes
 - Auto-fix issues in your codebase
+- Model Context Protocol (MCP) server integration for enhanced agent capabilities
 
 # Installation
 
@@ -22,7 +23,17 @@ Connect Sentry to Tembo for automatic error detection and code fixes.
   </Step>
   <Step title="Map Projects">
     Map your Sentry projects to GitHub repositories under "Projects" on the Integrations page.
-    
+
     Only mapped projects will generate pull requests with code fixes.
   </Step>
 </Steps>
+
+# Model Context Protocol (MCP)
+
+When Sentry is connected, Tembo agents automatically gain access to the Sentry MCP server. This provides agents with enhanced capabilities to:
+
+- Query error and issue data directly from Sentry
+- Analyze stack traces and error patterns
+- Access monitoring data for better context when fixing bugs
+
+The MCP integration is automatically enabled when you connect Sentry - no additional configuration required.
