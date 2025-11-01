@@ -12,18 +12,25 @@ Refine, iterate, and improve on Tembo's [pull requests](/features/pull-requests)
 
 The Feedback Loop works automatically once you have:
 - [GitHub integration](/integrations/github) enabled in your Tembo workspace
-- The feedback loop for [GitLab](/integrations/gitlab) is coming soon!
 - At least one pull request created by Tembo (from error detection, manual assignment, etc.)
 
 That's it! No additional setup required.
+
+<Note>
+**Git Provider Support**: The Feedback Loop currently supports GitHub. Support for [GitLab](/integrations/gitlab) and [Bitbucket](/integrations/bitbucket) is coming soon!
+</Note>
 
 
 ## How it works
 
 1. **Initial Solution** - Tembo creates a pull request to solve an issue
-2. **Review & Comment** - You review the PR and leave feedback (tag @tembo in your GitHub review or comments)  
+2. **Review & Comment** - You review the PR and leave feedback (tag @tembo in your GitHub review or comments)
 3. **Automatic Retry** - Tembo processes your feedback and updates the PR with improvements
 4. **Iteration** - Continue providing feedback until you're satisfied with the solution
+
+<Warning>
+**Important**: You must mention `@tembo` in your PR comments or reviews for Tembo to process your feedback. This prevents accidental triggers from internal team discussions or comments meant for other team members.
+</Warning>
 
 ## Providing Feedback
 
