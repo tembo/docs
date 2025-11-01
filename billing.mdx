@@ -10,10 +10,27 @@ We currently sell credit packs of different sizes to meet your needs.
 
 Credits are consumed when Tembo analyzes your code and generates pull requests:
 
-- Each credit typically produces one pull request
-- Complex issues may require more credits
-- Simple fixes use fewer credits
-- Credits never expire, so you can purchase them at your own pace
+- **Complex issues may require more credits** - Credit consumption is based on LLM tokens used, which varies depending on the complexity of the task
+- **Simple fixes use fewer credits** - Straightforward tasks typically consume fewer tokens and therefore fewer credits
+- **Credits never expire** - Purchase credits at your own pace without worrying about expiration
+- **Unused credits roll over** - Any credits you don't use remain in your account indefinitely
+
+## What Consumes Credits
+
+Credits are used for:
+
+- Creating pull requests from assigned issues (Linear, Jira, Slack)
+- Fixing production errors detected from Sentry
+- Optimizing database queries and indexes
+- Processing feedback on pull requests through the [Feedback Loop](/features/feedback-loop)
+
+## Credit Refunds
+
+In certain situations, you may receive automatic credit refunds:
+
+- **Failed tasks** - If Tembo is unable to complete a task due to an internal error, the credit is refunded
+- **Duplicate issues** - If the same issue is queued multiple times, duplicate attempts may be refunded
+- **Invalid inputs** - Tasks that fail due to configuration issues or missing access may be refunded
 
 ## Usage and Monitoring
 
