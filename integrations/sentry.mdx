@@ -7,9 +7,21 @@ Connect Sentry to Tembo for automatic error detection and code fixes.
 
 # Features
 
-- Monitor errors and analyzes stack traces
-- Generate pull requests with specific code fixes
-- Auto-fix issues in your codebase
+- Monitors errors and analyzes stack traces in real-time
+- Generates pull requests with specific code fixes for detected issues
+- Auto-fixes bugs in your codebase as soon as they're detected
+- Reduces time from error detection to resolution
+
+# How It Works
+
+Once connected, Tembo monitors your Sentry projects for new errors. When an error is detected:
+
+1. Tembo analyzes the stack trace and error context
+2. Identifies the root cause in your codebase
+3. Generates a fix and creates a pull request
+4. Notifies your team for review
+
+This happens automatically - no manual intervention needed.
 
 # Installation
 
@@ -22,7 +34,14 @@ Connect Sentry to Tembo for automatic error detection and code fixes.
   </Step>
   <Step title="Map Projects">
     Map your Sentry projects to GitHub repositories under "Projects" on the Integrations page.
-    
+
     Only mapped projects will generate pull requests with code fixes.
   </Step>
+  <Step title="Start Monitoring">
+    Once mapped, Tembo immediately begins monitoring for new errors. When errors are detected, pull requests will be created automatically in the mapped repositories.
+  </Step>
 </Steps>
+
+<Note>
+Tembo responds to errors as they occur in real-time. For high-priority production issues, pull requests are typically created within minutes of error detection.
+</Note>
