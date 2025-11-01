@@ -7,9 +7,10 @@ Connect Sentry to Tembo for automatic error detection and code fixes.
 
 # Features
 
-- Monitor errors and analyzes stack traces
+- Monitor errors and analyze stack traces in real-time
 - Generate pull requests with specific code fixes
-- Auto-fix issues in your codebase
+- Auto-fix issues in your codebase as they occur
+- Reduce mean time to resolution (MTTR) for production errors
 
 # Installation
 
@@ -22,7 +23,48 @@ Connect Sentry to Tembo for automatic error detection and code fixes.
   </Step>
   <Step title="Map Projects">
     Map your Sentry projects to GitHub repositories under "Projects" on the Integrations page.
-    
+
     Only mapped projects will generate pull requests with code fixes.
   </Step>
 </Steps>
+
+# How it Works
+
+Once configured, Tembo continuously monitors your Sentry projects for new errors:
+
+1. **Error Detection** - When Sentry captures an error, Tembo receives a notification
+2. **Stack Trace Analysis** - Tembo analyzes the stack trace to identify the root cause
+3. **Code Investigation** - The agent examines the relevant code in your repository
+4. **Solution Generation** - A fix is developed based on the error context and code analysis
+5. **Pull Request Creation** - Tembo opens a PR with the proposed fix for your review
+
+## Project Mapping
+
+Mapping your Sentry projects to repositories is essential for Tembo to:
+
+- Locate the correct codebase for error resolution
+- Create pull requests in the appropriate repository
+- Understand your project structure and dependencies
+
+**To map a project:**
+1. Go to the Integrations page and find your Sentry integration
+2. Click on "Projects" to view all available Sentry projects
+3. For each project, select the corresponding GitHub repository from the dropdown
+4. Save your mappings
+
+# Best Practices
+
+**Map projects accurately:**
+- Ensure each Sentry project is mapped to the correct repository
+- For monorepos, map all relevant Sentry projects to the same repository
+- Verify mappings after setup by triggering a test error
+
+**Review pull requests promptly:**
+- Tembo's fixes are generated based on stack traces and code analysis
+- Review the proposed changes to ensure they address the root cause
+- Use the [feedback loop](/features/feedback-loop) to refine solutions if needed
+
+**Monitor error patterns:**
+- Similar errors may indicate systemic issues worth addressing
+- Use Sentry's grouping features to track related errors
+- Consider broader refactoring for frequently occurring error patterns
