@@ -10,6 +10,7 @@ Connect Sentry to Tembo for automatic error detection and code fixes.
 - Monitor errors and analyzes stack traces
 - Generate pull requests with specific code fixes
 - Auto-fix issues in your codebase
+- **Model Context Protocol (MCP) support** - Agents can directly query Sentry data during task execution
 
 # Installation
 
@@ -22,7 +23,40 @@ Connect Sentry to Tembo for automatic error detection and code fixes.
   </Step>
   <Step title="Map Projects">
     Map your Sentry projects to GitHub repositories under "Projects" on the Integrations page.
-    
+
     Only mapped projects will generate pull requests with code fixes.
   </Step>
 </Steps>
+
+# Model Context Protocol (MCP)
+
+The Sentry integration includes MCP server support, which provides AI agents with direct access to your Sentry data during task execution.
+
+## What is MCP?
+
+Model Context Protocol is a standardized way for AI agents to interact with external data sources. When enabled, agents working on your tasks can:
+
+- Query error details, stack traces, and event data from Sentry
+- Access issue metadata, tags, and user impact information
+- Retrieve monitoring data to understand error patterns
+- Make more informed decisions when fixing bugs
+
+## How it Works
+
+When an agent is working on a task related to a Sentry error:
+
+1. The agent automatically gets access to a Sentry MCP server
+2. The server is authenticated with your Sentry integration credentials
+3. The agent can query Sentry data directly without manual intervention
+4. This enables deeper context and more accurate fixes
+
+## Benefits
+
+- **Richer Context**: Agents can access complete error information including stack traces, breadcrumbs, and user context
+- **Faster Resolution**: Direct access to Sentry data eliminates the need for manual error investigation
+- **Better Fixes**: Agents can analyze error patterns and frequency to create more comprehensive solutions
+- **Automatic**: No additional configuration required - MCP is enabled automatically when you connect Sentry
+
+<Note>
+MCP support is automatically enabled when you connect your Sentry integration. No additional setup is required.
+</Note>
