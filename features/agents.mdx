@@ -65,6 +65,18 @@ Cursor is an AI coding agent supporting both Anthropic Claude models and OpenAI 
 - `gpt-5` - Powerful reasoning and code generation
 - `composer-1` - OpenAI's composer model
 
+## Choosing the Right Agent
+
+Different agents excel at different types of tasks. Here's guidance on when to use each:
+
+**For most tasks:** Start with **Claude Code** (default). It provides the best balance of code quality, reliability, and cost-effectiveness for general software engineering work.
+
+**For complex refactoring or architectural changes:** Use **Claude Code with `claude-4.1-opus`** or **Codex with `gpt-5-high`** for deeper reasoning capabilities.
+
+**For quick fixes and simple updates:** Use **Claude Code with `claude-4-5-haiku`** or **Codex with `gpt-5-minimal`** for faster execution on straightforward tasks.
+
+**For team consistency:** If your team already uses a specific IDE or coding environment (Cursor, Amp, etc.), select the matching agent for familiar code patterns and style.
+
 ## Selecting an Agent
 
 Agents are specified using an agent key format: `agentType:model`
