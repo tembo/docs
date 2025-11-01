@@ -1,0 +1,170 @@
+---
+title: 'MCP Servers'
+icon: 'plug'
+description: 'Extend your agents with Model Context Protocol servers for additional tools and integrations'
+---
+
+MCP (Model Context Protocol) servers extend your agents with additional tools, integrations, and capabilities. Tembo supports both built-in MCP servers and custom configurations.
+
+## What is MCP?
+
+The Model Context Protocol is an open standard that allows AI agents to connect to external tools, APIs, and data sources. MCP servers provide tools that your agents can use to interact with external systems, from browser automation to project management integrations.
+
+Learn more at [modelcontextprotocol.io](https://modelcontextprotocol.io).
+
+## Built-in MCP Servers
+
+Tembo provides several MCP servers out of the box:
+
+| Server       | Type    | Description                                  |
+| ------------ | ------- | -------------------------------------------- |
+| **Tembo**    | `stdio` | Core Tembo tools (sub-issues, Slack)        |
+| **Playwright** | `stdio` | Browser automation and web testing         |
+| **Context7** | `stdio` | Context management and search              |
+
+### Tembo MCP
+
+The Tembo MCP server provides tools for interacting with Tembo's features:
+
+- **createSubIssue** - Create sub-issues from tasks
+- **sendSlackMessage** - Send messages to Slack channels (requires Slack integration)
+
+### Playwright MCP
+
+Enables agents to automate browser interactions:
+
+- Navigate web pages
+- Fill forms and click elements
+- Take screenshots
+- Run automated tests
+
+### Context7 MCP
+
+Provides enhanced context management capabilities for your agents.
+
+## Integration MCP Servers
+
+When you connect integrations to Tembo, additional MCP servers become available automatically:
+
+| Integration | Server Type | Tools Provided                                |
+| ----------- | ----------- | --------------------------------------------- |
+| **GitHub**  | `stdio`     | Repository management, issues, pull requests |
+| **Linear**  | `http`      | Issue tracking, project management            |
+
+These servers are automatically configured with the appropriate authentication when you connect the integration.
+
+## Custom MCP Servers
+
+You can add custom MCP servers in your organization settings. Tembo supports three types of MCP servers:
+
+### Server Types
+
+**stdio** - Local process-based servers
+```json
+{
+  "command": "node",
+  "args": ["path/to/server.js"],
+  "env": {
+    "API_KEY": "your-key"
+  }
+}
+```
+
+**http** - HTTP-based servers
+```json
+{
+  "url": "https://example.com/mcp",
+  "headers": {
+    "Authorization": "Bearer token"
+  }
+}
+```
+
+**sse** - Server-Sent Events servers
+```json
+{
+  "url": "https://example.com/mcp/sse",
+  "headers": {
+    "Authorization": "Bearer token"
+  }
+}
+```
+
+## Configuration Format
+
+Custom MCP servers can be configured using either object or array format:
+
+### Object Format
+
+```json
+{
+  "mcpServers": {
+    "my-server": {
+      "command": "node",
+      "args": ["server.js"],
+      "env": {
+        "API_KEY": "key"
+      }
+    },
+    "api-server": {
+      "url": "https://api.example.com/mcp",
+      "headers": {
+        "Authorization": "Bearer token"
+      }
+    }
+  }
+}
+```
+
+### Array Format
+
+```json
+{
+  "mcpServers": [
+    {
+      "name": "my-server",
+      "type": "stdio",
+      "command": "node",
+      "args": ["server.js"],
+      "env": {
+        "API_KEY": "key"
+      }
+    },
+    {
+      "name": "api-server",
+      "type": "http",
+      "url": "https://api.example.com/mcp"
+    }
+  ]
+}
+```
+
+## Adding Custom MCP Servers
+
+To add custom MCP servers to your organization:
+
+1. Navigate to **Settings** > **Agents** in your Tembo dashboard
+2. Scroll to the **Custom MCP Servers** section
+3. Enter your MCP configuration in JSON format
+4. Press `Cmd+Enter` (Mac) or `Ctrl+Enter` (Windows/Linux) to save
+5. New tasks will automatically use the configured MCP servers
+
+## Best Practices
+
+**Security**: Store sensitive credentials as environment variables rather than hardcoding them in configuration.
+
+**Testing**: Test MCP servers locally before adding them to your organization configuration.
+
+**Documentation**: Document custom MCP servers for your team, including what tools they provide and when to use them.
+
+**Version Control**: Keep MCP server configurations in version control alongside your rule files for team consistency.
+
+## Troubleshooting
+
+**MCP server not available**: Ensure the server configuration is valid JSON and all required fields are provided.
+
+**Authentication errors**: Verify credentials and API keys are correct and have the necessary permissions.
+
+**Connection issues**: For HTTP/SSE servers, check that the URL is accessible and the server is running.
+
+For additional help, contact [support](mailto:hi@tembo.io).
