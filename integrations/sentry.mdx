@@ -58,3 +58,22 @@ To help Tembo generate better fixes:
 - Always review PRs before merging - Tembo provides solutions, you decide what gets deployed
 - Use the [Feedback Loop](/features/feedback-loop) to request improvements by tagging `@tembo` in PR comments
 - Test the fix in a staging environment before deploying to production
+
+# MCP Server Integration
+
+Tembo provides a [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server for Sentry, enabling AI coding agents to directly interact with your Sentry data during task execution.
+
+## What is MCP?
+
+Model Context Protocol is a standardized way for AI applications to connect to external data sources and tools. With MCP, agents can query Sentry error data, retrieve stack traces, and access issue details in real-time while solving problems.
+
+## Using the Sentry MCP Server
+
+When you connect Sentry to Tembo, the MCP server is automatically available to agents working on your tasks. Agents can:
+
+- **Query error data** - Search and filter Sentry issues programmatically
+- **Retrieve stack traces** - Access detailed error information for debugging
+- **Check issue status** - Verify if errors are resolved or still occurring
+- **Analyze error trends** - Understand error patterns and frequency
+
+This enables agents to make more informed decisions when fixing bugs, as they have direct access to production error data and can verify their fixes against actual error conditions.
