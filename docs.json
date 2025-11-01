@@ -36,6 +36,7 @@
             "pages": [
               "features/overview",
               "features/agents",
+              "features/mcp-servers",
               "features/pull-requests",
               "features/feedback-loop",
               "features/workflow-automations",

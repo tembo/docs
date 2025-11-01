@@ -3,13 +3,14 @@ title: "Sentry"
 icon: "gear"
 ---
 
-Connect Sentry to Tembo for automatic error detection and code fixes.
+Connect Sentry to Tembo for automatic error detection and code fixes. When Sentry detects an error in your application, Tembo analyzes the stack trace and creates a pull request with a targeted fix.
 
 # Features
 
-- Monitor errors and analyzes stack traces
-- Generate pull requests with specific code fixes
-- Auto-fix issues in your codebase
+- **Automatic error monitoring** - Detects new errors as they occur in your production environment
+- **Stack trace analysis** - Analyzes error context, breadcrumbs, and related data to understand root causes
+- **Intelligent fixes** - Generates pull requests with code changes that address the specific error
+- **Webhook-driven** - Responds immediately when Sentry reports new issues
 
 # Installation
 
@@ -18,12 +19,12 @@ Connect Sentry to Tembo for automatic error detection and code fixes.
     Navigate to the [Integrations page](https://app.tembo.io/integrations) in Tembo and click the `Connect` button next to Sentry.
   </Step>
   <Step title="Authorize">
-    Authorize Tembo to access your Sentry account with permissions to read error data and receive webhook events. You'll be redirected back to the Integrations page when complete.
+    Authorize Tembo to access your Sentry account with permissions to read error data and receive webhook events. You'll be redirected back to the Integrations page when authorization is complete.
   </Step>
   <Step title="Map Projects">
     Map your Sentry projects to GitHub repositories under "Projects" on the Integrations page.
-    
-    Only mapped projects will generate pull requests with code fixes.
+
+    **Important:** Only mapped projects will generate pull requests with code fixes. Ensure each Sentry project is associated with the correct repository.
   </Step>
 </Steps>
 
@@ -38,3 +39,53 @@ Tembo listens to Sentry issue lifecycle events and maps them to workflow trigger
 - `issue.assigned`
 
 See Workflow Automations for creating triggers from these events.
+
+# How It Works
+
+1. **Error Detected** - Sentry captures an error in your application and sends a webhook to Tembo
+2. **Analysis** - Tembo retrieves the full error context, including stack traces, breadcrumbs, and environment details
+3. **Solution Generation** - Tembo analyzes your codebase and creates an appropriate fix
+4. **Pull Request** - A PR is automatically opened in your repository with the fix and context
+5. **Review & Iterate** - Use the [Feedback Loop](/features/feedback-loop) to refine the solution if needed
+
+# Best Practices
+
+## Project Mapping
+
+- Map Sentry projects to the repositories where the errors actually occur
+- For monorepos, you may need multiple Sentry projects mapped to the same repository
+- Verify mappings are correct to ensure fixes target the right codebase
+
+## Error Context
+
+To help Tembo generate better fixes:
+
+- Configure Sentry to capture comprehensive stack traces
+- Enable source maps for minified JavaScript/TypeScript
+- Include relevant tags and custom context in your Sentry configuration
+- Set up breadcrumbs to track user actions leading to errors
+
+## Reviewing Auto-Generated Fixes
+
+- Always review PRs before merging - Tembo provides solutions, you decide what gets deployed
+- Use the [Feedback Loop](/features/feedback-loop) to request improvements by tagging `@tembo` in PR comments
+- Test the fix in a staging environment before deploying to production
+
+# MCP Server Integration
+
+Tembo provides a [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server for Sentry, enabling AI coding agents to directly interact with your Sentry data during task execution.
+
+## What is MCP?
+
+Model Context Protocol is a standardized way for AI applications to connect to external data sources and tools. With MCP, agents can query Sentry error data, retrieve stack traces, and access issue details in real-time while solving problems.
+
+## Using the Sentry MCP Server
+
+When you connect Sentry to Tembo, the MCP server is automatically available to agents working on your tasks. Agents can:
+
+- **Query error data** - Search and filter Sentry issues programmatically
+- **Retrieve stack traces** - Access detailed error information for debugging
+- **Check issue status** - Verify if errors are resolved or still occurring
+- **Analyze error trends** - Understand error patterns and frequency
+
+This enables agents to make more informed decisions when fixing bugs, as they have direct access to production error data and can verify their fixes against actual error conditions.

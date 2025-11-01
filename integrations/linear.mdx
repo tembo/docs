@@ -28,8 +28,15 @@ Assign Linear issues to Tembo and turn them into PRs.
     - For multi-repo tasks (e.g., full-stack features), add multiple labels before assigning to Tembo
     - Example: Add both `tembo/frontend` and `tembo/backend` labels for a task that requires changes to both repositories
 
-    **Default repository:**
-    You can set a default repository in your settings to avoid adding labels to every issue when working primarily in one repository.
+    **Setting a default repository:**
+
+    If you work primarily in one repository, you can configure a default repository in the [Linear integration settings](https://app.tembo.io/integrations). This eliminates the need to add repository labels to every issue.
+
+    - Navigate to Settings → Integrations → Linear
+    - Select your default repository from the dropdown
+    - All issues assigned to Tembo without repository labels will use this default
+
+    **Note:** Repository labels on individual issues always take precedence over the default repository setting.
   </Step>
   <Step title="Assignment">
     Now you can assign Linear issues to Tembo to trigger solutions.
@@ -47,3 +54,53 @@ Tembo maps Linear activity to workflow triggers (use a `linear.*` naming convent
 - `comment.created`
 
 See Workflow Automations for how to create triggers from these events.
+</Steps>
+
+# Usage
+
+## Triggering Tembo
+
+There are two ways to trigger Tembo to work on a Linear issue:
+
+### Method 1: Assign to Tembo
+
+Assign the issue directly to Tembo. The bot user should appear in your Linear workspace after completing the integration setup.
+
+### Method 2: Add "tembo" Label
+
+Add the `tembo` label to any issue. This is useful when you want to queue multiple issues or when assignment isn't convenient.
+
+## Status Updates
+
+Tembo keeps you informed as it works on your Linear issues:
+
+- **Status Changes** - Tembo automatically updates the Linear issue status as it progresses through the task
+- **Comments** - Tembo adds comments to the issue with progress updates and links to pull requests
+- **Pull Request Links** - When code changes are ready, Tembo comments with a link to the generated PR
+
+## Working with Multiple Repositories
+
+For tasks that span multiple repositories (e.g., full-stack features):
+
+1. Add multiple repository labels to the issue before assigning to Tembo
+2. Example: Add both `tembo/frontend` and `tembo/backend` labels
+3. Tembo will create separate pull requests for each repository
+
+## Best Practices
+
+**Write clear, actionable issue descriptions:**
+
+Good examples:
+- "Add email validation to the user registration form"
+- "Fix memory leak in the background job processor"
+- "Add pagination to the /api/users endpoint"
+
+Less effective:
+- "Fix the bug"
+- "Improve performance"
+- "Update the app"
+
+**Include relevant context:**
+- Add screenshots or error logs to help Tembo understand the issue
+- Reference related issues or pull requests
+- Specify acceptance criteria in the issue description

@@ -12,6 +12,8 @@ Connect GitHub to Tembo to open pull requests to improve your codebase.
 - Scan for performance issues
 - Scan for technical debt
 - Scan for refactoring opportunities
+- Automatically fix failed workflows and CI/CD pipelines
+- Respond to PR comments and review feedback
 
 # Installation
 
@@ -24,7 +26,7 @@ Connect GitHub to Tembo to open pull requests to improve your codebase.
   </Step>
   <Step title="Activate Repositories">
     After syncing completes (may take a few minutes), select which repositories you want Tembo to scan under "Active Repositories" on the Integrations page.
-    
+
     Only repositories you activate here will be scanned for issues and receive improvement PRs.
   </Step>
 </Steps>
@@ -48,3 +50,52 @@ Tembo listens to the following GitHub events and maps them to workflow triggers 
 - `installation_repositories.removed`
 
 See Workflow Automations for how to create triggers that start workflows from these events, and for the cross-integration trigger list.
+# Usage
+
+## Automated Scanning
+
+Once you've activated repositories, Tembo automatically scans for:
+
+- **TODO Comments** - Finds and implements requested functionality from TODO items
+- **Security Issues** - Identifies potential security vulnerabilities in your code
+- **Performance Issues** - Detects slow queries, inefficient algorithms, and optimization opportunities
+- **Technical Debt** - Discovers areas that need refactoring or modernization
+- **Code Quality** - Spots potential bugs, unused code, and anti-patterns
+
+## Pull Requests
+
+When Tembo finds an issue it can address, it will:
+
+1. **Create a Pull Request** - Opens a PR with the proposed fix or improvement
+2. **Add Context** - Includes a detailed description of what was changed and why
+3. **Request Review** - Assigns the PR for team review following your repository's workflow
+
+## Working with Tembo PRs
+
+**Reviewing Pull Requests:**
+- Review Tembo's PRs just like any other team member's work
+- Leave comments directly on the code if you need changes
+- Use the [Feedback Loop](/features/feedback-loop) feature to have Tembo address your review comments automatically
+
+**Best Practices:**
+- Configure repository settings to match your team's preferences
+- Use [Rule Files](/features/rule-files) to help Tembo understand your coding standards
+- Set up [Hooks](/features/hooks) to customize Tembo's behavior for your workflow
+# Working with Pull Requests
+
+## Commenting on PRs
+
+When reviewing Tembo's pull requests, you can request changes or improvements by tagging `@tembo` in your comments. This ensures Tembo responds to your specific feedback while ignoring internal team discussions or comments directed at other team members.
+
+**Example:**
+```
+@tembo Please update this function to include error handling
+```
+
+Without the `@tembo` tag, Tembo will not respond to the comment, allowing for cleaner team communication.
+
+## Failed Workflow Detection
+
+Tembo automatically monitors your GitHub Actions workflows and detects when they fail. When a workflow fails due to broken tests, linting errors, or other issues, Tembo will analyze the failure, identify the root cause, and create a PR with a fix.
+
+This helps maintain a healthy CI/CD pipeline without manual intervention.

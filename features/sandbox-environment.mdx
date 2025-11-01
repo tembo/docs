@@ -99,6 +99,54 @@ The sandbox environment is designed to integrate seamlessly with your developmen
 - **Repository access**: Full access to your repository contents and history
 - **Build tool compatibility**: Support for common build systems and package managers
 - **Testing frameworks**: Compatible with popular testing tools and frameworks
+- **Nix dev shell support**: Automatically detects and uses Nix flakes for reproducible development environments
+
+### Model Context Protocol (MCP) Support
+
+Tembo supports the Model Context Protocol (MCP), allowing AI agents to access custom tools, resources, and integrations during task execution. MCP servers can be configured to provide agents with additional capabilities such as:
+
+- **Custom API integrations**: Connect to internal tools and services
+- **Database access**: Query and interact with databases directly
+- **File system operations**: Extended file manipulation capabilities
+- **External data sources**: Access to documentation, wikis, or knowledge bases
+
+To configure MCP servers for your organization, add them to your organization settings in the Tembo dashboard. Agents will automatically have access to configured MCP servers when working on tasks.
+
+### Nix Development Shells
+
+Tembo's sandbox environment supports Nix flakes for reproducible development environments. To use this feature, your repository must have a `flake.nix` file in the root directory that defines a development shell named `default` for the `x86_64-linux` platform.
+
+**Requirements:**
+- Your `flake.nix` must specify `devShells.x86_64-linux.default`
+- The development shell must target the x86_64-linux platform (Tembo's sandbox runs on x86_64 Linux)
+- The flake must be in your repository's root directory
+
+**Example flake.nix:**
+```nix
+{
+  description = "My project development environment";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  };
+
+  outputs = { self, nixpkgs }: {
+    devShells.x86_64-linux.default = nixpkgs.legacyPackages.x86_64-linux.mkShell {
+      packages = with nixpkgs.legacyPackages.x86_64-linux; [
+        nodejs
+        python3
+        # Add any other tools your project needs
+      ];
+    };
+  };
+}
+```
+
+When configured correctly, Tembo will:
+- **Automatically detect** your `flake.nix` file at the repository root
+- **Load the default devshell** for the x86_64-linux platform
+- **Make available** all packages and environment variables defined in your Nix development shell
+- **Ensure reproducibility** across different tasks and environments
 
 ## Best Practices
 

@@ -3,7 +3,7 @@ title: "Slack"
 icon: "slack"
 ---
 
-Connect Tembo to Slack to trigger background tasks with any agent (Claude Code, Codex, OpenCode, Cursor, etc.).
+Connect Tembo to Slack to trigger background tasks with any agent (Claude Code, Codex, OpenCode, Amp, Cursor, etc.).
 
 <video
   controls
@@ -95,9 +95,11 @@ Tembo supports flexible command syntax with multiple options. You can use either
 
   - Example: `repo=owner/repository`, `repo=myorg/webapp`
 
-- **`agent=`** - Specify which AI agent to use
-  - Example: `agent=claudeCode`, `agent=codex`
-  - More agents coming soon
+- **`agent=`** - Specify which AI agent and model to use (format: `agentType:model`)
+  - Example: `agent=claudeCode:claude-4-5-sonnet`, `agent=codex:gpt-5-medium`
+  - Supported agents: `claudeCode`, `codex`, `opencode`, `amp`, `cursor`
+  - If no agent is specified, defaults to `claudeCode:claude-4-5-sonnet`
+  - See [Agents documentation](/features/agents) for all available options
 
 ### Thread Context Utilization
 
@@ -117,3 +119,40 @@ Tembo reacts to Slack interactions and maps them to workflow triggers (use a `sl
 - `thread_reply`
 
 See Workflow Automations for how to create triggers from Slack events.
+## Status Updates
+
+Tembo keeps you informed throughout the task lifecycle:
+
+**Reaction indicators on your message:**
+- 👀 **Eyes** - Task received and processing
+- ✅ **Check mark** - Task completed successfully
+- ❌ **X mark** - Task failed or encountered an error
+
+**Direct messages for longer tasks:**
+- Progress updates as the agent works
+- Pull request links when code changes are ready
+- Error details if the task cannot be completed
+
+**Channel updates when complete:**
+- Links to generated pull requests with summary of changes
+
+## Best Practices
+
+**Write clear, specific task descriptions:**
+
+Good examples:
+```
+@tembo Add error handling to the user registration endpoint
+@tembo Optimize the product search query by adding an index on the name column
+```
+
+Less effective:
+```
+@tembo Fix the bug
+@tembo Make it faster
+```
+
+**Use threads for collaboration:**
+1. Team discusses the problem and potential approaches in a thread
+2. When ready, mention `@tembo` with the final task description
+3. Tembo reads the full thread context and incorporates the discussion
