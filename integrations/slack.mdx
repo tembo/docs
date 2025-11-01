@@ -95,9 +95,11 @@ Tembo supports flexible command syntax with multiple options. You can use either
 
   - Example: `repo=owner/repository`, `repo=myorg/webapp`
 
-- **`agent=`** - Specify which AI agent to use
-  - Example: `agent=claudeCode`, `agent=codex`
-  - More agents coming soon
+- **`agent=`** - Specify which AI agent and model to use (format: `agentType:model`)
+  - Example: `agent=claudeCode:claude-4-5-sonnet`, `agent=codex:gpt-5-medium`
+  - Supported agents: `claudeCode`, `codex`, `opencode`, `amp`, `cursor`
+  - If no agent is specified, defaults to `claudeCode:claude-4-5-sonnet`
+  - See [Agents documentation](/features/agents) for all available options
 
 ### Thread Context Utilization
 
