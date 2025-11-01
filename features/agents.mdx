@@ -91,6 +91,25 @@ Agents are specified using an agent key format: `agentType:model`
 
 If no agent is specified, Tembo defaults to `claudeCode:claude-4-5-sonnet`.
 
+## Choosing the Right Model
+
+Different models offer different tradeoffs between speed, cost, and capability:
+
+**For most tasks:** Use the default models (`claude-4-5-sonnet` or `gpt-5-medium`)
+- Balanced performance for typical engineering tasks
+- Good reasoning capability with reasonable speed
+- Cost-effective for production use
+
+**For simple, straightforward tasks:** Use lightweight models (`claude-4-5-haiku` or `gpt-5-minimal`)
+- Faster execution for simple bug fixes
+- Lower cost for high-volume operations
+- Best for well-defined, smaller scope work
+
+**For complex architectural work:** Use advanced models (`claude-4.1-opus` or `gpt-5-high`)
+- Deep reasoning for system design decisions
+- Better handling of large, multi-file refactors
+- More thorough analysis of edge cases
+
 ## Using Rule Files
 
 Rule files allow you to provide agent-specific instructions and coding standards. Each agent reads from its designated configuration file in your repository root (see **Rule File** listed above for each agent).
