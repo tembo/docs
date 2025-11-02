@@ -1,9 +1,9 @@
 ---
-title: "Workflow Automations"
-icon: "repeat"
+title: "Automations"
+icon: "automation"
 ---
 
-# Workflow Automations
+# Automations
 
 Tembo Workflows let you automate multi-step tasks that Tembo executes on your behalf. You define workflows as JSON in your repo, schedule them or trigger them from events, and Tembo runs them reliably in the background.
 
@@ -32,13 +32,7 @@ Example:
 }
 ```
 
-Sync occurs when Tembo walks your repository, or you can run the CLI:
-
-```bash
-pnpm run cli workflow sync-code-repository <codeRepositoryId>
-```
-
-This scans `/.tembo/workflows` and upserts workflows in your org.
+Sync occurs when Tembo walks your repository.
 
 ## Ways to Run a Workflow
 
