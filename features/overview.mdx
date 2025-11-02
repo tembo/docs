@@ -1,196 +1,89 @@
 ---
 title: 'Overview'
-description: 'The unified interface for background coding agents'
+description: 'A background coding agent that integrates with your development workflow'
 icon: 'robot'
 ---
 
-Tembo is the unified interface for background coding agents that connects to your existing tools, listens for signals, and opens pull requests that fix bugs, build features, and improve your codebase.
-
-It's fast, reliable, and built to support the way modern engineering teams actually work.
-
-## The Problem We're Solving
-
-Your best developers may be supercharged by AI, but most are in "wait and see" mode. The AI coding revolution is well underway, but many teams are falling behind because:
-
-- Most developers are stuck in IDE-mode or running single agentic sessions locally
-- The evolution has been: AI Chat IDE → Agentic CLIs → ?
-- Top performers are running many agentic coding sessions in parallel, but this requires complicated local dev environment setups
-
-## Built to Amplify Teams, Not Replace Them
-
-Tembo brings the power of coding CLIs and IDEs to everyone — not just engineers.
-
-Whether it's sales, support, or product, anyone can spin up work, assign issues, and trigger fixes directly from the tools they already use.
-
-You can refine, iterate, and improve on Tembo's pull requests using natural language feedback, directly inside your pull requests.
-
-## AI That Works at the Task Level, Not the Keystroke
-
-Tembo is different from traditional AI coding tools:
-
-### Just Tag @tembo to Trigger Tasks Anywhere
-
-Tembo integrates with your tickets, listens for signals through your existing CI, and triggers production tools and team processes through your existing workflows.
-
-- No context switching
-- No IDE clutter
-- Just agentic tools generating real output
-
-### Immediate Background Execution
-
-Tembo operates at the task level with immediate background execution:
-
-- No waiting around while AI thinks
-- Agentic tools working in isolated sandboxes
-- Real, production-ready pull requests as output
-
-### Put Coding Tasks on Repeat
-
-You can create automated workflows that run on a schedule or react to external signals, scaling your development capacity to handle routine tasks.
+Tembo is a background coding agent that integrates with your existing development tools to automatically create pull requests that fix bugs, implement features, and improve your codebase.
 
 ## What Tembo Does
 
-Tembo executes engineering work across four key areas:
+Tembo operates as an engineering agent that works asynchronously in [isolated sandbox environments](/features/sandbox-environment). It monitors your systems, processes assigned tasks, and submits pull requests for your team to review.
 
-### Execute Engineering Tickets
+### Core Capabilities
 
-- Assign issues from Linear, Jira, etc. to Tembo (or watch for specific tags)
-- Takes a first crack at writing code to solve the issue
-- Creates production-ready PRs for your review
+**Issue Implementation**
+Tembo processes tickets from your project management tools and generates code to address them. You can assign issues from [Linear](/integrations/linear), [Jira](/integrations/jira), or directly through the Tembo dashboard. See [Pull Requests](/features/pull-requests) for details on how tasks are triggered and processed.
 
-### Fix Bugs in Production
+**Error Detection and Resolution**
+Through [Sentry integration](/integrations/sentry), Tembo monitors application errors and creates fixes for identified issues. It analyzes stack traces and implements appropriate error handling.
 
-- Watches your error tracking tools (like Sentry) continuously
-- Identifies errors that can be fixed with simple code commits
-- Automatically creates fixes and submits PRs
+**Database Performance Optimization**
+When connected to [PostgreSQL](/integrations/postgres), [Supabase](/integrations/supabase), or [AWS RDS](/integrations/aws), Tembo identifies slow queries (>100ms by default), creates missing indexes, and removes unused indexes to improve performance.
 
-### Improve Database Performance
+**Technical Debt Reduction**
+Tembo performs periodic codebase analysis to identify refactoring opportunities, security vulnerabilities, and code quality issues. It also processes [TODO comments](/features/todo-comments) found in your code.
 
-- Monitors your database query performance
-- Suggests changes to code or indexing to speed up your applications
-- Implements optimizations automatically
+## How It Works
 
-### General Codebase Improvements
+Tembo functions through a cycle of detection, execution, and review:
 
-- Weekly analysis of each repo to identify technical debt and security vulnerabilities
-- Finds opportunities for refactoring and performance improvements
-- Submits PRs for low-hanging fruit improvements
+1. **Detection** - Issues are identified through integrations (Sentry errors, database metrics) or manually assigned (Linear/Jira tickets, direct task creation)
+2. **Execution** - Tembo analyzes the codebase using your configured [agent](/features/agents) and generates a solution in an isolated environment
+3. **Pull Request** - Changes are submitted as a pull request with context about the problem and solution
+4. **Feedback Loop** - You can provide feedback by mentioning @tembo in PR comments, and it will iterate on the changes
 
-## Specific Issue Types Tembo Handles
+See [Feedback Loop](/features/feedback-loop) for how to refine Tembo's work through natural language feedback in your pull requests.
 
-### Database Performance Issues
+## Supported Integrations
 
-- **Slow Queries** - Identifies queries with high execution times (>100ms by default) and optimizes them
-- **Missing Indexes** - Detects tables that would benefit from indexing and creates appropriate indexes
-- **Unused Indexes** - Finds indexes that aren't being used and removes them to improve write performance
+Tembo connects to your existing development infrastructure:
 
-### Application Errors
+**Source Control**
+- [GitHub](/integrations/github), [GitLab](/integrations/gitlab), [Bitbucket](/integrations/bitbucket)
 
-- **Sentry Errors** - Automatically pulls application errors from Sentry and fixes the underlying code issues
-- **Stack Traces** - Analyzes error patterns and implements proper error handling
+**Project Management**
+- [Linear](/integrations/linear), [Jira](/integrations/jira), GitHub Issues
 
-### Code Quality Issues
+**Monitoring and Observability**
+- [Sentry](/integrations/sentry)
 
-- **[TODO Comments](/features/todo-comments)** - Finds TODO items in your codebase and implements the requested functionality
-- **Code Bugs** - Uses AI to scan code files and detect potential bugs or performance issues
-- **Linear Issues** - Syncs with Linear project management to implement features and fixes
+**Databases**
+- [PostgreSQL](/integrations/postgres), [Supabase](/integrations/supabase), [AWS RDS](/integrations/aws)
 
-### Extensive Tool Integrations
+**Communication**
+- [Slack](/integrations/slack), [Raycast](/integrations/raycast)
 
-Tembo connects to your existing development ecosystem across multiple categories:
+## Available Agents
 
-#### Source Control
-- GitHub, GitLab, Bitbucket
+Tembo provides access to multiple [coding agents](/features/agents) and models:
 
-#### Databases
-- PostgreSQL, Supabase
+- **Claude Code** (default) - Powered by Anthropic's Claude models
+- **Codex** - Uses OpenAI's GPT-5 models
+- **Opencode** - Supports both Anthropic and OpenAI models
+- **Amp** - Anthropic-powered agent with smart model detection
+- **Cursor** - Supports Anthropic and OpenAI models via Cursor CLI
 
-#### Issue Tracking
-- Linear, Jira, GitHub Issues
+Each agent supports multiple model tiers for different complexity levels and performance requirements.
 
-#### Monitoring
-- Sentry, Datadog
+## Configuration
 
-#### Productivity
-- Slack, Raycast
+**Rule Files**
+You can provide agent-specific instructions through [rule files](/features/rule-files) in your repository. These define coding standards, project conventions, and architectural patterns for Tembo to follow.
 
-### Multiple Coding Agents and LLMs
+**Hooks**
+[Hooks](/features/hooks) allow you to execute custom logic before and after Tembo's actions, enabling integration with your existing CI/CD pipelines and workflows.
 
-Tembo provides a unified interface that works with multiple coding agents and language models:
+**MCP Servers**
+[Model Context Protocol (MCP) servers](/features/mcp-servers) extend Tembo's capabilities by providing additional tools and context sources that agents can access during task execution.
 
-#### Coding Agents
-- Claude Code, Codex, OpenCode, Cursor, Gemini CLI, Ampcode, Copilot CLI
+## Team Workflow
 
-#### Coding LLMs
-- Claude, OpenAI GPT, Grok Code, Deepseek, Gemini, Codestral, Qwen
+Your team maintains control over what code gets merged:
 
-This flexibility lets you choose the right tool for each task while maintaining a consistent workflow.
+1. Review pull requests created by Tembo using your standard review process
+2. Provide feedback through PR comments (mention @tembo to trigger updates)
+3. Approve and merge changes when satisfied with the implementation
+4. Configure which issues and signals Tembo responds to through integration settings
 
-## It's Go Time
-
-Tembo helps your team move faster and ship more:
-
-### Get More PRs
-
-Tembo connects your tools and team to cutting-edge coding agents, reducing friction to code generation.
-
-### Merge More PRs
-
-With AI generating a first pass, your best developers can now focus on getting the right code merged instead of writing every line themselves.
-
-### 10x Your Team's Agentic Coding Adoption
-
-Amplify your development capacity by delegating more tasks to AI, freeing your team to focus on high-impact work.
-
-## Proven Results
-
-Nearly 4,000 organizations have already started using Tembo, from early-stage startups to established companies like Product Forge, Whop, SMB, Topstep, Kernel, Tenstory, Launch Scout, Seven Hills Technology, Frayt, and The Prompting Company.
-
-> "I've been working with Tembo's asynchronous remote coding agent for about a month now and have found it to be highly effective."
->
-> — Stefan Fox, Co-founder, CTO at Mightybot
-
-> "The Tembo agent follows prompt instructions well, with clear step-by-step visualization as it works. The GitHub integration is excellent - it's engaging to interact with the agent by @ mentioning it, and it reliably follows up on tasks."
->
-> — Chris Nelson, Co-founder and Principal Engineer at LaunchScout
-
-> "Give any existing issue to @tembo right from your favourite ticketing software!"
->
-> — Luke Moderwell, Senior Product Designer at Product Forge
-
-## Getting Started
-
-Every journey begins with a first step. Choose the path that's right for you:
-
-### Create Tembo Account
-
-Start using Tembo today:
-
-- Free to try, no credit card required
-- Unlimited repos and members
-- Explore all features, coding agents, and coding LLMs
-
-[Get started](https://app.tembo.io)
-
-### Contact Sales
-
-For teams that need more:
-
-- Self-hostable deployment options
-- Custom billing arrangements
-- SSO integration
-- Role-based permissions
-- Dedicated support
-- Onboarding services
-- Advanced team reporting
-
-[Talk to sales](https://book.avoma.com/tembo/tembo-demo/)
-
-## What Your Team Does
-
-Your team stays in control while Tembo handles the heavy lifting:
-
-- **Review PRs** - Approve, improve, and merge PRs from anywhere (no text editor needed)
-- **Provide feedback** - Refine and iterate on Tembo's work using natural language directly in pull requests
-- **Focus on features** - Spend time building new functionality instead of maintenance
-- **Set priorities** - Guide Tembo's work through ticket assignments and workflow configuration
+Tembo generates solutions autonomously, but your team decides what gets deployed.
