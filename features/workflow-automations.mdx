@@ -54,61 +54,11 @@ Create triggers that tie a workflow to an event. Triggers can be scoped to an in
 
 Tembo workflows can be triggered from provider webhooks. Use a consistent `triggerName` (we recommend `provider.category.event`, for example `github.pull_request.opened`).
 
-- The exact event set comes from our current webhook handlers in the monorepo and may evolve. The Integrations page in the app shows the live list for your org.
-- The GitHub list below reflects our current implementation; for other providers, see each integration page for the most up-to-date events. If you need an additional event (e.g., GitHub tag creation), reach out to hi@tembo.io.
-
-GitHub:
-
-- `pull_request.opened`
-- `pull_request.closed`
-- `pull_request.reopened`
-- `pull_request.ready_for_review`
-- `pull_request.converted_to_draft`
-- `pull_request.edited`
-- `pull_request_review.submitted`
-- `issue_comment.created`
-- `installation.created`
-- `installation.deleted`
-- `installation.new_permissions_accepted`
-- `installation_repositories.added`
-- `installation_repositories.removed`
-
-GitLab (examples):
-
-- `merge_request.opened`
-- `merge_request.closed`
-- `note.created` (comments on merge requests)
-
-Bitbucket (examples):
-
-- `pull_request.opened`
-- `pull_request.merged`
-- `pull_request.comment_created`
-
-Slack:
-
-- `app_mention`
-- `slash_command`
-- `message_action`
-- `thread_reply`
-
-Linear (examples):
-
-- `issue.assigned`
-- `issue.labeled`
-
-Jira (examples):
-
-- `issue.updated`
-- `issue.labeled`
-
-Sentry (examples):
-
-- `issue.created`
-- `issue.regression`
-
-See the integration pages for details and any provider-specific notes:
-`integrations/github.mdx`, `integrations/gitlab.mdx`, `integrations/bitbucket.mdx`, `integrations/slack.mdx`, `integrations/linear.mdx`, `integrations/jira.mdx`, `integrations/sentry.mdx`.
+- The exact event set comes from our current webhook handlers in the monorepo and may evolve.
+- For the live list enabled for your org, check the Integrations page in the app.
+- For provider-specific details, see each integration doc:
+  `integrations/github.mdx`, `integrations/gitlab.mdx`, `integrations/bitbucket.mdx`, `integrations/slack.mdx`, `integrations/linear.mdx`, `integrations/jira.mdx`, `integrations/sentry.mdx`.
+- If you need an additional event (for example, GitHub tag creation), contact support@tembo.io.
 
 ## What Happens During a Run
 
@@ -138,4 +88,4 @@ See the integration pages for details and any provider-specific notes:
 
 ---
 
-If you need help modeling workflow JSON or wiring a custom event to a trigger, reach out at hi@tembo.io.
+If you need help modeling workflow JSON or wiring a custom event to a trigger, reach out at support@tembo.io.
