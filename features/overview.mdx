@@ -1,122 +1,70 @@
 ---
 title: 'Overview'
+description: 'A background coding agent that integrates with your development workflow'
 icon: 'robot'
 ---
 
-Tembo is a proactive AI software engineer that accelerates your team's productivity to the max.
+Tembo is a background coding agent that integrates with your existing development tools to automatically create pull requests that fix bugs, implement features, and improve your codebase.
 
-Tembo is built on:
-
-- A powerful language model tuned for software maintenance and code generation
-- Real-time signal ingestion from tools like Sentry and Linear (see [integrations](/integrations))
-- A PR generation and PR review processing engine
-
-It's your tireless AI engineer who works around the clock to keep your codebase healthy and your team productive.
-
-## How the Agent Works
-
-Tembo turns noisy alerts and performance signals into real code fixes:
-
-1. **Ingests Signals**\
-   Pulls from error trackers and database metrics (e.g. Sentry, Postgres)
-
-2. **Triages Autonomously**\
-   Detects root causes, prioritizes issues, and builds a fix plan without waiting for a ticket
-
-3. **Writes Pull Requests**\
-   Generates clean, merge-ready PRs that align with your repo's best practices
-
-4. **Seeks Approval**\
-   You stay in control — approve, reject, or modify the fix before it merges
+![How Tembo Works](/images/how-tembo-works.png)
 
 ## What Tembo Does
 
-Tembo executes engineering work across four key areas:
+Tembo operates as an engineering agent that works asynchronously in [isolated sandbox environments](/features/sandbox-environment). It monitors your systems, processes assigned tasks, and submits pull requests for your team to review.
 
-### Execute Engineering Tickets
+Tembo processes tickets from your project management tools ([Linear](/integrations/linear), [Jira](/integrations/jira)), monitors error tracking systems ([Sentry](/integrations/sentry)), analyzes database performance ([PostgreSQL](/integrations/postgres), [Supabase](/integrations/supabase), [AWS RDS](/integrations/aws)), and can be mentioned in [Slack](/integrations/slack) to write code based on your discussions. It generates code to address these issues and submits [pull requests](/features/pull-requests) for review.
 
-- Assign issues from Linear, Jira, etc. to Tembo (or watch for specific tags)
-- Takes a first crack at writing code to solve the issue
-- Creates production-ready PRs for your review
+## How It Works
 
-### Fix Bugs in Production
+Tembo functions through a cycle of detection, execution, and review:
 
-- Watches your error tracking tools (like Sentry) continuously
-- Identifies errors that can be fixed with simple code commits
-- Automatically creates fixes and submits PRs
+1. **Detection** - Issues are identified through integrations (Sentry errors, database metrics) or manually assigned (Linear/Jira tickets, direct task creation)
+2. **Execution** - Tembo analyzes the codebase using your configured [agent](/features/agents) and generates a solution in an isolated environment
+3. **Pull Request** - Changes are submitted as a pull request with context about the problem and solution
+4. **Feedback Loop** - You can provide feedback by mentioning @tembo in PR comments, and it will iterate on the changes
 
-### Improve Database Performance
+See [Feedback Loop](/features/feedback-loop) for how to refine Tembo's work through natural language feedback in your pull requests.
 
-- Monitors your database query performance
-- Suggests changes to code or indexing to speed up your applications
-- Implements optimizations automatically
+## Supported Integrations
 
-### General Codebase Improvements
+| Type                         | Integrations                                                                                   |
+| ---------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Source Control**           | [GitHub](/integrations/github), [GitLab](/integrations/gitlab), [Bitbucket](/integrations/bitbucket) |
+| **Project Management**       | [Linear](/integrations/linear), [Jira](/integrations/jira), GitHub Issues                     |
+| **Monitoring & Observability** | [Sentry](/integrations/sentry)                                                                 |
+| **Databases**                | [PostgreSQL](/integrations/postgres), [Supabase](/integrations/supabase), [AWS RDS](/integrations/aws) |
+| **Communication**            | [Slack](/integrations/slack), [Raycast](/integrations/raycast)                                |
 
-- Weekly analysis of each repo to identify technical debt and security vulnerabilities
-- Finds opportunities for refactoring and performance improvements
-- Submits PRs for low-hanging fruit improvements
+## Available Agents
 
-## Specific Issue Types Tembo Handles
+| Agent           | Provider         | Default Model       |
+| --------------- | ---------------- | ------------------- |
+| **Claude Code** | Anthropic        | `claude-4-5-sonnet` |
+| **Codex**       | OpenAI           | `gpt-5-medium`      |
+| **Opencode**    | Anthropic/OpenAI | `claude-4-5-sonnet` |
+| **Amp**         | Anthropic        | `claude-4-5-sonnet` |
+| **Cursor**      | Anthropic/OpenAI | `gpt-5-medium`      |
 
-### Database Performance Issues
+See [Agents](/features/agents) for detailed information on each agent and how to choose the right one for your tasks.
 
-- **Slow Queries** - Identifies queries with high execution times (>100ms by default) and optimizes them
-- **Missing Indexes** - Detects tables that would benefit from indexing and creates appropriate indexes
-- **Unused Indexes** - Finds indexes that aren't being used and removes them to improve write performance
+## Configuration
 
-### Application Errors
+**Rule Files**
+You can provide agent-specific instructions through [rule files](/features/rule-files) in your repository. These define coding standards, project conventions, and architectural patterns for Tembo to follow.
 
-- **Sentry Errors** - Automatically pulls application errors from Sentry and fixes the underlying code issues
-- **Stack Traces** - Analyzes error patterns and implements proper error handling
+**Hooks**
+[Hooks](/features/hooks) allow you to execute custom logic before and after Tembo's actions, enabling integration with your existing CI/CD pipelines and workflows.
 
-### Code Quality Issues
+**MCP Servers**
+[Model Context Protocol (MCP) servers](/features/mcp-servers) extend Tembo's capabilities by providing additional tools and context sources that agents can access during task execution.
 
-- **[TODO Comments](/features/todo-comments)** - Finds TODO items in your codebase and implements the requested functionality
-- **Code Bugs** - Uses AI to scan code files and detect potential bugs or performance issues
-- **Linear Issues** - Syncs with Linear project management to implement features and fixes
+## Team Workflow
 
-### Integration Support
+Your team maintains control over what code gets merged:
 
-Tembo connects to your existing tools:
+1. Review pull requests created by Tembo using your standard review process
+2. Provide feedback through PR comments (mention @tembo to trigger updates)
+3. Approve and merge changes when satisfied with the implementation
+4. Configure which issues and signals Tembo responds to through integration settings
 
-- PostgreSQL databases (including AWS RDS and Supabase)
-- GitHub repositories for pull request creation
-- Sentry for error monitoring
-- Linear for project management
-
-> Tembo focuses on production issues that impact performance and reliability, automatically creating pull requests with the fixes your team needs.
-
-## Tembo Adapts to Your Workflow
-
-Tembo learns and adapts as it works:
-
-- **Context-aware learning** from your codebase, stack, and issue history
-- **Cross-team intelligence** from similar fixes applied across the platform
-- **Human-in-the-loop feedback** to improve future PR quality
-- **Regular updates** from the latest database, observability, and performance research
-
-## What Your Engineers Do
-
-Your team stays in control while Tembo handles the heavy lifting:
-
-- **Review PRs** - Approve, improve, and merge PRs from anywhere (no text editor needed)
-- **Focus on features** - Spend time building new functionality instead of maintenance
-- **Set priorities** - Guide Tembo's work through ticket assignments and workflow configuration
-
-## Interacting With Tembo
-
-Use Tembo on your terms:
-
-- **Slack:** Get alerts and fixes where your team already lives
-- **GitHub:** Review PRs as if they came from a wildly intelligent teammate
-- **Web Dashboard:** See what's been fixed, what's coming next, and approve changes
-
-### Solution Review and Approval
-
-While Tembo can work autonomously, you maintain control through your workflow toggle:
-
-1. The agent detects an issue and generates a solution
-2. You receive a notification with details and recommendations
-3. You can approve, reject, or modify the proposed solution
-4. Upon approval, the agent implements the changes
+Tembo generates solutions autonomously, but your team decides what gets deployed.
