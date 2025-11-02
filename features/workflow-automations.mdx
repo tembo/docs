@@ -11,16 +11,16 @@ Tembo Automations let you automate multi-step tasks that Tembo executes on your 
 - Create and manage event triggers from the automation’s page or the Integration settings.
 - Public API endpoints for schedules and triggers may not be available for your account yet; check the Public API tab or contact support for access.
 
-## How It Works
-
-- Automation definition lives in your code repository under `/.tembo/workflows/*.json`.
-- Tembo scans your repository and imports each automation into your organization.
-- An automation can be started by a schedule (cron) or a trigger (an event), which enqueues a background job.
-- The job records an Automation Run and converts your automation JSON into a Tembo “Automation Issue”, then Tembo executes it using the same engine that powers issue solving.
-
 ## Defining Automations in Your Repo
 
-Add one or more JSON files in `/.tembo/workflows/`. Each file should contain at least a `name` and `jsonContent` (the editor JSON for your automation).
+Add one or more JSON files in `/.tembo/workflows/`. Each file should contain at least a `name` and `jsonContent` (the editor JSON for your automation). Tembo scans your repository and imports each automation into your organization during sync.
+
+How this fits together:
+
+- Store automation JSON under `/.tembo/workflows/*.json` in your repo.
+- On sync, Tembo imports each definition into your org.
+- Automations start from either a schedule (cron) or an event trigger, which enqueues a background job.
+- That job records an Automation Run and converts your JSON into a Tembo “Automation Issue”, then executes it using the same engine that powers issue solving.
 
 Example:
 
