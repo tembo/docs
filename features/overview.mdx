@@ -12,19 +12,7 @@ Tembo is a background coding agent that integrates with your existing developmen
 
 Tembo operates as an engineering agent that works asynchronously in [isolated sandbox environments](/features/sandbox-environment). It monitors your systems, processes assigned tasks, and submits pull requests for your team to review.
 
-Tembo processes tickets from your project management tools (Linear, Jira, GitHub Issues), monitors error tracking systems (Sentry), analyzes database performance (PostgreSQL, Supabase, AWS RDS), scans for TODO comments in your codebase, and receives notifications through communication channels (Slack). It generates code to address these issues and submits pull requests for review. See [Pull Requests](/features/pull-requests) for details on how tasks are triggered and processed.
-
-**Issue Implementation**
-You can assign issues from [Linear](/integrations/linear), [Jira](/integrations/jira), or directly through the Tembo dashboard, and Tembo will generate code to address them.
-
-**Error Detection and Resolution**
-Through [Sentry integration](/integrations/sentry), Tembo monitors application errors and creates fixes for identified issues. It analyzes stack traces and implements appropriate error handling.
-
-**Database Performance Optimization**
-When connected to [PostgreSQL](/integrations/postgres), [Supabase](/integrations/supabase), or [AWS RDS](/integrations/aws), Tembo identifies slow queries (>100ms by default), creates missing indexes, and removes unused indexes to improve performance.
-
-**Technical Debt Reduction**
-Tembo performs periodic codebase analysis to identify refactoring opportunities, security vulnerabilities, and code quality issues. It also processes [TODO comments](/features/todo-comments) found in your code.
+Tembo processes tickets from your project management tools ([Linear](/integrations/linear), [Jira](/integrations/jira), [GitHub Issues](/integrations/github)), monitors error tracking systems ([Sentry](/integrations/sentry)), analyzes database performance ([PostgreSQL](/integrations/postgres), [Supabase](/integrations/supabase), [AWS RDS](/integrations/aws)), scans for [TODO comments](/features/todo-comments) in your codebase, and receives notifications through communication channels ([Slack](/integrations/slack)). It generates code to address these issues and submits pull requests for review. See [Pull Requests](/features/pull-requests) for details on how tasks are triggered and processed.
 
 ## How It Works
 
