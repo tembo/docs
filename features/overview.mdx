@@ -6,14 +6,16 @@ icon: 'robot'
 
 Tembo is a background coding agent that integrates with your existing development tools to automatically create pull requests that fix bugs, implement features, and improve your codebase.
 
+![How Tembo Works](/images/how-tembo-works.png)
+
 ## What Tembo Does
 
 Tembo operates as an engineering agent that works asynchronously in [isolated sandbox environments](/features/sandbox-environment). It monitors your systems, processes assigned tasks, and submits pull requests for your team to review.
 
-### Core Capabilities
+Tembo processes tickets from your project management tools (Linear, Jira, GitHub Issues), monitors error tracking systems (Sentry), analyzes database performance (PostgreSQL, Supabase, AWS RDS), scans for TODO comments in your codebase, and receives notifications through communication channels (Slack). It generates code to address these issues and submits pull requests for review. See [Pull Requests](/features/pull-requests) for details on how tasks are triggered and processed.
 
 **Issue Implementation**
-Tembo processes tickets from your project management tools and generates code to address them. You can assign issues from [Linear](/integrations/linear), [Jira](/integrations/jira), or directly through the Tembo dashboard. See [Pull Requests](/features/pull-requests) for details on how tasks are triggered and processed.
+You can assign issues from [Linear](/integrations/linear), [Jira](/integrations/jira), or directly through the Tembo dashboard, and Tembo will generate code to address them.
 
 **Error Detection and Resolution**
 Through [Sentry integration](/integrations/sentry), Tembo monitors application errors and creates fixes for identified issues. It analyzes stack traces and implements appropriate error handling.
@@ -37,34 +39,25 @@ See [Feedback Loop](/features/feedback-loop) for how to refine Tembo's work thro
 
 ## Supported Integrations
 
-Tembo connects to your existing development infrastructure:
-
-**Source Control**
-- [GitHub](/integrations/github), [GitLab](/integrations/gitlab), [Bitbucket](/integrations/bitbucket)
-
-**Project Management**
-- [Linear](/integrations/linear), [Jira](/integrations/jira), GitHub Issues
-
-**Monitoring and Observability**
-- [Sentry](/integrations/sentry)
-
-**Databases**
-- [PostgreSQL](/integrations/postgres), [Supabase](/integrations/supabase), [AWS RDS](/integrations/aws)
-
-**Communication**
-- [Slack](/integrations/slack), [Raycast](/integrations/raycast)
+| Type                         | Integrations                                                                                   |
+| ---------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Source Control**           | [GitHub](/integrations/github), [GitLab](/integrations/gitlab), [Bitbucket](/integrations/bitbucket) |
+| **Project Management**       | [Linear](/integrations/linear), [Jira](/integrations/jira), GitHub Issues                     |
+| **Monitoring & Observability** | [Sentry](/integrations/sentry)                                                                 |
+| **Databases**                | [PostgreSQL](/integrations/postgres), [Supabase](/integrations/supabase), [AWS RDS](/integrations/aws) |
+| **Communication**            | [Slack](/integrations/slack), [Raycast](/integrations/raycast)                                |
 
 ## Available Agents
 
-Tembo provides access to multiple [coding agents](/features/agents) and models:
+| Agent           | Provider         | Default Model       |
+| --------------- | ---------------- | ------------------- |
+| **Claude Code** | Anthropic        | `claude-4-5-sonnet` |
+| **Codex**       | OpenAI           | `gpt-5-medium`      |
+| **Opencode**    | Anthropic/OpenAI | `claude-4-5-sonnet` |
+| **Amp**         | Anthropic        | `claude-4-5-sonnet` |
+| **Cursor**      | Anthropic/OpenAI | `gpt-5-medium`      |
 
-- **Claude Code** (default) - Powered by Anthropic's Claude models
-- **Codex** - Uses OpenAI's GPT-5 models
-- **Opencode** - Supports both Anthropic and OpenAI models
-- **Amp** - Anthropic-powered agent with smart model detection
-- **Cursor** - Supports Anthropic and OpenAI models via Cursor CLI
-
-Each agent supports multiple model tiers for different complexity levels and performance requirements.
+See [Agents](/features/agents) for detailed information on each agent and how to choose the right one for your tasks.
 
 ## Configuration
 
