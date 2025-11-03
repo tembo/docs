@@ -3,7 +3,6 @@ title: "GitLab"
 icon: "gitlab"
 ---
 
-
 Connect GitLab to Tembo to open merge requests to improve your codebase.
 
 # Features
@@ -13,6 +12,8 @@ Connect GitLab to Tembo to open merge requests to improve your codebase.
 - Scan for performance issues
 - Scan for technical debt
 - Scan for refactoring opportunities
+- Automatically fix failed CI/CD pipelines
+- Respond to MR comments and review feedback
 
 # Installation
 
@@ -25,7 +26,50 @@ Connect GitLab to Tembo to open merge requests to improve your codebase.
   </Step>
   <Step title="Activate Repositories">
     After syncing completes (may take a few minutes), select which repositories you want Tembo to scan under "Active Repositories" on the Integrations page.
-    
+
     Only repositories you activate here will be scanned for issues and receive improvement merge requests.
   </Step>
 </Steps>
+
+# Usage
+
+## Automated Scanning
+
+Once activated, Tembo automatically scans for TODO comments, security issues, performance problems, technical debt, and code quality issues.
+
+## Merge Requests
+
+When Tembo finds an addressable issue, it creates a merge request with the proposed fix, detailed description, and assigns it for team review.
+
+# Working with Merge Requests
+
+## Reviewing Merge Requests
+
+Review Tembo's MRs just like any other team member's work:
+
+- Examine the changes and verify they align with your requirements
+- Leave comments directly on the code if you need changes
+- Use the [Feedback Loop](/features/feedback-loop) feature to have Tembo address your review comments automatically
+
+## Commenting on MRs
+
+When reviewing Tembo's merge requests, you can request changes or improvements by tagging `@tembo` in your comments. This ensures Tembo responds to your specific feedback while ignoring internal team discussions or comments directed at other team members.
+
+**Example:**
+```
+@tembo Please update this function to include error handling
+```
+
+Without the `@tembo` tag, Tembo will not respond to the comment, allowing for cleaner team communication.
+
+## Failed Pipeline Detection
+
+Tembo automatically monitors your GitLab CI/CD pipelines and detects when they fail. When a pipeline fails due to broken tests, linting errors, or other issues, Tembo will analyze the failure, identify the root cause, and create an MR with a fix.
+
+This helps maintain a healthy CI/CD pipeline without manual intervention.
+
+## Best Practices
+
+- Configure repository settings to match your team's preferences
+- Use [Rule Files](/features/rule-files) to help Tembo understand your coding standards
+- Set up [Hooks](/features/hooks) to customize Tembo's behavior for your workflow
