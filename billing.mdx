@@ -40,9 +40,38 @@ You can monitor your credit consumption in real-time through the [Billing dashbo
 
 To start getting pull requests, purchase Tembo Compute Credits through the [Billing page](https://app.tembo.io/settings/billing) within the Tembo app. You can buy additional credits at any time as needed.
 
-## Auto-Reload (Coming Soon)
+## Auto-Reload
 
-We are developing a feature to automatically reload your Tembo Compute Credits when they are running low, up to a maximum monthly limit. Until this feature is available, you can manually reload your credits at any time.
+Auto-reload automatically adds credits to your account when your balance falls below a threshold you set, ensuring uninterrupted service without manual intervention.
+
+### How Auto-Reload Works
+
+Auto-reload monitors your credit balance and automatically purchases credits when needed:
+
+- **Automatic monitoring** - Your credit balance is continuously monitored
+- **Threshold-based reload** - When your balance drops below your configured threshold, credits are automatically purchased
+- **Target balance** - Credits are added up to your specified target balance
+- **Monthly limit** - A monthly spending limit prevents excessive charges
+- **Payment method required** - You must have a payment method on file for auto-reload to function
+
+### Setting Up Auto-Reload
+
+To enable auto-reload:
+
+1. Navigate to the [Billing page](https://app.tembo.io/settings/billing) in your Tembo app
+2. Add a payment method if you haven't already
+3. Configure your auto-reload settings:
+   - **Enable auto-reload** - Toggle auto-reload on or off
+   - **Reload when balance below** - Set the credit threshold that triggers a reload (default: 100 credits)
+   - **Target balance** - Set your desired balance after reload (default: 1000 credits)
+   - **Monthly credit limit** - Set the maximum amount you're willing to spend per month (default: 1000 credits)
+
+### Important Notes
+
+- **Payment method required** - Auto-reload requires at least one payment method on file. You cannot delete your payment method while auto-reload is enabled
+- **Monthly limits** - Your monthly credit limit helps prevent unexpected charges. The system will not exceed this limit even if your balance is below the threshold
+- **Manual purchases** - You can still manually purchase credits at any time, even with auto-reload enabled
+- **Disabling auto-reload** - You can disable auto-reload at any time through the Billing settings page
 
 ## Enterprise Options
 
