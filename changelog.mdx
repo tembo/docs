@@ -3,6 +3,60 @@ title: "Changelog"
 description: "Keep track of changes and updates to Tembo"
 ---
 
+<Update label="2025-11-03" tags={["MCP", "Documentation", "Integrations"]}>
+
+Highlights since the last update:
+
+## MCP Servers Support
+
+Tembo now provides comprehensive Model Context Protocol (MCP) server support, allowing you to extend your agents with additional tools and integrations.
+
+![MCP Servers](/images/mcp-servers.png)
+
+Key features include:
+
+- **Built-in MCP Servers** - Tembo, Playwright, and Context7 servers available out of the box
+- **Integration MCP Servers** - Automatic MCP server configuration when connecting GitHub and Linear integrations
+- **Custom MCP Servers** - Add your own MCP servers (stdio, HTTP, or SSE) via organization settings
+- **Enhanced Agent Capabilities** - Give your agents access to browser automation, context management, and external APIs
+
+Learn more in the [MCP Servers documentation](/features/mcp-servers).
+
+## Enhanced Sentry Integration
+
+The Sentry integration now includes MCP server support, providing agents with direct access to Sentry tools and APIs. This enables more sophisticated error analysis and automated debugging workflows.
+
+Enhanced documentation covers:
+- MCP server configuration for Sentry
+- Advanced error handling workflows
+- Integration best practices
+
+See the updated [Sentry integration guide](/integrations/sentry).
+
+## Sandbox Environment Improvements
+
+### Nix Ecosystem Support
+
+The sandbox environment now supports the Nix package manager and ecosystem, enabling reproducible development environments and declarative package management.
+
+This addition brings:
+- Access to the extensive Nix package repository
+- Declarative environment configuration
+- Reproducible builds across different environments
+
+Learn more about sandbox capabilities in the [Sandbox Environment documentation](/features/sandbox-environment).
+
+## Documentation Updates
+
+Significant improvements to integration and feature documentation:
+
+- **GitHub Integration** - Restructured documentation with clearer workflows and MCP tool access details
+- **Linear Integration** - Updated guidance on repository linking and issue management
+- **Slack Integration** - Refreshed agent options to reflect currently available agents
+- **Hooks Documentation** - Added MCP servers configuration examples
+
+</Update>
+
 <Update label="2025-10-10" tags={["Slack", "Agents", "Design"]}>
 
 Highlights since the last update:
