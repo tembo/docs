@@ -3,6 +3,69 @@ title: "Changelog"
 description: "Keep track of changes and updates to Tembo"
 ---
 
+<Update label="2025-11-03" tags={["MCP", "Integrations", "Documentation"]}>
+
+## Model Context Protocol (MCP) Support
+
+Tembo now supports MCP servers, extending agent capabilities with custom tools and integrations. Learn more in our [MCP Servers documentation](/features/mcp-servers).
+
+### Built-in MCP Servers
+
+- **Tembo MCP** - Core tools for creating sub-issues and sending Slack messages
+- **Playwright MCP** - Browser automation and web testing capabilities
+- **Context7 MCP** - Enhanced context management for agents
+
+### Integration MCP Servers
+
+MCP servers are now automatically configured when you connect integrations:
+
+- **GitHub MCP** - Repository management, issues, and pull request tools
+- **Linear MCP** - Issue tracking and project management tools
+- **Sentry MCP** - Enhanced error tracking and debugging capabilities
+
+### Custom MCP Configuration
+
+Add your own MCP servers in organization settings with support for:
+- stdio (local process-based servers)
+- HTTP-based servers
+- Server-Sent Events (SSE) servers
+
+## Enhanced Sentry Integration
+
+The Sentry integration now includes MCP server support, providing agents with direct access to:
+- Error details and stack traces
+- Issue management capabilities
+- Project and organization context
+- Enhanced debugging information
+
+## Linear Integration Improvements
+
+### Default Repository Configuration
+
+Set a default repository in Linear settings to streamline your workflow. When creating tasks from Linear issues, your default repository will be suggested first.
+
+### Repository Selection Flow
+
+Improved repository selection experience when assigning Linear issues to Tembo, making it easier to choose the right codebase for each task.
+
+## Sandbox Environment Updates
+
+### Nix Ecosystem Support
+
+The sandbox environment now supports the Nix ecosystem, enabling:
+- Declarative package management
+- Reproducible development environments
+- Access to the Nix package repository
+
+## Documentation Improvements
+
+- Comprehensive MCP servers guide with configuration examples
+- Enhanced integration documentation for GitHub, Linear, and Sentry
+- Improved hooks documentation with MCP configuration examples
+- Updated agent documentation to reflect current available agents
+
+</Update>
+
 <Update label="2025-10-10" tags={["Slack", "Agents", "Design"]}>
 
 Highlights since the last update:
