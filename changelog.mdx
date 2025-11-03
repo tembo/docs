@@ -3,6 +3,59 @@ title: "Changelog"
 description: "Keep track of changes and updates to Tembo"
 ---
 
+<Update label="2025-11-03" tags={["MCP", "Sentry", "Sandbox", "Documentation"]}>
+
+## Model Context Protocol (MCP) Support
+
+Tembo now supports [Model Context Protocol (MCP)](/features/mcp-servers), enabling agents to connect to external tools, APIs, and data sources through a standardized interface.
+
+### Built-in MCP Servers
+
+- **Tembo MCP** - Core tools for creating sub-issues and sending Slack messages
+- **Playwright MCP** - Browser automation and web testing capabilities
+- **Context7 MCP** - Enhanced context management for agents
+
+### Integration MCP Servers
+
+When you connect integrations, additional MCP servers become automatically available:
+
+- **GitHub MCP** - Repository management, issues, and pull request operations
+- **Linear MCP** - Issue tracking and project management
+- **Sentry MCP** - Direct access to error data, stack traces, and issue status
+
+### Custom MCP Configuration
+
+You can now add custom MCP servers in your organization settings, supporting three server types:
+- stdio (local process-based)
+- http (HTTP-based)
+- sse (Server-Sent Events)
+
+## Enhanced Sentry Integration
+
+The [Sentry integration](/integrations/sentry) now includes MCP server capabilities, allowing agents to:
+- Query error data programmatically
+- Retrieve detailed stack traces during debugging
+- Check issue status and verify fixes
+- Analyze error trends and patterns
+
+## Sandbox Improvements
+
+### Nix Ecosystem Support
+
+The [sandbox environment](/features/sandbox-environment) now supports the Nix ecosystem, enabling:
+- Reproducible development environments
+- Declarative package management
+- Consistent builds across different systems
+
+## Documentation Updates
+
+- Comprehensive workflows and automations documentation
+- Updated agent references across all documentation
+- Enhanced integration guides with detailed setup instructions
+- Improved GitHub integration documentation structure
+
+</Update>
+
 <Update label="2025-10-10" tags={["Slack", "Agents", "Design"]}>
 
 Highlights since the last update:
