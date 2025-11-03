@@ -3,6 +3,62 @@ title: "Changelog"
 description: "Keep track of changes and updates to Tembo"
 ---
 
+<Update label="2025-11-03" tags={["Workflows", "MCP", "Documentation", "Linear"]}>
+
+Highlights since the last update:
+
+## Workflows & Automations
+
+Create custom, repeatable AI-powered tasks that run automatically on schedules or triggers. Perfect for maintenance tasks, security audits, and regular updates.
+
+Key features:
+- **Scheduled Workflows** - Run tasks on a cron schedule (daily, weekly, monthly, or custom intervals)
+- **Event-Based Triggers** - Execute workflows based on repository events like PR creation or issue updates
+- **Config-as-Code** - Define workflows in `.tembo/workflows.yml` for version control and team collaboration
+- **Pre-Built Examples** - Documentation sync, security audits, dependency updates, and performance monitoring
+
+Learn more in the [Workflows documentation](/features/workflows).
+
+## Model Context Protocol (MCP) Servers
+
+Extended agent capabilities with MCP server support, providing specialized tools and deeper integration access:
+
+**Built-in MCP Servers:**
+- **Tembo** - Create sub-issues and send Slack messages directly from agents
+- **Playwright** - Browser automation for testing and web scraping
+- **Context7** - Enhanced context retrieval and semantic search
+
+**Integration-Specific Servers:**
+- **Linear MCP** - Direct Linear API access for issue management
+- **Sentry MCP** - Query and analyze error data during debugging
+- **GitHub MCP** - Enhanced repository operations beyond standard git
+
+MCP servers are automatically configured when you connect integrations. View all available servers in the [MCP documentation](/features/mcp-servers).
+
+## Enhanced Documentation
+
+Comprehensive documentation updates across the platform:
+
+- **Workflows Guide** - Complete guide with examples and best practices
+- **MCP Servers** - Documentation for all available MCP integrations
+- **Sandbox Environment** - Added Nix ecosystem support details
+- **Sentry Integration** - Enhanced guide with MCP capabilities and troubleshooting
+- **Agent References** - Updated to reflect currently available agents
+- **GitHub Integration** - Improved structure and organization
+
+## Linear Integration Updates
+
+Enhanced Linear workflow with improved repository management:
+
+- **Interactive Repository Selection** - Choose repositories when assigning tasks
+- **Default Repository Setting** - Configure a default repository for faster task creation
+- **Multi-Repository Support** - Select multiple repositories for full-stack features
+- **Better Status Updates** - Real-time progress updates and PR links in Linear comments
+
+See the updated [Linear integration guide](/integrations/linear) for details.
+
+</Update>
+
 <Update label="2025-10-10" tags={["Slack", "Agents", "Design"]}>
 
 Highlights since the last update:
