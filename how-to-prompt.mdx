@@ -1,0 +1,383 @@
+---
+title: 'How to Prompt Tembo'
+description: 'Learn how to write effective prompts and issue descriptions to get the best results from Tembo'
+---
+
+Writing clear, actionable prompts is key to getting great results from Tembo. Whether you're assigning issues from Linear, Jira, or working directly with Tembo, following these guidelines will help ensure successful outcomes.
+
+## Anatomy of a Great Prompt
+
+A well-structured prompt includes:
+
+1. **Clear objective** - What needs to be done
+2. **Relevant context** - Why it matters and what's affected
+3. **Acceptance criteria** - How to know when it's done
+4. **Technical details** - Specific requirements or constraints
+
+## Examples of Ideal Stories
+
+### Bug Fix Example
+
+**Good:**
+```
+Title: Fix memory leak in background job processor
+
+Description:
+The background job processor in workers/job-processor.ts is accumulating
+memory over time and crashing after ~6 hours of operation.
+
+Context:
+- Observed in production on the worker-pool-3 instance
+- Error logs show heap size growing from 512MB to 4GB before crash
+- Affects all background jobs, particularly email sending queue
+
+Acceptance Criteria:
+- Memory usage remains stable over 24+ hour period
+- No loss of queued jobs during processing
+- Add monitoring to track memory usage over time
+
+Technical Details:
+- See Sentry error #12345 for stack traces
+- Suspect issue in the job cleanup logic around line 156
+- May need to implement proper event listener cleanup
+```
+
+**Why it works:**
+- Specific file location mentioned
+- Clear reproduction context (production environment, timeframe)
+- Measurable acceptance criteria
+- Links to error tracking
+- Technical hypothesis provided
+
+---
+
+### Feature Implementation Example
+
+**Good:**
+```
+Title: Add email validation to user registration form
+
+Description:
+Implement comprehensive email validation for the user registration flow
+to reduce invalid signups and improve data quality.
+
+Requirements:
+- Format validation (RFC 5322 compliant)
+- Check for disposable email domains
+- Real-time validation feedback in the UI
+- Show specific error messages for different validation failures
+
+Acceptance Criteria:
+- Invalid email formats are rejected with clear error messages
+- Disposable email domains (from blocklist) are rejected
+- Validation happens on both client and server side
+- Existing valid emails continue to work without issues
+- Unit tests cover edge cases
+
+Technical Notes:
+- Frontend form is in components/auth/RegistrationForm.tsx
+- Backend validation should be in services/user-service.ts
+- Use existing validation library (zod) for consistency
+- Disposable email list: https://github.com/disposable/disposable-email-domains
+```
+
+**Why it works:**
+- Specific requirements broken down clearly
+- Both functional and technical acceptance criteria
+- File locations specified
+- References existing patterns (zod validation)
+- External dependencies identified
+
+---
+
+### Refactoring Example
+
+**Good:**
+```
+Title: Refactor authentication middleware to use modern async/await
+
+Description:
+The authentication middleware (middleware/auth.js) uses callback-based
+patterns from Node.js 8. Modernize it to use async/await for better
+readability and error handling.
+
+Scope:
+- Convert all callback functions to async/await
+- Improve error handling with try/catch blocks
+- Add TypeScript types
+- Maintain backward compatibility with existing routes
+
+Acceptance Criteria:
+- All middleware functions use async/await
+- No callbacks remain in the file
+- Error handling is improved and consistent
+- All existing tests pass without modification
+- No breaking changes to API consumers
+
+Context:
+- This is part of the larger Node.js modernization effort (TEM-1234)
+- Other middleware files will follow the same pattern
+- Keep existing function signatures to avoid breaking changes
+```
+
+**Why it works:**
+- Clear scope of changes
+- Explicit backward compatibility requirement
+- Links to related work
+- Sets pattern for future refactoring
+- Prioritizes stability
+
+---
+
+### API Endpoint Example
+
+**Good:**
+```
+Title: Add pagination to GET /api/users endpoint
+
+Description:
+The /api/users endpoint currently returns all users in a single response,
+causing performance issues as the user base grows. Add cursor-based
+pagination to improve performance and reduce response times.
+
+Requirements:
+- Implement cursor-based pagination (not offset-based)
+- Default page size: 50 users
+- Maximum page size: 200 users
+- Include pagination metadata in response
+- Maintain backward compatibility for existing clients
+
+Response Format:
+{
+  "data": [...],
+  "pagination": {
+    "next_cursor": "abc123",
+    "prev_cursor": "xyz789",
+    "has_more": true,
+    "total_count": 1500
+  }
+}
+
+Acceptance Criteria:
+- Endpoint responds with paginated results
+- Query parameters: ?cursor=xxx&limit=50
+- Response includes pagination metadata
+- Performance improves for large datasets (>1000 users)
+- Existing clients without pagination params continue to work
+- API documentation is updated
+
+Technical Details:
+- Endpoint: routes/api/users.ts
+- Use existing pagination utility in utils/pagination.ts
+- Index on users.created_at for efficient cursor queries
+- Update OpenAPI spec in openapi.yml
+```
+
+**Why it works:**
+- Specific implementation approach (cursor-based)
+- Example response format provided
+- Performance goal specified
+- Backward compatibility addressed
+- File locations and utilities mentioned
+
+---
+
+## Less Effective Prompts
+
+### Too Vague
+
+**Poor:**
+```
+Title: Fix the bug
+Description: The app is broken, please fix it.
+```
+
+**Why it doesn't work:**
+- No specific issue identified
+- No context about what's "broken"
+- No way to verify when it's fixed
+
+---
+
+### Missing Context
+
+**Poor:**
+```
+Title: Improve performance
+Description: Make the dashboard load faster.
+```
+
+**Why it doesn't work:**
+- No current performance metrics
+- No target performance specified
+- Unclear which parts of dashboard to optimize
+- No acceptance criteria
+
+---
+
+### Overly Broad
+
+**Poor:**
+```
+Title: Update the app
+Description: Modernize the codebase and add new features.
+```
+
+**Why it doesn't work:**
+- Multiple unrelated tasks
+- No specific features identified
+- Unclear scope and priorities
+- Too large for a single issue
+
+---
+
+## Tips for Different Issue Types
+
+### For Bug Reports
+
+Include:
+- Steps to reproduce
+- Expected vs. actual behavior
+- Error messages or logs
+- Environment details (production, staging, local)
+- Links to error tracking tools (Sentry, etc.)
+
+### For Feature Requests
+
+Include:
+- User story or use case
+- Mockups or wireframes (if applicable)
+- Success metrics
+- Edge cases to consider
+- Dependencies on other features
+
+### For Refactoring Tasks
+
+Include:
+- Current state and problems
+- Desired end state
+- Constraints (backward compatibility, performance)
+- Files or modules to refactor
+- Related technical debt items
+
+### For Documentation Tasks
+
+Include:
+- What needs to be documented
+- Target audience (developers, users, etc.)
+- Existing documentation to update or reference
+- Examples to include
+- Format preferences (API docs, guides, tutorials)
+
+## Working with Jira and Linear
+
+When creating issues in Jira or Linear for Tembo:
+
+### Use Labels Effectively
+
+Add relevant labels to help Tembo prioritize and categorize:
+- `bug`, `feature`, `refactor`, `docs`
+- `urgent`, `high-priority`
+- `frontend`, `backend`, `full-stack`
+
+### Link Related Issues
+
+Connect related issues so Tembo can understand dependencies:
+- Parent/child issue relationships
+- Blocking/blocked by relationships
+- Related issues in the same epic or project
+
+### Attach Supporting Materials
+
+- Screenshots or screen recordings
+- Error logs or stack traces
+- Design files or mockups
+- Links to external documentation
+
+### Set Appropriate Metadata
+
+- Priority level
+- Story points or complexity estimate
+- Component or team assignment
+- Sprint or milestone
+- Due dates (for time-sensitive issues)
+
+## Common Patterns
+
+### Multi-Repository Tasks
+
+When a task spans multiple repositories:
+
+```
+Title: Add user authentication to frontend and backend
+
+Description:
+Implement user authentication across both frontend and backend repositories.
+
+Frontend (webapp repo):
+- Create login/signup forms
+- Implement JWT token storage
+- Add auth context provider
+- Add protected route wrapper
+
+Backend (api repo):
+- Create /auth/login and /auth/signup endpoints
+- Implement JWT token generation
+- Add authentication middleware
+- Set up refresh token rotation
+
+Acceptance Criteria:
+- Users can register and login from frontend
+- JWT tokens are securely stored and transmitted
+- Protected routes require authentication
+- Tokens automatically refresh before expiration
+- Both repos have passing tests
+
+Note: This requires changes to both repositories. Please work on both.
+```
+
+### Database Migration Tasks
+
+```
+Title: Add indexes to improve query performance on orders table
+
+Description:
+Add database indexes to the orders table to improve query performance
+for the dashboard and reporting features.
+
+Indexes to Add:
+1. Index on (user_id, created_at) for user order history
+2. Index on (status, updated_at) for status filtering
+3. Composite index on (store_id, created_at) for store dashboards
+
+Acceptance Criteria:
+- Migration file created with up/down migrations
+- Indexes are added successfully in staging environment
+- Query performance improves (measure before/after)
+- No locking issues during migration
+- Migration is documented in MIGRATIONS.md
+
+Context:
+- Dashboard queries are taking 3-5 seconds
+- Orders table has 2M+ rows
+- Target: <500ms query time
+```
+
+## Getting the Best Results
+
+1. **Be specific** - Include file paths, line numbers, function names
+2. **Provide context** - Explain the why, not just the what
+3. **Set clear criteria** - Define what success looks like
+4. **Include examples** - Show expected inputs/outputs
+5. **Link resources** - Reference documentation, similar PRs, error logs
+6. **Break down complexity** - Split large tasks into smaller, focused issues
+7. **Iterate and refine** - If results aren't what you expected, add more detail
+
+## Questions?
+
+If you're unsure how to structure a prompt, start with:
+- What needs to change?
+- Why does it need to change?
+- How will we know it's done correctly?
+
+Then add technical details, context, and constraints as needed.
