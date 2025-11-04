@@ -27,6 +27,7 @@
             "group": "Get Started",
             "pages": [
               "welcome",
+              "how-to-prompt",
               "pwa",
               "billing"
             ]
