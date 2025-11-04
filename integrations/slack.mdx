@@ -3,7 +3,7 @@ title: "Slack"
 icon: "slack"
 ---
 
-Connect Tembo to Slack to trigger background tasks with any agent (Claude Code, Codex, OpenCode, Amp, Cursor, etc.).
+Connect Tembo to Slack to trigger background tasks with any coding agent (Claude Code, Codex, OpenCode, Amp, Cursor, etc.).
 
 ![Slack Integration](/images/slack-integration.png)
 
@@ -53,7 +53,7 @@ Connect Tembo to Slack to trigger background tasks with any agent (Claude Code, 
 
 ## Basic Commands
 
-### Start a Background Agent
+### Start a Background Coding Agent
 
 ```
 @tembo [your task description]
@@ -91,15 +91,15 @@ Tembo supports flexible command syntax with multiple options. You can use either
 
   - Example: `repo=owner/repository`, `repo=myorg/webapp`
 
-- **`agent=`** - Specify which AI agent and model to use (format: `agentType:model`)
+- **`agent=`** - Specify which coding agent and model to use (format: `agentType:model`)
   - Example: `agent=claudeCode:claude-4-5-sonnet`, `agent=codex:gpt-5-medium`
-  - Supported agents: `claudeCode`, `codex`, `opencode`, `amp`, `cursor`
-  - If no agent is specified, defaults to `claudeCode:claude-4-5-sonnet`
-  - See [Agents documentation](/features/coding-agents) for all available options
+  - Supported coding agents: `claudeCode`, `codex`, `opencode`, `amp`, `cursor`
+  - If no coding agent is specified, defaults to `claudeCode:claude-4-5-sonnet`
+  - See [Coding Agents documentation](/features/coding-agents) for all available options
 
 ### Thread Context Utilization
 
-When you mention `@tembo` in a thread, the agent automatically:
+When you mention `@tembo` in a thread, the coding agent automatically:
 
 - Reads the entire conversation history
 - Understands the context from previous messages
@@ -115,7 +115,7 @@ Tembo keeps you informed throughout the task lifecycle:
 - ❌ **X mark** - Task failed or encountered an error
 
 **Direct messages for longer tasks:**
-- Progress updates as the agent works
+- Progress updates as the coding agent works
 - Pull request links when code changes are ready
 - Error details if the task cannot be completed
 

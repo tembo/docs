@@ -15,7 +15,10 @@
       "Bash(fi)",
       "Bash(done)",
       "Bash(git mv:*)",
-      "WebFetch(domain:website-git-tembo-blog-post-new-a2247b-darren-baldwins-projects.vercel.app)"
+      "WebFetch(domain:website-git-tembo-blog-post-new-a2247b-darren-baldwins-projects.vercel.app)",
+      "WebSearch",
+      "WebFetch(domain:www.mintlify.com)",
+      "WebFetch(domain:starter.mintlify.com)"
     ],
     "deny": [],
     "ask": []

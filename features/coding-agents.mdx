@@ -3,21 +3,17 @@ title: 'Coding Agents'
 icon: 'robot-astromech'
 ---
 
-Tembo supports agents to solve your software engineering tasks. Each agent has different capabilities, models, and configuration options.
+import CodingAgentsTable from '/snippets/coding-agents-table.mdx';
 
-## Available Agents
+Tembo supports coding agents to solve your software engineering tasks. Each coding agent has different capabilities, models, and configuration options.
 
-| Agent           | Model Providers         | Default Model       |
-| --------------- | ----------------------- | ------------------- |
-| **Claude Code** | Anthropic               | `claude-4-5-sonnet` |
-| **Codex**       | OpenAI                  | `gpt-5-medium`      |
-| **Opencode**    | Anthropic/OpenAI        | `claude-4-5-sonnet` |
-| **Amp**         | Anthropic               | `claude-4-5-sonnet` |
-| **Cursor**      | Anthropic/OpenAI/Cursor | `gpt-5-medium`      |
+## Available Coding Agents
+
+<CodingAgentsTable />
 
 ### Claude Code (Default)
 
-Claude Code is Tembo's default agent, powered by Anthropic's Claude models.
+Claude Code is Tembo's default coding agent, powered by Anthropic's Claude models.
 
 **Supported Models:**
 
@@ -28,7 +24,7 @@ Claude Code is Tembo's default agent, powered by Anthropic's Claude models.
 
 ### Codex
 
-Codex is an agent powered by OpenAI's latest GPT-5 models with varying reasoning levels, allowing you to choose the right balance of speed and thoroughness.
+Codex is a coding agent powered by OpenAI's latest GPT-5 models with varying reasoning levels, allowing you to choose the right balance of speed and thoroughness.
 
 **Supported Models:**
 
@@ -39,7 +35,7 @@ Codex is an agent powered by OpenAI's latest GPT-5 models with varying reasoning
 
 ### Opencode
 
-Opencode is an alternative agent supporting both Anthropic Claude models and OpenAI GPT models, providing flexibility in model selection.
+Opencode is an alternative coding agent supporting both Anthropic Claude models and OpenAI GPT models, providing flexibility in model selection.
 
 **Supported Models:**
 
@@ -50,13 +46,13 @@ Opencode is an alternative agent supporting both Anthropic Claude models and Ope
 
 ### Amp
 
-Amp is a powerful AI coding agent powered by Anthropic's Claude models.
+Amp is a powerful coding agent powered by Anthropic's Claude models.
 
 Amp uses smart model detection and currently uses [Sonnet 4.5](https://ampcode.com/news/claude-sonnet-4-5) as its main model.
 
 ### Cursor
 
-Cursor is an AI coding agent supporting both Anthropic Claude models and OpenAI GPT models through the Cursor CLI.
+Cursor is a coding agent supporting both Anthropic Claude models and OpenAI GPT models through the Cursor CLI.
 
 **Supported Models:**
 
@@ -65,9 +61,9 @@ Cursor is an AI coding agent supporting both Anthropic Claude models and OpenAI 
 - `gpt-5` - Powerful reasoning and code generation
 - `composer-1` - OpenAI's composer model
 
-## Choosing the Right Agent
+## Choosing the Right Coding Agent
 
-Different agents excel at different types of tasks. Here's guidance on when to use each:
+Different coding agents excel at different types of tasks. Here's guidance on when to use each:
 
 **For most tasks:** Start with **Claude Code** (default). It provides the best balance of code quality, reliability, and cost-effectiveness for general software engineering work.
 
@@ -75,11 +71,11 @@ Different agents excel at different types of tasks. Here's guidance on when to u
 
 **For quick fixes and simple updates:** Use **Claude Code with `claude-4-5-haiku`** or **Codex with `gpt-5-minimal`** for faster execution on straightforward tasks.
 
-**For team consistency:** If your team already uses a specific IDE or coding environment (Cursor, Amp, etc.), select the matching agent for familiar code patterns and style.
+**For team consistency:** If your team already uses a specific IDE or coding environment (Cursor, Amp, etc.), select the matching coding agent for familiar code patterns and style.
 
-## Selecting an Agent
+## Selecting a Coding Agent
 
-Agents are specified using an agent key format: `agentType:model`
+Coding Agents are specified using a coding agent key format: `agentType:model`
 
 **Examples:**
 
@@ -89,7 +85,7 @@ Agents are specified using an agent key format: `agentType:model`
 - `amp:claude-4-5-sonnet`
 - `cursor:gpt-5`
 
-If no agent is specified, Tembo defaults to `claudeCode:claude-4-5-sonnet`.
+If no coding agent is specified, Tembo defaults to `claudeCode:claude-4-5-sonnet`.
 
 ## Choosing the Right Model
 
@@ -112,7 +108,7 @@ Different models offer different tradeoffs between speed, cost, and capability:
 
 ## Using Rule Files
 
-Rule files allow you to provide agent-specific instructions and coding standards. Each agent reads from its designated configuration file in your repository root (see **Rule File** listed above for each agent).
+Rule files allow you to provide coding agent-specific instructions and coding standards. Each coding agent reads from its designated configuration file in your repository root (see **Rule File** listed above for each coding agent).
 
 These files can include:
 
@@ -123,12 +119,12 @@ These files can include:
 
 Learn more about [rule files](/features/rule-files).
 
-## Switching Between Agents
+## Switching Between Coding Agents
 
-You can configure which agent to use for your organization or specific tasks through:
+You can configure which coding agent to use for your organization or specific tasks through:
 
-1. **Dashboard Settings** - Set a default agent for all tasks
-2. **API Configuration** - Specify an agent key when creating tasks via API
-3. **Integration Settings** - Configure per-integration agent preferences
+1. **Dashboard Settings** - Set a default coding agent for all tasks
+2. **API Configuration** - Specify a coding agent key when creating tasks via API
+3. **Integration Settings** - Configure per-integration coding agent preferences
 
-Contact your Tembo administrator or check the [API documentation](/api-reference) for details on agent configuration.
+Contact your Tembo administrator or check the [API documentation](/api-reference) for details on coding agent configuration.
