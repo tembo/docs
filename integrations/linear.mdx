@@ -1,10 +1,9 @@
 ---
-title: 'Linear'
-icon: '/images/linear.svg'
+title: "Linear"
+icon: "); -webkit-mask-image: url('/images/linear.svg'); mask-image: url('/images/linear.svg');/*"
 ---
 
 Assign Linear issues to Tembo and turn them into PRs.
-
 
 # Features
 
@@ -21,20 +20,16 @@ Assign Linear issues to Tembo and turn them into PRs.
   <Step title="Authorize">
     Authorize Tembo to access your Linear workspace. You'll be redirected back to the Integrations page when complete.
   </Step>
-  <Step title="Configure Repositories">
-    Make sure you have at least one code repository (GitHub, GitLab, or Bitbucket) connected to your Tembo organization. You can manage repositories in the [Integrations page](https://app.tembo.io/integrations).
+  <Step title="Repository Labels">
+    Tembo automatically creates a "Tembo Git Repositories" label group with all your GitHub repositories. Use these labels to specify which repository Tembo should target for each issue.
 
-    **Setting a default repository (optional):**
+    You can set a default repository to avoid adding labels to every issue.
 
-    If you work primarily in one repository, you can configure a default repository in the [Linear integration settings](https://app.tembo.io/integrations). This will be suggested first when selecting repositories.
-
-    - Navigate to Settings → Integrations → Linear
-    - Select your default repository from the dropdown
   </Step>
   <Step title="Start Using Tembo">
     Now you can assign Linear issues to Tembo to trigger solutions.
   </Step>
-</Steps> 
+</Steps>
 
 # Supported Triggers
 

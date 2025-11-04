@@ -1,6 +1,6 @@
 ---
 title: "Sentry"
-icon: "/images/sentry.svg"
+icon: "); -webkit-mask-image: url('/images/sentry.svg'); mask-image: url('/images/sentry.svg');/*"
 ---
 
 Connect Sentry to Tembo for automatic error detection and code fixes. When Sentry detects an error in your application, Tembo analyzes the stack trace and creates a pull request with a targeted fix.
@@ -24,7 +24,8 @@ Connect Sentry to Tembo for automatic error detection and code fixes. When Sentr
   <Step title="Map Projects">
     Map your Sentry projects to GitHub repositories under "Projects" on the Integrations page.
 
-    **Important:** Only mapped projects will generate pull requests with code fixes. Ensure each Sentry project is associated with the correct repository.
+    Only mapped projects will generate pull requests with code fixes.
+
   </Step>
 </Steps>
 
