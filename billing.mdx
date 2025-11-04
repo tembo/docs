@@ -73,6 +73,34 @@ To enable auto-reload:
 - **Manual purchases** - You can still manually purchase credits at any time, even with auto-reload enabled
 - **Disabling auto-reload** - You can disable auto-reload at any time through the Billing settings page
 
+## Troubleshooting
+
+### Auto-Reload Not Working
+
+If auto-reload isn't triggering when expected:
+
+1. **Verify payment method** - Ensure you have an active payment method on file. Auto-reload requires at least one valid payment method.
+2. **Check threshold settings** - Confirm your balance has dropped below the configured threshold. Auto-reload only triggers when balance < threshold.
+3. **Review monthly limit** - If you've reached your monthly credit limit, auto-reload won't purchase additional credits until the next billing cycle.
+4. **Confirm auto-reload is enabled** - Double-check that the auto-reload toggle is in the "on" position in your [Billing settings](https://app.tembo.io/settings/billing).
+
+### Payment Method Issues
+
+If you're having trouble with payment methods:
+
+- **Cannot delete payment method** - You must disable auto-reload before removing your payment method. Toggle auto-reload off first, then delete the payment method.
+- **Payment failed** - Check that your card is valid and has sufficient funds. Update your payment details in the Billing dashboard if needed.
+
+### Credit Balance Questions
+
+**Why didn't I receive the full target balance?**
+Auto-reload will only add credits up to your monthly limit. If adding the full amount would exceed your monthly limit, only the remaining allowed amount will be purchased.
+
+**My balance went below threshold but I don't see new credits.**
+Auto-reload typically processes within a few minutes. If you don't see credits after 10 minutes, check that all auto-reload requirements are met (payment method on file, monthly limit not exceeded, auto-reload enabled).
+
+For additional support, contact us at [hi@tembo.io](mailto:hi@tembo.io).
+
 ## Enterprise Options
 
 For larger teams, we offer:
