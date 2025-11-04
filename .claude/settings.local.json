@@ -19,7 +19,9 @@
       "WebSearch",
       "WebFetch(domain:www.mintlify.com)",
       "WebFetch(domain:starter.mintlify.com)",
-      "Bash(curl -s https://raw.githubusercontent.com/tembo-io/monorepo/refs/heads/gro-2/automation-recipe-book.md?token=GHSAT0AAAAAACTHWCXIDJAO4PABCYUAKZZO2IKGJPA)"
+      "Bash(curl -s https://raw.githubusercontent.com/tembo-io/monorepo/refs/heads/gro-2/automation-recipe-book.md?token=GHSAT0AAAAAACTHWCXIDJAO4PABCYUAKZZO2IKGJPA)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
