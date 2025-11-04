@@ -42,3 +42,16 @@ Assign Jira tickets to Tembo and turn them into PRs.
     to view the session.
   </Step>
 </Steps>
+
+# Supported Triggers
+
+Tembo maps Jira activity to automation triggers (use a `jira.*` naming convention in your `triggerName`). The Integrations page in the app shows the live set enabled for your org. Supported events:
+
+- `issue.created`
+- `issue.updated`
+- `issue.labeled`
+- `issue.assigned`
+- `transition.changed`
+- `comment.created`
+
+See Automations for how to create triggers from these events.

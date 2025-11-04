@@ -31,6 +31,25 @@ Connect GitHub to Tembo to open pull requests to improve your codebase.
   </Step>
 </Steps>
 
+# Supported Webhooks
+
+Tembo listens to the following GitHub events and maps them to automation triggers (reference them as `github.<event>` in your `triggerName`, e.g., `github.pull_request.opened`). Tembo subscribes only to the events listed here (not every GitHub webhook). The Integrations page in the app shows the live set enabled for your org. If you need an additional event (for example, tag creation), contact support@tembo.io.
+
+- `pull_request.opened`
+- `pull_request.closed`
+- `pull_request.reopened`
+- `pull_request.ready_for_review`
+- `pull_request.converted_to_draft`
+- `pull_request.edited`
+- `pull_request_review.submitted`
+- `issue_comment.created`
+- `installation.created`
+- `installation.deleted`
+- `installation.new_permissions_accepted`
+- `installation_repositories.added`
+- `installation_repositories.removed`
+
+See Automations for how to create triggers that start automations from these events.
 # Usage
 
 ## Automated Scanning

@@ -1,0 +1,95 @@
+---
+title: "Automations"
+icon: "repeat"
+---
+
+Tembo Automations let you automate multi-step tasks that Tembo executes on your behalf. You define automations as JSON in your repo, schedule them or trigger them from events, and Tembo runs them reliably in the background.
+
+## Managing via UI
+
+- Create and manage schedules from the automation’s page in the Tembo UI.
+- Create and manage event triggers from the automation’s page or the Integration settings.
+- Public API endpoints for schedules and triggers may not be available for your account yet; check the Public API tab or contact support for access.
+
+## Defining Automations in Your Repo
+
+Add one or more JSON files in `/.tembo/workflows/`. Each file should contain at least a `name` and `jsonContent` (the editor JSON for your automation). Tembo scans your repository and imports each automation into your organization during sync.
+
+How this fits together:
+
+- Store automation JSON under `/.tembo/workflows/*.json` in your repo.
+- On sync, Tembo imports each definition into your org.
+- Automations start from either a schedule (cron) or an event trigger, which enqueues a background job.
+- That job records an Automation Run and converts your JSON into a Tembo “Automation Issue”, then executes it using the same engine that powers issue solving.
+
+Example:
+
+```json
+{
+  "name": "Nightly Maintenance",
+  "jsonContent": {
+    "type": "doc",
+    "content": [
+      { "type": "paragraph", "content": [{ "type": "text", "text": "Run nightly tasks" }] }
+    ]
+  }
+}
+```
+
+Sync occurs when Tembo walks your repository.
+
+## Ways to Run an Automation
+
+### 1) Scheduled (Cron)
+Create schedules that enqueue your automation at specific times using standard cron expressions.
+
+- Use the Tembo UI to create, edit, and delete schedules for an automation.
+- Tembo checks schedules every minute and enqueues the automation when due.
+- Each schedule tracks `lastRunAt` and `nextRunAt` for visibility.
+
+### 2) Event Triggers
+Create triggers that tie an automation to an event. Triggers can be scoped to an integration (e.g., GitHub, GitLab, Bitbucket, Linear, Slack).
+
+- Use the Tembo UI to create, list, update, and delete triggers for an automation.
+- `triggerName` is a free-form identifier you use consistently from your integration/webhook to fire the automation.
+- `integrationId` is optional; use it to associate a trigger with a specific connected provider.
+
+### Supported Triggers & Webhooks
+
+Tembo automations can be triggered from provider webhooks. Use a consistent `triggerName` (we recommend `provider.category.event`, for example `github.pull_request.opened`).
+
+- The exact event set comes from our current webhook handlers in the monorepo and may evolve.
+- For the live list enabled for your org, check the Integrations page in the app.
+- For provider-specific details, see each integration doc:
+  - [GitHub](/integrations/github)
+  - [GitLab](/integrations/gitlab)
+  - [Bitbucket](/integrations/bitbucket)
+  - [Slack](/integrations/slack)
+  - [Linear](/integrations/linear)
+  - [Jira](/integrations/jira)
+  - [Sentry](/integrations/sentry)
+- If you need an additional event (for example, GitHub tag creation), contact support@tembo.io.
+
+## What Happens During a Run
+
+1. A schedule or trigger enqueues an automation run job with the automation ID.
+2. Tembo creates an Automation Run record for traceability (status + runtime).
+3. Tembo opens an “Automation Issue” that stores your `jsonContent` and a link to the run.
+4. Tembo enqueues a `solve_issue` job for that Automation Issue. Your automation executes using the same robust agent pipeline as normal issues.
+5. The run status is updated to finished or failed when processing completes.
+
+## Monitoring & Visibility
+
+- View automations and runs in the Tembo UI.
+- Admins can also inspect queued/scheduled jobs in the admin tools.
+- Use the Public API’s Queue endpoints to inspect general queue state if needed.
+
+## Tips & Conventions
+
+- Name uniqueness: Automations are unique per organization by name; re-sync updates the `jsonContent` for the same-name automation.
+- Schedules and triggers are also unique per org by their generated names (Tembo adds short hashes under the hood).
+- Credits: Automations ultimately execute through the same engine that solves issues. Standard credit checks apply when execution reaches issue-solving.
+
+---
+
+If you need help modeling automation JSON or wiring a custom event to a trigger, reach out at support@tembo.io.

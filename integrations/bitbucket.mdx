@@ -101,3 +101,18 @@ When Tembo creates a pull request:
 - Ensure the repository allows pull requests from the connected account
 
 If you encounter persistent authentication issues, try disconnecting and reconnecting the Bitbucket integration.
+
+# Supported Webhooks
+
+Tembo listens to common Bitbucket events and maps them to automation triggers (reference them as `bitbucket.<category>` in your `triggerName`, e.g., `bitbucket.pull_request.opened`). The Integrations page in the app shows the live set enabled for your org. Supported events:
+
+- `pull_request.opened`
+- `pull_request.updated`
+- `pull_request.reopened`
+- `pull_request.approved`
+- `pull_request.unapproved`
+- `pull_request.merged`
+- `pull_request.closed`
+- `pull_request.comment_created`
+
+See Automations for creating triggers from these events.

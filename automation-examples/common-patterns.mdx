@@ -1,0 +1,130 @@
+---
+title: "Common Patterns"
+description: "Reusable automation patterns for common use cases"
+---
+
+## Overview
+
+These patterns represent common automation use cases that can be adapted to your specific needs. Use them as templates to build your own automations.
+
+---
+
+## Pattern: Digest Creator
+
+Collect information over a time period and summarize it.
+
+**Examples**:
+
+- Daily changelog
+- Weekly issue summary
+- Monthly metrics report
+
+**When to Use**:
+- You need to aggregate information from multiple sources
+- Information should be delivered at regular intervals
+- Team needs summaries rather than individual updates
+
+---
+
+## Pattern: Event Responder
+
+React to specific events and take action.
+
+**Examples**:
+
+- PR opened → Request reviewers
+- CI failed → Attempt auto-fix
+- Issue created → Check for duplicates
+
+**When to Use**:
+- You need immediate action when events occur
+- Responses are consistent and can be automated
+- Manual monitoring is time-consuming
+
+---
+
+## Pattern: Health Monitor
+
+Regularly check the health of systems or processes.
+
+**Examples**:
+
+- Check for stale issues
+- Monitor CI success rates
+- Track open PR aging
+
+**When to Use**:
+- You need proactive alerts about problems
+- Status should be checked regularly
+- Manual monitoring is tedious or error-prone
+
+---
+
+## Pattern: Content Generator
+
+Create or enhance content automatically.
+
+**Examples**:
+
+- Generate blog frontmatter
+- Create release notes
+- Write PR descriptions
+
+**When to Use**:
+- Content follows a predictable pattern
+- Manual content creation is repetitive
+- Consistency is important
+
+---
+
+## Pattern: Notifier
+
+Keep team informed about important events.
+
+**Examples**:
+
+- Post release announcements
+- Alert on security issues
+- Share deployment status
+
+**When to Use**:
+- Team needs to stay informed about specific events
+- Information should go to multiple channels
+- Timing is important (immediate or scheduled)
+
+---
+
+## Combining Patterns
+
+Many powerful automations combine multiple patterns:
+
+**Example: Release Workflow**
+1. **Event Responder**: New tag created triggers automation
+2. **Digest Creator**: Summarizes commits since last release
+3. **Content Generator**: Creates formatted release notes
+4. **Notifier**: Posts to Slack and creates GitHub release
+
+**Example: Issue Health Monitor**
+1. **Health Monitor**: Checks for stale issues weekly
+2. **Digest Creator**: Groups issues by priority and team
+3. **Notifier**: Posts summary to team channels
+
+---
+
+## Tips for Using Patterns
+
+### Start with a Pattern
+
+Choose the pattern that best matches your use case, then customize it. Don't try to build from scratch.
+
+### Mix and Match
+
+Combine patterns to create more sophisticated workflows. Most real-world automations use multiple patterns.
+
+### Keep It Simple
+
+Start with the simplest pattern that solves your problem. Add complexity only when needed.
+
+### Document Your Pattern
+
+When you create a new pattern or variation, document it for your team to reuse.

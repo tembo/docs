@@ -18,7 +18,10 @@
       "WebFetch(domain:website-git-tembo-blog-post-new-a2247b-darren-baldwins-projects.vercel.app)",
       "WebSearch",
       "WebFetch(domain:www.mintlify.com)",
-      "WebFetch(domain:starter.mintlify.com)"
+      "WebFetch(domain:starter.mintlify.com)",
+      "Bash(curl -s https://raw.githubusercontent.com/tembo-io/monorepo/refs/heads/gro-2/automation-recipe-book.md?token=GHSAT0AAAAAACTHWCXIDJAO4PABCYUAKZZO2IKGJPA)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []

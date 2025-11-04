@@ -1,0 +1,110 @@
+---
+title: "Product Changelog"
+description: "Automate the creation and distribution of product changelogs and release notes"
+---
+
+## Overview
+
+Product changelog automations help keep your team and customers informed about changes without manual effort. These automations can summarize commits, generate release notes, and distribute updates across multiple channels.
+
+---
+
+## Example 1: Daily Product Changelog Summary
+
+**Use Case**: Keep your team informed about daily code changes without manual work.
+
+**How it works**:
+- Runs once per day at 9 AM
+- Summarizes all commits merged to main branch in the last 24 hours
+- Formats changes into "Customer facing changes" and "Internal changes"
+- Posts to #product-changelog Slack channel
+
+**Schedule**: Daily at 9:00 AM
+
+**Prompt Template**:
+
+```text
+Summarize all changes merged to the main branch in the last 24 hours.
+
+Group the changes into two sections:
+1. Customer facing changes - features, bug fixes, and improvements users will notice
+2. Internal changes - refactoring, infrastructure, and developer experience improvements
+
+Use Slack Block Kit to format the message with:
+- A header with today's date
+- Sections for each category
+- Bullet points for each change
+- Link to relevant pull requests
+
+Post the summary to the #product-changelog channel.
+```
+
+**MCP Servers Needed**: GitHub, Slack
+
+**Tips**:
+- Use emoji indicators (✨ for features, 🐛 for bugs, 🔧 for internal changes)
+- Include PR links for transparency
+- Skip posting if there are no changes
+
+---
+
+## Example 2: Release Notes Generator
+
+**Use Case**: Automatically generate release notes when a new tag is created.
+
+**How it works**:
+- Monitors for new git tags in your repository
+- Compares changes since the previous release tag
+- Generates comprehensive release notes using AI
+- Posts to multiple channels (Slack, GitHub releases)
+
+**Schedule**: Hourly (checks for new tags)
+
+**Prompt Template**:
+
+```text
+Check if a new tag has been created in the repository since the last processed tag.
+
+If a new tag exists:
+1. Get all commits between the previous tag and the new tag
+2. Analyze the commits and generate release notes with:
+   - New features
+   - Bug fixes
+   - Breaking changes
+   - Deprecations
+   - Performance improvements
+
+3. Format the release notes in markdown
+4. Create a GitHub release with the notes
+5. Post a summary to #releases Slack channel
+6. Update the automation state with the latest processed tag
+
+If no new tag exists, do nothing.
+```
+
+**MCP Servers Needed**: GitHub, Slack
+
+**Advanced Features**:
+- Automation state management to track the last processed tag
+- Automatic categorization of changes based on commit messages
+- Integration with Linear to link resolved issues
+
+---
+
+## Tips for Product Changelog Automations
+
+### Be User-Focused
+
+When generating changelogs, focus on the impact to end users rather than technical implementation details. Your customers care about what changed for them, not internal refactoring.
+
+### Use Consistent Formatting
+
+Stick to a consistent format for changelogs across all releases. This makes it easier for users to scan and understand changes quickly.
+
+### Include Version Numbers
+
+Always include version numbers or tags in release notes to help users track which version they're running.
+
+### Link to Documentation
+
+For significant new features, include links to relevant documentation or guides to help users understand how to use the new functionality.

@@ -29,6 +29,18 @@ Connect Sentry to Tembo for automatic error detection and code fixes. When Sentr
   </Step>
 </Steps>
 
+# Supported Webhooks
+
+Tembo listens to Sentry issue lifecycle events and maps them to automation triggers (reference them as `sentry.<event>` in your `triggerName`). The Integrations page in the app shows the live set enabled for your org. Supported events:
+
+- `issue.created`
+- `issue.regression`
+- `issue.resolved`
+- `issue.ignored`
+- `issue.assigned`
+
+See Automations for creating triggers from these events.
+
 # How It Works
 
 1. **Error Detected** - Sentry captures an error in your application and sends a webhook to Tembo
