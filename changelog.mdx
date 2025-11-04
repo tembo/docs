@@ -4,6 +4,67 @@ description: "Keep track of changes and updates to Tembo"
 icon: 'clock-rotate-left'
 ---
 
+<Update label="2025-11-04" tags={["Hooks", "MCP", "Integrations", "Documentation"]}>
+
+## Hooks System
+
+Introduced Tembo Hooks - a powerful customization system that lets you run custom commands at specific points during task execution. Configure lifecycle hooks like `postClone` and `prePush` through a `.tembo.json` file to integrate your CI/CD processes and quality checks directly into Tembo's workflow.
+
+Learn more in the [Hooks documentation](/features/hooks).
+
+## MCP Server Support
+
+Added support for Model Context Protocol (MCP) servers, extending your agents with additional tools and integrations. Tembo now includes built-in MCP servers for:
+
+- **Tembo MCP** - Core tools for sub-issues and Slack messaging
+- **Playwright** - Browser automation and web testing
+- **Context7** - Context management and search
+
+You can also configure custom MCP servers to extend your agents with external APIs and data sources.
+
+Learn more in the [MCP Servers documentation](/features/mcp-servers).
+
+## Progressive Web App
+
+Tembo can now be installed as a Progressive Web App (PWA) on your device. Get quick access from your home screen, enjoy an app-like experience, and work with offline resilience for viewing recent data.
+
+Learn more in the [PWA documentation](/pwa).
+
+## Raycast Integration
+
+Create and manage coding tasks directly from Raycast. The new Tembo extension for Raycast allows you to:
+
+- Create tasks with natural language
+- View and filter all tasks in your organization
+- Monitor task status from your menubar
+- Use Raycast AI to interact with Tembo
+
+Install the extension from the [Raycast Store](https://www.raycast.com/store).
+
+## New Integrations
+
+Added support for additional integrations to connect Tembo with your development stack:
+
+- **AWS RDS** - Connect your Amazon RDS databases
+- **PostgreSQL** - Direct database connections
+- **Supabase** - Integration with Supabase projects
+
+## Prompting Guide
+
+Published a comprehensive guide on writing effective prompts and issue descriptions to get the best results from Tembo. The guide covers:
+
+- Anatomy of great prompts
+- Examples of ideal stories for bugs and features
+- Best practices for technical details and acceptance criteria
+
+Learn more in the [Prompting Guide](/prompting-guide).
+
+## AIFSD Manifesto
+
+Added documentation on the AIFSD (AI-First Software Development) principles that guide Tembo's approach to autonomous software development.
+
+</Update>
+
 <Update label="2025-11-03" tags={["Billing", "Documentation"]}>
 
 ## Auto-Reload for Credits
