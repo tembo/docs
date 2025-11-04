@@ -70,18 +70,15 @@ When Tembo finds an issue it can address, it will:
 2. **Add Context** - Includes a detailed description of what was changed and why
 3. **Request Review** - Assigns the PR for team review following your repository's workflow
 
-## Working with Tembo PRs
+# Working with Pull Requests
 
-**Reviewing Pull Requests:**
-- Review Tembo's PRs just like any other team member's work
+## Reviewing Pull Requests
+
+Review Tembo's PRs just like any other team member's work:
+
+- Examine the changes and verify they align with your requirements
 - Leave comments directly on the code if you need changes
 - Use the [Feedback Loop](/features/feedback-loop) feature to have Tembo address your review comments automatically
-
-**Best Practices:**
-- Configure repository settings to match your team's preferences
-- Use [Rule Files](/features/rule-files) to help Tembo understand your coding standards
-- Set up [Hooks](/features/hooks) to customize Tembo's behavior for your workflow
-# Working with Pull Requests
 
 ## Commenting on PRs
 
@@ -99,3 +96,9 @@ Without the `@tembo` tag, Tembo will not respond to the comment, allowing for cl
 Tembo automatically monitors your GitHub Actions workflows and detects when they fail. When a workflow fails due to broken tests, linting errors, or other issues, Tembo will analyze the failure, identify the root cause, and create a PR with a fix.
 
 This helps maintain a healthy CI/CD pipeline without manual intervention.
+
+## Best Practices
+
+- Configure repository settings to match your team's preferences
+- Use [Rule Files](/features/rule-files) to help Tembo understand your coding standards
+- Set up [Hooks](/features/hooks) to customize Tembo's behavior for your workflow

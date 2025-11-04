@@ -1,0 +1,307 @@
+---
+title: 'Prompting Guide'
+description: 'Learn how to write effective prompts and issue descriptions to get the best results from Tembo'
+icon: 'pen-to-square'
+---
+
+Writing clear, actionable prompts is key to getting great results from Tembo. Whether you're assigning issues from Linear, Jira, or working directly with Tembo, following these guidelines will help ensure successful outcomes.
+
+## Anatomy of a Great Prompt
+
+A well-structured prompt includes four essential elements. First, state a clear objective that describes what needs to be done. Next, provide relevant context explaining why it matters and what's affected. Then define acceptance criteria so everyone knows when the work is complete. Finally, include technical details that specify any requirements or constraints.
+
+## Examples of Ideal Stories
+
+### Bug Fix Example
+
+**Good:**
+```
+Title: Fix memory leak in background job processor
+
+Description:
+The background job processor in workers/job-processor.ts is accumulating
+memory over time and crashing after ~6 hours of operation.
+
+Context:
+The issue has been observed in production on the worker-pool-3 instance.
+Error logs show heap size growing from 512MB to 4GB before crash. This
+affects all background jobs, particularly the email sending queue.
+
+Acceptance Criteria:
+Memory usage remains stable over a 24+ hour period without crashes. No
+queued jobs should be lost during processing. Add monitoring to track
+memory usage over time so we can detect similar issues early.
+
+Technical Details:
+See Sentry error #12345 for stack traces. The issue is likely in the job
+cleanup logic around line 156. We may need to implement proper event
+listener cleanup to prevent the leak.
+```
+
+**Why it works:** This prompt succeeds because it identifies the specific file location and provides clear reproduction context including the production environment and timeframe. The acceptance criteria are measurable, there's a link to error tracking for reference, and a technical hypothesis is provided to guide the investigation.
+
+---
+
+### Feature Implementation Example
+
+**Good:**
+```
+Title: Add email validation to user registration form
+
+Description:
+Implement comprehensive email validation for the user registration flow
+to reduce invalid signups and improve data quality.
+
+Requirements:
+The validation should be RFC 5322 compliant for format checking. We need
+to check against disposable email domains using a blocklist. The UI should
+provide real-time validation feedback with specific error messages for
+different types of validation failures.
+
+Acceptance Criteria:
+Invalid email formats are rejected with clear, user-friendly error messages.
+Disposable email domains from our blocklist are rejected. Validation happens
+on both client and server side to prevent bypassing. All existing valid
+emails continue to work without issues. Unit tests should cover edge cases
+like unusual but valid email formats.
+
+Technical Notes:
+The frontend form is in components/auth/RegistrationForm.tsx and the backend
+validation should be added to services/user-service.ts. Use our existing
+validation library (zod) for consistency with the rest of the codebase. For
+the disposable email list, use: https://github.com/disposable/disposable-email-domains
+```
+
+**Why it works:** The prompt breaks down specific requirements clearly while providing both functional and technical acceptance criteria. File locations are specified so there's no ambiguity about where to make changes. It references existing patterns like the zod validation library, and identifies external dependencies that need to be integrated.
+
+---
+
+### Refactoring Example
+
+**Good:**
+```
+Title: Refactor authentication middleware to use modern async/await
+
+Description:
+The authentication middleware (middleware/auth.js) uses callback-based
+patterns from Node.js 8. Modernize it to use async/await for better
+readability and error handling.
+
+Scope:
+Convert all callback functions to async/await syntax throughout the file.
+Improve error handling with try/catch blocks instead of error-first callbacks.
+Add TypeScript types to make the code more maintainable. Maintain backward
+compatibility with existing routes so nothing breaks during the transition.
+
+Acceptance Criteria:
+All middleware functions use async/await with no callback patterns remaining
+in the file. Error handling is improved and consistent throughout. All existing
+tests pass without modification, proving backward compatibility. There are no
+breaking changes to API consumers.
+
+Context:
+This is part of the larger Node.js modernization effort tracked in TEM-1234.
+Other middleware files will follow the same pattern once this is complete.
+Keep existing function signatures to avoid breaking changes downstream.
+```
+
+**Why it works:** The scope of changes is clearly defined with explicit backward compatibility requirements. It links to related work so Tembo understands the broader context. The prompt sets a pattern for future refactoring efforts and prioritizes stability over aggressive modernization.
+
+---
+
+### API Endpoint Example
+
+**Good:**
+```
+Title: Add pagination to GET /api/users endpoint
+
+Description:
+The /api/users endpoint currently returns all users in a single response,
+causing performance issues as the user base grows. Add cursor-based
+pagination to improve performance and reduce response times.
+
+Requirements:
+Implement cursor-based pagination rather than offset-based to handle large
+datasets efficiently. Use a default page size of 50 users with a maximum
+of 200 users per request. Include pagination metadata in the response so
+clients can navigate through results. Maintain backward compatibility for
+existing clients that don't send pagination parameters.
+
+Response Format:
+{
+  "data": [...],
+  "pagination": {
+    "next_cursor": "abc123",
+    "prev_cursor": "xyz789",
+    "has_more": true,
+    "total_count": 1500
+  }
+}
+
+Acceptance Criteria:
+The endpoint responds with paginated results when requested. Query parameters
+should be ?cursor=xxx&limit=50. Response includes pagination metadata for
+navigation. Performance improves measurably for large datasets over 1000 users.
+Existing clients without pagination params continue to work as before. API
+documentation is updated to reflect the new parameters.
+
+Technical Details:
+The endpoint is in routes/api/users.ts. Use the existing pagination utility
+in utils/pagination.ts for consistency. Add an index on users.created_at for
+efficient cursor queries. Update the OpenAPI spec in openapi.yml with the new
+parameters and response format.
+```
+
+**Why it works:** The prompt specifies a particular implementation approach (cursor-based rather than offset-based) and provides an example response format. There's a measurable performance goal specified. Backward compatibility is explicitly addressed to prevent breaking existing integrations. File locations and existing utilities are mentioned to guide implementation.
+
+---
+
+## Less Effective Prompts
+
+### Too Vague
+
+**Poor:**
+```
+Title: Fix the bug
+Description: The app is broken, please fix it.
+```
+
+**Why it doesn't work:** There's no specific issue identified, no context about what's "broken," and no way to verify when it's fixed. This kind of prompt forces Tembo to guess at what the actual problem is, leading to wasted time and potentially incorrect solutions.
+
+---
+
+### Missing Context
+
+**Poor:**
+```
+Title: Improve performance
+Description: Make the dashboard load faster.
+```
+
+**Why it doesn't work:** Without current performance metrics, there's no baseline to measure against. No target performance is specified, so it's unclear what "faster" means. Which parts of the dashboard need optimization? Without acceptance criteria, it's impossible to know when the work is complete.
+
+---
+
+### Overly Broad
+
+**Poor:**
+```
+Title: Update the app
+Description: Modernize the codebase and add new features.
+```
+
+**Why it doesn't work:** This prompt combines multiple unrelated tasks without prioritization. No specific features are identified, the scope is unclear, and it's too large for a single issue. This should be broken down into smaller, focused tasks that can be completed independently.
+
+---
+
+## Tips for Different Issue Types
+
+### For Bug Reports
+
+When reporting bugs, start by providing clear steps to reproduce the issue. Describe both the expected and actual behavior so the difference is obvious. Include complete error messages or log excerpts. Specify environment details like whether it's happening in production, staging, or local development. Link to error tracking tools like Sentry if you have them, as stack traces and error contexts are invaluable for debugging.
+
+### For Feature Requests
+
+Feature requests should begin with a user story or use case that explains the problem being solved. Include mockups or wireframes if the feature has a visual component. Define success metrics so you can measure whether the feature achieves its goals. Think through edge cases and document them upfront. List dependencies on other features or systems that need to be considered.
+
+### For Refactoring Tasks
+
+Refactoring prompts need to describe the current state and what problems it's causing. Clearly articulate the desired end state and why it's better. Document constraints like backward compatibility requirements or performance considerations. Identify the specific files or modules that need refactoring. Link to related technical debt items to provide broader context.
+
+### For Documentation Tasks
+
+Documentation requests should specify exactly what needs to be documented and why. Identify the target audience, whether that's developers, end users, or administrators. Reference existing documentation that should be updated or that provides a good model to follow. Include examples that should appear in the documentation. State format preferences, like whether you want API reference docs, how-to guides, or tutorials.
+
+## Working with Jira and Linear
+
+When creating issues in Jira or Linear for Tembo, take advantage of the platform's organizational features to provide additional context and structure.
+
+### Use Labels Effectively
+
+Add relevant labels to help Tembo prioritize and categorize work. Use type labels like `bug`, `feature`, `refactor`, and `docs` to indicate what kind of work is needed. Add priority labels like `urgent` or `high-priority` when time-sensitive. Include scope labels like `frontend`, `backend`, or `full-stack` to clarify what parts of the system are involved.
+
+### Link Related Issues
+
+Connect related issues so Tembo can understand dependencies and relationships. Set up parent/child issue relationships when breaking down large features. Mark blocking and blocked-by relationships so Tembo knows the order of operations. Link related issues in the same epic or project to show how work fits together.
+
+### Attach Supporting Materials
+
+Rich context comes from supporting materials beyond text descriptions. Attach screenshots or screen recordings to show visual bugs or desired behavior. Include error logs or stack traces directly in the issue. Link to design files or mockups for features with visual components. Reference external documentation that provides necessary background.
+
+### Set Appropriate Metadata
+
+Fill in metadata fields to help with planning and prioritization. Set the priority level to indicate urgency. Add story points or complexity estimates to help with capacity planning. Assign the appropriate component or team. Set the sprint or milestone if there's a timeline. Add due dates for time-sensitive issues that have external deadlines.
+
+## Common Patterns
+
+### Multi-Repository Tasks
+
+When a task spans multiple repositories, be explicit about the scope in each repo and how the changes coordinate:
+
+```
+Title: Add user authentication to frontend and backend
+
+Description:
+Implement user authentication across both frontend and backend repositories.
+
+Frontend (webapp repo):
+The frontend needs login and signup forms that collect user credentials.
+Implement JWT token storage in localStorage with proper security considerations.
+Add an auth context provider to manage authentication state throughout the app.
+Create a protected route wrapper that redirects unauthenticated users to login.
+
+Backend (api repo):
+Create /auth/login and /auth/signup endpoints that validate credentials and
+issue tokens. Implement JWT token generation with appropriate expiration times.
+Add authentication middleware that validates tokens on protected routes. Set up
+refresh token rotation to maintain security while keeping users logged in.
+
+Acceptance Criteria:
+Users can successfully register and login from the frontend interface. JWT tokens
+are securely stored and transmitted with proper headers. Protected routes require
+authentication and redirect appropriately. Tokens automatically refresh before
+expiration to maintain sessions. Both repositories have passing tests that verify
+the authentication flow end-to-end.
+
+Note: This requires changes to both repositories. Please work on both and ensure
+the implementations are compatible.
+```
+
+### Database Migration Tasks
+
+Database migrations need extra care to avoid production issues:
+
+```
+Title: Add indexes to improve query performance on orders table
+
+Description:
+Add database indexes to the orders table to improve query performance
+for the dashboard and reporting features.
+
+Indexes to Add:
+We need an index on (user_id, created_at) for user order history queries that
+are currently doing full table scans. Add an index on (status, updated_at) for
+the status filtering that's used heavily in the admin dashboard. Create a
+composite index on (store_id, created_at) for per-store dashboards that show
+recent orders.
+
+Acceptance Criteria:
+A migration file is created with both up and down migrations for safe rollback.
+The indexes are successfully added in the staging environment without issues.
+Query performance improves measurably (measure before and after with EXPLAIN).
+No table locking issues occur during migration on large tables. The migration
+is documented in MIGRATIONS.md with any special deployment considerations.
+
+Context:
+Dashboard queries are currently taking 3-5 seconds to load, causing user
+frustration. The orders table has grown to over 2 million rows. Our target
+is under 500ms query time for a responsive user experience.
+```
+
+## Getting the Best Results
+
+Being specific makes all the difference. Include file paths, line numbers, and function names when you know them. Provide context by explaining the why behind the work, not just the what. Set clear criteria that define what success looks like in measurable terms. Include examples showing expected inputs and outputs. Link to relevant resources like documentation, similar PRs, or error logs. Break down complexity by splitting large tasks into smaller, focused issues that can be completed independently. Iterate and refine your prompts based on results—if Tembo's output isn't what you expected, add more detail and try again.
+
+## Questions?
+
+If you're unsure how to structure a prompt, start with three basic questions. What needs to change? Why does it need to change? How will we know it's done correctly? Once you have those answers, add technical details, context, and constraints as needed. The goal is to provide enough information for someone unfamiliar with the problem to understand what needs to be done and why it matters.

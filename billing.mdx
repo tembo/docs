@@ -1,5 +1,6 @@
 ---
 title: "Billing"
+icon: 'credit-card'
 ---
 
 Tembo works on a pay-as-you-go credit system with **no monthly commitments or hidden fees**.
@@ -40,9 +41,66 @@ You can monitor your credit consumption in real-time through the [Billing dashbo
 
 To start getting pull requests, purchase Tembo Compute Credits through the [Billing page](https://app.tembo.io/settings/billing) within the Tembo app. You can buy additional credits at any time as needed.
 
-## Auto-Reload (Coming Soon)
+## Auto-Reload
 
-We are developing a feature to automatically reload your Tembo Compute Credits when they are running low, up to a maximum monthly limit. Until this feature is available, you can manually reload your credits at any time.
+Auto-reload automatically adds credits to your account when your balance falls below a threshold you set, ensuring uninterrupted service without manual intervention.
+
+### How Auto-Reload Works
+
+Auto-reload monitors your credit balance and automatically purchases credits when needed:
+
+- **Automatic monitoring** - Your credit balance is continuously monitored
+- **Threshold-based reload** - When your balance drops below your configured threshold, credits are automatically purchased
+- **Target balance** - Credits are added up to your specified target balance
+- **Monthly limit** - A monthly spending limit prevents excessive charges
+- **Payment method required** - You must have a payment method on file for auto-reload to function
+
+### Setting Up Auto-Reload
+
+To enable auto-reload:
+
+1. Navigate to the [Billing page](https://app.tembo.io/settings/billing) in your Tembo app
+2. Add a payment method if you haven't already
+3. Configure your auto-reload settings:
+   - **Enable auto-reload** - Toggle auto-reload on or off
+   - **Reload when balance below** - Set the credit threshold that triggers a reload (default: 100 credits)
+   - **Target balance** - Set your desired balance after reload (default: 1000 credits)
+   - **Monthly credit limit** - Set the maximum amount you're willing to spend per month (default: 1000 credits)
+
+### Important Notes
+
+- **Payment method required** - Auto-reload requires at least one payment method on file. You cannot delete your payment method while auto-reload is enabled
+- **Monthly limits** - Your monthly credit limit helps prevent unexpected charges. The system will not exceed this limit even if your balance is below the threshold
+- **Manual purchases** - You can still manually purchase credits at any time, even with auto-reload enabled
+- **Disabling auto-reload** - You can disable auto-reload at any time through the Billing settings page
+
+## Troubleshooting
+
+### Auto-Reload Not Working
+
+If auto-reload isn't triggering when expected:
+
+1. **Verify payment method** - Ensure you have an active payment method on file. Auto-reload requires at least one valid payment method.
+2. **Check threshold settings** - Confirm your balance has dropped below the configured threshold. Auto-reload only triggers when balance < threshold.
+3. **Review monthly limit** - If you've reached your monthly credit limit, auto-reload won't purchase additional credits until the next billing cycle.
+4. **Confirm auto-reload is enabled** - Double-check that the auto-reload toggle is in the "on" position in your [Billing settings](https://app.tembo.io/settings/billing).
+
+### Payment Method Issues
+
+If you're having trouble with payment methods:
+
+- **Cannot delete payment method** - You must disable auto-reload before removing your payment method. Toggle auto-reload off first, then delete the payment method.
+- **Payment failed** - Check that your card is valid and has sufficient funds. Update your payment details in the Billing dashboard if needed.
+
+### Credit Balance Questions
+
+**Why didn't I receive the full target balance?**
+Auto-reload will only add credits up to your monthly limit. If adding the full amount would exceed your monthly limit, only the remaining allowed amount will be purchased.
+
+**My balance went below threshold but I don't see new credits.**
+Auto-reload typically processes within a few minutes. If you don't see credits after 10 minutes, check that all auto-reload requirements are met (payment method on file, monthly limit not exceeded, auto-reload enabled).
+
+For additional support, contact us at [hi@tembo.io](mailto:hi@tembo.io).
 
 ## Enterprise Options
 

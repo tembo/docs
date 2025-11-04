@@ -1,6 +1,9 @@
 ---
 title: 'What is Tembo?'
+icon: 'sparkles'
 ---
+
+import CodingAgentsTable from '/snippets/coding-agents-table.mdx';
 
 **Tembo is your engineering agent – always watching, always working.** It can work from your existing tickets, find bugs, fix broken pipelines, and open PRs to improve your codebase through a variety of integrations – and it works from anywhere you are.
 
@@ -10,7 +13,7 @@ title: 'What is Tembo?'
 
 - **Fix production bugs** — Monitor error tracking tools like Sentry and automatically generate PRs to fix the errors.
 
-- **Implement from issues** — Assign issues from Slack, Linear, Jira, etc. to Tembo and it writes code to solve the issue, whether it’s a bug, a feature, or a refactor.
+- **Implement from issues** — Assign issues from Slack, Linear, Jira, etc. to Tembo and it writes code to solve the issue, whether it's a bug, a feature, or a refactor.
 
 - **Reduce technical debt** — Periodic analysis of your codebase to identify technical debt, security vulnerabilities, and refactoring opportunities, then submits PRs for quick wins.
 
@@ -18,20 +21,53 @@ title: 'What is Tembo?'
 
 All these are optional, but Tembo can do them all.
 
+## How It Works
+
+Tembo functions through a cycle of detection, execution, and review:
+
+1. **Detection** - Issues are identified through integrations (Sentry errors, database metrics) or manually assigned (Linear/Jira tickets, direct task creation)
+2. **Execution** - Tembo analyzes the codebase using your configured [coding agent](/features/coding-agents) and generates a solution in an isolated [sandbox environment](/features/sandbox-environment)
+3. **Pull Request** - Changes are submitted as a pull request with context about the problem and solution
+4. **Feedback Loop** - You can provide feedback by mentioning @tembo in PR comments, and it will iterate on the changes
+
+See [Feedback Loop](/features/feedback-loop) for how to refine Tembo's work through natural language feedback in your pull requests.
+
 ## What about my team?
 
-Your team will review, approve, improve and merge PRs from anywhere. Whether you are using GitHub or GitLab, Tembo will work with you.
+Your team maintains control over what code gets merged:
 
-We have a [Feedback Loop](/features/feedback-loop) for reviewing Tembo's work from your source control provider. If you use AI-powered code review tools like Graphite, CodeRabbit, or Cursor Bug Bot, Tembo will validate and commit relevant changes if you enable this feature.
+1. Review pull requests created by Tembo using your standard review process
+2. Provide feedback through PR comments (mention @tembo to trigger updates)
+3. Approve and merge changes when satisfied with the implementation
+4. Configure which issues and signals Tembo responds to through integration settings
 
-## Setting up integrations
+Tembo generates solutions autonomously, but your team decides what gets deployed. We have a [Feedback Loop](/features/feedback-loop) for reviewing Tembo's work from your source control provider. If you use AI-powered code review tools like Graphite, CodeRabbit, or Cursor Bug Bot, Tembo will validate and commit relevant changes if you enable this feature.
 
-Getting started with Tembo is straightforward - connect the tools your team already uses:
+## Supported Integrations
 
-- **Source control** (GitHub, GitLab, Bitbucket) for creating PRs
-- **Issue tracking** (Linear, Jira, Github Issues) for ticket assignments
-- **Productivity Tools** (Slack, Raycast) for ticketless work assignment
-- **Monitoring** (Sentry) for automatic error detection
-- **Databases** (PostgreSQL, Supabase, AWS RDS) for performance optimization
+| Type                         | Integrations                                                                                   |
+| ---------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Source Control**           | [GitHub](/integrations/github), [GitLab](/integrations/gitlab), [Bitbucket](/integrations/bitbucket) |
+| **Project Management**       | [Linear](/integrations/linear), [Jira](/integrations/jira)                     |
+| **Monitoring & Observability** | [Sentry](/integrations/sentry)                                                                 |
+| **Databases**                | [PostgreSQL](/integrations/postgres), [Supabase](/integrations/supabase), [AWS RDS](/integrations/aws) |
+| **Communication**            | [Slack](/integrations/slack), [Raycast](/integrations/raycast)                                |
 
-Most integrations use OAuth for secure connection. After authorization, Tembo syncs your data and you can activate the repositories or projects you want monitored. Once active, Tembo immediately starts scanning and can begin working on assigned issues or detected issues.
+Most integrations use OAuth for secure connection. After authorization, Tembo syncs your data and you can activate the repositories or projects you want monitored.
+
+## Available Coding Agents
+
+<CodingAgentsTable />
+
+See [Coding Agents](/features/coding-agents) for detailed information on each coding agent and how to choose the right one for your tasks.
+
+## Configuration
+
+**Rule Files**
+You can provide coding agent-specific instructions through [rule files](/features/rule-files) in your repository. These define coding standards, project conventions, and architectural patterns for Tembo to follow.
+
+**Hooks**
+[Hooks](/features/hooks) allow you to execute custom logic before and after Tembo's actions, enabling integration with your existing CI/CD pipelines and workflows.
+
+**MCP Servers**
+[Model Context Protocol (MCP) servers](/features/mcp-servers) extend Tembo's capabilities by providing additional tools and context sources that coding agents can access during task execution.
