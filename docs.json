@@ -27,31 +27,33 @@
             "group": "Get Started",
             "pages": [
               "welcome",
-              "how-to-prompt",
-              "pwa",
-              "billing"
+              "prompting-guide"
+            ]
+          },
+          {
+            "group": "Onboarding Tembo",
+            "pages": [
+              "integrations/github",
+              "integrations/gitlab",
+              "integrations/bitbucket",
+              "features/rule-files",
+              "inviting-your-team"
             ]
           },
           {
             "group": "Features",
             "pages": [
-              "features/overview",
               "features/agents",
+              "features/sandbox-environment",
               "features/mcp-servers",
               "features/pull-requests",
               "features/feedback-loop",
-              "features/rule-files",
-              "features/todo-comments",
-              "features/hooks",
-              "features/sandbox-environment"
+              "features/hooks"
             ]
           },
           {
             "group": "Integrations",
             "pages": [
-              "integrations/github",
-              "integrations/gitlab",
-              "integrations/bitbucket",
               "integrations/slack",
               "integrations/sentry",
               "integrations/linear",
@@ -63,15 +65,24 @@
             ]
           },
           {
+            "group": "Admin",
+            "pages": [
+              "security",
+              "billing"
+            ]
+          },
+          {
             "group": "Resources",
             "pages": [
+              "aifsd-manifesto",
+              "pwa",
               "changelog"
             ]
           }
         ]
       },
       {
-        "tab": "Public API",
+        "tab": "API Reference",
         "icon": "code",
         "openapi": "/openapi.documented.yml"
       }

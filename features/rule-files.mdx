@@ -1,129 +1,181 @@
 ---
 title: 'Rule Files'
+description: 'Add project context and conventions to help Tembo work effectively in your codebase'
 icon: 'code'
 ---
 
-Configure Tembo with project-specific context and conventions.
+After connecting your source control, configure your repository with context that helps Tembo understand your project's conventions, architecture, and requirements.
 
-A configuration file is essentially a set of instructions that Tembo reads to understand your project's context, conventions, and requirements when solving tasks and generating pull requests.
+Tembo automatically looks for configuration files in your repository's root directory. These files provide persistent context that Tembo uses when solving issues and creating pull requests.
 
 ## Supported Configuration Files
 
-Tembo supports configuration files at the top level of your repository that act as project-level instructions included in all interactions with the agent. Multiple file names are supported for compatibility with other agents, but the first file that matches in this list will be used:
+Tembo supports multiple file names for compatibility with other AI coding agents. Place one of these files in your repository root:
 
-- `tembo.md`
+- `tembo.md` (recommended)
+- `AGENTS.md`
 - `CLAUDE.md`
-- `.rules`
 - `.cursorrules`
 - `.windsurfrules`
 - `.clinerules`
-- `.github/copilot-instructions.md`
+- `.rules`
 - `AGENT.md`
-- `AGENTS.md`
+- `.github/copilot-instructions.md`
 
-## How it works
+<Note>
+  Tembo will use the first file it finds from this list, so you only need one configuration file per repository.
+</Note>
 
-### Automatic context loading
-- When Tembo solves an issue, it automatically searches for and loads rule files
-- These files provide persistent context that helps Tembo understand your codebase and preferences
-- The content becomes part of Tembo's context for generating solutions and processing feedback
+## Creating Your First Rule File
+
+Create a file named `tembo.md` in your repository root and include relevant information about your project. Here's a complete example to get you started:
+
+```markdown
+# Project Context
+
+This is a React + TypeScript web application with a Node.js backend API.
+
+## Setup Commands
+
+- `npm install` - Install dependencies
+- `npm run dev` - Start development server (frontend on :3000, backend on :4000)
+- `npm run build` - Build for production
+- `npm test` - Run test suite
+- `npm run lint` - Run ESLint and fix issues
+
+## Code Style Guidelines
+
+### TypeScript
+- Use strict mode
+- Define explicit types, avoid `any`
+- Prefer interfaces for object shapes
+- Use type guards for runtime checks
+
+### React
+- Use functional components with hooks
+- Avoid class components
+- Extract reusable logic into custom hooks
+- Keep components focused on single responsibilities
+
+### Formatting
+- Follow ESLint and Prettier configurations
+- Use conventional commit format: `type(scope): message`
+- Sort imports alphabetically
+
+## Testing Guidelines
+
+- Write unit tests for all business logic
+- Use Jest for unit tests
+- Use React Testing Library for component tests
+- Target >80% code coverage
+- Run tests before committing: `npm test`
+
+## Project Structure
+
+- `/src/components` - Reusable UI components
+- `/src/pages` - Page-level components
+- `/src/hooks` - Custom React hooks
+- `/src/services` - API calls and business logic
+- `/src/utils` - Helper functions
+- `/src/types` - TypeScript type definitions
+- `/tests` - Test files
+- `/docs` - Documentation
+
+## Development Workflow
+
+- Create feature branches from `main`
+- Submit pull requests for code review
+- Squash commits when merging
+- Update documentation when adding features
+- Keep changelog up to date
+
+## Architecture Principles
+
+- Separation of concerns between UI and business logic
+- Use dependency injection for services
+- Implement error boundaries for React components
+- Handle errors gracefully with user-friendly messages
+```
 
 ## What to Include
 
-### Common Commands and Scripts
-Document frequently used commands that Tembo should know about:
+### Essential Information
+
+Include information that helps Tembo make better decisions:
+
+**Build and Development Commands**
+Document how to build, test, and run your project. Include any custom scripts or commands specific to your workflow.
+
+**Code Style and Conventions**
+Define your coding standards, naming conventions, and formatting rules. This ensures Tembo generates code that matches your project's style.
+
+**Testing Requirements**
+Specify your testing expectations, frameworks, and coverage targets. Tembo will write tests that follow your conventions.
+
+**Architecture Guidelines**
+Explain your project's structure, design patterns, and architectural decisions. This helps Tembo understand where code belongs.
+
+### Optional But Helpful
+
+**Common Pitfalls**
+Document known issues, gotchas, or common mistakes to avoid. This helps Tembo avoid problematic patterns.
+
+**Performance Considerations**
+Highlight performance-sensitive areas or optimization requirements specific to your application.
+
+**Security Guidelines**
+Specify security requirements, authentication patterns, or data handling rules.
+
+**Integration Details**
+Document how your codebase integrates with external services or APIs.
+
+## Best Practices
+
+### Keep It Focused
+
+Rule files become part of Tembo's context, so keep them concise and relevant:
+
+- Focus on information that impacts code generation
+- Remove outdated or obsolete information
+- Use clear, direct language
+- Organize with headings for easy scanning
+
+### Use Emphasis for Important Points
+
+Highlight critical information that Tembo should always follow:
 
 ```markdown
-# Build commands
-- npm run build: Build the project
-- npm run dev: Start development server
-- npm run test: Run test suite
-- npm run lint: Run linter and fix issues
+**IMPORTANT**: Always validate user input before database queries
+**NOTE**: The API rate limit is 100 requests per minute
+**WARNING**: Never commit API keys or secrets to the repository
 ```
 
-### Code Style and Conventions
-Define your project's coding standards:
+### Update Regularly
 
-```markdown
-# Code style
-- Use TypeScript interfaces instead of any types
-- Prefer functional components over class components
-- Use async/await instead of Promise chains
-- Import statements should be sorted alphabetically
-- Use descriptive variable names
+Keep your rule file current as your project evolves:
 
-# File naming conventions
-- Components: PascalCase (e.g., UserProfile.tsx)
-- Utilities: camelCase (e.g., formatDate.ts)
-- Constants: UPPER_SNAKE_CASE (e.g., API_ENDPOINTS.ts)
-```
+- Update when conventions change
+- Add new patterns as they emerge
+- Remove deprecated guidelines
+- Review quarterly to ensure accuracy
 
-### Architecture Guidelines
-Explain your project's architectural decisions:
+## How Tembo Uses Rule Files
 
-```markdown
-# Architecture principles
-- Follow Clean Architecture patterns
-- Separate business logic from UI components
-- Use dependency injection for services
-- Keep components focused on single responsibilities
+When Tembo receives an issue assignment:
 
-# Directory structure
-- `/src/components` - Reusable UI components
-- `/src/services` - Business logic and API calls
-- `/src/utils` - Helper functions and utilities
-- `/src/types` - TypeScript type definitions
-```
+1. **Loads the rule file** from your repository root
+2. **Includes the content** as part of its context
+3. **Follows the guidelines** when generating code
+4. **Applies conventions** throughout the solution
 
-### Testing Requirements
-Specify testing expectations:
+The rule file context persists across all interactions, ensuring consistency in every pull request Tembo creates for your repository.
 
-```markdown
-# Testing guidelines
-- Write unit tests for all business logic
-- Use React Testing Library for component tests
-- Mock external API calls in tests
-- Aim for 80%+ code coverage
-- Include error handling test cases
+## Next Steps
 
-# Test file naming
-- Unit tests: `*.test.ts`
-- Integration tests: `*.integration.test.ts`
-- Component tests: `*.component.test.tsx`
-```
+After configuring your repository:
 
-### Documentation Standards
-Define documentation requirements:
-
-```markdown
-# Documentation
-- Add JSDoc comments to all public functions
-- Update README.md when adding new features
-- Document API endpoints in OpenAPI format
-- Include examples in function documentation
-
-# Comment guidelines
-- Explain why, not what
-- Use TODO comments for future improvements
-- Remove commented-out code before committing
-```
-
-### Error Handling Patterns
-Specify how errors should be handled:
-
-```markdown
-# Error handling
-- Use custom error classes for different error types
-- Log errors with appropriate severity levels
-- Provide user-friendly error messages
-- Include error boundaries in React components
-- Handle async errors with try-catch blocks
-```
-
-### Context Optimization
-
-- The file content becomes part of Tembo's prompts
-- Keep it focused and relevant
-- Remove outdated information regularly
-- Use emphasis (IMPORTANT, NOTE, WARNING) for critical points
+1. Test it by assigning a small issue to Tembo
+2. Review the generated pull request for adherence to your guidelines
+3. Refine your rule file based on results
+4. Use the [Feedback Loop](/features/feedback-loop) to iterate on Tembo's work
 

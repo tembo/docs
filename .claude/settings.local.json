@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm dev)",
+      "Bash(mintlify dev:*)",
+      "Bash(npm i:*)",
+      "Bash(pnpm add:*)",
+      "WebFetch(domain:www.tembo.io)",
+      "WebFetch(domain:docs.devin.ai)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(curl -s https://raw.githubusercontent.com/tembo/aifsd/refs/heads/main/README.md)",
+      "Bash(for file in features/*.mdx integrations/*.mdx)",
+      "Bash(do if [ -f \"$file\" ])",
+      "Bash(then echo -n \"$file: \")",
+      "Bash(fi)",
+      "Bash(done)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
