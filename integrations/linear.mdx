@@ -1,10 +1,10 @@
 ---
 title: 'Linear'
 icon: 'linear'
+icon: '/logo/linear.svg'
 ---
 
 Assign Linear issues to Tembo and turn them into PRs.
-
 
 # Features
 
@@ -21,74 +21,13 @@ Assign Linear issues to Tembo and turn them into PRs.
   <Step title="Authorize">
     Authorize Tembo to access your Linear workspace. You'll be redirected back to the Integrations page when complete.
   </Step>
-  <Step title="Configure Repositories">
-    Make sure you have at least one code repository (GitHub, GitLab, or Bitbucket) connected to your Tembo organization. You can manage repositories in the [Integrations page](https://app.tembo.io/integrations).
+  <Step title="Repository Labels">
+    Tembo automatically creates a "Tembo Git Repositories" label group with all your GitHub repositories. Use these labels to specify which repository Tembo should target for each issue.
 
-    **Setting a default repository (optional):**
+    You can set a default repository to avoid adding labels to every issue.
 
-    If you work primarily in one repository, you can configure a default repository in the [Linear integration settings](https://app.tembo.io/integrations). This will be suggested first when selecting repositories.
-
-    - Navigate to Settings → Integrations → Linear
-    - Select your default repository from the dropdown
   </Step>
   <Step title="Start Using Tembo">
     Now you can assign Linear issues to Tembo to trigger solutions.
   </Step>
 </Steps>
-
-# Usage
-
-## Triggering Tembo
-
-Assign the issue directly to Tembo. The bot user should appear in your Linear workspace after completing the integration setup.
-
-## Repository Selection
-
-When you assign a Linear issue to Tembo, you'll be prompted to select which repository to work on:
-
-1. **Assign the issue** - Assign the Linear issue to Tembo
-2. **Select repository** - Tembo will present you with a dropdown menu of available repositories
-3. **Choose your repository** - Select one repository from the list, or type to select multiple repositories
-4. **Tembo starts work** - Once you've made your selection, Tembo will automatically begin working on the task
-
-### Working with Multiple Repositories
-
-For tasks that span multiple repositories (e.g., full-stack features):
-
-1. When prompted for repository selection, type the names of multiple repositories
-2. Example: Type "frontend backend" or select both repositories
-3. Tembo will create separate pull requests for each repository and coordinate changes across all selected repositories
-
-## Status Updates
-
-Tembo keeps you informed as it works on your Linear issues:
-
-- **Interactive Prompts** - Tembo will ask you to select a repository and confirm before starting work
-- **Progress Updates** - Tembo provides real-time updates as it works through the task
-- **Status Changes** - Tembo automatically updates the Linear issue status as it progresses through the task
-- **Comments** - Tembo adds comments to the issue with progress updates and links to pull requests
-- **Pull Request Links** - When code changes are ready, Tembo comments with a link to the generated PR
-
-## Best Practices
-
-**Write clear, actionable issue descriptions:**
-
-Good examples:
-- "Add email validation to the user registration form"
-- "Fix memory leak in the background job processor"
-- "Add pagination to the /api/users endpoint"
-
-Less effective:
-- "Fix the bug"
-- "Improve performance"
-- "Update the app"
-
-**Include relevant context:**
-- Add screenshots or error logs to help Tembo understand the issue
-- Reference related issues or pull requests
-- Specify acceptance criteria in the issue description
-
-**Choose the right repositories:**
-- Select all repositories that need changes for the task
-- For full-stack features, include both frontend and backend repositories
-- If unsure, start with one repository and Tembo can help identify if others are needed
