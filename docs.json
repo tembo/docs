@@ -40,7 +40,7 @@
           {
             "group": "Features",
             "pages": [
-              "features/agents",
+              "features/coding-agents",
               "features/sandbox-environment",
               "features/mcp-servers",
               "features/pull-requests",

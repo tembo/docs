@@ -24,7 +24,7 @@ All these are optional, but Tembo can do them all.
 Tembo functions through a cycle of detection, execution, and review:
 
 1. **Detection** - Issues are identified through integrations (Sentry errors, database metrics) or manually assigned (Linear/Jira tickets, direct task creation)
-2. **Execution** - Tembo analyzes the codebase using your configured [agent](/features/agents) and generates a solution in an isolated [sandbox environment](/features/sandbox-environment)
+2. **Execution** - Tembo analyzes the codebase using your configured [agent](/features/coding-agents) and generates a solution in an isolated [sandbox environment](/features/sandbox-environment)
 3. **Pull Request** - Changes are submitted as a pull request with context about the problem and solution
 4. **Feedback Loop** - You can provide feedback by mentioning @tembo in PR comments, and it will iterate on the changes
 
@@ -63,7 +63,7 @@ Most integrations use OAuth for secure connection. After authorization, Tembo sy
 | **Amp**         | Anthropic        | `claude-4-5-sonnet` |
 | **Cursor**      | Anthropic/OpenAI | `gpt-5-medium`      |
 
-See [Agents](/features/agents) for detailed information on each agent and how to choose the right one for your tasks.
+See [Agents](/features/coding-agents) for detailed information on each agent and how to choose the right one for your tasks.
 
 ## Configuration
 
