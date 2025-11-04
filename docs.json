@@ -94,10 +94,10 @@
   },
   "navbar": {
     "links": [
-      {
-        "label": "Get Help",
-        "href": "mailto:hi@tembo.io"
-      },
+       {
+         "label": "Get Help",
+         "href": "mailto:support@tembo.io"
+       },
       {
         "label": "Book a Demo",
         "href": "https://book.avoma.com/tembo/tembo-demo/"
