@@ -1,0 +1,81 @@
+---
+title: "Team Communication"
+description: "Keep your team informed with automated notifications, reminders, and status updates"
+---
+
+## Overview
+
+Team communication automations help reduce communication overhead by automatically keeping everyone informed about important events, stale issues, and team updates.
+
+---
+
+## Example: Stale Issue Reminder
+
+**Use Case**: Keep your team on top of issues that haven't been updated in a while.
+
+**How it works**:
+- Runs weekly on Monday mornings
+- Finds issues that haven't been updated in 14+ days
+- Categorizes by priority and team
+- Posts a digest to Slack with actionable items
+
+**Schedule**: Weekly on Monday at 9:00 AM
+
+**Prompt Template**:
+
+```text
+Find all open Linear issues that:
+- Haven't been updated in the last 14 days
+- Are not in "Backlog" status
+- Have an assignee
+
+Group the issues by:
+1. High/Urgent priority (needs immediate attention)
+2. Medium priority
+3. Low priority
+
+For each group, format a Slack message with:
+- Issue title and identifier
+- Assignee
+- Days since last update
+- Quick link to the issue
+
+Post to #standup channel with:
+- A summary count of stale issues
+- Top 5 most urgent items that need attention
+- Mention assignees for urgent items
+
+If there are no stale issues, post a celebration message! 🎉
+```
+
+**MCP Servers Needed**: Linear, Slack
+
+**Customization Options**:
+- Adjust the staleness threshold (7, 14, 30 days)
+- Filter by specific teams or projects
+- Exclude certain issue types or labels
+- Add team-specific channels for different categories
+
+---
+
+## Tips for Team Communication Automations
+
+### Find the Right Frequency
+
+Weekly reminders work well for most teams, but adjust based on your team's workflow. Too frequent and it becomes noise, too infrequent and issues get forgotten.
+
+### Make it Actionable
+
+Every notification should include clear next steps and links to take action. Don't just inform—enable action.
+
+### Celebrate Wins
+
+When there are no stale issues or all builds are passing, celebrate it! Positive reinforcement helps maintain good habits.
+
+### Avoid Notification Fatigue
+
+Be selective about what gets posted and where. Not every event needs a notification. Focus on truly important updates.
+
+### Provide Context
+
+Include enough information in notifications so team members can understand the situation without needing to click through multiple links.

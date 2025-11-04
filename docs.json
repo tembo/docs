@@ -28,10 +28,6 @@
 						"pages": ["welcome", "prompting-guide"]
 					},
 					{
-						"group": "Onboarding Tembo",
-						"pages": ["features/rule-files", "inviting-your-team"]
-					},
-					{
 						"group": "Features",
 						"pages": [
 							"features/coding-agents",
@@ -41,9 +37,7 @@
 							"features/pull-requests",
 							"features/feedback-loop",
 							"features/rule-files",
-							"features/todo-comments",
-							"features/hooks",
-							"features/sandbox-environment"
+							"features/hooks"
 						]
 					},
 					{
@@ -64,11 +58,34 @@
 					},
 					{
 						"group": "Admin",
-						"pages": ["security", "billing"]
+						"pages": ["admin/security", "admin/billing", "admin/inviting-your-team"]
 					},
 					{
 						"group": "Resources",
-						"pages": ["aifsd-manifesto", "pwa", "changelog"]
+						"pages": ["resources/aifsd-manifesto", "resources/pwa", "changelog"]
+					}
+				]
+			},
+			{
+				"tab": "Automation Examples",
+				"icon": "robot",
+				"groups": [
+					{
+						"group": "Automation Examples",
+						"pages": [
+							"automation-examples/overview",
+							"automation-examples/common-patterns",
+							"automation-examples/advanced-tips"
+						]
+					},
+					{
+						"group": "Examples by Category",
+						"pages": [
+							"automation-examples/product-changelog",
+							"automation-examples/code-quality-cicd",
+							"automation-examples/team-communication",
+							"automation-examples/content-documentation"
+						]
 					}
 				]
 			},
@@ -102,7 +119,7 @@
 	},
 	"footer": {
 		"socials": {
-			"x": "https://x.com/tembo_io"
+			"x": "https://x.com/tembo"
 		}
 	},
 	"redirects": [
