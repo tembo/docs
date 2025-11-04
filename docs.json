@@ -33,9 +33,6 @@
           {
             "group": "Onboarding Tembo",
             "pages": [
-              "integrations/github",
-              "integrations/gitlab",
-              "integrations/bitbucket",
               "features/rule-files",
               "inviting-your-team"
             ]
@@ -54,6 +51,9 @@
           {
             "group": "Integrations",
             "pages": [
+              "integrations/github",
+              "integrations/gitlab",
+              "integrations/bitbucket",
               "integrations/slack",
               "integrations/sentry",
               "integrations/linear",
