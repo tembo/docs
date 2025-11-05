@@ -5,11 +5,7 @@ icon: 'sparkles'
 
 import CodingAgentsTable from '/snippets/coding-agents-table.mdx';
 
-**The unified interface for background coding agents.**
-
-Any coding agent. Any model. Create and execute engineering tasks from any part of your stack, always with full context.
-
-**Tembo is your engineering agent – always watching, always working.** It can work from your existing tickets, find bugs, fix broken pipelines, and open PRs to improve your codebase through a variety of integrations – and it works from anywhere you are.
+**Tembo is your unified interface for background coding agents.** Any coding agent. Any model. Create and execute engineering tasks from any part of your stack, always with full context.
 
 ![How Tembo Works](/images/how-tembo-works.png)
 
@@ -23,11 +19,9 @@ Any coding agent. Any model. Create and execute engineering tasks from any part 
 
 - **Write & update documentation** — Using your monorepo as the source, update your docs repo to ensure features are well-documented.
 
-All these are optional, but Tembo can do them all.
+- **Automations keep you moving.** Offload repetitive work to Tembo, powered by full MCP support, so you can stay focused on what matters.
 
-**Automations keep you moving.** Offload repetitive work to Tembo, powered by full MCP support, so you can stay focused on what matters.
-
-**Multi-repository support.** Easily spin off a single task and have Tembo open PRs across multiple repositories when you request it or when the situation calls for it.
+- **Multi-repository support.** Easily spin off a single task and have Tembo open PRs across multiple repositories when you request it or when the situation calls for it.
 
 ## How It Works
 
@@ -36,9 +30,7 @@ Tembo functions through a cycle of detection, execution, and review:
 1. **Detection** - Issues are identified through integrations (Sentry errors, database metrics) or manually assigned (Linear/Jira tickets, direct task creation)
 2. **Execution** - Tembo analyzes the codebase using your configured [coding agent](/features/coding-agents) and generates a solution in an isolated [sandbox environment](/features/sandbox-environment)
 3. **Pull Request** - Changes are submitted as a pull request with context about the problem and solution
-4. **Feedback Loop** - You can provide feedback by mentioning @tembo in PR comments, and it will iterate on the changes
-
-See [Feedback Loop](/features/feedback-loop) for how to refine Tembo's work through natural language feedback in your pull requests.
+4. **[Feedback Loop](/features/feedback-loop)** - You can provide feedback by mentioning @tembo in PR comments, and it will iterate on the changes
 
 ## What about my team?
 
@@ -66,13 +58,13 @@ Wherever you work best.
 
 ## Supported Integrations
 
-| Type                         | Integrations                                                                                   |
-| ---------------------------- | ---------------------------------------------------------------------------------------------- |
-| **Source Control**           | [GitHub](/integrations/github), [GitLab](/integrations/gitlab), [Bitbucket](/integrations/bitbucket) |
-| **Project Management**       | [Linear](/integrations/linear), [Jira](/integrations/jira)                     |
-| **Monitoring & Observability** | [Sentry](/integrations/sentry)                                                                 |
-| **Databases**                | [PostgreSQL](/integrations/postgres), [Supabase](/integrations/supabase), [AWS RDS](/integrations/aws) |
-| **Communication**            | [Slack](/integrations/slack), [Raycast](/integrations/raycast)                                |
+| Type                           | Integrations                                                                                           |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| **Source Control**             | [GitHub](/integrations/github), [GitLab](/integrations/gitlab), [Bitbucket](/integrations/bitbucket)   |
+| **Project Management**         | [Linear](/integrations/linear), [Jira](/integrations/jira)                                             |
+| **Monitoring & Observability** | [Sentry](/integrations/sentry)                                                                         |
+| **Databases**                  | [PostgreSQL](/integrations/postgres), [Supabase](/integrations/supabase), [AWS RDS](/integrations/aws) |
+| **Communication**              | [Slack](/integrations/slack), [Raycast](/integrations/raycast)                                         |
 
 Most integrations use OAuth for secure connection. After authorization, Tembo syncs your data and you can activate the repositories or projects you want monitored.
 
