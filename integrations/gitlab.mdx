@@ -34,6 +34,17 @@ Connect GitLab to Tembo to open merge requests to improve your codebase.
 
 # Usage
 
+## Repository Sync
+
+Tembo automatically syncs with your GitLab account after installation to discover repositories and keep them up to date. The sync process:
+
+1. Fetches all repositories accessible to the connected account
+2. Updates repository metadata and permissions
+3. Discovers new repositories added to your GitLab account
+4. Maintains the list of available repositories for activation
+
+You can manually trigger a sync at any time by clicking the **Sync** button on the [Integrations page](https://app.tembo.io/integrations) next to your GitLab integration. This is useful when you've added new repositories or changed permissions in GitLab.
+
 ## Automated Scanning
 
 Once activated, Tembo automatically scans for TODO comments, security issues, performance problems, technical debt, and code quality issues.
