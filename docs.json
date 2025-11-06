@@ -130,6 +130,10 @@
 		{
 			"source": "/ai-agent/tembo-md",
 			"destination": "/features/rule-files"
+		},
+		{
+			"source": "/docs/getting-started/postgres_guides/:slug*",
+			"destination": "/integrations/postgres"
 		}
 	]
 }
