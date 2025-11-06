@@ -535,3 +535,161 @@ paths:
             const me = await client.me.retrieve();
 
             console.log(me.orgId);
+  /workflow/update:
+    put:
+      responses:
+        "200":
+          description: Successfully updated workflow configuration
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  workflowId:
+                    type: string
+                    format: uuid
+                    description: The workflow (automation) ID that was updated
+                  schedulesUpdated:
+                    type: integer
+                    description: Number of schedules that were updated
+                  triggersUpdated:
+                    type: integer
+                    description: Number of triggers that were updated
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    description: Timestamp when the update was completed
+                required:
+                  - workflowId
+                  - schedulesUpdated
+                  - triggersUpdated
+                  - updatedAt
+        "400":
+          description: Bad request - invalid input or missing required fields
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                  - error
+        "404":
+          description: Workflow not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                  - error
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                  - error
+      operationId: putPublic-apiWorkflowUpdate
+      tags:
+        - public-api
+      parameters: []
+      description: Update workflow schedules and triggers in a single unified endpoint. This allows you to modify cron schedules and event triggers for an automation.
+      summary: Update Workflow
+      requestBody:
+        description: Workflow update payload with schedules and/or triggers
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                workflowId:
+                  type: string
+                  format: uuid
+                  description: The workflow (automation) ID to update
+                  example: 123e4567-e89b-12d3-a456-426614174000
+                schedules:
+                  type: array
+                  description: Array of schedule configurations to update or create
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: Schedule ID (required for updates, omit for new schedules)
+                        example: 456e7890-e89b-12d3-a456-426614174001
+                      cronExpression:
+                        type: string
+                        description: Standard cron expression (e.g., "0 0 * * *" for daily at midnight)
+                        example: "0 2 * * *"
+                      enabled:
+                        type: boolean
+                        description: Whether the schedule is active
+                        example: true
+                    required:
+                      - cronExpression
+                triggers:
+                  type: array
+                  description: Array of trigger configurations to update or create
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: Trigger ID (required for updates, omit for new triggers)
+                        example: 789e0123-e89b-12d3-a456-426614174002
+                      triggerName:
+                        type: string
+                        description: Free-form identifier (recommended format - provider.category.event)
+                        example: github.pull_request.opened
+                      integrationId:
+                        type: string
+                        format: uuid
+                        description: Optional integration ID to associate this trigger with a specific provider
+                        example: 321e4567-e89b-12d3-a456-426614174003
+                      enabled:
+                        type: boolean
+                        description: Whether the trigger is active
+                        example: true
+                    required:
+                      - triggerName
+              required:
+                - workflowId
+        required: true
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import Tembo from '@tembo-io/sdk';
+
+            const client = new Tembo({
+              apiKey: 'My API Key',
+            });
+
+            // Update both schedules and triggers for a workflow
+            const result = await client.workflow.update({
+              workflowId: '123e4567-e89b-12d3-a456-426614174000',
+              schedules: [
+                {
+                  cronExpression: '0 2 * * *', // Run at 2am daily
+                  enabled: true
+                }
+              ],
+              triggers: [
+                {
+                  triggerName: 'github.pull_request.opened',
+                  integrationId: '321e4567-e89b-12d3-a456-426614174003',
+                  enabled: true
+                }
+              ]
+            });
+
+            console.log(result.schedulesUpdated, result.triggersUpdated);
