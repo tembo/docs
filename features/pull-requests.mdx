@@ -66,6 +66,17 @@ Tembo automatically generates meaningful commit messages for all changes it make
 
 The AI analyzes the git diff and issue context to create commit messages that accurately describe what was changed and why, making it easier to understand the commit history at a glance.
 
+### PR Template Support
+
+When creating a pull request, Tembo reads your repository's PR template and uses it to structure the PR description according to your preferred format. If no template is found, Tembo generates a standard PR description.
+
+Tembo checks for PR templates in the following locations:
+- `/.github/pull_request_template.md` or `/.github/PULL_REQUEST_TEMPLATE.md`
+- `/docs/pull_request_template.md` or `/docs/PULL_REQUEST_TEMPLATE.md`
+- `/pull_request_template.md` or `/PULL_REQUEST_TEMPLATE.md` (root directory)
+
+This ensures that Tembo's pull requests maintain consistency with your team's existing PR conventions and required sections.
+
 ---
 
 You maintain complete control - Tembo provides solutions, you decide what gets merged.
