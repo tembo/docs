@@ -80,13 +80,37 @@ The Tembo Sandbox includes the following base dependencies and their versions:
 |------|---------|-------------|
 | **rustup** | 1.28.2 | Rust toolchain installer and version management tool |
 
+## Sandbox Types
+
+Tembo supports multiple sandbox environment types to accommodate different use cases and requirements:
+
+### Docker (Default)
+
+The Docker sandbox is the default environment type, offering:
+
+- **Fast startup**: Containers start quickly for rapid task execution
+- **Wide compatibility**: Works with most common development workflows
+- **Resource efficient**: Lightweight containerization with minimal overhead
+- **Best for**: Most general-purpose tasks, web applications, and standard development workflows
+
+### QEMU
+
+The QEMU sandbox provides full virtual machine isolation using QEMU/KVM virtualization:
+
+- **Complete isolation**: Full VM-level isolation for enhanced security
+- **System-level access**: Support for tasks requiring deeper system integration
+- **Custom kernels**: Ability to run specialized kernel configurations
+- **Best for**: Tasks requiring enhanced isolation, system-level operations, or specialized environments
+
+You can configure the sandbox type at the organization, issue, or job level. If not specified, Tembo defaults to the Docker sandbox type.
+
 ## Environment Characteristics
 
 ### Isolation and Security
 
-The Tembo Sandbox operates in a containerized Docker environment that provides:
+The Tembo Sandbox provides strong isolation and security guarantees:
 
-- **Process isolation**: Each task runs in its own isolated container
+- **Process isolation**: Each task runs in its own isolated environment
 - **File system isolation**: Changes are contained within the sandbox
 - **Network security**: Controlled network access for security
 - **Resource limits**: CPU and memory constraints to ensure stability
