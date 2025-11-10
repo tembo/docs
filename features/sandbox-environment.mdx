@@ -172,6 +172,9 @@ When configured correctly, Tembo will:
 - **Make available** all packages and environment variables defined in your Nix development shell
 - **Ensure reproducibility** across different tasks and environments
 
+**How it works:**
+When a coding agent executes commands in the sandbox, it automatically runs them within your Nix development shell if a `flake.nix` is detected. This means all build commands, tests, and scripts will have access to the exact dependencies specified in your flake, ensuring consistent behavior across all task executions.
+
 ## Best Practices
 
 When working with the Tembo Sandbox environment:
@@ -193,6 +196,12 @@ When working with the Tembo Sandbox environment:
 - **Version awareness**: Be aware of the pre-installed tool versions when writing build scripts
 - **Cross-language support**: Take advantage of the multi-language environment for polyglot projects
 - **Tool conflicts**: Be mindful of potential conflicts between different language ecosystems
+
+### Nix Development Shell Tips
+
+- **Use Nix for complex dependencies**: If your project requires specific tool versions or uncommon dependencies, consider using a Nix development shell instead of relying on pre-installed tools
+- **Test locally**: Use `nix develop` locally to verify your flake configuration before relying on it in Tembo
+- **Keep flakes minimal**: Include only the dependencies your project needs to reduce environment setup time
 
 ## Support and Updates
 
