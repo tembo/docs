@@ -1,6 +1,57 @@
 ---
 title: "Automations"
+description: "Create intelligent workflows that run on a schedule or are triggered by events"
 icon: "repeat"
 ---
 
-Coming soon
+**Automations in Tembo allow you to offload repetitive engineering work to background coding agents.** Set up workflows that run on a schedule or trigger from events in your stack—like new Sentry errors, Linear issues, or Slack messages.
+
+## What are Automations?
+
+Automations are intelligent workflows that combine:
+
+- **Triggers** - Schedule-based (hourly, daily, weekly, monthly) or event-based (GitHub, Linear, Sentry, Slack)
+- **Coding Agents** - Any [supported coding agent](/features/coding-agents) with your preferred model
+- **Context** - Full access to your repositories and [MCP servers](/features/mcp-servers)
+- **Actions** - Generate code, create PRs, post to Slack, update docs
+
+Unlike CI/CD scripts, automations use AI agents to analyze context, make decisions, and write code autonomously.
+
+## Common Use Cases
+
+**Fix Production Bugs** - Monitor Sentry errors and automatically generate PRs to fix issues.
+
+**Generate Changelogs** - Create customer-facing changelogs from merged pull requests.
+
+**Reduce Technical Debt** - Periodic analysis to identify and fix TODOs, code smells, and quick wins.
+
+**Keep Docs in Sync** - Automatically update documentation when API changes are merged.
+
+## How It Works
+
+1. **Configure the Trigger** - Choose when your automation runs (schedule or event)
+2. **Write the Prompt** - Describe what you want the automation to do
+3. **Select Agent & Model** - Choose which [coding agent](/features/coding-agents) to use
+4. **Add MCP Servers** - Connect to services via [MCP servers](/features/mcp-servers)
+5. **Test & Enable** - Run a test execution, then enable for production
+
+Each automation runs in an isolated [sandbox environment](/features/sandbox-environment).
+
+## Creating an Automation
+
+Navigate to [Automations](https://app.tembo.io/automations) and click "Create Automation" to configure:
+
+- **Name & Trigger** - Description and when it runs
+- **Prompt** - Instructions for the automation
+- **Agent** - Which coding agent to use
+- **Repositories** - Which repos to access
+- **MCP Servers** - Additional tools and integrations
+
+<Tip>Start with simple scheduled automations before moving to event-based triggers.</Tip>
+
+## Examples & Resources
+
+- [Automation Examples Overview](/automation-examples/overview) - Best practices
+- [Common Patterns](/automation-examples/common-patterns) - Reusable patterns
+- [Product Changelog](/automation-examples/product-changelog) - Auto-generate changelogs
+- [Code Quality & CI/CD](/automation-examples/code-quality-cicd) - Quality checks
