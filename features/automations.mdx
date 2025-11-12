@@ -1,6 +1,121 @@
 ---
 title: "Automations"
 icon: "repeat"
+description: "Build intelligent workflows that fix issues, generate updates, and maintain your codebase automatically"
 ---
 
-Coming soon
+Tembo Automations allow you to build intelligent workflows that run on a schedule or are triggered by events. Instead of waiting for issues to pile up, automations proactively maintain your codebase, generate updates, and respond to events as they happen.
+
+## What Are Automations?
+
+Automations are AI-powered workflows that execute tasks autonomously. They can:
+
+- **React to events**: Respond to GitHub webhooks, Linear issue updates, Sentry errors, or Slack messages
+- **Run on schedules**: Execute hourly, daily, weekly, or monthly to perform routine maintenance
+- **Access integrations**: Connect to GitHub, Linear, Slack, Sentry, and other tools via [MCP servers](/features/mcp-servers)
+- **Generate code**: Fix bugs, update dependencies, refactor code, and more using AI coding agents
+
+## Common Use Cases
+
+### 1. Proactive Bug Fixing
+
+Automatically fix issues before they impact users:
+
+- **Sentry Integration**: When an error is detected, Tembo analyzes the stack trace and opens a PR with a fix
+- **Failed CI/CD**: Detect failed workflows and push fixes for broken tests or lint errors
+- **Security Vulnerabilities**: Scan for CVEs and patch dependencies automatically
+
+### 2. Content & Documentation
+
+Keep your documentation and changelogs up to date:
+
+- **Generate Changelogs**: Summarize merged PRs and post updates to Slack or Linear
+- **Update Documentation**: Ensure README files and docs stay in sync with code changes
+- **API Documentation**: Auto-generate OpenAPI specs from code changes
+
+### 3. Code Quality & Maintenance
+
+Maintain code quality without manual intervention:
+
+- **Clear TODOs**: Find and resolve TODO comments in your codebase
+- **Tech Debt Cleanup**: Refactor deprecated patterns or update old dependencies
+- **Code Formatting**: Ensure consistent style across the codebase
+
+### 4. Team Communication
+
+Keep your team informed automatically:
+
+- **Daily Standup Summaries**: Post daily progress reports to Slack
+- **PR Reminders**: Notify reviewers of pending pull requests
+- **Issue Triage**: Label and categorize new issues based on content
+
+## How Automations Work
+
+### Triggers
+
+Automations can be triggered in two ways:
+
+**Schedule-based**: Set a cron schedule (hourly, daily, weekly, monthly) for routine tasks.
+
+**Event-based**: React to webhooks from your integrations:
+- GitHub: Push events, PR comments, issue updates, workflow failures
+- Linear: Issue created, issue updated, issue closed
+- Sentry: New error, error spike
+- Slack: Messages in specific channels
+
+### Execution
+
+When triggered, automations:
+
+1. **Load context**: Access your repositories and integrations via MCP servers
+2. **Run AI agent**: Execute your automation prompt using your chosen [coding agent](/features/coding-agents)
+3. **Perform actions**: Create PRs, post to Slack, update issues, or run any task defined in your prompt
+4. **Report results**: Track execution logs and outputs in the Tembo dashboard
+
+### MCP Server Access
+
+Automations have access to all your configured [MCP servers](/features/mcp-servers), enabling them to:
+
+- Query GitHub repositories, PRs, and issues
+- Read and update Linear issues
+- Post messages to Slack channels
+- Access Sentry error data
+- Connect to databases via Postgres MCP
+- Use custom MCP servers you've configured
+
+## Creating an Automation
+
+To create an automation:
+
+1. **Navigate to Automations** in the Tembo dashboard
+2. **Choose a trigger**: Select schedule-based or event-based
+3. **Write your prompt**: Define what the automation should do (see [examples](/automation-examples/overview))
+4. **Select coding agent**: Choose which AI agent and model to use
+5. **Configure MCP servers**: Select which integrations the automation can access
+6. **Test and deploy**: Run a test execution before enabling
+
+## Best Practices
+
+<Card title="Start Simple" icon="seedling">
+  Begin with straightforward automations that solve clear problems. Don't try to automate everything at once.
+</Card>
+
+<Card title="Use Clear Prompts" icon="pen">
+  Your automation prompt should be specific, structured, and include instructions for edge cases.
+</Card>
+
+<Card title="Test First" icon="flask">
+  Test with a private Slack channel or test repository before enabling for production.
+</Card>
+
+<Card title="Schedule Appropriately" icon="clock">
+  Choose the right frequency—most information doesn't need minute-by-minute updates.
+</Card>
+
+For detailed examples and advanced techniques, see our [Automation Examples](/automation-examples/overview).
+
+## Related Features
+
+- [MCP Servers](/features/mcp-servers) - Connect automations to external services
+- [Coding Agents](/features/coding-agents) - Choose the AI agent that powers your automations
+- [Sandbox Environment](/features/sandbox-environment) - Secure execution environment for automation tasks
