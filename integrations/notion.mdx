@@ -1,0 +1,75 @@
+---
+title: "Notion"
+icon: "notion"
+---
+
+Connect Notion to Tembo to access your workspace content through MCP (Model Context Protocol) servers.
+
+# Overview
+
+The Notion integration allows Tembo to connect to your Notion workspaces, enabling AI agents to access and work with your documentation, databases, and other Notion content through the Model Context Protocol (MCP).
+
+# Features
+
+- **MCP Server Access** - Connect your Notion workspace content to AI agents
+- **OAuth Authentication** - Secure connection to your Notion account
+- **Workspace Integration** - Access all pages and databases in connected workspaces
+
+# Installation
+
+<Steps>
+  <Step title="Install">
+    Navigate to the [Integrations page](https://app.tembo.io/integrations) in Tembo and click the `Install` button next to Notion.
+  </Step>
+  <Step title="Authorize">
+    Authorize Tembo to access your Notion account. You'll be prompted to grant access to your Notion workspaces and choose specific pages Tembo will be able to access. You'll be redirected back to the Integrations page when complete.
+  </Step>
+  <Step title="Configure Workspace">
+    After authorization, your Notion workspace will be connected and available for use with MCP-enabled agents.
+  </Step>
+</Steps>
+
+# Usage
+
+## MCP Server Access
+
+Once connected, the Notion MCP server provides AI agents with access to:
+
+- **Pages** - Read and interact with Notion pages
+- **Databases** - Query and manipulate database content
+- **Blocks** - Access individual content blocks within pages
+- **Workspace Structure** - Navigate through your workspace hierarchy
+
+## Integration with Coding Agents
+
+The Notion integration enables coding agents to:
+
+- Reference documentation stored in Notion
+- Pull context from Notion databases for development tasks
+- Access project requirements and specifications
+- Maintain consistency between documentation and code
+
+# Managing Your Integration
+
+## Reauthorization
+
+If you need to modify the permissions or reconnect your Notion account:
+
+1. Navigate to the [Integrations page](https://app.tembo.io/integrations)
+2. Find the Notion integration card
+3. Click the settings button to reauthorize or disconnect
+
+## Supported Permissions
+
+The integration requires the following Notion permissions:
+
+- Read access to pages and databases
+- Write access to pages it is allowed to access, including creating new subpages
+- Access to workspace content structure
+- Ability to read user information for workspace identification
+
+# Security & Privacy
+
+- **OAuth 2.0** - Secure authentication using Notion's official OAuth flow
+- **Workspace-scoped** - Access is limited to the specific workspace you authorize
+- **Read and write operations** - Provides read access to content and write access to pages it is allowed to access, including creating new subpages

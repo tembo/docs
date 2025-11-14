@@ -50,6 +50,7 @@
 							"integrations/sentry",
 							"integrations/linear",
 							"integrations/jira",
+							"integrations/notion",
 							"integrations/postgres",
 							"integrations/aws",
 							"integrations/supabase",
