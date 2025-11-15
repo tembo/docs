@@ -94,8 +94,42 @@ Tembo supports flexible command syntax with multiple options. You can use either
 - **`agent=`** - Specify which coding agent and model to use (format: `agentType:model`)
   - Example: `agent=claudeCode:claude-4-5-sonnet`, `agent=codex:gpt-5-medium`
   - Supported coding agents: `claudeCode`, `codex`, `opencode`, `amp`, `cursor`
-  - If no coding agent is specified, defaults to `claudeCode:claude-4-5-sonnet`
+  - If no coding agent is specified, Tembo uses your organization's default configuration
   - See [Coding Agents documentation](/features/coding-agents) for all available options
+
+## Coding Agent Selection
+
+Tembo automatically determines the best coding agent for your task based on your organization's configuration. Here's how the selection works:
+
+**Default Behavior:**
+- If you don't specify an agent, Tembo uses your organization's default agent configuration
+- You can set organization-wide defaults in the [Settings page](https://app.tembo.io/settings)
+- Individual repositories can override these defaults in their settings
+
+**Specifying an Agent:**
+```
+@tembo [agent=claudeCode:claude-4-5-sonnet] Your task description here
+```
+
+**Examples by Task Type:**
+
+```
+// Quick bug fix with Claude Code
+@tembo [agent=claudeCode:claude-4-5-sonnet] Fix the null pointer exception in utils/parser.ts
+
+// Complex refactoring with Codex
+@tembo [agent=codex:gpt-5-large] Refactor the authentication system to use OAuth2
+
+// Frontend work with OpenCode
+@tembo [agent=opencode:gpt-5-medium] Add responsive design to the dashboard component
+```
+
+**When to Choose Different Agents:**
+- Use **Claude Code** for general purpose tasks, bug fixes, and feature implementation
+- Use **Codex** for complex refactoring, architectural changes, or when you need deeper reasoning
+- Use **OpenCode** for frontend-focused work or when working with modern JavaScript frameworks
+- Use **Amp** for high-performance or systems programming tasks
+- Use **Cursor** when you want the familiar Cursor IDE experience with background execution
 
 ### Thread Context Utilization
 
