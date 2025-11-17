@@ -7,15 +7,25 @@ Connect PostgreSQL databases to Tembo for performance monitoring and optimizatio
 
 # Features
 
-- Monitor slow queries and missing indexes
-- Detect unused indexes
+- **Monitor slow queries** - Identifies queries that exceed performance thresholds and suggests optimizations
+- **Detect missing indexes** - Analyzes query patterns to find opportunities for new indexes that would improve performance
+- **Detect unused indexes** - Identifies indexes that are no longer being used, helping reduce storage overhead and write performance impact
+- **Automatic optimization PRs** - Generates pull requests with database migration scripts to implement recommended improvements
 
 # Installation
 
 <Steps>
   <Step title="Create User">
     Create a dedicated database user for Tembo with read permissions and
-    monitoring access.
+    monitoring access. The user needs access to PostgreSQL system catalogs and statistics views.
+    
+    **Example SQL:**
+    ```sql
+    CREATE USER tembo_monitor WITH PASSWORD 'your-secure-password';
+    GRANT CONNECT ON DATABASE your_database TO tembo_monitor;
+    GRANT USAGE ON SCHEMA public TO tembo_monitor;
+    GRANT SELECT ON ALL TABLES IN SCHEMA public TO tembo_monitor;
+    ```
   </Step>
   <Step title="Connect">
     Navigate to the [Integrations page](https://app.tembo.io/integrations) in
@@ -26,4 +36,41 @@ Connect PostgreSQL databases to Tembo for performance monitoring and optimizatio
     Test the connection to verify Tembo can access your database. Once verified,
     monitoring begins immediately.
   </Step>
+  <Step title="Map Repository">
+    Map your database connection to the GitHub, GitLab, or Bitbucket repository where your database migrations are stored. This allows Tembo to create PRs with optimization suggestions.
+  </Step>
 </Steps>
+
+# Usage
+
+## Automated Monitoring
+
+Once connected, Tembo continuously monitors your database performance:
+
+- **Query Performance Analysis** - Tracks slow queries using PostgreSQL's `pg_stat_statements` extension
+- **Index Analysis** - Examines query execution plans to identify missing or unused indexes
+- **Performance Trends** - Monitors query performance over time to detect degradation
+
+## Pull Requests for Optimizations
+
+When Tembo identifies optimization opportunities, it will:
+
+1. **Create a Pull Request** - Opens a PR with database migration scripts (e.g., `CREATE INDEX` statements)
+2. **Add Context** - Includes detailed explanations of the performance issue and expected improvement
+3. **Provide Metrics** - Shows query execution times and estimated performance gains
+
+**Example PR Description:**
+```
+Add index on users.email for faster lookups
+
+This index will improve the performance of queries filtering by email,
+reducing query time from ~150ms to ~5ms for email-based lookups.
+```
+
+## Best Practices
+
+- **Use Read-Only Access** - Tembo only needs read access to monitor performance; it never modifies your database directly
+- **Monitor Production Databases** - Connect production databases for the most accurate performance insights
+- **Review Migration Scripts** - Always review Tembo's suggested migrations before merging, especially for large tables
+- **Test in Staging** - Apply migrations to a staging environment first to verify performance improvements
+- **Enable pg_stat_statements** - Ensure the `pg_stat_statements` extension is enabled for comprehensive query analysis
