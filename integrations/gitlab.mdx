@@ -32,6 +32,31 @@ Connect GitLab to Tembo to open merge requests to improve your codebase.
   </Step>
 </Steps>
 
+# Managing Your Integration
+
+## Manual Sync
+
+If you've added new repositories to your GitLab account or modified repository permissions, you can manually sync to refresh the list:
+
+1. Navigate to the [Integrations page](https://app.tembo.io/integrations)
+2. Find the GitLab integration card
+3. Click the sync button (circular arrow icon)
+4. Wait for the sync to complete - the button will show a loading indicator while syncing
+
+The sync process will discover any new repositories you've granted access to and update existing repository metadata.
+
+# Supported Webhooks
+
+Tembo listens to the following GitLab events and maps them to automation triggers (reference them as `gitlab.<event>` in your `triggerName`, e.g., `gitlab.merge_request.opened`). Tembo subscribes only to the events listed here (not every GitLab webhook). The Integrations page in the app shows the live set enabled for your org. If you need an additional event, contact support@tembo.io.
+
+- `merge_request.opened`
+- `merge_request.updated`
+- `merge_request.closed`
+- `merge_request.merged`
+- `note.created` (for comments on merge requests)
+
+See Automations for how to create triggers that start automations from these events.
+
 # Usage
 
 ## Automated Scanning
