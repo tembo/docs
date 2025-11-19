@@ -32,6 +32,7 @@ Codex is a coding agent powered by OpenAI's latest GPT-5 models with varying rea
 - `gpt-5-minimal` - Fastest, lightweight reasoning
 - `gpt-5-low` - Quick reasoning
 - `gpt-5-high` - Deep reasoning for complex problems
+- `gpt-5-codex` - Specialized for code generation tasks
 
 ### Opencode
 
@@ -52,15 +53,17 @@ Amp uses smart model detection and currently uses [Sonnet 4.5](https://ampcode.c
 
 ### Cursor
 
-Cursor is a coding agent supporting Anthropic Claude models, OpenAI GPT models, and XAI's Grok through the Cursor CLI.
+Cursor is a coding agent supporting Anthropic Claude models, OpenAI GPT models, Google's Gemini, Cursor's Composer, and XAI's Grok through the Cursor CLI.
 
 **Supported Models:**
 
-- `claude-4-5-sonnet` - Balanced performance and cost
+- `claude-4-5-sonnet` (Default) - Balanced performance and cost
 - `claude-4.1-opus` - Maximum capability for complex tasks
-- `gpt-5` - Powerful reasoning and code generation
-- `gpt-5-codex` - Specialized for code generation tasks
-- `composer-1` - OpenAI's composer model
+- `gpt-5.1` - Latest GPT-5.1 model
+- `gpt-5.1-codex` - GPT-5.1 specialized for code
+- `gpt-5.1-codex-high` - GPT-5.1 Codex with high reasoning
+- `gemini-3-pro` - Google's Gemini 3 Pro model
+- `composer-1` - Cursor's Composer model
 - `grok` - XAI's Grok model for advanced reasoning
 
 ## Choosing the Right Coding Agent
@@ -85,7 +88,8 @@ Coding Agents are specified using a coding agent key format: `agentType:model`
 - `codex:gpt-5-medium`
 - `opencode:claude-4-5-sonnet`
 - `amp:claude-4-5-sonnet`
-- `cursor:gpt-5`
+- `cursor:claude-4-5-sonnet`
+- `cursor:gpt-5.1-codex`
 - `cursor:grok`
 
 If no coding agent is specified, Tembo defaults to `claudeCode:claude-4-5-sonnet`.
