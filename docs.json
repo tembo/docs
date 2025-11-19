@@ -131,6 +131,10 @@
 		{
 			"source": "/ai-agent/tembo-md",
 			"destination": "/features/rule-files"
+		},
+		{
+			"source": "/billing",
+			"destination": "/admin/billing"
 		}
 	]
 }
