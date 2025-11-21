@@ -1,6 +1,6 @@
 ---
-title: "GitHub"
-icon: "github"
+title: 'GitHub'
+icon: 'github'
 ---
 
 Connect GitHub to Tembo to open pull requests to improve your codebase.
@@ -32,6 +32,7 @@ Connect GitHub to Tembo to open pull requests to improve your codebase.
     Only repositories you activate here will be scanned for issues and receive improvement PRs.
 
     **Tip:** If repositories don't appear after a few minutes, use the sync button on the Integrations page to manually trigger a refresh.
+
   </Step>
 </Steps>
 
@@ -67,6 +68,7 @@ Tembo listens to the following GitHub events and maps them to automation trigger
 - `installation_repositories.removed`
 
 See Automations for how to create triggers that start automations from these events.
+
 # Usage
 
 ## Automated Scanning
@@ -104,6 +106,7 @@ Review Tembo's PRs just like any other team member's work:
 When reviewing Tembo's pull requests, you can request changes or improvements by tagging `@tembo` in your comments. This ensures Tembo responds to your specific feedback while ignoring internal team discussions or comments directed at other team members.
 
 **Example:**
+
 ```
 @tembo Please update this function to include error handling
 ```
@@ -117,7 +120,7 @@ You can tag Tembo directly in GitHub issues to start work on implementing the re
 **Example usage:**
 
 ```
-@tembo Please implement the API endpoint described in this issue. 
+@tembo Please implement the API endpoint described in this issue.
 Include proper error handling and follow our existing patterns.
 ```
 
@@ -126,6 +129,35 @@ Include proper error handling and follow our existing patterns.
 Tembo automatically monitors your GitHub Actions workflows and detects when they fail. When a workflow fails due to broken tests, linting errors, or other issues, Tembo will analyze the failure, identify the root cause, and create a PR with a fix.
 
 This helps maintain a healthy CI/CD pipeline without manual intervention.
+
+## Troubleshooting
+
+### Repositories Not Appearing After Installation
+
+If repositories don't appear in the "Active Repositories" list after installation:
+
+1. **Wait a few minutes** - Initial sync can take 2-5 minutes depending on the number of repositories
+2. **Check repository permissions** - Ensure you granted Tembo access to the repositories during installation
+3. **Manual sync** - Click the sync button on the GitHub integration card to refresh the repository list
+4. **Verify organization access** - If repositories belong to an organization, ensure you have permission to install GitHub Apps for that organization
+
+### Tembo Not Responding to @tembo Mentions
+
+If Tembo doesn't respond when you mention `@tembo` in issues or PR comments:
+
+1. **Check the mention format** - Ensure you're using `@tembo` (not variations like `@Tembo` or `@TEMBO`)
+2. **Verify repository activation** - Confirm the repository is activated in the Integrations page
+3. **Check webhook status** - The Integrations page shows the live set of enabled webhooks; ensure `issue_comment.created` is enabled
+4. **Review permissions** - Verify Tembo has the necessary permissions to read issues and comments
+
+### Pull Requests Not Being Created
+
+If Tembo isn't creating PRs for detected issues:
+
+1. **Verify repository activation** - Only activated repositories receive automated scanning
+2. **Check branch protection** - Ensure Tembo has permission to create branches and open PRs
+3. **Review scanning settings** - Confirm automated scanning is enabled for your organization
+4. **Check for existing PRs** - Tembo may not create duplicate PRs for issues already addressed
 
 ## Best Practices
 
