@@ -124,6 +124,44 @@ Tembo automatically monitors your GitHub Actions workflows and detects when they
 
 This helps maintain a healthy CI/CD pipeline without manual intervention.
 
+## Troubleshooting
+
+### Repositories Not Appearing After Installation
+
+If repositories don't appear in the "Active Repositories" list after installation:
+
+1. **Wait a few minutes** - Initial sync can take 2-5 minutes depending on the number of repositories
+2. **Check repository permissions** - Ensure you granted Tembo access to the repositories during installation
+3. **Manual sync** - Click the sync button on the GitHub integration card to refresh the repository list
+4. **Verify organization access** - If repositories belong to an organization, ensure you have permission to install GitHub Apps for that organization
+
+### Tembo Not Responding to @tembo Mentions
+
+If Tembo doesn't respond when you mention `@tembo` in issues or PR comments:
+
+1. **Check the mention format** - Ensure you're using `@tembo` (not variations like `@Tembo` or `@TEMBO`)
+2. **Verify repository activation** - Confirm the repository is activated in the Integrations page
+3. **Check webhook status** - The Integrations page shows the live set of enabled webhooks; ensure `issue_comment.created` is enabled
+4. **Review permissions** - Verify Tembo has the necessary permissions to read issues and comments
+
+### Pull Requests Not Being Created
+
+If Tembo isn't creating PRs for detected issues:
+
+1. **Verify repository activation** - Only activated repositories receive automated scanning
+2. **Check branch protection** - Ensure Tembo has permission to create branches and open PRs
+3. **Review scanning settings** - Confirm automated scanning is enabled for your organization
+4. **Check for existing PRs** - Tembo may not create duplicate PRs for issues already addressed
+
+### Webhook Events Not Triggering
+
+If automation triggers aren't firing from GitHub events:
+
+1. **Verify webhook subscription** - Check the Integrations page to see which events are enabled
+2. **Check GitHub App permissions** - Ensure the GitHub App has permissions for the events you need
+3. **Review organization settings** - Some organizations restrict third-party app access; verify with your GitHub admin
+4. **Contact support** - If you need additional events beyond the standard set, contact support@tembo.io
+
 ## Best Practices
 
 - Configure repository settings to match your team's preferences
