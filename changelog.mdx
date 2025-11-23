@@ -4,15 +4,41 @@ description: 'Keep track of changes and updates to Tembo'
 icon: 'clock-rotate-left'
 ---
 
-<Update label="2025-11-21" tags={["Security", "Settings", "GitHub"]}>
+<Update label="2025-11-21" tags={["Cursor CLI", "Integrations", "Automations", "Slack", "Pull Requests"]}>
+
+## Cursor CLI Model Support
+
+Added support for new AI models in the Cursor CLI:
+
+- **GPT-5.1**
+- **GPT-5.1 Codex**
+- **Gemini 3**
+
+## Tembo in Pull Requests and Slack
+
+Mention `@tembo` in GitHub pull requests and Slack messages to ask questions about code, architecture, or project context.
+
+## Stateful Scheduled Automations
+
+Scheduled automations can now get and set state. This allows automations to:
+
+- Store information between runs
+- Track progress across executions
+- Build on previous results
+
+## Notion Integration
+
+Added Notion integration. Create tasks from Notion pages and sync documentation with your codebase.
+
+See [Notion integration documentation](/integrations/notion).
 
 ## Signed Commits
 
-Tembo now automatically signs commits created on GitHub using the GitHub App integration. This ensures that all automated changes are verified and trusted.
+Commits created by Tembo through the GitHub integration are automatically signed and verified. All Tembo commits display the "Verified" badge in GitHub.
 
-## User Settings & GPG Keys
+See [signed commits documentation](/features/pull-requests#signed-commits).
 
-We've laid the groundwork for personalized user settings, including support for GPG key configuration. This allows for more secure and attributed contributions. Coming soon.
+Also various bug fixes and improvements were shipped this week.
 
 </Update>
 
