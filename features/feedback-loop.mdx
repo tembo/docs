@@ -11,21 +11,21 @@ Refine, iterate, and improve on Tembo's [pull requests](/features/pull-requests)
 ## Prerequisites
 
 The Feedback Loop works automatically once you have:
-- [GitHub integration](/integrations/github) enabled in your Tembo workspace
-- At least one pull request created by Tembo (from error detection, manual assignment, etc.)
+- [GitHub integration](/integrations/github) or [GitLab integration](/integrations/gitlab) enabled in your Tembo workspace
+- At least one pull request or merge request created by Tembo (from error detection, manual assignment, etc.)
 
 That's it! No additional setup required.
 
 <Note>
-**Git Provider Support**: The Feedback Loop currently supports GitHub. Support for [GitLab](/integrations/gitlab) and [Bitbucket](/integrations/bitbucket) is coming soon!
+**Git Provider Support**: The Feedback Loop currently supports GitHub and GitLab. Support for [Bitbucket](/integrations/bitbucket) is coming soon!
 </Note>
 
 
 ## How it works
 
-1. **Initial Solution** - Tembo creates a pull request to solve an issue
-2. **Review & Comment** - You review the PR and leave feedback (tag @tembo in your GitHub review or comments)
-3. **Automatic Retry** - Tembo processes your feedback and updates the PR with improvements
+1. **Initial Solution** - Tembo creates a pull request (GitHub) or merge request (GitLab) to solve an issue
+2. **Review & Comment** - You review the PR/MR and leave feedback (tag @tembo in your review or comments)
+3. **Automatic Retry** - Tembo processes your feedback and updates the PR/MR with improvements
 4. **Iteration** - Continue providing feedback until you're satisfied with the solution
 
 <Note>
@@ -33,25 +33,25 @@ That's it! No additional setup required.
 </Note>
 
 <Warning>
-**Important**: You must mention `@tembo` in your PR comments or reviews for Tembo to process your feedback. This prevents accidental triggers from internal team discussions or comments meant for other team members.
+**Important**: You must mention `@tembo` in your PR/MR comments or reviews for Tembo to process your feedback. This prevents accidental triggers from internal team discussions or comments meant for other team members.
 </Warning>
 
 ## Providing Feedback
 
-### Option 1: Use GitHub's PR Review function
+### Option 1: Use PR/MR Review function
 
 ![GitHub Review Interface](/images/request-review.png)
 
-- Submit a formal PR review using GitHub's built-in review feature
+- Submit a formal review using your Git provider's built-in review feature (GitHub PR reviews or GitLab MR reviews)
 - Tag "@tembo" in your review summary or in any specific comments you want Tembo to act on (untagged feedback is ignored)
 - **Advantages:**
   - Tembo knows exactly which lines you're commenting on for precise fixes
   - You can batch multiple feedback points in a single review
   - Cleaner conversation thread with organized feedback
-  - Standard GitHub workflow that integrates with your team's process
+  - Standard workflow that integrates with your team's process
 
 ### Option 2: Add comments
-- Leave regular comments in the PR conversation
+- Leave regular comments in the PR/MR conversation
 - You must mention "@tembo" in the comment to trigger processing (untagged comments are ignored)
 
 ![Comment Review Example](/images/comment-review.png)
@@ -60,11 +60,11 @@ That's it! No additional setup required.
 
 Here's how a typical feedback loop works in practice:
 
-### Step 1: Tembo Creates Initial PR
-Tembo detects a Sentry error about unhandled database timeouts and creates a PR with a basic try-catch solution.
+### Step 1: Tembo Creates Initial PR/MR
+Tembo detects a Sentry error about unhandled database timeouts and creates a PR (or MR for GitLab) with a basic try-catch solution.
 
-### Step 2: You Provide Feedback via GitHub Review
-Using GitHub's review feature, you add multiple comments:
+### Step 2: You Provide Feedback via Review
+Using your Git provider's review feature (GitHub PR reviews or GitLab MR reviews), you add multiple comments:
 - Line 15: "Add retry logic with exponential backoff"
 - Line 22: "Log the timeout duration for monitoring"  
 - Line 30: "Consider connection pooling optimization"
@@ -109,12 +109,12 @@ If you need further refinements, simply add another review or comment with "@tem
 ```
 
 **✅ Batch feedback in a single review:**
-- Add multiple comments to different lines in one GitHub review
+- Add multiple comments to different lines in one review (GitHub PR review or GitLab MR review)
 - Tag "@tembo" on the review summary or individual comments you want addressed; Tembo processes all tagged points together for cohesive improvements
 - Cleaner conversation thread and better context awareness
 
 **ℹ️ Tagging is required:**
-- Tembo only acts on PR feedback that mentions "@tembo" (in reviews or regular comments)
+- Tembo only acts on PR/MR feedback that mentions "@tembo" (in reviews or regular comments)
 - This prevents accidental triggers from internal team discussions or other bot messages
 
 ### What Tembo's Feedback Loop Handles Well
