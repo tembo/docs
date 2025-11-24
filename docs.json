@@ -17,6 +17,12 @@
 	"api": {
 		"openapi": "/openapi.documented.yml"
 	},
+	"integrations": {
+		"posthog": {
+			"apiKey": "phc_Gx2xD1dreOAEWo4EkDeFoKMSwMsKkx6FUeMH90J97sT",
+			"sessionRecording": true
+		}
+	},
 	"navigation": {
 		"tabs": [
 			{
