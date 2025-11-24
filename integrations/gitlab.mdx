@@ -96,6 +96,35 @@ Tembo automatically monitors your GitLab CI/CD pipelines and detects when they f
 
 This helps maintain a healthy CI/CD pipeline without manual intervention.
 
+## Troubleshooting
+
+### Repositories Not Appearing After Installation
+
+If repositories don't appear in the "Active Repositories" list after installation:
+
+1. **Wait a few minutes** - Initial sync can take 2-5 minutes depending on the number of repositories
+2. **Check repository permissions** - Ensure you granted Tembo access to the repositories during installation
+3. **Manual sync** - Click the sync button on the GitLab integration card to refresh the repository list
+4. **Verify group access** - If repositories belong to a GitLab group, ensure you have permission to install GitLab Apps for that group
+
+### Tembo Not Responding to @tembo Mentions
+
+If Tembo doesn't respond when you mention `@tembo` in merge request comments:
+
+1. **Check the mention format** - Ensure you're using `@tembo` (not variations like `@Tembo` or `@TEMBO`)
+2. **Verify repository activation** - Confirm the repository is activated in the Integrations page
+3. **Check webhook status** - The Integrations page shows the live set of enabled webhooks; ensure `note.created` is enabled
+4. **Review permissions** - Verify Tembo has the necessary permissions to read merge requests and comments
+
+### Merge Requests Not Being Created
+
+If Tembo isn't creating MRs for detected issues:
+
+1. **Verify repository activation** - Only activated repositories receive automated scanning
+2. **Check branch protection** - Ensure Tembo has permission to create branches and open merge requests
+3. **Review scanning settings** - Confirm automated scanning is enabled for your organization
+4. **Check for existing MRs** - Tembo may not create duplicate MRs for issues already addressed
+
 ## Best Practices
 
 - Configure repository settings to match your team's preferences
