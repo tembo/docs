@@ -91,6 +91,17 @@ When Tembo finds an issue it can address, it will:
 
 All commits in Tembo PRs are automatically signed and verified.
 
+## Signed Commits
+
+Tembo automatically signs all commits created through the GitHub integration using the GitHub App. This provides several benefits:
+
+- **Verified Badge** - All commits display a "Verified" badge in GitHub, confirming they were created by Tembo's authenticated integration
+- **Security Assurance** - Signed commits provide cryptographic proof that the code changes originated from Tembo
+- **Compliance** - Helps meet requirements for verified commits in organizations with strict security policies
+- **No Configuration Required** - Commit signing happens automatically for all Tembo-created commits
+
+You can verify signed commits by looking for the "Verified" badge next to commits in pull requests created by Tembo. For more details, see the [Pull Requests documentation](/features/pull-requests#signed-commits).
+
 # Working with Pull Requests
 
 ## Reviewing Pull Requests
