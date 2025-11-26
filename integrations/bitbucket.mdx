@@ -39,6 +39,8 @@ Connect your Bitbucket repositories so that Tembo can open pull requests directl
     After connecting, Tembo will sync all accessible repositories from your
     Bitbucket workspaces. Choose the repositories you want Tembo to work with,
     including both your monorepo and docs repositories for full coverage.
+
+    **Tip:** If repositories don't appear after a few minutes, use the sync button on the Integrations page to manually trigger a refresh.
   </Step>
 </Steps>
 
@@ -59,6 +61,19 @@ Configure how Tembo creates pull requests:
 - **Draft PRs**: Enable to create pull requests as drafts by default
 - **Branch Cleanup**: Pull requests automatically delete source branches when merged
 - **PR Templates**: Use your repository's existing PR template if configured
+
+# Managing Your Integration
+
+## Manual Sync
+
+If you've added new repositories to your Bitbucket workspace or modified repository permissions, you can manually sync to refresh the list:
+
+1. Navigate to the [Integrations page](https://app.tembo.io/integrations)
+2. Find the Bitbucket integration card
+3. Click the sync button (circular arrow icon)
+4. Wait for the sync to complete - the button will show a loading indicator while syncing
+
+The sync process will discover any new repositories you've granted access to and update existing repository metadata.
 
 # Usage
 
@@ -88,6 +103,15 @@ When Tembo creates a pull request:
 # Troubleshooting
 
 ## Common Issues
+
+### Repositories Not Appearing After Installation
+
+If repositories don't appear in the repository list after installation:
+
+1. **Wait a few minutes** - Initial sync can take 2-5 minutes depending on the number of repositories
+2. **Check repository permissions** - Ensure the service user has access to the repositories in your Bitbucket workspace
+3. **Manual sync** - Click the sync button on the Bitbucket integration card to refresh the repository list
+4. **Verify workspace access** - Ensure the service user is a member of all required workspaces
 
 ### Authentication Errors
 - Ensure the service user has proper permissions in the Bitbucket workspace
