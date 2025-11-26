@@ -13,6 +13,10 @@
 			"dark": "#080808"
 		}
 	},
+	"appearance": {
+		"default": "system",
+		"strict": false
+	},
 	"favicon": "/favicon.ico",
 	"api": {
 		"openapi": "/openapi.documented.yml"
