@@ -1,6 +1,6 @@
 {
 	"$schema": "https://mintlify.com/docs.json",
-	"theme": "mint",
+	"theme": "palm",
 	"name": "Tembo Docs",
 	"colors": {
 		"primary": "#141414",
