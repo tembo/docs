@@ -73,4 +73,4 @@ reducing query time from ~150ms to ~5ms for email-based lookups.
 - **Monitor Production Databases** - Connect production databases for the most accurate performance insights
 - **Review Migration Scripts** - Always review Tembo's suggested migrations before merging, especially for large tables
 - **Test in Staging** - Apply migrations to a staging environment first to verify performance improvements
-- **Enable pg_stat_statements** - Ensure the `pg_stat_statements` extension is enabled for comprehensive query analysis
+- **Enable pg_stat_statements** - Ensure the `pg_stat_statements` extension is enabled for comprehensive query analysis. Enable it by running `CREATE EXTENSION IF NOT EXISTS pg_stat_statements;` in your database. If the extension isn't available, add `pg_stat_statements` to `shared_preload_libraries` in your `postgresql.conf` and restart PostgreSQL.
