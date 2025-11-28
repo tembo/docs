@@ -6,6 +6,24 @@ icon: 'pen-to-square'
 
 Writing clear, actionable prompts is key to getting great results from Tembo. Whether you're assigning issues from Linear, Jira, or working directly with Tembo, following these guidelines will help ensure successful outcomes.
 
+## How to Interact with Tembo
+
+Understanding when and where to tag `@tembo` helps ensure your requests are processed correctly:
+
+**When you MUST tag `@tembo`:**
+- **Pull Request comments** - Tag `@tembo` in PR/MR comments or reviews to request changes or provide feedback on Tembo's work
+- **GitHub Issues** - Mention `@tembo` in GitHub issue comments to start work on implementing features or fixes
+- **Slack messages** - Use `@tembo` to trigger tasks in Slack channels or direct messages
+
+**When tagging is NOT required:**
+- **Tembo Dashboard** - Tasks created directly in the dashboard don't need tagging
+- **Linear Issues** - Assigning Linear issues to Tembo automatically triggers work without tagging
+- **Jira Issues** - Assigning Jira issues to Tembo works without explicit tagging
+- **Initial task creation** - The first request in any context doesn't require tagging
+
+**Why tagging matters:**
+Tagging `@tembo` in PR comments and GitHub issues ensures Tembo responds to your specific feedback while ignoring internal team discussions or comments meant for other team members. This prevents accidental triggers and keeps communication clean.
+
 ## Anatomy of a Great Prompt
 
 A well-structured prompt includes four essential elements. First, state a clear objective that describes what needs to be done. Next, provide relevant context explaining why it matters and what's affected. Then define acceptance criteria so everyone knows when the work is complete. Finally, include technical details that specify any requirements or constraints.
