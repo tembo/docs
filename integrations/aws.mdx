@@ -3,4 +3,48 @@ title: 'AWS'
 icon: 'aws'
 ---
 
-Request access to this integration in the app. 
+Connect AWS RDS PostgreSQL databases to Tembo for performance monitoring and optimization.
+
+# Features
+
+- **Monitor slow queries** - Identifies queries that exceed performance thresholds and suggests optimizations
+- **Detect missing indexes** - Analyzes query patterns to find opportunities for new indexes that would improve performance
+- **Detect unused indexes** - Identifies indexes that are no longer being used, helping reduce storage overhead and write performance impact
+- **Automatic optimization PRs** - Generates pull requests with database migration scripts to implement recommended improvements
+- **Multi-region support** - Automatically discovers RDS instances across multiple AWS regions
+
+# Installation
+
+<Steps>
+  <Step title="Connect AWS Account">
+    Navigate to the [Integrations page](https://app.tembo.io/integrations) in
+    Tembo and click the `Connect` button next to AWS. You'll be redirected to
+    AWS CloudFormation to create a connection using a secure IAM role.
+  </Step>
+  <Step title="Deploy CloudFormation Stack">
+    Follow the CloudFormation wizard to deploy the connection stack. This creates
+    an IAM role that allows Tembo to discover and monitor your RDS instances securely.
+  </Step>
+  <Step title="Activate RDS Instances">
+    After the connection is established, Tembo will automatically discover your
+    RDS PostgreSQL instances across supported regions. Select which instances
+    you want to monitor under "Active Instances" on the Integrations page.
+  </Step>
+  <Step title="Map Repository">
+    Map your RDS instances to the GitHub, GitLab, or Bitbucket repository where
+    your database migrations are stored. This allows Tembo to create PRs with
+    optimization suggestions.
+  </Step>
+</Steps>
+
+# Usage
+
+Once connected, Tembo continuously monitors your RDS PostgreSQL instances for slow queries, missing indexes, and unused indexes using PostgreSQL's `pg_stat_statements` extension. When optimization opportunities are identified, Tembo creates pull requests with database migration scripts, detailed explanations, and performance metrics.
+
+## Best Practices
+
+- **Secure IAM Role** - The CloudFormation template creates a least-privilege IAM role for Tembo
+- **Monitor Production Databases** - Connect production RDS instances for the most accurate performance insights
+- **Review Migration Scripts** - Always review Tembo's suggested migrations before merging, especially for large tables
+- **Test in Staging** - Apply migrations to a staging environment first to verify performance improvements
+- **Enable pg_stat_statements** - Ensure the `pg_stat_statements` extension is enabled on your RDS instances for comprehensive query analysis 
