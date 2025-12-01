@@ -55,3 +55,49 @@ Tembo maps Jira activity to automation triggers (use a `jira.*` naming conventio
 - `comment.created`
 
 See Automations for how to create triggers from these events.
+
+# Usage
+
+## Triggering Tembo
+
+Add the "Tembo" label to any Jira issue you want Tembo to work on. Once labeled, Tembo will:
+
+1. **Analyze the issue** - Review the issue description, acceptance criteria, and any attached context
+2. **Create a coding session** - Generate a solution based on the issue requirements
+3. **Comment with updates** - Provide progress updates and a link to view the session
+4. **Create pull requests** - Submit code changes as pull requests when ready
+
+## Status Updates
+
+Tembo keeps you informed as it works on your Jira issues:
+
+- **Comments** - Tembo adds comments to the issue with progress updates and links to coding sessions
+- **Pull Request Links** - When code changes are ready, Tembo comments with links to generated pull requests
+- **Session Links** - View detailed coding sessions to see how Tembo approached the problem
+
+## Troubleshooting
+
+### Tembo Not Responding to Labeled Issues
+
+If Tembo doesn't respond after adding the "Tembo" label:
+
+1. **Verify label name** - Ensure the label is exactly "Tembo" (case-sensitive)
+2. **Check account setup** - Confirm you completed the installation using the dedicated Tembo Jira account
+3. **Review permissions** - Verify the Tembo account has permission to read and comment on issues in the project
+4. **Check integration status** - Navigate to the [Integrations page](https://app.tembo.io/integrations) to ensure the Jira integration is active
+
+### Issues Not Being Processed
+
+If labeled issues aren't being processed:
+
+1. **Verify repository connection** - Ensure you have connected GitHub, GitLab, or Bitbucket repositories to Tembo
+2. **Check issue format** - Include clear descriptions and acceptance criteria to help Tembo understand the task
+3. **Review webhook status** - The Integrations page shows the live set of enabled webhooks; ensure `issue.labeled` is enabled
+
+## Best Practices
+
+- **Write clear issue descriptions** - Include detailed requirements, acceptance criteria, and context to help Tembo understand the task
+- **Use acceptance criteria** - Define specific, measurable criteria so Tembo knows when the work is complete
+- **Attach relevant context** - Include screenshots, error logs, or links to related issues when applicable
+- **Use [Rule Files](/features/rule-files)** - Help Tembo understand your coding standards and project conventions
+- **Set up [Hooks](/features/hooks)** - Customize Tembo's behavior to match your team's workflow
