@@ -73,8 +73,11 @@ reducing query time from ~150ms to ~5ms for email-based lookups.
 
 Beyond performance monitoring, Tembo's **Postgres MCP (Model Context Protocol)** may access your database during task execution. This happens when Tembo determines that querying your database would help complete a specific task more effectively.
 
+The MCP is powered by [crystaldba/postgres-mcp](https://github.com/crystaldba/postgres-mcp) and runs in **restricted mode**, ensuring read-only access.
+
 **Key Points:**
-- **Always Read-Only** - The MCP only performs SELECT queries and never modifies data
+- **Restricted Mode** - Runs in read-only mode, preventing any data modification operations
+- **Open Source** - Built on the crystaldba/postgres-mcp implementation
 - **Task-Driven** - Only accesses data when relevant to the current task being performed
 - **Same Connection** - Uses the same database connection and permissions you've configured
 - **Transparent** - You'll be informed when Tembo accesses your database for task completion
