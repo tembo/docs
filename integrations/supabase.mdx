@@ -7,8 +7,10 @@ Connect Supabase PostgreSQL databases to Tembo for performance monitoring and op
 
 # Features
 
-- Monitor database performance and identify issues
-- Generate solutions for common PostgreSQL problems
+- **Monitor slow queries** - Identifies queries that exceed performance thresholds and suggests optimizations
+- **Detect missing indexes** - Analyzes query patterns to find opportunities for new indexes that would improve performance
+- **Detect unused indexes** - Identifies indexes that are no longer being used, helping reduce storage overhead
+- **Automatic optimization PRs** - Generates pull requests with database migration scripts to implement recommended improvements
 
 # Installation
 
@@ -23,6 +25,32 @@ Connect Supabase PostgreSQL databases to Tembo for performance monitoring and op
     After syncing completes (may take a few minutes), select which Supabase projects you want Tembo to monitor under "Active Projects" on the Integrations page.
 
     Only projects you activate here will be monitored for performance issues and optimization opportunities.
-
+  </Step>
+  <Step title="Map Repository">
+    Map your Supabase project to the GitHub, GitLab, or Bitbucket repository where your database migrations are stored. This allows Tembo to create PRs with optimization suggestions.
   </Step>
 </Steps>
+
+# Usage
+
+## Automated Monitoring
+
+Once connected, Tembo continuously monitors your Supabase database performance:
+
+- **Query Performance Analysis** - Tracks slow queries using PostgreSQL's `pg_stat_statements` extension
+- **Index Analysis** - Examines query execution plans to identify missing or unused indexes
+- **Performance Trends** - Monitors query performance over time to detect degradation
+
+## Pull Requests for Optimizations
+
+When Tembo identifies optimization opportunities, it will:
+
+1. **Create a Pull Request** - Opens a PR with database migration scripts (e.g., `CREATE INDEX` statements)
+2. **Add Context** - Includes detailed explanations of the performance issue and expected improvement
+3. **Provide Metrics** - Shows query execution times and estimated performance gains
+
+## Best Practices
+
+- **Monitor Production Databases** - Connect production databases for the most accurate performance insights
+- **Review Migration Scripts** - Always review Tembo's suggested migrations before merging, especially for large tables
+- **Test in Staging** - Apply migrations to a staging environment first to verify performance improvements
