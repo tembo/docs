@@ -99,3 +99,22 @@ Less effective:
 - Select all repositories that need changes for the task
 - For full-stack features, include both frontend and backend repositories
 - If unsure, start with one repository and Tembo can help identify if others are needed
+
+# MCP Server Integration
+
+Tembo provides a [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server for Linear, enabling AI coding agents to directly interact with your Linear workspace during task execution.
+
+## What is MCP?
+
+Model Context Protocol is a standardized way for AI applications to connect to external data sources and tools. With MCP, agents can query Linear issues, access project data, and retrieve workspace information in real-time while solving problems.
+
+## Using the Linear MCP Server
+
+When you connect Linear to Tembo, the MCP server is automatically available to agents working on your tasks. Agents can:
+
+- **Query issues** - Search and filter Linear issues programmatically
+- **Access project context** - Retrieve project details, cycles, and milestones
+- **Check issue relationships** - Understand dependencies and related issues
+- **Read comments and activity** - Access the full history and discussion on issues
+
+This enables agents to make more informed decisions when implementing features or fixes, as they have direct access to your issue tracker and can understand the broader context of the work being done.
