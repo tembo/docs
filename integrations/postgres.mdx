@@ -11,13 +11,15 @@ Connect PostgreSQL databases to Tembo for performance monitoring and optimizatio
 - **Detect missing indexes** - Analyzes query patterns to find opportunities for new indexes that would improve performance
 - **Detect unused indexes** - Identifies indexes that are no longer being used, helping reduce storage overhead and write performance impact
 - **Automatic optimization PRs** - Generates pull requests with database migration scripts to implement recommended improvements
+- **Task-based data access** - Postgres MCP enables Tembo to query your database when needed for specific tasks (always read-only)
 
 # Installation
 
 <Steps>
-  <Step title="Create User">
-    Create a dedicated database user for Tembo with read permissions and
-    monitoring access. The user needs access to PostgreSQL system catalogs and statistics views.
+  <Step title="Create User (Optional)">
+    **Optional:** Create a dedicated database user for Tembo to ensure read-only access.
+    While not strictly necessary, this is recommended for additional security assurance.
+    The user needs access to PostgreSQL system catalogs and statistics views.
     
     **Example SQL:**
     ```sql
@@ -66,6 +68,19 @@ Add index on users.email for faster lookups
 This index will improve the performance of queries filtering by email,
 reducing query time from ~150ms to ~5ms for email-based lookups.
 ```
+
+## Postgres MCP Integration
+
+Beyond performance monitoring, Tembo's **Postgres MCP (Model Context Protocol)** may access your database during task execution. This happens when Tembo determines that querying your database would help complete a specific task more effectively.
+
+The MCP is powered by [crystaldba/postgres-mcp](https://github.com/crystaldba/postgres-mcp) and runs in **restricted mode**, ensuring read-only access.
+
+**Key Points:**
+- **Restricted Mode** - Runs in read-only mode, preventing any data modification operations
+- **Open Source** - Built on the crystaldba/postgres-mcp implementation
+- **Task-Driven** - Only accesses data when relevant to the current task being performed
+- **Same Connection** - Uses the same database connection and permissions you've configured
+- **Transparent** - You'll be informed when Tembo accesses your database for task completion
 
 ## Best Practices
 
