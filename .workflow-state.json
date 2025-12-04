@@ -1,0 +1,12 @@
+{
+  "workflowId": "e2f4ed9c-96de-490b-a687-52458f882c44",
+  "changes": [
+    {
+      "date": "2025-12-02",
+      "file": "integrations/linear.mdx",
+      "change": "Added MCP Server Integration section documenting Linear MCP server capabilities",
+      "linesAdded": 18,
+      "linesDeleted": 0
+    }
+  ]
+}
