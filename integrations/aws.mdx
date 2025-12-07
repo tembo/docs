@@ -45,10 +45,38 @@ Connect AWS RDS PostgreSQL databases to Tembo for performance monitoring and opt
 
 Once connected, Tembo continuously monitors your RDS PostgreSQL instances for slow queries, missing indexes, and unused indexes using PostgreSQL's `pg_stat_statements` extension. When optimization opportunities are identified, Tembo creates pull requests with database migration scripts, detailed explanations, and performance metrics.
 
+## Troubleshooting
+
+### RDS Instances Not Appearing
+
+If your RDS instances don't appear after connecting:
+
+1. **Wait for discovery** - Initial discovery can take a few minutes as Tembo scans multiple AWS regions
+2. **Check CloudFormation stack** - Verify the stack deployed successfully in your AWS console
+3. **Verify IAM permissions** - Ensure the IAM role has permission to describe RDS instances
+4. **Check instance type** - Only PostgreSQL RDS instances are supported
+
+### Optimization PRs Not Being Created
+
+If Tembo isn't creating optimization PRs:
+
+1. **Verify repository mapping** - Ensure your RDS instance is mapped to the correct repository
+2. **Check pg_stat_statements** - The extension must be enabled for query analysis
+3. **Review monitoring period** - Tembo needs time to collect query statistics before suggesting optimizations
+4. **Check branch permissions** - Ensure Tembo has permission to create branches in your repository
+
+### Connection Issues
+
+If Tembo cannot connect to your RDS instance:
+
+1. **Security groups** - Verify the RDS security group allows connections from Tembo's IP ranges
+2. **VPC configuration** - Ensure your RDS instance is accessible (public or via VPN/Direct Connect)
+3. **SSL/TLS settings** - Confirm SSL settings match your RDS configuration
+
 ## Best Practices
 
 - **Secure IAM Role** - The CloudFormation template creates a least-privilege IAM role for Tembo
 - **Monitor Production Databases** - Connect production RDS instances for the most accurate performance insights
 - **Review Migration Scripts** - Always review Tembo's suggested migrations before merging, especially for large tables
 - **Test in Staging** - Apply migrations to a staging environment first to verify performance improvements
-- **Enable pg_stat_statements** - Ensure the `pg_stat_statements` extension is enabled on your RDS instances for comprehensive query analysis 
+- **Enable pg_stat_statements** - Ensure the `pg_stat_statements` extension is enabled on your RDS instances for comprehensive query analysis
