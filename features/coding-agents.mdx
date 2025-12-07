@@ -18,8 +18,9 @@ Claude Code is Tembo's default coding agent, powered by Anthropic's Claude model
 **Supported Models:**
 
 - `claude-4-5-sonnet` (Default) - Balanced performance and cost
-- `claude-4-5-haiku` - Fastest, lightweight reasoning
+- `claude-opus-4-5` - Maximum capability with Opus 4.5
 - `claude-4.1-opus` - Maximum capability for complex tasks
+- `claude-4-5-haiku` - Fastest, lightweight reasoning
 - `claude-4-sonnet` - Fast and efficient
 
 ### Codex
@@ -36,20 +37,21 @@ Codex is a coding agent powered by OpenAI's latest GPT-5 models with varying rea
 
 ### Opencode
 
-Opencode is an alternative coding agent supporting both Anthropic Claude models and OpenAI GPT models, providing flexibility in model selection.
+Opencode is an alternative coding agent supporting Anthropic Claude models, providing flexibility in model selection.
 
 **Supported Models:**
 
 - `claude-4-5-sonnet` (Default) - Balanced performance and cost
-- `claude-4-5-haiku` - Fastest, lightweight reasoning
+- `claude-opus-4-5` - Maximum capability with Opus 4.5
 - `claude-4.1-opus` - Maximum capability for complex tasks
+- `claude-4-5-haiku` - Fastest, lightweight reasoning
 - `claude-4-sonnet` - Fast and efficient
 
 ### Amp
 
 Amp is a powerful coding agent powered by Anthropic's Claude models.
 
-Amp uses smart model detection and currently uses [Sonnet 4.5](https://ampcode.com/news/claude-sonnet-4-5) as its main model.
+Amp manages its own model selection automatically and defaults to `claude-opus-4-5` (Opus 4.5) for maximum capability.
 
 ### Cursor
 
@@ -58,6 +60,7 @@ Cursor is a coding agent supporting Anthropic Claude models, OpenAI GPT models, 
 **Supported Models:**
 
 - `claude-4-5-sonnet` (Default) - Balanced performance and cost
+- `claude-opus-4-5` - Maximum capability with Opus 4.5
 - `claude-4.1-opus` - Maximum capability for complex tasks
 - `gpt-5.1` - Latest GPT-5.1 model
 - `gpt-5.1-codex` - GPT-5.1 specialized for code
@@ -72,7 +75,7 @@ Different coding agents excel at different types of tasks. Here's guidance on wh
 
 **For most tasks:** Start with **Claude Code** (default). It provides the best balance of code quality, reliability, and cost-effectiveness for general software engineering work.
 
-**For complex refactoring or architectural changes:** Use **Claude Code with `claude-4.1-opus`** or **Codex with `gpt-5-high`** for deeper reasoning capabilities.
+**For complex refactoring or architectural changes:** Use **Claude Code with `claude-opus-4-5`** or **Codex with `gpt-5-high`** for deeper reasoning capabilities.
 
 **For quick fixes and simple updates:** Use **Claude Code with `claude-4-5-haiku`** or **Codex with `gpt-5-minimal`** for faster execution on straightforward tasks.
 
@@ -85,9 +88,10 @@ Coding Agents are specified using a coding agent key format: `agentType:model`
 **Examples:**
 
 - `claudeCode:claude-4-5-sonnet`
+- `claudeCode:claude-opus-4-5`
 - `codex:gpt-5-medium`
 - `opencode:claude-4-5-sonnet`
-- `amp:claude-4-5-sonnet`
+- `amp:claude-opus-4-5`
 - `cursor:claude-4-5-sonnet`
 - `cursor:gpt-5.1-codex`
 - `cursor:grok`
@@ -108,7 +112,7 @@ Different models offer different tradeoffs between speed, cost, and capability:
 - Lower cost for high-volume operations
 - Best for well-defined, smaller scope work
 
-**For complex architectural work:** Use advanced models (`claude-4.1-opus` or `gpt-5-high`)
+**For complex architectural work:** Use advanced models (`claude-opus-4-5` or `gpt-5-high`)
 - Deep reasoning for system design decisions
 - Better handling of large, multi-file refactors
 - More thorough analysis of edge cases
