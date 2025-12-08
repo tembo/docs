@@ -68,6 +68,41 @@ The integration requires the following Notion permissions:
 - Access to workspace content structure
 - Ability to read user information for workspace identification
 
+# Best Practices
+
+## Organizing Notion Content
+
+For best results when using Notion with Tembo:
+
+- **Create a dedicated workspace section** - Organize documentation that agents will reference in clearly named pages
+- **Use consistent page structures** - Maintain similar layouts across documentation pages for predictable content access
+- **Keep technical specs up to date** - Ensure requirements and specifications in Notion match your current project needs
+- **Use database properties effectively** - Leverage Notion database properties to help agents filter and find relevant content
+
+## Writing Agent-Friendly Content
+
+- **Use clear headings** - Structured headings help agents navigate and locate specific information
+- **Include code examples** - When documenting technical requirements, include code snippets for reference
+- **Link related pages** - Cross-reference related documentation to provide complete context
+
+# Troubleshooting
+
+## Workspace Not Appearing
+
+If your Notion workspace doesn't appear after authorization:
+
+1. **Verify authorization** - Ensure you completed the OAuth flow and granted access to the correct workspace
+2. **Check page permissions** - Confirm you selected pages Tembo can access during authorization
+3. **Reauthorize if needed** - Navigate to the [Integrations page](https://app.tembo.io/integrations) and reconnect
+
+## Agents Cannot Access Expected Content
+
+If agents report they cannot find content from Notion:
+
+1. **Verify page selection** - During Notion authorization, you must explicitly select which pages Tembo can access
+2. **Check page sharing** - Ensure the pages aren't restricted to specific workspace members only
+3. **Review workspace structure** - Nested pages inherit parent permissions but must be in an authorized section
+
 # Security & Privacy
 
 - **OAuth 2.0** - Secure authentication using Notion's official OAuth flow
