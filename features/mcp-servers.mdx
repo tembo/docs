@@ -21,6 +21,7 @@ Tembo provides several MCP servers out of the box:
 | **Tembo**    | `stdio` | Core Tembo tools (sub-issues, Slack, tasks) |
 | **Playwright** | `stdio` | Browser automation and web testing         |
 | **Context7** | `stdio` | Context management and search              |
+| **Kernel**   | `http`  | Cloud browser infrastructure for web agents |
 
 ### Tembo MCP
 
@@ -42,6 +43,26 @@ Enables agents to automate browser interactions:
 ### Context7 MCP
 
 Provides enhanced context management capabilities for your agents.
+
+### Kernel MCP
+
+[Kernel](https://onkernel.com) provides cloud browser infrastructure for AI agents and web automation. The Kernel MCP server enables your agents to launch and control browsers in the cloud without managing infrastructure.
+
+**Use cases:**
+- Automate web interactions that require anti-bot detection handling
+- Scrape websites and extract data with cloud-based browsers
+- Build web agents that maintain authenticated sessions across tasks
+- Execute Playwright code remotely with automatic video replay for debugging
+
+**Key tools:**
+- **create_browser** / **delete_browser** - Launch and manage cloud browser sessions
+- **execute_playwright_code** - Run Playwright/TypeScript code with video replay
+- **take_screenshot** - Capture page screenshots
+- **setup_profile** / **list_profiles** - Manage reusable browser profiles for authentication
+- **search_docs** - Query Kernel platform documentation
+
+**Setup:**
+To enable the Kernel MCP server, add your Kernel API key in **Settings** > **Agents** > **Kernel API Key**. Get your API key from [onkernel.com](https://onkernel.com).
 
 ## Integration MCP Servers
 
