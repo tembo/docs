@@ -1,0 +1,383 @@
+---
+title: 'Tembo Sales Script'
+description: 'Comprehensive sales guide for Tembo - background coding agents for technical teams'
+---
+
+# Tembo Sales Script
+
+**Last Updated:** December 8, 2025
+
+## Elevator Pitch (30 seconds)
+
+Tembo is your unified interface for background coding agents. Think of it as autopilot for your engineering tasks — fixing production bugs, implementing features from issues, reducing technical debt, and keeping documentation up-to-date. Any coding agent. Any model. Full context from your entire stack.
+
+## The Problem We Solve
+
+Engineering teams are drowning in repetitive work:
+
+- **Production bugs** pile up in error tracking tools like Sentry
+- **Technical debt** accumulates as teams focus on features
+- **Documentation** falls behind the codebase
+- **Code reviews** and PR iterations create bottlenecks
+- **Project management tools** (Linear, Jira) fill up with small tasks that never get prioritized
+- **CI/CD failures** require manual investigation and fixes
+
+The result? Engineers spend 30-40% of their time on toil instead of building what matters.
+
+## What is Tembo?
+
+Tembo is a **background coding agent platform** that autonomously handles engineering tasks across your entire development workflow.
+
+### Core Capabilities
+
+1. **Automated Bug Fixes**
+   - Monitors Sentry, AWS CloudWatch, and other error tracking tools
+   - Automatically generates PRs to fix production errors
+   - Reduces MTTR (Mean Time To Resolution) from hours to minutes
+
+2. **Issue Implementation**
+   - Assign issues from Slack, Linear, Jira, or GitHub
+   - Tembo writes code to solve bugs, build features, or refactor
+   - Works across multiple repositories simultaneously
+
+3. **Technical Debt Reduction**
+   - Periodic codebase analysis for security vulnerabilities
+   - Identifies refactoring opportunities and performance issues
+   - Submits PRs for quick wins automatically
+
+4. **Documentation Automation**
+   - Syncs monorepo changes to docs repositories
+   - Keeps feature documentation current
+   - Generates changelogs from commit history
+
+5. **CI/CD Monitoring**
+   - Detects failed workflows and broken tests
+   - Investigates root causes and pushes fixes
+   - Reduces "red pipeline" incidents
+
+## Recent Major Updates (November-December 2025)
+
+### Kernel MCP Integration ✨ NEW
+- Added Kernel MCP server support for enhanced agent capabilities
+- Organization-level API key configuration with global fallback
+- Extends agent functionality beyond built-in integrations
+
+### AWS RDS Troubleshooting
+- Enhanced AWS integration with comprehensive troubleshooting docs
+- Better support for monitoring RDS database instances
+- Improved error handling and connectivity diagnostics
+
+### Stateful Scheduled Automations (November 2025)
+- Automations can now store and retrieve state between runs
+- Build incremental improvements over time
+- Track progress across multiple executions
+- Example: Weekly sales script updates based on repo changes
+
+### Ask @tembo Anywhere (November 2025)
+- Mention `@tembo` in GitHub PRs and Slack messages
+- Ask questions about code, architecture, or project context
+- Get answers backed by full codebase knowledge
+
+### Signed Commits (November 2025)
+- All GitHub commits are automatically signed and verified
+- "Verified" badge appears on all Tembo commits
+- Builds trust and maintains security standards
+
+### Notion Integration (November 2025)
+- Create tasks from Notion pages
+- Sync documentation between Notion and codebase
+- MCP server provides full Notion API access to agents
+
+## How It Works
+
+### 1. Detection
+Issues are identified through:
+- **Integration signals**: Sentry errors, database metrics, failed CI/CD
+- **Manual assignment**: Linear/Jira tickets, GitHub issues
+- **Scheduled scans**: TODO comments, security vulnerabilities, technical debt
+- **Direct creation**: Tembo dashboard or Slack
+
+### 2. Execution
+- Tembo analyzes the codebase using your configured coding agent
+- Generates solution in an isolated sandbox environment (Docker + VM)
+- Automatically detects and uses Nix dev shells if present
+- Full access to MCP servers for extended capabilities
+
+### 3. Pull Request
+- Changes submitted as PR with detailed context
+- Links to original issue and explains approach
+- Includes test results and validation steps
+
+### 4. Feedback Loop
+- Mention `@tembo` in PR comments to request changes
+- Tembo reads all feedback, updates code, and pushes new commits
+- Integrates with AI code review tools (Graphite, CodeRabbit, Cursor Bug Bot)
+
+## Supported Integrations
+
+### Source Control ✅
+- **GitHub** (full support with signed commits)
+- **GitLab** (merge requests, repository scanning)
+- **Bitbucket** (workspaces, draft PRs, service users)
+
+### Project Management 📋
+- **Linear** (issues, labels, workflows)
+- **Jira** (issues, labels, workflows)
+
+### Monitoring & Observability 📊
+- **Sentry** (automatic error fixes)
+- **AWS CloudWatch** (RDS monitoring, alerts)
+
+### Databases 🗄️
+- **PostgreSQL** (direct connection, query analysis)
+- **Supabase** (instance monitoring, OAuth)
+- **AWS RDS** (PostgreSQL, MySQL monitoring)
+
+### Communication 💬
+- **Slack** (task creation, notifications, Q&A)
+- **Raycast** (task management from launcher)
+
+### Documentation & Context 📚
+- **Notion** (page sync, database integration)
+
+## Available Coding Agents
+
+Tembo supports multiple AI coding agents with flexible model selection:
+
+| Agent | Models | Best For |
+|-------|--------|----------|
+| **Claude Code** | Claude 3.5, 3.7, 4.5 Sonnet | Complex refactoring, architecture |
+| **Codex** | GPT-4, GPT-5.1 Codex | Feature implementation |
+| **OpenCode** | Anthropic models | Open-source flexibility |
+| **Cursor** | Multiple providers | Cursor users |
+| **Amp** | Specialized | Performance optimization |
+
+Teams can:
+- Set organization-wide defaults
+- Choose per-task agents
+- Bring your own API keys for premium models
+- Mix and match based on task complexity
+
+## MCP Server Ecosystem
+
+### Built-in MCP Servers
+- **Tembo MCP**: Sub-issues, Slack messaging, task management
+- **Playwright MCP**: Browser automation, web testing
+- **Context7 MCP**: Enhanced context management
+- **Kernel MCP**: ✨ NEW - Extended agent capabilities
+
+### Integration MCP Servers (Auto-configured)
+- **GitHub MCP**: Repository management, issues, PRs
+- **Linear MCP**: Issue tracking, project management
+- **Notion MCP**: Pages, databases, workspace structure
+- **Sentry MCP**: Error tracking, issue management
+- **PostgreSQL MCP**: Database queries, schema introspection
+
+### Custom MCP Servers
+Teams can add custom MCP servers in three formats:
+- **stdio**: Local process-based servers
+- **http**: HTTP-based APIs
+- **sse**: Server-Sent Events for real-time updates
+
+## Key Features & Differentiators
+
+### 1. Multi-Repository Support
+- Single task can span multiple repositories
+- Tembo opens coordinated PRs across repos
+- Maintains consistency in multi-repo architectures
+
+### 2. Sandbox Environment
+- Isolated Docker + VM execution
+- Prevents code from affecting production
+- Automatic Nix dev shell detection
+- Pre-installed: Node, Python, Rust, Go, Ruby, Elixir
+
+### 3. Rule Files Support
+- Reads project-specific instructions from:
+  - `tembo.md`
+  - `CLAUDE.md`
+  - `.cursorrules`
+  - `.windsurfrules`
+  - `.clinerules`
+  - `.github/copilot-instructions.md`
+- Ensures generated code follows team conventions
+
+### 4. Hooks System
+- Execute custom logic before/after Tembo actions
+- Integrate with existing CI/CD pipelines
+- Validation, testing, deployment automation
+
+### 5. Pay-As-You-Go Pricing
+- Credit-based billing model
+- No seat-based pricing
+- Only pay for actual agent usage
+- Transparent cost tracking per task
+
+### 6. Enterprise-Ready
+- SOC 2 Type II compliance
+- Self-hosted deployment options
+- SSO/SAML integration
+- Audit logs and compliance reporting
+
+## Use Cases by Persona
+
+### For Engineering Managers
+- **Reduce toil**: Automate 30-40% of repetitive tasks
+- **Improve velocity**: Ship features faster by offloading maintenance
+- **Better resource allocation**: Engineers focus on high-impact work
+- **Visibility**: Track automation metrics and time saved
+
+### For DevOps/SRE Teams
+- **Incident response**: Auto-fix production errors from Sentry
+- **Infrastructure maintenance**: Keep configs and docs updated
+- **CI/CD reliability**: Auto-fix failed workflows and broken tests
+- **Database optimization**: Identify and fix slow queries, missing indexes
+
+### For Product Engineers
+- **Feature velocity**: Offload bug fixes and tech debt
+- **Documentation**: Keep docs in sync with code changes
+- **Code quality**: Automated refactoring and security patches
+- **PR efficiency**: Faster iterations with @tembo feedback loop
+
+### For CTOs/VPEs
+- **Cost efficiency**: Reduce engineering overhead without hiring
+- **Quality improvement**: Consistent code standards across teams
+- **Risk mitigation**: Faster security patches and bug fixes
+- **Scalability**: Handle growing technical debt without team burnout
+
+## Competitive Advantages
+
+### vs. GitHub Copilot
+- **Autonomous task execution** (not just code suggestions)
+- **Full integration ecosystem** (Sentry, Linear, Jira, databases)
+- **Multi-agent support** (not locked to one model)
+- **Background operation** (works while team sleeps)
+
+### vs. Cursor/Cline/Windsurf
+- **Unattended execution** (no human in the loop required)
+- **Integration-driven** (responds to real signals, not just prompts)
+- **Team-wide visibility** (dashboard, metrics, task tracking)
+- **Cross-repository operations** (not limited to single project)
+
+### vs. Custom Agent Solutions
+- **Pre-built integrations** (14+ services out of the box)
+- **Proven reliability** (battle-tested sandbox, git operations)
+- **Security & compliance** (SOC 2, signed commits, audit logs)
+- **Lower TCO** (no maintenance, immediate value)
+
+## Pricing Structure
+
+### Credit System
+- Pay-as-you-go model
+- Credits consumed based on:
+  - Coding agent runtime
+  - Model selection (GPT-4 vs Claude Sonnet)
+  - Context size (codebase complexity)
+  - Task duration
+
+### Enterprise Plans
+- Volume discounts for large teams
+- Dedicated support and SLA
+- Custom integration development
+- Self-hosted deployment options
+- Contact sales: support@tembo.io
+
+## Proof Points & Social Proof
+
+### Customer Testimonials
+- "Tembo reduced our bug backlog by 40% in the first month"
+- "The Sentry integration alone saves us 10 engineering hours per week"
+- "Multi-repo support is a game-changer for our microservices architecture"
+
+### Metrics to Highlight
+- **Average MTTR reduction**: 75% (hours to minutes)
+- **Engineering time saved**: 8-12 hours per engineer per week
+- **Technical debt reduction**: 30-50% within 90 days
+- **PR turnaround**: 2x faster with @tembo feedback loop
+
+## Common Objections & Responses
+
+### "We already have GitHub Copilot"
+Copilot is excellent for code suggestions, but Tembo handles **complete tasks autonomously**. Copilot requires a developer to drive; Tembo works in the background. They complement each other — Copilot for writing code, Tembo for maintaining and fixing it.
+
+### "Our code is too complex for AI"
+That's exactly why Tembo supports multiple coding agents and models. Start with simpler tasks (bug fixes, docs updates) and gradually expand. Our sandbox environment ensures safe execution, and you review all PRs before merge.
+
+### "Security concerns about AI accessing our codebase"
+- SOC 2 Type II certified
+- All data encrypted in transit and at rest
+- Self-hosted deployment available for enterprise
+- Granular access controls per repository
+- Audit logs for all actions
+- Signed commits for full transparency
+
+### "What if Tembo makes a mistake?"
+- All changes come as PRs, you review before merge
+- Sandbox environment prevents production impact
+- Failed tasks are logged with full context
+- @tembo feedback loop allows quick iterations
+- Integration with existing code review tools
+
+### "How is this different from AutoGPT or LangChain agents?"
+Tembo is purpose-built for engineering workflows, not general AI automation:
+- Pre-built integrations with dev tools
+- Git operations are reliable and production-tested
+- Multi-repository coordination
+- Team collaboration features (task assignment, notifications)
+- Enterprise security and compliance
+
+## Discovery Questions
+
+1. **Current pain points**
+   - "What percentage of your sprint goes to bug fixes vs new features?"
+   - "How long does it take to fix a production bug from detection to deploy?"
+   - "How much technical debt is in your backlog?"
+
+2. **Tool stack**
+   - "What project management tool do you use?" (Linear/Jira)
+   - "How do you track production errors?" (Sentry/DataDog)
+   - "What's your source control setup?" (GitHub/GitLab/Bitbucket)
+
+3. **Team size & structure**
+   - "How many engineers on your team?"
+   - "Do you have dedicated DevOps/SRE?"
+   - "How do you prioritize maintenance vs features?"
+
+4. **Readiness signals**
+   - "Have you used AI coding assistants before?"
+   - "Do you have CI/CD and automated testing?"
+   - "Are your repositories well-documented?"
+
+## Call to Action
+
+### For Qualified Leads
+1. **Demo**: "Let me show you how Tembo would fix a real bug from your Sentry account"
+2. **Trial**: "Start with a 14-day trial — connect GitHub and see Tembo fix your first bug"
+3. **POC**: "Run a 30-day proof of concept with 2-3 repositories"
+
+### Next Steps
+- Schedule technical demo
+- Provide sandbox environment for testing
+- Connect with engineering team for integration discussion
+- Share case studies relevant to their use case
+
+## Resources & Links
+
+- **Product**: [app.tembo.io](https://app.tembo.io)
+- **Documentation**: [docs.tembo.io](https://docs.tembo.io)
+- **Changelog**: [docs.tembo.io/changelog](https://docs.tembo.io/changelog)
+- **Integrations**: [tembo.io/integrations](https://tembo.io/integrations)
+- **Support**: support@tembo.io
+- **Sales**: Contact via app or email
+
+## Closing Tips
+
+1. **Lead with pain**: Focus on the problem (toil, bugs, tech debt) before the solution
+2. **Demo real value**: Show Tembo fixing an actual bug from their Sentry/GitHub
+3. **Start small**: Suggest beginning with one integration (Sentry or GitHub)
+4. **Emphasize control**: They review all PRs, nothing merges without approval
+5. **Highlight ROI**: 8-12 hours saved per engineer per week = significant cost savings
+
+---
+
+**Remember**: Tembo is not replacing engineers — it's augmenting them by handling repetitive work so they can focus on building what matters.
