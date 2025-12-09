@@ -3,4 +3,46 @@ title: "Automations"
 icon: "repeat"
 ---
 
-Coming soon
+Automations allow you to run background coding agents on a schedule or triggered by events. Build intelligent workflows that keep your codebase healthy, documentation up-to-date, and team informed—automatically.
+
+## What are Automations?
+
+Automations are scheduled or event-driven tasks that run coding agents in the background. Unlike manual task assignment, automations proactively detect issues and take action without human intervention.
+
+**Common use cases:**
+- Maintain documentation by syncing docs with monorepo changes
+- Clear technical debt by fixing TODOs and security issues
+- Generate changelogs from merged PRs
+- React to Sentry errors or failed CI workflows
+- Post daily standup summaries or weekly reports
+
+## How It Works
+
+1. **Trigger** - Run on schedule (hourly, daily, weekly, or monthly) or in response to events
+2. **Execute** - Coding agent runs with full repository access and [MCP server](/features/mcp-servers) integrations
+3. **Output** - Create PRs, post to Slack, update issues, or trigger other workflows
+
+## Creating an Automation
+
+Navigate to Automations in your Tembo dashboard and configure:
+
+- **Prompt** — Clear instructions for what to do (see [prompting guide](/prompting-guide))
+- **Schedule** — When it runs: hourly, daily, weekly, or monthly
+- **Coding Agent** — Which [agent and model](/features/coding-agents) to use
+- **MCP Servers** — Enable needed integrations (GitHub, Slack, Linear, Sentry, etc.)
+
+<Tip>Start simple and expand as you learn what works for your team.</Tip>
+
+## Example Automations
+
+**Daily Changelog:** Find merged PRs from last 24 hours, categorize by type, and post formatted summary to #changelog.
+
+**Weekly TODO Cleanup:** Find TODOs older than 30 days, create Linear issues with context, and open PR removing them.
+
+See [Automation Examples](/automation-examples/overview) for more templates and best practices.
+
+## Related Features
+
+- **[Coding Agents](/features/coding-agents)** — Choose the right agent for your automations
+- **[MCP Servers](/features/mcp-servers)** — Extend capabilities with integrations
+- **[Automation Examples](/automation-examples/overview)** — Practical examples to get started
