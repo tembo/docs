@@ -46,23 +46,28 @@ Provides enhanced context management capabilities for your agents.
 
 ### Kernel MCP
 
-[Kernel](https://onkernel.com) provides cloud browser infrastructure for AI agents and web automation. The Kernel MCP server enables your agents to launch and control browsers in the cloud without managing infrastructure.
+The [Kernel](https://onkernel.com) MCP server provides cloud-based browser infrastructure for AI agents and automation tasks. It offers serverless browsers with anti-bot detection, session persistence, and autoscaling capabilities.
 
-**Use cases:**
-- Automate web interactions that require anti-bot detection handling
-- Scrape websites and extract data with cloud-based browsers
-- Build web agents that maintain authenticated sessions across tasks
-- Execute Playwright code remotely with automatic video replay for debugging
+**Key use cases:**
 
-**Key tools:**
-- **create_browser** / **delete_browser** - Launch and manage cloud browser sessions
-- **execute_playwright_code** - Run Playwright/TypeScript code with video replay
-- **take_screenshot** - Capture page screenshots
-- **setup_profile** / **list_profiles** - Manage reusable browser profiles for authentication
-- **search_docs** - Query Kernel platform documentation
+- **Web scraping and data extraction** - Extract data from websites that require JavaScript rendering or authentication
+- **Automated testing** - Run end-to-end browser tests in isolated cloud environments
+- **Form filling and submissions** - Automate complex web workflows that require user interactions
+- **Screenshot capture** - Generate screenshots of web pages for documentation or monitoring
+- **Browser automation at scale** - Run hundreds of concurrent browser sessions without infrastructure management
 
-**Setup:**
-To enable the Kernel MCP server, add your Kernel API key in **Settings** > **Agents** > **Kernel API Key**. Get your API key from [onkernel.com](https://onkernel.com).
+**Available tools:**
+
+- **create_browser** / **delete_browser** - Launch and terminate browser sessions
+- **execute_playwright_code** - Run Playwright/TypeScript code with automatic video replay
+- **take_screenshot** - Capture screenshots with optional region selection
+- **setup_profile** / **list_profiles** - Manage browser profiles for session persistence
+- **list_apps** / **invoke_action** - Interact with Kernel apps and deployments
+- **search_docs** - Search Kernel documentation for up-to-date information via MCP query
+
+**Configuration:**
+
+To use Kernel MCP, add your Kernel API key in **Settings** > **Agents** under the "Kernel API Key" field. Get your API key from [onkernel.com](https://onkernel.com).
 
 ## Integration MCP Servers
 
