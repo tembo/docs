@@ -27,9 +27,62 @@ Tembo provides several MCP servers out of the box:
 
 The Tembo MCP server provides tools for interacting with Tembo's features:
 
-- **createSubIssue** - Create sub-issues from tasks
-- **sendSlackMessage** - Send messages to Slack channels (requires Slack integration)
-- **listTasks** - List and paginate tasks for your organization with filtering options
+- **create_task** - Create new tasks with optional repository and branch specifications
+- **list_tasks** - List and paginate tasks for your organization with filtering options
+- **search_tasks** - Search tasks by title or description content
+- **list_repositories** - Display enabled code repositories for your organization
+- **get_current_user** - Get authenticated user information
+- **createSubIssue** - Create sub-issues from tasks (available when used within Tembo)
+- **sendSlackMessage** - Send messages to Slack channels (requires Slack integration, available when used within Tembo)
+
+The Tembo MCP server is available in two ways:
+
+1. **Built-in** - Automatically available for all Tembo agents
+2. **Public npm package** - Can be used with other MCP clients like Claude Desktop
+
+#### Using Tembo MCP with Claude Desktop
+
+The Tembo MCP server is published as a public npm package, allowing you to use Tembo's task management features directly in Claude Desktop or other MCP-compatible applications.
+
+**Installation**
+
+You can use the Tembo MCP server without installation via npx:
+
+```bash
+npx -y @tembo-io/mcp
+```
+
+Or install it globally:
+
+```bash
+npm install -g @tembo-io/mcp
+```
+
+**Configuration**
+
+1. Generate a Tembo API key from your [API Keys settings](https://app.tembo.io/settings/api-keys)
+
+2. Add the following configuration to your MCP client settings file (for Claude Desktop, this is `claude_desktop_config.json`):
+
+```json
+{
+  "mcpServers": {
+    "tembo": {
+      "command": "npx",
+      "args": ["-y", "@tembo-io/mcp"],
+      "env": {
+        "TEMBO_API_KEY": "your-api-key-here"
+      }
+    }
+  }
+}
+```
+
+Replace `your-api-key-here` with your actual API key from Step 1.
+
+3. Restart your MCP client to load the Tembo MCP server
+
+Once configured, you can ask Claude to create tasks, search for existing tasks, list repositories, and more - all directly from Claude Desktop.
 
 ### Playwright MCP
 
