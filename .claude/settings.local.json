@@ -21,7 +21,8 @@
       "WebFetch(domain:starter.mintlify.com)",
       "Bash(curl -s https://raw.githubusercontent.com/tembo-io/monorepo/refs/heads/gro-2/automation-recipe-book.md?token=GHSAT0AAAAAACTHWCXIDJAO4PABCYUAKZZO2IKGJPA)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(git push)"
     ],
     "deny": [],
     "ask": []
