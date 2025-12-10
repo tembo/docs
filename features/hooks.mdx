@@ -80,6 +80,19 @@ Runs after Tembo has made changes to your code but before pushing the changes an
 ```
 
 
+## Automatic Fix Mode
+
+Set `"autoFix": true` at the root level of your `.tembo.json` to enable automatic error recovery. When a hook fails, Tembo will analyze the error output and attempt to fix the issue before retrying.
+
+```json
+{
+  "hooks": {
+    "prePush": ["npm run lint", "npm run test"]
+  },
+  "autoFix": true
+}
+```
+
 ## Hook Execution Details
 
 ### Execution Environment
@@ -92,7 +105,7 @@ Runs after Tembo has made changes to your code but before pushing the changes an
 ### Error Handling
 
 - If any command in a hook fails (returns non-zero exit code), the hook execution stops
-- For `postClone` and `prePush` hooks, failures will cause the entire issue resolution process to fail
+- Hook failures will cause the task to fail unless `autoFix` is enabled, in which case Tembo will attempt to fix the issues automatically
 
 ### Command Execution
 
