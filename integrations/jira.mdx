@@ -101,3 +101,25 @@ If labeled issues aren't being processed:
 - **Attach relevant context** - Include screenshots, error logs, or links to related issues when applicable
 - **Use [Rule Files](/features/rule-files)** - Help Tembo understand your coding standards and project conventions
 - **Set up [Hooks](/features/hooks)** - Customize Tembo's behavior to match your team's workflow
+
+## Writing Effective Jira Tickets
+
+When creating issues for Tembo to work on, provide clear and actionable descriptions:
+
+**Good Examples:**
+- "Fix null pointer exception in UserService.getProfile() when user has no avatar set"
+- "Add rate limiting to /api/users endpoint - max 100 requests per minute per API key"
+- "Refactor PaymentProcessor to use strategy pattern for different payment providers"
+
+**Less Effective:**
+- "Fix the crash"
+- "Make it faster"
+- "Clean up the code"
+
+**Recommended Ticket Structure:**
+1. **Summary** - Clear, specific one-line description
+2. **Description** - Detailed context about the problem or feature
+3. **Acceptance Criteria** - Specific conditions that define "done"
+4. **Technical Notes** - Relevant file paths, error messages, or implementation hints
+
+See the [Prompting Guide](/prompting-guide) for more tips on writing effective task descriptions.
