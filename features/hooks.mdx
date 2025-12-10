@@ -25,8 +25,7 @@ Create a `.tembo.json` file in your repository root with the following structure
       "npm run test",
       "npm run build"
     ]
-  },
-  "autoFix": true
+  }
 }
 ```
 
@@ -83,63 +82,16 @@ Runs after Tembo has made changes to your code but before pushing the changes an
 
 ## Automatic Fix Mode
 
-The `autoFix` parameter enables Tembo to automatically attempt to fix issues when `prePush` hooks fail. When enabled, if a hook command fails (such as a linting error or failing test), Tembo will analyze the error output and attempt to resolve the issue before retrying the hooks.
-
-### Configuration
-
-Add `autoFix` to your `.tembo.json` file at the root level:
+Set `"autoFix": true` at the root level of your `.tembo.json` to enable automatic error recovery. When a hook fails, Tembo will analyze the error output and attempt to fix the issue before retrying.
 
 ```json
 {
   "hooks": {
-    "prePush": [
-      "npm run lint",
-      "npm run test"
-    ]
+    "prePush": ["npm run lint", "npm run test"]
   },
   "autoFix": true
 }
 ```
-
-### How It Works
-
-1. Tembo runs your configured `prePush` hooks
-2. If a hook command fails, Tembo captures the error output
-3. With `autoFix` enabled, Tembo analyzes the error and attempts to fix the issue (e.g., fixing lint errors, correcting type issues)
-4. Tembo reruns the hooks to verify the fix
-5. This process repeats until hooks pass or Tembo determines it cannot resolve the issue
-
-### Parameters
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `autoFix` | boolean | `false` | When `true`, Tembo will attempt to automatically fix issues when `prePush` hooks fail |
-
-### Best Use Cases
-
-- **Linting errors**: Tembo can automatically fix code style issues, import ordering, and formatting problems
-- **Type errors**: Tembo can resolve TypeScript or other type system errors
-- **Test failures**: Tembo can analyze and fix failing tests when the fix is straightforward
-
-### Example
-
-```json
-{
-  "hooks": {
-    "postClone": [
-      "npm install"
-    ],
-    "prePush": [
-      "npm run lint",
-      "npm run typecheck",
-      "npm run test"
-    ]
-  },
-  "autoFix": true
-}
-```
-
-With this configuration, if `npm run lint` fails due to code style issues, Tembo will automatically attempt to fix them and rerun the hooks.
 
 ## Hook Execution Details
 
@@ -153,8 +105,7 @@ With this configuration, if `npm run lint` fails due to code style issues, Tembo
 ### Error Handling
 
 - If any command in a hook fails (returns non-zero exit code), the hook execution stops
-- For `postClone` hooks, failures will cause the entire issue resolution process to fail
-- For `prePush` hooks, failures will cause the task to fail unless `autoFix` is enabled, in which case Tembo will attempt to fix the issues automatically
+- Hook failures will cause the task to fail unless `autoFix` is enabled, in which case Tembo will attempt to fix the issues automatically
 
 ### Command Execution
 
