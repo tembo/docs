@@ -105,7 +105,7 @@ Set `"autoFix": true` at the root level of your `.tembo.json` to enable automati
 ### Error Handling
 
 - If any command in a hook fails (returns non-zero exit code), the hook execution stops
-- Hook failures will cause the task to fail unless `autoFix` is enabled, in which case Tembo will attempt to fix the issues automatically
+- Hook failures are handled silently. If `autoFix` is enabled, Tembo will analyze the error output and attempt to fix the issues automatically
 
 ### Command Execution
 
