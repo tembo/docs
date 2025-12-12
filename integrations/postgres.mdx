@@ -89,3 +89,31 @@ The MCP is powered by [crystaldba/postgres-mcp](https://github.com/crystaldba/po
 - **Review Migration Scripts** - Always review Tembo's suggested migrations before merging, especially for large tables
 - **Test in Staging** - Apply migrations to a staging environment first to verify performance improvements
 - **Enable pg_stat_statements** - Ensure the `pg_stat_statements` extension is enabled for comprehensive query analysis. Enable it by running `CREATE EXTENSION IF NOT EXISTS pg_stat_statements;` in your database. If the extension isn't available, add `pg_stat_statements` to `shared_preload_libraries` in your `postgresql.conf` and restart PostgreSQL.
+
+## Troubleshooting
+
+### Connection Failed
+
+If Tembo cannot connect to your database:
+
+1. **Verify connection string format** - Ensure the format is `postgresql://username:password@host:port/database`
+2. **Check network access** - Confirm your database allows connections from Tembo's IP addresses
+3. **Test credentials locally** - Use `psql` with the same connection string to verify credentials work
+4. **Review SSL requirements** - Some databases require SSL; add `?sslmode=require` to your connection string if needed
+
+### No Query Statistics Available
+
+If Tembo reports no slow queries or missing index suggestions:
+
+1. **Enable pg_stat_statements** - Run `CREATE EXTENSION IF NOT EXISTS pg_stat_statements;`
+2. **Check extension availability** - If the above fails, add `pg_stat_statements` to `shared_preload_libraries` in `postgresql.conf` and restart PostgreSQL
+3. **Verify permissions** - Ensure the Tembo user has `SELECT` access to `pg_stat_statements` views
+4. **Wait for data collection** - Statistics accumulate over time; allow several hours of normal database activity
+
+### Optimization PRs Not Being Created
+
+If Tembo detects issues but doesn't create pull requests:
+
+1. **Verify repository mapping** - Check that your database is mapped to the correct repository on the Integrations page
+2. **Confirm repository permissions** - Ensure Tembo has write access to create branches and PRs in the mapped repository
+3. **Check for existing PRs** - Tembo may skip creating duplicate PRs for already-addressed issues
