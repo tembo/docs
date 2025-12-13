@@ -54,3 +54,31 @@ When Tembo identifies optimization opportunities, it will:
 - **Monitor Production Databases** - Connect production databases for the most accurate performance insights
 - **Review Migration Scripts** - Always review Tembo's suggested migrations before merging, especially for large tables
 - **Test in Staging** - Apply migrations to a staging environment first to verify performance improvements
+
+# Troubleshooting
+
+## Projects Not Appearing
+
+If your Supabase projects don't appear after connecting:
+
+1. **Wait a few minutes** - Initial sync can take 2-5 minutes depending on the number of projects
+2. **Verify Supabase access** - Ensure you authorized Tembo with access to the projects you want to monitor
+3. **Check project status** - Projects must be active (not paused) to appear in the list
+4. **Manual sync** - Use the sync button on the Integrations page to trigger a refresh
+
+## No Query Statistics Available
+
+If Tembo isn't detecting slow queries or optimization opportunities:
+
+1. **Verify pg_stat_statements** - Supabase enables this extension by default, but verify it's active in your database
+2. **Generate query traffic** - The database needs query activity to collect statistics
+3. **Check sampling rate** - Ensure your queries are running frequently enough to be captured
+4. **Review time range** - Performance data is collected over time; new projects may need 24-48 hours
+
+## Optimization PRs Not Being Created
+
+If Tembo detects issues but isn't creating pull requests:
+
+1. **Map your repository** - Ensure you've mapped your Supabase project to the correct repository
+2. **Check repository permissions** - Verify Tembo has write access to create branches and pull requests
+3. **Review migration location** - Confirm your database migrations are stored in the mapped repository
