@@ -100,6 +100,33 @@ Less effective:
 - For full-stack features, include both frontend and backend repositories
 - If unsure, start with one repository and Tembo can help identify if others are needed
 
+# Troubleshooting
+
+## Tembo Not Responding to Assigned Issues
+
+If Tembo doesn't respond after assigning an issue:
+
+1. **Verify assignment** - Ensure the issue is assigned directly to the Tembo bot user
+2. **Check integration status** - Navigate to the [Integrations page](https://app.tembo.io/integrations) to ensure the Linear integration is active
+3. **Review permissions** - Confirm Tembo has access to the Linear workspace and project
+4. **Check webhook status** - The Integrations page shows enabled webhooks; ensure `issue.assigned` is enabled
+
+## Repository Selection Not Appearing
+
+If the repository selection prompt doesn't appear:
+
+1. **Verify GitHub/GitLab connection** - Ensure you have connected a code hosting provider to Tembo
+2. **Check repository access** - Confirm the repositories are visible in your Tembo dashboard
+3. **Try reassigning** - Unassign and reassign the issue to Tembo to trigger the prompt again
+
+## Pull Requests Not Being Created
+
+If issues are processed but PRs aren't created:
+
+1. **Check repository permissions** - Ensure Tembo has write access to the target repository
+2. **Review issue description** - Provide clearer requirements if Tembo couldn't determine the needed changes
+3. **Verify branch protection** - Ensure branch protection rules allow Tembo to create branches
+
 # MCP Server Integration
 
 Tembo provides a [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server for Linear, enabling AI coding agents to directly interact with your Linear workspace during task execution.
