@@ -90,3 +90,30 @@ When you connect Sentry to Tembo, the MCP server is automatically available to a
 - **Analyze error trends** - Understand error patterns and frequency
 
 This enables agents to make more informed decisions when fixing bugs, as they have direct access to production error data and can verify their fixes against actual error conditions.
+
+# Troubleshooting
+
+### Errors Not Triggering Fixes
+
+If Sentry errors aren't generating pull requests with fixes:
+
+1. **Check project mapping** - Verify the Sentry project is mapped to the correct GitHub repository on the Integrations page
+2. **Verify webhook status** - Ensure the Sentry webhook is properly configured and receiving events
+3. **Review error frequency** - Tembo may deduplicate fixes for errors that have already been addressed
+4. **Check error context** - Ensure Sentry is capturing sufficient stack trace information for Tembo to analyze
+
+### Project Mapping Issues
+
+If you're having trouble mapping Sentry projects to repositories:
+
+1. **Refresh project list** - Use the sync button on the Integrations page to refresh Sentry projects
+2. **Verify permissions** - Ensure Tembo has access to the Sentry projects you want to map
+3. **Check organization access** - Confirm the Sentry organization is properly connected
+
+### Webhook Not Receiving Events
+
+If Tembo isn't receiving Sentry webhooks:
+
+1. **Verify integration status** - Check the Integrations page to confirm Sentry is connected
+2. **Test with a new error** - Trigger a test error to verify the webhook pipeline
+3. **Review Sentry settings** - Ensure webhooks are enabled for your Sentry organization
