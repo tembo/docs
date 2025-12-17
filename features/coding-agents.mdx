@@ -151,3 +151,29 @@ You can configure which coding agent to use for your organization or specific ta
 3. **Integration Settings** - Configure per-integration coding agent preferences
 
 Contact your Tembo administrator or check the [API documentation](/api-reference) for details on coding agent configuration.
+
+## Troubleshooting
+
+### Task Taking Too Long
+
+If a task is taking longer than expected:
+
+1. **Check task complexity** - Complex tasks with large codebases naturally take longer. Consider breaking them into smaller, focused tasks
+2. **Review model selection** - Opus models provide deeper reasoning but take longer. Try Sonnet or Haiku for simpler tasks
+3. **Check for infinite loops** - Review the task logs in your dashboard for signs of repeated operations
+
+### Unexpected Code Output
+
+If the generated code doesn't match your expectations:
+
+1. **Verify rule files** - Ensure your `tembo.md` or other [rule files](/features/rule-files) clearly define your coding standards
+2. **Add more context** - Include specific file paths, function names, and patterns in your task description
+3. **Use the Feedback Loop** - Provide specific feedback via PR comments to refine the output
+
+### Model Not Available
+
+If you receive an error that a model is unavailable:
+
+1. **Check the model name** - Verify the model ID matches the supported models listed above
+2. **Try default model** - Omit the model specification to use the default (`claude-4-5-sonnet`)
+3. **Contact support** - Some models may have availability restrictions. Reach out to [support@tembo.io](mailto:support@tembo.io) for assistance
