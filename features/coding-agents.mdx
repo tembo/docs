@@ -119,28 +119,7 @@ Different models offer different tradeoffs between speed, cost, and capability:
 
 ## Using Rule Files
 
-Rule files allow you to provide coding agent-specific instructions and coding standards. All coding agents support `tembo.md` and other standard rule files in your repository root.
-
-Tembo will look for and concatenate instructions from all of the following rule files if they exist in your repository:
-
-- `CLAUDE.md`
-- `tembo.md`
-- `.rules`
-- `.cursorrules`
-- `.windsurfrules`
-- `.clinerules`
-- `.github/copilot-instructions.md`
-- `AGENT.md`
-- `AGENTS.md`
-
-These files can include:
-
-- Coding standards and style guidelines
-- Project-specific conventions
-- Commands to run before or after certain operations
-- Context about your architecture and patterns
-
-Learn more about [rule files](/features/rule-files).
+All coding agents use rule files (`tembo.md`, `CLAUDE.md`, `.cursorrules`, etc.) to understand your project's coding standards and conventions. See [Rule Files](/features/rule-files) for the complete list of supported files and configuration details.
 
 ## Switching Between Coding Agents
 
