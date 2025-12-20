@@ -5,7 +5,7 @@ icon: 'robot-astromech'
 
 import CodingAgentsTable from '/snippets/coding-agents-table.mdx';
 
-Tembo supports coding agents to solve your software engineering tasks. Each coding agent has different capabilities, models, and configuration options.
+Tembo supports multiple coding agents to solve your software engineering tasks.
 
 ## Available Coding Agents
 
@@ -13,146 +13,67 @@ Tembo supports coding agents to solve your software engineering tasks. Each codi
 
 ### Claude Code (Default)
 
-Claude Code is Tembo's default coding agent, powered by Anthropic's Claude models.
+Powered by Anthropic's Claude models. Best balance of quality, reliability, and cost.
 
-**Supported Models:**
-
-- `claude-4-5-sonnet` (Default) - Balanced performance and cost
-- `claude-opus-4-5` - Maximum capability with Opus 4.5
-- `claude-4.1-opus` - Maximum capability for complex tasks
-- `claude-4-5-haiku` - Fastest, lightweight reasoning
-- `claude-4-sonnet` - Fast and efficient
+**Models:** `claude-opus-4-5` (default), `claude-4-5-sonnet`, `claude-4.1-opus`, `claude-4-5-haiku`, `claude-4-sonnet`
 
 ### Codex
 
-Codex is a coding agent powered by OpenAI's latest GPT-5 models with varying reasoning levels, allowing you to choose the right balance of speed and thoroughness.
+Powered by OpenAI's GPT-5 models with configurable reasoning levels.
 
-**Supported Models:**
-
-- `gpt-5-medium` (Default) - Balanced reasoning
-- `gpt-5-minimal` - Fastest, lightweight reasoning
-- `gpt-5-low` - Quick reasoning
-- `gpt-5-high` - Deep reasoning for complex problems
-- `gpt-5-codex` - Specialized for code generation tasks
+**Models:** `gpt-5-medium` (default), `gpt-5-minimal`, `gpt-5-low`, `gpt-5-high`, `gpt-5-codex`
 
 ### Opencode
 
-Opencode is an alternative coding agent supporting Anthropic Claude models, providing flexibility in model selection.
+Alternative agent supporting Anthropic Claude models.
 
-**Supported Models:**
-
-- `claude-4-5-sonnet` (Default) - Balanced performance and cost
-- `claude-opus-4-5` - Maximum capability with Opus 4.5
-- `claude-4.1-opus` - Maximum capability for complex tasks
-- `claude-4-5-haiku` - Fastest, lightweight reasoning
-- `claude-4-sonnet` - Fast and efficient
+**Models:** `claude-opus-4-5` (default), `claude-4-5-sonnet`, `claude-4.1-opus`, `claude-4-5-haiku`, `claude-4-sonnet`
 
 ### Amp
 
-Amp is a powerful coding agent powered by Anthropic's Claude models.
-
-Amp manages its own model selection automatically and defaults to `claude-opus-4-5` (Opus 4.5) for maximum capability.
+Powered by Claude models. Manages model selection automatically, defaults to `claude-opus-4-5`.
 
 ### Cursor
 
-Cursor is a coding agent supporting Anthropic Claude models, OpenAI GPT models, Google's Gemini, Cursor's Composer, and XAI's Grok through the Cursor CLI.
+Supports Claude, GPT, Gemini, Composer, and Grok through the Cursor CLI.
 
-**Supported Models:**
+**Models:** `claude-opus-4-5` (default), `claude-4-5-sonnet`, `claude-4.1-opus`, `gpt-5.1`, `gpt-5.1-codex`, `gpt-5.1-codex-high`, `gpt-5.2`, `gemini-3-pro`, `composer-1`, `grok`
 
-- `claude-4-5-sonnet` (Default) - Balanced performance and cost
-- `claude-opus-4-5` - Maximum capability with Opus 4.5
-- `claude-4.1-opus` - Maximum capability for complex tasks
-- `gpt-5.1` - Latest GPT-5.1 model
-- `gpt-5.1-codex` - GPT-5.1 specialized for code
-- `gpt-5.1-codex-high` - GPT-5.1 Codex with high reasoning
-- `gemini-3-pro` - Google's Gemini 3 Pro model
-- `composer-1` - Cursor's Composer model
-- `grok` - XAI's Grok model for advanced reasoning
+## Selecting an Agent
 
-## Choosing the Right Coding Agent
+Use the format `agentType:model`:
 
-Different coding agents excel at different types of tasks. Here's guidance on when to use each:
+```
+claudeCode:claude-4-5-sonnet
+codex:gpt-5-high
+cursor:grok
+```
 
-**For most tasks:** Start with **Claude Code** (default). It provides the best balance of code quality, reliability, and cost-effectiveness for general software engineering work.
-
-**For complex refactoring or architectural changes:** Use **Claude Code with `claude-opus-4-5`** or **Codex with `gpt-5-high`** for deeper reasoning capabilities.
-
-**For quick fixes and simple updates:** Use **Claude Code with `claude-4-5-haiku`** or **Codex with `gpt-5-minimal`** for faster execution on straightforward tasks.
-
-**For team consistency:** If your team already uses a specific IDE or coding environment (Cursor, Amp, etc.), select the matching coding agent for familiar code patterns and style.
-
-## Selecting a Coding Agent
-
-Coding Agents are specified using a coding agent key format: `agentType:model`
-
-**Examples:**
-
-- `claudeCode:claude-4-5-sonnet`
-- `claudeCode:claude-opus-4-5`
-- `codex:gpt-5-medium`
-- `opencode:claude-4-5-sonnet`
-- `amp:claude-opus-4-5`
-- `cursor:claude-4-5-sonnet`
-- `cursor:gpt-5.1-codex`
-- `cursor:grok`
-
-If no coding agent is specified, Tembo defaults to `claudeCode:claude-4-5-sonnet`.
+Default: `claudeCode:claude-opus-4-5`
 
 ## Choosing the Right Model
 
-Different models offer different tradeoffs between speed, cost, and capability:
+| Use Case | Recommended Models |
+|----------|-------------------|
+| Most tasks | `claude-4-5-sonnet`, `gpt-5-medium` |
+| Quick fixes | `claude-4-5-haiku`, `gpt-5-minimal` |
+| Complex refactoring | `claude-opus-4-5`, `gpt-5-high` |
 
-**For most tasks:** Use the default models (`claude-4-5-sonnet` or `gpt-5-medium`)
-- Balanced performance for typical engineering tasks
-- Good reasoning capability with reasonable speed
-- Cost-effective for production use
+## Rule Files
 
-**For simple, straightforward tasks:** Use lightweight models (`claude-4-5-haiku` or `gpt-5-minimal`)
-- Faster execution for simple bug fixes
-- Lower cost for high-volume operations
-- Best for well-defined, smaller scope work
+All agents use rule files (`AGENTS.md`, `tembo.md`, `.cursorrules`, etc.) to understand your coding standards. See [Rule Files](/features/rule-files) for details.
 
-**For complex architectural work:** Use advanced models (`claude-opus-4-5` or `gpt-5-high`)
-- Deep reasoning for system design decisions
-- Better handling of large, multi-file refactors
-- More thorough analysis of edge cases
+## Configuration
 
-## Using Rule Files
-
-All coding agents use rule files (`tembo.md`, `CLAUDE.md`, `.cursorrules`, etc.) to understand your project's coding standards and conventions. See [Rule Files](/features/rule-files) for the complete list of supported files and configuration details.
-
-## Switching Between Coding Agents
-
-You can configure which coding agent to use for your organization or specific tasks through:
-
-1. **Dashboard Settings** - Set a default coding agent for all tasks
-2. **API Configuration** - Specify a coding agent key when creating tasks via API
-3. **Integration Settings** - Configure per-integration coding agent preferences
-
-Contact your Tembo administrator or check the [API documentation](/api-reference) for details on coding agent configuration.
+Set your coding agent via:
+- **Dashboard Settings** — Default for all tasks
+- **API** — Specify per-task with agent key
+- **Integration Settings** — Per-integration preferences
 
 ## Troubleshooting
 
-### Task Taking Too Long
+**Task taking too long?** Break into smaller tasks, or use a faster model (Sonnet/Haiku instead of Opus).
 
-If a task is taking longer than expected:
+**Unexpected output?** Check your [rule files](/features/rule-files), add more context to task descriptions, or use the Feedback Loop via PR comments.
 
-1. **Check task complexity** - Complex tasks with large codebases naturally take longer. Consider breaking them into smaller, focused tasks
-2. **Review model selection** - Opus models provide deeper reasoning but take longer. Try Sonnet or Haiku for simpler tasks
-3. **Check for infinite loops** - Review the task logs in your dashboard for signs of repeated operations
-
-### Unexpected Code Output
-
-If the generated code doesn't match your expectations:
-
-1. **Verify rule files** - Ensure your `tembo.md` or other [rule files](/features/rule-files) clearly define your coding standards
-2. **Add more context** - Include specific file paths, function names, and patterns in your task description
-3. **Use the Feedback Loop** - Provide specific feedback via PR comments to refine the output
-
-### Model Not Available
-
-If you receive an error that a model is unavailable:
-
-1. **Check the model name** - Verify the model ID matches the supported models listed above
-2. **Try default model** - Omit the model specification to use the default (`claude-4-5-sonnet`)
-3. **Contact support** - Some models may have availability restrictions. Reach out to [support@tembo.io](mailto:support@tembo.io) for assistance
+**Model unavailable?** Verify the model ID or omit it to use the default. Contact [support@tembo.io](mailto:support@tembo.io) if issues persist.
