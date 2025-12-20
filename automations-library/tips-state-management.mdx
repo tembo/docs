@@ -1,0 +1,180 @@
+---
+title: "State Management"
+description: "Track progress between automation runs to avoid duplicates and enable recovery"
+---
+
+Automations often need to remember what they've already processed. State management lets you track progress between runs, avoid duplicate work, and recover from failures.
+
+## Use Cases
+
+- **Track last processed item** — Remember the last tag, commit, or issue you handled
+- **Store counters and metrics** — Keep running totals across automation runs
+- **Avoid duplicate notifications** — Don't re-post about the same PR twice
+- **Resume from failures** — Pick up where you left off if something goes wrong
+- **Cache expensive computations** — Store results that don't change often
+
+## Basic Example
+
+Track the last processed git tag for release notes:
+
+```text
+1. Read {lastProcessedTag} from state (default: null)
+2. Find all tags newer than {lastProcessedTag}
+3. If no new tags, exit early
+4. For each new tag:
+   - Generate release notes
+   - Post to Slack
+   - Create GitHub release
+5. Update {lastProcessedTag} to the newest tag
+6. Save state
+```
+
+On the first run, `lastProcessedTag` is null, so all tags are processed. On subsequent runs, only new tags are handled.
+
+## Common Patterns
+
+### Tracking Processed Items
+
+Store IDs of items you've already handled:
+
+```text
+State:
+- processedIssueIds: ["ISS-123", "ISS-456", "ISS-789"]
+
+For each new issue:
+1. Check if issue ID is in processedIssueIds
+2. If yes, skip
+3. If no, process the issue and add ID to processedIssueIds
+```
+
+### Timestamp-Based Tracking
+
+Use timestamps instead of IDs for time-based queries:
+
+```text
+State:
+- lastRunAt: "2024-01-15T09:00:00Z"
+
+1. Fetch items created after {lastRunAt}
+2. Process items
+3. Update lastRunAt to current time
+```
+
+### Counters and Metrics
+
+Track statistics across runs:
+
+```text
+State:
+- totalPRsReviewed: 142
+- totalIssuesFixed: 87
+- weekStartCount: 12
+
+At end of automation:
+- Increment totalPRsReviewed
+- If Monday, reset weekStartCount to 0
+- Save state
+```
+
+### Deduplication with TTL
+
+Prevent duplicate notifications with expiring state:
+
+```text
+State:
+- notifiedErrors: {
+    "ERR-001": "2024-01-15T09:00:00Z",
+    "ERR-002": "2024-01-14T15:30:00Z"
+  }
+
+For each error:
+1. Check if error ID is in notifiedErrors
+2. If yes and timestamp is < 24 hours old, skip
+3. If no or timestamp is old, notify and update timestamp
+4. Clean up entries older than 7 days
+```
+
+## Best Practices
+
+### Initialize with Defaults
+
+Always handle the case where state doesn't exist yet:
+
+```text
+Read {lastProcessedTag} from state
+If null or missing, use "v0.0.0" as default
+```
+
+### Document Your State Variables
+
+Add comments explaining what each variable means:
+
+```text
+State schema:
+- lastProcessedTag: The most recent git tag we've generated release notes for
+- processedPRIds: Array of PR numbers we've already reviewed (max 1000)
+- dailyDigestSentAt: Timestamp of last daily digest to prevent duplicates
+```
+
+### Clean Up Old State
+
+Prevent state from growing unbounded:
+
+```text
+At end of automation:
+- Remove processedPRIds older than 30 days
+- Keep only last 1000 entries
+- Delete unused state variables
+```
+
+### Handle State Corruption
+
+Be defensive about invalid state:
+
+```text
+Read state
+If state is invalid or corrupted:
+  - Log warning
+  - Reset to defaults
+  - Continue with fresh state
+```
+
+### Atomic Updates
+
+Update state only after successful completion:
+
+```text
+1. Read current state
+2. Do all processing
+3. If any step fails, don't update state (will retry next run)
+4. Only save state after everything succeeds
+```
+
+## Debugging State Issues
+
+### Log State Changes
+
+Include state in your logs for debugging:
+
+```text
+Log: "Starting with state: lastProcessedTag=v1.2.3"
+... processing ...
+Log: "Saving state: lastProcessedTag=v1.2.5 (processed 2 new tags)"
+```
+
+### Add a Reset Mechanism
+
+Allow manual state reset for recovery:
+
+```text
+If RESET_STATE flag is set:
+  - Clear all state
+  - Log "State reset requested"
+  - Start fresh
+```
+
+## Related
+
+- [Error Handling](/automations-library/tips-error-handling) — Handle failures gracefully
+- [Performance Tips](/automations-library/tips-performance) — Optimize automation runs
+- [Product Changelog](/automations-library/product-changelog) — Example using state for release tracking

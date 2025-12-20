@@ -1,0 +1,314 @@
+---
+title: "Enrich Linear Issues"
+description: "Automatically add context from your codebase, Slack, Sentry, and Notion to new Linear issues"
+---
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/5RiReoIEGU4"
+  title="Enrich Linear Issues — Tembo Automations"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+></iframe>
+
+## Overview
+
+When someone creates a Linear ticket, they rarely include all the context needed to implement it. Months later, when a developer picks up the issue, they're left searching through Slack threads, documentation, and code to understand what's needed.
+
+This automation solves that by automatically enriching new Linear issues with relevant context from your connected tools—codebase, Slack conversations, Sentry errors, and Notion docs.
+
+**What it does:**
+- Triggers when a new Linear issue is created
+- Searches your codebase for relevant files and patterns
+- Finds related Slack conversations
+- Pulls in Sentry errors if applicable
+- References relevant Notion documentation
+- Adds a detailed comment with implementation guidance
+
+---
+
+## Quick Start
+
+1. Navigate to **Automations** in your Tembo dashboard
+2. Click **Templates Library**
+3. Install the **"Enrich Linear Issues"** template
+4. Connect your integrations (GitHub, Slack, Notion, Sentry)
+5. Enable for your Linear workspace
+
+---
+
+## How It Works
+
+When a new Linear issue is created:
+
+1. **Parses the issue** — Extracts key terms and intent from the title and description
+2. **Searches the codebase** — Finds relevant files, functions, and patterns
+3. **Checks Slack** — Looks for related conversations and context
+4. **Queries Sentry** — Finds related errors if it's a bug report
+5. **Searches Notion** — Pulls in relevant documentation
+6. **Adds enriched comment** — Posts implementation guidance to the issue
+
+<Tip>Developers picking up old tickets no longer need to ask "where is this code?" or "what was the original conversation about?"—it's all in the issue.</Tip>
+
+---
+
+## Configuration
+
+### Basic Setup
+
+**Trigger**: Linear issue created
+
+**Prompt Template**:
+
+```text
+A new Linear issue has been created. Enrich it with relevant context.
+
+## Issue Details
+- Title: {issue_title}
+- Description: {issue_description}
+- Labels: {issue_labels}
+- Creator: {issue_creator}
+
+## Gather Context
+
+### 1. Codebase Search
+Search GitHub for:
+- Files related to the feature/bug area
+- Similar implementations or patterns
+- Recent changes to related code
+- Relevant tests
+
+### 2. Slack Search
+Find related conversations:
+- Threads mentioning this feature
+- Bug reports from users
+- Design discussions
+- Previous decisions about this area
+
+### 3. Sentry Search (if bug-related)
+Look for:
+- Related error messages
+- Stack traces
+- Affected user count
+- When the error first appeared
+
+### 4. Notion Search
+Find relevant docs:
+- Technical specifications
+- Design documents
+- API documentation
+- Previous PRs or RFCs
+
+## Create Enrichment Comment
+
+Post a comment on the Linear issue with this structure:
+
+### 📁 Relevant Code
+- List key files with brief descriptions
+- Note any recent changes
+- Highlight relevant functions/components
+
+### 💬 Slack Context
+- Summarize relevant conversations
+- Link to important threads
+- Note any decisions made
+
+### 🐛 Related Errors (if applicable)
+- Link to Sentry issues
+- Summarize error patterns
+- Note affected users
+
+### 📚 Documentation
+- Link to relevant Notion pages
+- Summarize key specs
+- Note any constraints or requirements
+
+### 💡 Implementation Hints
+- Suggest where to start
+- Note potential gotchas
+- Reference similar past work
+```
+
+**MCP Servers Needed**: Linear, GitHub, Slack, Notion, Sentry (optional)
+
+---
+
+## Example Enriched Issue
+
+Here's what an enriched Linear issue looks like:
+
+**Original Issue:**
+> **Title:** Add "out of credit" banner to dashboard
+>
+> **Description:** When users run out of credits, show a banner prompting them to upgrade.
+
+**Automated Enrichment Comment:**
+
+```markdown
+## 🤖 Context gathered by Tembo
+
+### 📁 Relevant Code
+
+**Banner Components**
+- `src/components/Banner/Banner.tsx` - Base banner component
+- `src/components/Banner/UpgradeBanner.tsx` - Similar upgrade prompt banner
+
+**Credit Logic**
+- `src/hooks/useCredits.ts` - Hook for fetching credit balance
+- `src/api/billing.ts` - Billing API endpoints (see `getCredits()`)
+
+**Recent Changes**
+- PR #234 (2 weeks ago) added the `useCredits` hook
+- PR #201 refactored banner styling
+
+### 💬 Slack Context
+
+**Original Discussion** ([#product, Nov 15](slack://link))
+> Sarah: "Users are confused when they hit the credit limit.
+> Can we add a clear banner?"
+>
+> Mike: "Yes, should link directly to the upgrade page.
+> Use the warning variant, not error."
+
+**Design Decision** ([#design, Nov 16](slack://link))
+> The banner should be dismissible but reappear on page refresh
+> until credits are added.
+
+### 📚 Documentation
+
+- [Billing System Overview](notion://link) - How credits work
+- [Banner Component Spec](notion://link) - Design guidelines
+- [Upgrade Flow](notion://link) - Where the banner should link
+
+### 💡 Implementation Hints
+
+1. Use the existing `UpgradeBanner` as a template
+2. Call `useCredits()` to check balance
+3. Show banner when `credits <= 0`
+4. Link to `/settings/billing` for upgrade
+5. Add dismiss logic with localStorage (key: `credit-banner-dismissed`)
+
+**Similar PR for reference:** #198 (trial expiration banner)
+```
+
+---
+
+## Customization Options
+
+### Filter by Issue Type
+
+Only enrich certain types of issues:
+
+```text
+Only enrich issues that:
+- Have label "needs-context" or "new-feature"
+- Are in the "Backlog" or "Todo" state
+- Don't already have comments
+
+Skip issues that:
+- Are marked as "quick-fix"
+- Already have implementation details
+- Are documentation-only tasks
+```
+
+### Depth of Search
+
+Adjust how thoroughly to search:
+
+**Quick Enrichment:**
+```text
+Quick context gathering (for simple issues):
+- Search codebase for directly mentioned files only
+- Check last 7 days of Slack
+- Skip Sentry and Notion
+```
+
+**Deep Enrichment:**
+```text
+Thorough context gathering (for complex features):
+- Search entire codebase for related patterns
+- Check last 90 days of Slack across all channels
+- Include Sentry errors from last 30 days
+- Search all Notion workspaces
+```
+
+### Team-Specific Context
+
+Different context for different teams:
+
+**Frontend Issues:**
+```text
+For issues labeled "frontend":
+- Focus on component files and styling
+- Check #frontend and #design Slack channels
+- Include Figma links from Notion
+- Note browser compatibility requirements
+```
+
+**Backend Issues:**
+```text
+For issues labeled "backend":
+- Focus on API routes and database models
+- Check #backend and #infrastructure channels
+- Include Sentry errors and performance data
+- Note API versioning considerations
+```
+
+### Auto-Assignment Hints
+
+Suggest who should work on it:
+
+```text
+Based on the code areas involved, suggest assignees:
+- Check git blame for recent contributors to relevant files
+- Note who participated in Slack discussions
+- Suggest team members with expertise in this area
+```
+
+---
+
+## Tips for Better Results
+
+### 1. Use Consistent Naming
+
+The automation works best when your codebase has clear naming:
+- Feature names match across code, Slack, and Linear
+- Files and folders have descriptive names
+- Slack channels are topic-specific
+
+### 2. Connect All Your Tools
+
+The more integrations you enable, the richer the context:
+- **GitHub**: Code context and recent changes
+- **Slack**: Conversations and decisions
+- **Notion**: Specs and documentation
+- **Sentry**: Error context for bugs
+
+### 3. Write Better Initial Issues
+
+Even with enrichment, better input = better output:
+```text
+Include in your issue:
+- What the feature/fix should do
+- Why it's needed (user problem)
+- Any known constraints
+```
+
+### 4. Review and Refine
+
+Check the enrichment quality periodically:
+- Is it finding relevant code?
+- Are Slack threads helpful?
+- Adjust search terms in the prompt if needed
+
+---
+
+## Related
+
+- [Linear Integration](/integrations/linear) — Set up the Linear MCP server
+- [GitHub Integration](/integrations/github) — Connect your codebase
+- [Slack Integration](/integrations/slack) — Enable Slack search
+- [Notion Integration](/integrations/notion) — Connect documentation
+- [Sentry Integration](/integrations/sentry) — Link error tracking

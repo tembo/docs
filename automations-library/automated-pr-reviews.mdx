@@ -1,0 +1,288 @@
+---
+title: "Automated PR Reviews"
+description: "Get instant, thorough code reviews on every pull request using AI"
+---
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/jEBJJ9ASaXo"
+  title="PR Reviews — Tembo Automations"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+></iframe>
+
+## Overview
+
+Code reviews are essential but time-consuming. This automation uses AI agents like Claude to automatically review every pull request, catching issues before human reviewers even look at the code.
+
+**What it does:**
+- Triggers automatically when a PR is opened or updated
+- Reviews code changes against your team's guidelines
+- Leaves specific, actionable comments on problematic lines
+- Improves PR descriptions for clarity
+- Auto-approves clean PRs (optional)
+
+---
+
+## Quick Start
+
+1. Navigate to **Automations** in your Tembo dashboard
+2. Click **Templates Library**
+3. Install the **"PR Review"** template
+4. Configure your review guidelines
+5. Enable for your repositories
+
+---
+
+## How It Works
+
+When a pull request is opened or updated:
+
+1. **Fetches the diff** — Gets all changed files and modifications
+2. **Analyzes the code** — AI reviews against your guidelines
+3. **Leaves comments** — Adds inline comments on specific lines with issues
+4. **Updates description** — Optionally improves the PR description
+5. **Approves or requests changes** — Based on findings
+
+<Tip>The AI catches subtle issues like mismatched timeout values, incorrect slice ranges, and logic errors that are easy to miss in manual review.</Tip>
+
+---
+
+## Configuration
+
+### Basic Setup
+
+**Trigger**: Pull request opened / synchronized
+
+**Prompt Template**:
+
+```text
+Review this pull request for code quality and potential issues.
+
+## Review Guidelines
+1. Check for bugs and logic errors
+2. Verify error handling is adequate
+3. Look for security vulnerabilities
+4. Ensure code follows our style guide
+5. Check for performance issues
+
+## Review Process
+1. Fetch the PR diff
+2. Analyze each changed file
+3. For each issue found:
+   - Leave an inline comment on the specific line
+   - Explain what's wrong and why
+   - Suggest a fix
+
+4. If the PR description is unclear:
+   - Update it with a clearer summary
+
+5. Final decision:
+   - If no issues: Approve the PR
+   - If minor issues: Comment but don't block
+   - If major issues: Request changes
+
+## What NOT to review
+- Don't nitpick style if it matches our guidelines
+- Don't suggest refactors unless there's a clear bug
+- Don't comment on unchanged code
+```
+
+**MCP Servers Needed**: GitHub
+
+---
+
+## Customization Options
+
+### Team-Specific Reviewers
+
+Create different review profiles for different teams:
+
+**Frontend Team**:
+```text
+Additional review criteria for frontend code:
+- Check for accessibility issues (missing alt text, ARIA labels)
+- Verify responsive design considerations
+- Look for React anti-patterns (missing keys, unnecessary re-renders)
+- Ensure proper loading and error states
+- Check bundle size impact for new dependencies
+```
+
+**Backend Team**:
+```text
+Additional review criteria for backend code:
+- Check for SQL injection vulnerabilities
+- Verify proper authentication/authorization
+- Look for N+1 query problems
+- Ensure database transactions are used correctly
+- Check for proper logging and monitoring
+```
+
+**Security-Focused**:
+```text
+Security review checklist:
+- Input validation on all user data
+- Output encoding to prevent XSS
+- Parameterized queries for database access
+- Secrets not hardcoded in code
+- Proper CORS configuration
+- Rate limiting on sensitive endpoints
+```
+
+### Per-Developer Configuration
+
+Adjust review strictness based on experience:
+
+```text
+For PRs from junior developers:
+- Be more thorough with explanations
+- Suggest learning resources for common issues
+- Always leave at least one positive comment
+
+For PRs from senior developers:
+- Focus only on bugs and security issues
+- Skip style suggestions
+- Trust architectural decisions unless clearly wrong
+```
+
+### Repository-Specific Rules
+
+Different rules for different repos:
+
+```text
+For the "payments" repository:
+- Extra scrutiny on any financial calculations
+- Require explicit error handling for all API calls
+- Flag any changes to transaction logic for human review
+
+For the "internal-tools" repository:
+- Lighter review, focus on major bugs only
+- Auto-approve formatting-only changes
+```
+
+---
+
+## Example Review Comments
+
+Here's what the AI reviewer might comment:
+
+**Catching a bug:**
+```
+Line 47: The timeout value here is 5000ms, but the API call on line 23
+uses 3000ms. This will cause the retry logic to fail before the
+request times out.
+
+Suggestion: Use a consistent timeout value, or make the retry timeout
+longer than the request timeout.
+```
+
+**Security issue:**
+```
+Line 112: This SQL query uses string concatenation with user input,
+which could allow SQL injection.
+
+Suggestion: Use parameterized queries instead:
+`db.query('SELECT * FROM users WHERE id = ?', [userId])`
+```
+
+**Logic error:**
+```
+Line 89: The slice `items[0:length-1]` excludes the last item.
+Based on the function name `getAllItems`, this looks unintentional.
+
+Suggestion: Use `items[0:length]` or simply `items[:]` to include
+all items.
+```
+
+**Performance concern:**
+```
+Line 156: This database query is inside a loop, which will cause
+N+1 query issues. With 100 items, this makes 100 separate queries.
+
+Suggestion: Batch the IDs and make a single query:
+`SELECT * FROM orders WHERE user_id IN (?)`
+```
+
+---
+
+## Auto-Approval Settings
+
+Configure when PRs can be automatically approved:
+
+```text
+Auto-approve PRs that meet ALL of these criteria:
+- No bugs or security issues found
+- Changes are under 100 lines
+- No changes to critical paths (auth, payments, data migrations)
+- All tests pass
+- Author has >10 merged PRs in this repo
+
+For auto-approved PRs, still leave a comment:
+"✅ Automated review complete. No issues found. Auto-approved."
+```
+
+---
+
+## Tips for Better Reviews
+
+### 1. Provide Context About Your Codebase
+
+Help the AI understand your stack:
+```text
+Our stack:
+- Node.js with TypeScript
+- PostgreSQL with Prisma ORM
+- React with Next.js
+- Jest for testing
+
+Common patterns:
+- We use Result types for error handling
+- All API routes go through authentication middleware
+- Database queries should use transactions for writes
+```
+
+### 2. Include Your Style Guide
+
+Reference your existing guidelines:
+```text
+Follow our style guide:
+- Functions should be under 50 lines
+- No more than 3 levels of nesting
+- Prefer early returns over nested if/else
+- All public functions need JSDoc comments
+```
+
+### 3. Set Clear Severity Levels
+
+Define what blocks a PR vs. what's just a suggestion:
+```text
+Blocking issues (request changes):
+- Security vulnerabilities
+- Bugs that would cause crashes
+- Breaking changes without migration
+
+Non-blocking issues (comment only):
+- Performance suggestions
+- Code style preferences
+- Refactoring opportunities
+```
+
+### 4. Review the Reviewer
+
+Periodically check that the AI's feedback is useful:
+- Are comments actionable?
+- Is it catching real issues?
+- Is it creating too much noise?
+
+Adjust your prompt based on what you learn.
+
+---
+
+## Related
+
+- [Pull Requests](/features/pull-requests) — Learn more about PR workflows in Tembo
+- [GitHub Integration](/integrations/github) — Set up the GitHub MCP server
+- [Auto PR Description](/automations-library/auto-pr-description) — Auto-generate PR descriptions
+- [Code Quality & CI/CD](/automations-library/code-quality-cicd) — More code quality automations

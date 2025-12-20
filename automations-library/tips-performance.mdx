@@ -1,0 +1,161 @@
+---
+title: "Performance Tips"
+description: "Optimize automations that process large amounts of data"
+---
+
+When automations process large datasets or call multiple APIs, performance matters. Here's how to optimize.
+
+## Using Multiple MCP Servers
+
+Complex automations can combine multiple services into powerful workflows.
+
+**Example: Cross-system sync**
+
+```text
+1. Check Linear for high-priority bugs (Linear MCP)
+2. For each bug, check if there's a GitHub issue (GitHub MCP)
+3. If no GitHub issue exists, create one (GitHub MCP)
+4. Post summary to Slack (Slack MCP)
+```
+
+**Benefits:**
+- Keeps systems in sync automatically
+- Reduces manual cross-referencing
+- Ensures nothing falls through the cracks
+
+**Tips:**
+- Plan the data flow between services
+- Handle API failures gracefully (one service being down shouldn't break everything)
+- Cache data when appropriate to reduce API calls
+
+## Iteration and Filtering
+
+Process collections efficiently by filtering early.
+
+```text
+For each open PR that:
+  - Is older than 7 days
+  - Has no reviews
+  - Is not in draft status
+
+Do:
+  - Comment asking for review
+  - Tag the PR author's team lead
+  - Add label "needs-review"
+```
+
+**Filtering strategies:**
+- Time-based (age, last updated)
+- Status-based (open, closed, draft)
+- Metadata-based (labels, assignees, priority)
+- Content-based (file changes, keywords)
+
+**Performance tips:**
+- Filter early to reduce the number of items to process
+- Set reasonable limits on collection sizes
+- Batch operations when possible
+
+## Pagination
+
+Process large datasets in chunks:
+
+```text
+Fetch 50 items at a time:
+1. Get first page of results
+2. Process the batch
+3. If more pages exist, continue
+4. Repeat until all items processed
+```
+
+This prevents timeouts and memory issues with large result sets.
+
+## Caching
+
+Store frequently accessed data to reduce API calls:
+
+```text
+Cache team member list for 24 hours:
+1. Check if cache exists and is fresh
+2. If yes, use cached data
+3. If no, fetch from API and update cache
+
+Use cached data for @mentions and assignments
+```
+
+**Good candidates for caching:**
+- Team member lists
+- Repository metadata
+- Label/status definitions
+- Configuration that rarely changes
+
+## Rate Limits
+
+Be mindful of API rate limits:
+
+| Service | Typical Limit |
+|---------|---------------|
+| GitHub | 5,000 requests/hour |
+| Linear | Varies by plan |
+| Slack | Different for posting vs reading |
+
+**Strategies:**
+- Batch operations when possible
+- Use webhooks instead of polling
+- Space out requests if approaching limits
+- Implement exponential backoff on rate limit errors
+
+## Schedule Appropriately
+
+Choose the right frequency for your automation:
+
+| Frequency | Use Cases |
+|-----------|-----------|
+| **Hourly** | Event monitoring (CI failures, new tags) |
+| **Daily** | Summaries and digests (changelog, standup) |
+| **Weekly** | Reports and reminders (stale issues, metrics) |
+| **Monthly** | Long-term trends and cleanup |
+
+<Warning>Avoid over-polling APIs. Most information doesn't need minute-by-minute updates.</Warning>
+
+## Monitoring
+
+Track automation performance to catch issues early.
+
+**Key metrics:**
+- Success/failure rate
+- Execution time
+- Items processed per run
+- API calls made
+
+**Alert conditions:**
+- Failure rate above threshold
+- No successful runs in X hours
+- Unusual execution time
+- API rate limit approached
+
+**Implementation:**
+
+```text
+At end of automation:
+- Record success/failure
+- Log execution time
+- Log items processed
+
+If failure rate > 20% in last 24 hours:
+  - Alert team in #automation-errors
+  - Include recent error messages
+```
+
+## Parallel Processing
+
+Handle independent items concurrently when possible:
+
+```text
+For each repository (process in parallel):
+  - Check CI status
+  - Generate report
+
+Combine all reports at the end
+```
+
+This can significantly speed up automations that touch multiple repositories or projects.
