@@ -47,7 +47,8 @@
 							"features/pull-requests",
 							"features/feedback-loop",
 							"features/rule-files",
-							"features/hooks"
+							"features/hooks",
+							"features/public-api"
 						]
 					},
 					{

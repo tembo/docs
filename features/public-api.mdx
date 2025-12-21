@@ -1,0 +1,221 @@
+---
+title: 'Public API'
+description: 'Programmatically interact with Tembo to create tasks, list repositories, and automate workflows'
+icon: 'code'
+---
+
+The Tembo Public API lets you integrate Tembo into your workflows, CI/CD pipelines, and custom tooling. Create tasks, manage repositories, and build powerful automations programmatically.
+
+## Getting Started
+
+### Generate an API Key
+
+1. Sign in to your [Tembo Dashboard](https://app.tembo.io)
+2. Go to **Settings** > **API Keys**
+3. Click **Create API Key**
+4. Copy and securely store your key
+
+<Warning>
+API keys grant full access to your organization's Tembo resources. Keep them secure and never commit them to version control.
+</Warning>
+
+### Authentication
+
+Include your API key in the `Authorization` header for all requests:
+
+```bash
+curl -H "Authorization: Bearer YOUR_API_KEY" \
+  https://internal.tembo.io/me
+```
+
+## SDK Installation
+
+The Tembo SDK provides a type-safe way to interact with the API.
+
+<CodeGroup>
+```bash npm
+npm install @tembo-io/sdk
+```
+
+```bash yarn
+yarn add @tembo-io/sdk
+```
+
+```bash pnpm
+pnpm add @tembo-io/sdk
+```
+</CodeGroup>
+
+### Initialize the Client
+
+```javascript
+import Tembo from '@tembo-io/sdk';
+
+const client = new Tembo({
+  apiKey: process.env.TEMBO_API_KEY,
+});
+```
+
+## API Endpoints
+
+### Create Task
+
+Create a new task for Tembo to work on. Tasks run asynchronously in sandboxed environments.
+
+```javascript
+const task = await client.task.create({
+  prompt: 'Fix the authentication bug in the login component',
+  agent: 'claudeCode:claude-4-5-sonnet',
+  repositories: ['https://github.com/org/repo'],
+  branch: 'main',
+});
+
+console.log(`Task created: ${task.id}`);
+```
+
+**Parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `prompt` | string | Yes | Description of the task to perform |
+| `agent` | string | No | Coding agent to use (default: `claudeCode:claude-opus-4-5`) |
+| `repositories` | string[] | No | Repository URLs for the task |
+| `branch` | string | No | Target git branch |
+| `queueRightAway` | boolean | No | Start immediately (default: `true`) |
+
+### List Tasks
+
+Retrieve a paginated list of tasks for your organization.
+
+```javascript
+const { issues, meta } = await client.task.list({
+  limit: 10,
+  page: 1,
+});
+
+console.log(`Found ${meta.totalCount} tasks`);
+```
+
+### Search Tasks
+
+Search tasks by title or description.
+
+```javascript
+const results = await client.task.search({
+  q: 'authentication bug',
+  limit: 10,
+});
+
+console.log(`Found ${results.issues.length} matching tasks`);
+```
+
+### List Repositories
+
+Get all enabled repositories for your organization.
+
+```javascript
+const { codeRepositories } = await client.repository.list();
+
+for (const repo of codeRepositories) {
+  console.log(`${repo.name}: ${repo.url}`);
+}
+```
+
+### Get Current User
+
+Verify your authentication and retrieve organization info.
+
+```javascript
+const me = await client.me.retrieve();
+console.log(`Organization: ${me.orgId}`);
+```
+
+## Use Cases
+
+### CI/CD Integration
+
+Trigger Tembo tasks from your CI pipeline:
+
+```yaml
+# GitHub Actions example
+- name: Create Tembo task for test failures
+  if: failure()
+  run: |
+    curl -X POST https://internal.tembo.io/task/create \
+      -H "Authorization: Bearer ${{ secrets.TEMBO_API_KEY }}" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "prompt": "Fix failing tests in CI: ${{ github.run_url }}",
+        "repositories": ["${{ github.server_url }}/${{ github.repository }}"],
+        "branch": "${{ github.ref_name }}"
+      }'
+```
+
+### Batch Task Creation
+
+Create multiple related tasks:
+
+```javascript
+const features = ['user-auth', 'payment-flow', 'notifications'];
+
+for (const feature of features) {
+  await client.task.create({
+    prompt: `Add unit tests for the ${feature} module`,
+    repositories: ['https://github.com/org/repo'],
+  });
+}
+```
+
+### Custom Dashboards
+
+Build internal tools that display task status:
+
+```javascript
+async function getRecentTasks() {
+  const { issues } = await client.task.list({ limit: 50 });
+
+  return issues.map(task => ({
+    id: task.id,
+    title: task.title,
+    status: task.status,
+    created: task.createdAt,
+  }));
+}
+```
+
+## Rate Limits
+
+The API enforces rate limits to ensure fair usage:
+
+- **100 requests per minute** per API key
+- **1000 requests per hour** per organization
+
+If you exceed these limits, requests return a `429 Too Many Requests` response.
+
+## Error Handling
+
+The API returns standard HTTP status codes:
+
+| Code | Description |
+|------|-------------|
+| `200` | Success |
+| `400` | Bad request - check your parameters |
+| `401` | Unauthorized - invalid or missing API key |
+| `429` | Rate limited - slow down requests |
+| `500` | Server error - contact support |
+
+```javascript
+try {
+  const task = await client.task.create({ prompt: 'Fix bug' });
+} catch (error) {
+  if (error.status === 401) {
+    console.error('Invalid API key');
+  } else if (error.status === 429) {
+    console.error('Rate limited, retrying...');
+  }
+}
+```
+
+## API Reference
+
+For complete endpoint documentation with request/response schemas, see the [API Reference](/api-reference/public-api/create-task).
