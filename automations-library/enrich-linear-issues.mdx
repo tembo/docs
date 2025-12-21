@@ -135,63 +135,17 @@ Post a comment on the Linear issue with this structure:
 
 ---
 
-## Example Enriched Issue
+## Example Output
 
-Here's what an enriched Linear issue looks like:
+For an issue titled "Add 'out of credit' banner to dashboard", Tembo posts a comment like:
 
-**Original Issue:**
-> **Title:** Add "out of credit" banner to dashboard
+> **📁 Relevant Code:** `Banner.tsx`, `UpgradeBanner.tsx`, `useCredits.ts` — with links to PRs that modified these files
 >
-> **Description:** When users run out of credits, show a banner prompting them to upgrade.
-
-**Automated Enrichment Comment:**
-
-```markdown
-## 🤖 Context gathered by Tembo
-
-### 📁 Relevant Code
-
-**Banner Components**
-- `src/components/Banner/Banner.tsx` - Base banner component
-- `src/components/Banner/UpgradeBanner.tsx` - Similar upgrade prompt banner
-
-**Credit Logic**
-- `src/hooks/useCredits.ts` - Hook for fetching credit balance
-- `src/api/billing.ts` - Billing API endpoints (see `getCredits()`)
-
-**Recent Changes**
-- PR #234 (2 weeks ago) added the `useCredits` hook
-- PR #201 refactored banner styling
-
-### 💬 Slack Context
-
-**Original Discussion** ([#product, Nov 15](slack://link))
-> Sarah: "Users are confused when they hit the credit limit.
-> Can we add a clear banner?"
+> **💬 Slack Context:** Links to discussions in #product and #design where the feature was requested and design decisions were made
 >
-> Mike: "Yes, should link directly to the upgrade page.
-> Use the warning variant, not error."
-
-**Design Decision** ([#design, Nov 16](slack://link))
-> The banner should be dismissible but reappear on page refresh
-> until credits are added.
-
-### 📚 Documentation
-
-- [Billing System Overview](notion://link) - How credits work
-- [Banner Component Spec](notion://link) - Design guidelines
-- [Upgrade Flow](notion://link) - Where the banner should link
-
-### 💡 Implementation Hints
-
-1. Use the existing `UpgradeBanner` as a template
-2. Call `useCredits()` to check balance
-3. Show banner when `credits <= 0`
-4. Link to `/settings/billing` for upgrade
-5. Add dismiss logic with localStorage (key: `credit-banner-dismissed`)
-
-**Similar PR for reference:** #198 (trial expiration banner)
-```
+> **📚 Documentation:** Links to billing system docs, banner component specs, and upgrade flow pages
+>
+> **💡 Implementation Hints:** Start with `UpgradeBanner` as template, use `useCredits()` hook, reference PR #198 (trial expiration banner)
 
 ---
 
