@@ -156,34 +156,14 @@ Route reports based on severity:
 
 ## Example Output
 
-Here's what the Slack message looks like:
+The Slack message includes a header with date, ranked errors with metrics, and a summary:
 
-```
-🚨 Daily Bug Priority Report — Dec 19, 2024
-
-#1: TypeError: Cannot read property 'id' of undefined
-├─ Users affected: 847
-├─ Occurrences: 2,341
-├─ Project: production-api
-├─ First seen: 6 hours ago
-└─ 🔗 View in Sentry
-
-#2: NetworkError: Failed to fetch user preferences
-├─ Users affected: 312
-├─ Occurrences: 891
-├─ Project: production-web
-├─ First seen: 2 days ago
-└─ 🔗 View in Sentry
-
-#3: ValidationError: Invalid email format
-├─ Users affected: 156
-├─ Occurrences: 423
-├─ Project: mobile-app
-├─ First seen: 1 week ago
-└─ 🔗 View in Sentry
-
-📊 Total errors in last 24h: 47 unique issues affecting 2,891 users
-```
+> **#1: TypeError: Cannot read property 'id' of undefined**
+> Users affected: 847 | Occurrences: 2,341 | Project: production-api | 🔗 View in Sentry
+>
+> **#2-3:** Additional errors ranked by user impact...
+>
+> 📊 Total: 47 unique issues affecting 2,891 users
 
 ---
 
