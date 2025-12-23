@@ -164,46 +164,13 @@ For the "internal-tools" repository:
 
 ---
 
-## Example Review Comments
+## Example Review Comment
 
-Here's what the AI reviewer might comment:
+> **Line 47:** The timeout value here is 5000ms, but the API call on line 23 uses 3000ms. This will cause the retry logic to fail before the request times out.
+>
+> **Suggestion:** Use a consistent timeout value, or make the retry timeout longer than the request timeout.
 
-**Catching a bug:**
-```
-Line 47: The timeout value here is 5000ms, but the API call on line 23
-uses 3000ms. This will cause the retry logic to fail before the
-request times out.
-
-Suggestion: Use a consistent timeout value, or make the retry timeout
-longer than the request timeout.
-```
-
-**Security issue:**
-```
-Line 112: This SQL query uses string concatenation with user input,
-which could allow SQL injection.
-
-Suggestion: Use parameterized queries instead:
-`db.query('SELECT * FROM users WHERE id = ?', [userId])`
-```
-
-**Logic error:**
-```
-Line 89: The slice `items[0:length-1]` excludes the last item.
-Based on the function name `getAllItems`, this looks unintentional.
-
-Suggestion: Use `items[0:length]` or simply `items[:]` to include
-all items.
-```
-
-**Performance concern:**
-```
-Line 156: This database query is inside a loop, which will cause
-N+1 query issues. With 100 items, this makes 100 separate queries.
-
-Suggestion: Batch the IDs and make a single query:
-`SELECT * FROM orders WHERE user_id IN (?)`
-```
+The AI catches issues including bugs, security vulnerabilities (SQL injection, XSS), logic errors, and performance concerns (N+1 queries).
 
 ---
 
