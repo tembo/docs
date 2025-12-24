@@ -125,63 +125,20 @@ Trigger based on PR author:
 
 ## Example Output
 
-For a PR with 200 lines of new authentication code, the automation might generate:
-
-```markdown
-## Summary
-Implements OAuth2 authentication flow with support for Google and GitHub providers.
-
-## Changes
-- Added `AuthProvider` component for managing auth state
-- Created OAuth callback handlers for Google and GitHub
-- Implemented token refresh logic with automatic retry
-- Added protected route wrapper component
-- Updated user context to include auth methods
-
-## Testing
-- Run `npm test` to execute auth unit tests
-- Test OAuth flow locally with `npm run dev:auth`
-- Verify token refresh by setting short expiry in `.env.local`
-```
+> **Summary**: Implements OAuth2 authentication with Google and GitHub providers.
+>
+> **Changes**: Added AuthProvider component, OAuth callback handlers, token refresh logic, protected route wrapper.
+>
+> **Testing**: Run `npm test` for unit tests, `npm run dev:auth` for local OAuth testing.
 
 ---
 
 ## Tips for Better Results
 
-### 1. Provide Context in Your Prompt
-
-The more context you give, the better the output:
-```text
-Our codebase is a Next.js application with TypeScript.
-We use Tailwind for styling and React Query for data fetching.
-```
-
-### 2. Include Your PR Template
-
-Paste your team's existing PR template into the prompt so the automation follows the same structure.
-
-### 3. Specify What to Exclude
-
-If you don't want certain details:
-```text
-Do not include:
-- Line-by-line code explanations
-- Implementation details that are obvious from the diff
-- Suggestions for improvements
-```
-
-### 4. Handle Edge Cases
-
-Add instructions for special scenarios:
-```text
-If this PR only changes documentation:
-- Keep the description brief
-- Note which docs were updated
-
-If this PR is a dependency update:
-- List the packages updated
-- Note any breaking changes from changelogs
-```
+- **Provide context** — Include your tech stack (e.g., "Next.js with TypeScript") in the prompt for more relevant descriptions
+- **Include your PR template** — Paste your team's existing format so the automation follows the same structure
+- **Specify exclusions** — Tell it to skip obvious details like line-by-line explanations
+- **Handle edge cases** — Add instructions for doc-only PRs, dependency updates, or other special scenarios
 
 ---
 
