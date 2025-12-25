@@ -114,71 +114,29 @@ Set `"autoFix": true` at the root level of your `.tembo.json` to enable automati
 - Commands support shell features like piping, redirects, and environment variables
 - Multi-line commands can be written as single strings with semicolons or `&&` operators
 
-## Advanced Configuration Examples
+## Advanced Example
 
-### Full Stack Application
+A full-stack application with database, linting, testing, and build steps:
 
 ```json
 {
   "hooks": {
     "postClone": [
-      "npm install",
-      "pip install -r requirements.txt",
-      "docker-compose up -d postgres redis",
-      "npm run db:migrate",
-      "npm run seed:test-data"
+      "npm ci",
+      "docker-compose up -d postgres",
+      "npm run db:migrate"
     ],
     "prePush": [
       "npm run lint",
-      "npm run test:unit",
-      "python -m pytest tests/",
-      "npm run build",
-      "docker-compose run --rm app npm run test:integration"
+      "npm run test",
+      "npm run build"
     ]
-  }
+  },
+  "autoFix": true
 }
 ```
 
-### Monorepo with Multiple Services
-
-```json
-{
-  "hooks": {
-    "postClone": [
-      "npm install --frozen-lockfile",
-      "npx lerna bootstrap",
-      "npm run build:shared"
-    ],
-    "prePush": [
-      "npx lerna run lint",
-      "npx lerna run test --since origin/main",
-      "npx lerna run build --since origin/main",
-      "npm run test:integration"
-    ]
-  }
-}
-```
-
-### Go Application with Custom Tooling
-
-```json
-{
-  "hooks": {
-    "postClone": [
-      "go mod download",
-      "go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest",
-      "make setup"
-    ],
-    "prePush": [
-      "go fmt ./...",
-      "golangci-lint run",
-      "go test ./...",
-      "go build -o bin/app ./cmd/app",
-      "make security-scan"
-    ]
-  }
-}
-```
+Adapt the commands to your stack—the pattern works for any language or framework.
 
 ## Best Practices
 
