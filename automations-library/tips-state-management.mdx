@@ -150,28 +150,10 @@ Update state only after successful completion:
 4. Only save state after everything succeeds
 ```
 
-## Debugging State Issues
+## Debugging Tips
 
-### Log State Changes
-
-Include state in your logs for debugging:
-
-```text
-Log: "Starting with state: lastProcessedTag=v1.2.3"
-... processing ...
-Log: "Saving state: lastProcessedTag=v1.2.5 (processed 2 new tags)"
-```
-
-### Add a Reset Mechanism
-
-Allow manual state reset for recovery:
-
-```text
-If RESET_STATE flag is set:
-  - Clear all state
-  - Log "State reset requested"
-  - Start fresh
-```
+- **Log state changes** — Log before/after values (e.g., `"State: v1.2.3 → v1.2.5"`) to trace issues
+- **Add reset mechanism** — Support a `RESET_STATE` flag to clear state and start fresh for recovery
 
 ## Related
 
