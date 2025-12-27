@@ -93,38 +93,9 @@ Production: Post to #team-updates
 
 ## Debugging Tips
 
-### Log Decision Points
-
-Add logging at key moments to understand what happened:
-
-```text
-Log: "Found 15 PRs merged in last 24 hours"
-Log: "After filtering: 8 PRs (excluded drafts and bots)"
-Log: "Grouped into: 3 features, 4 bugfixes, 1 chore"
-Log: "Posted to #changelog successfully"
-```
-
-### Include Timestamps
-
-Timestamps help correlate logs with events:
-
-```text
-[2024-01-15 09:00:03] Starting daily changelog automation
-[2024-01-15 09:00:05] Fetched 15 PRs from GitHub
-[2024-01-15 09:00:07] Posted summary to Slack
-[2024-01-15 09:00:07] Completed in 4 seconds
-```
-
-### Save Raw Responses
-
-For complex debugging, preserve API responses:
-
-```text
-If DEBUG mode:
-  - Save raw GitHub API response to logs
-  - Save formatted message before posting
-  - Include response status codes
-```
+- **Log decision points**: Record counts at each step ("Found 15 PRs → After filtering: 8 PRs → Posted successfully")
+- **Include timestamps**: Correlate logs with events for easier debugging
+- **Save raw responses**: In DEBUG mode, preserve API responses and status codes
 
 ## Security Considerations
 
