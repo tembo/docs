@@ -119,32 +119,10 @@ Choose the right frequency for your automation:
 
 ## Monitoring
 
-Track automation performance to catch issues early.
+Track automation performance to catch issues early:
 
-**Key metrics:**
-- Success/failure rate
-- Execution time
-- Items processed per run
-- API calls made
-
-**Alert conditions:**
-- Failure rate above threshold
-- No successful runs in X hours
-- Unusual execution time
-- API rate limit approached
-
-**Implementation:**
-
-```text
-At end of automation:
-- Record success/failure
-- Log execution time
-- Log items processed
-
-If failure rate > 20% in last 24 hours:
-  - Alert team in #automation-errors
-  - Include recent error messages
-```
+- **Metrics**: Success/failure rate, execution time, items processed, API calls
+- **Alerts**: Failure rate spikes, no successful runs in X hours, rate limits approached
 
 ## Parallel Processing
 
