@@ -59,22 +59,8 @@ A CI check has failed on PR #{pr_number}.
 
 ## Tips for Code Quality & CI/CD Automations
 
-### Start with Low-Risk Fixes
-
-Begin with automations that only fix formatting and linting issues. These are safe to auto-fix and won't break functionality.
-
-### Always Notify the Team
-
-When an automation makes changes to code, always leave a comment explaining what was fixed and why. This maintains transparency.
-
-### Set Clear Boundaries
-
-Define explicitly what the automation can and cannot fix. For example, never auto-fix failing tests without human review.
-
-### Track Success Rates
-
-Monitor how often your automation successfully fixes issues versus how often manual intervention is needed. Use this data to improve your prompts.
-
-### Integrate with Issue Tracking
-
-For issues that can't be auto-fixed, automatically create tickets in Linear or Jira with details about the failure.
+- **Start with low-risk fixes**: Only auto-fix formatting and linting issues initially—these won't break functionality.
+- **Always notify the team**: Leave clear comments explaining what was fixed and why.
+- **Set clear boundaries**: Define explicitly what can and cannot be auto-fixed (never auto-fix failing tests without human review).
+- **Track success rates**: Monitor auto-fix success vs manual intervention to improve prompts over time.
+- **Integrate with issue tracking**: Auto-create tickets in Linear or Jira for issues that can't be auto-fixed.
