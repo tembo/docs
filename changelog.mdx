@@ -4,6 +4,68 @@ description: 'Keep track of changes and updates to Tembo'
 icon: 'clock-rotate-left'
 ---
 
+<Update label="2026-01-01" tags={["Integrations", "Settings", "Reliability", "UI"]}>
+
+## New Year, New Integrations
+
+### Webflow MCP Integration
+
+Added Webflow to our growing list of MCP integrations. Connect your Webflow projects and let Tembo agents interact with your web content management directly.
+
+### Enhanced Branch Management
+
+The branch dropdown now supports pagination and server-side search, making it easier to work with repositories that have hundreds of branches. Find the branch you need faster, regardless of repository size.
+
+## Settings Improvements
+
+### AI Branch Naming Instructions
+
+Configure custom instructions for how Tembo generates branch names at the organization level. Ensure branch naming conventions align with your team's workflow and standards.
+
+### Auto-Save for Names
+
+Workspace and user names now auto-save when you click away from the input field. No more lost changes or forgotten save buttons.
+
+## Reliability & Performance
+
+### WebSocket Connection Resilience
+
+Improved WebSocket connection handling with better reconnection logic and error recovery. Real-time updates are now more reliable, especially on unstable network connections.
+
+### Smarter Error Handling
+
+- Enhanced JSON parsing with better error resilience
+- Improved encryption/decryption failure logging for easier debugging
+- Better handling of undefined, null, and empty environment variables
+
+### Queue & Job Improvements
+
+- Enhanced job dependency resolution for blocked jobs
+- New monitoring and alerts for stale sandbox queue jobs
+- Prevented duplicate GitHub org/user app installations
+
+## Privacy & Security
+
+### GitHub Email Privacy
+
+Tembo now respects GitHub's email privacy settings when creating co-authored commits. Private email addresses remain hidden in commit history.
+
+## UI Enhancements
+
+### Credit Usage Awareness
+
+- New out-of-credit banner with dynamic CTAs to help you stay productive
+- Insufficient credits event tracking for better usage insights
+
+### PR Workflow Improvements
+
+- Clearer PR description template instructions
+- Image paste validation now uses supported image types consistently
+
+Also various bug fixes and stability improvements were shipped this week.
+
+</Update>
+
 <Update label="2025-12-11" tags={["Automations", "Templates", "Pricing", "UI"]}>
 
 ![Automations](/images/automation-light.png)
