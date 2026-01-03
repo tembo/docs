@@ -35,7 +35,10 @@
 				"groups": [
 					{
 						"group": "Get Started",
-						"pages": ["welcome", "prompting-guide"]
+						"pages": [
+							"welcome",
+							"prompting-guide"
+						]
 					},
 					{
 						"group": "Features",
@@ -65,16 +68,25 @@
 							"integrations/postgres",
 							"integrations/aws",
 							"integrations/supabase",
-							"integrations/raycast"
+							"integrations/raycast",
+							"integrations/discord"
 						]
 					},
 					{
 						"group": "Admin",
-						"pages": ["admin/security", "admin/billing", "admin/inviting-your-team"]
+						"pages": [
+							"admin/security",
+							"admin/billing",
+							"admin/inviting-your-team"
+						]
 					},
 					{
 						"group": "Resources",
-						"pages": ["resources/aifsd-manifesto", "resources/pwa", "changelog"]
+						"pages": [
+							"resources/aifsd-manifesto",
+							"resources/pwa",
+							"changelog"
+						]
 					}
 				]
 			},
