@@ -194,56 +194,10 @@ For auto-approved PRs, still leave a comment:
 
 ## Tips for Better Reviews
 
-### 1. Provide Context About Your Codebase
-
-Help the AI understand your stack:
-```text
-Our stack:
-- Node.js with TypeScript
-- PostgreSQL with Prisma ORM
-- React with Next.js
-- Jest for testing
-
-Common patterns:
-- We use Result types for error handling
-- All API routes go through authentication middleware
-- Database queries should use transactions for writes
-```
-
-### 2. Include Your Style Guide
-
-Reference your existing guidelines:
-```text
-Follow our style guide:
-- Functions should be under 50 lines
-- No more than 3 levels of nesting
-- Prefer early returns over nested if/else
-- All public functions need JSDoc comments
-```
-
-### 3. Set Clear Severity Levels
-
-Define what blocks a PR vs. what's just a suggestion:
-```text
-Blocking issues (request changes):
-- Security vulnerabilities
-- Bugs that would cause crashes
-- Breaking changes without migration
-
-Non-blocking issues (comment only):
-- Performance suggestions
-- Code style preferences
-- Refactoring opportunities
-```
-
-### 4. Review the Reviewer
-
-Periodically check that the AI's feedback is useful:
-- Are comments actionable?
-- Is it catching real issues?
-- Is it creating too much noise?
-
-Adjust your prompt based on what you learn.
+- **Provide codebase context** — Include your stack, frameworks, and common patterns in the prompt
+- **Reference your style guide** — Add team conventions (function length, nesting limits, documentation requirements)
+- **Define severity levels** — Specify which issues should block (security, bugs) vs. comment-only (style, refactoring)
+- **Review the reviewer** — Periodically check if comments are actionable and adjust your prompt accordingly
 
 ---
 
