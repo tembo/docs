@@ -58,27 +58,7 @@ That's it! No additional setup required.
 
 ## Example Workflow
 
-Here's how a typical feedback loop works in practice:
-
-### Step 1: Tembo Creates Initial PR/MR
-Tembo detects a Sentry error about unhandled database timeouts and creates a PR (or MR for GitLab) with a basic try-catch solution.
-
-### Step 2: You Provide Feedback via Review
-Using your Git provider's review feature (GitHub PR reviews or GitLab MR reviews), you add multiple comments:
-- Line 15: "Add retry logic with exponential backoff"
-- Line 22: "Log the timeout duration for monitoring"  
-- Line 30: "Consider connection pooling optimization"
-- General comment: "Add unit tests for the timeout scenarios"
-
-### Step 3: Tembo Updates the PR
-Tembo processes all feedback points together and pushes a new commit that:
-- Implements retry logic with exponential backoff
-- Adds comprehensive logging with timeout metrics
-- Optimizes connection pooling configuration
-- Includes unit tests covering timeout edge cases
-
-### Step 4: Continue Iterating
-If you need further refinements, simply add another review or comment with "@tembo" and the cycle continues.
+> **Scenario:** Tembo creates a PR with a basic try-catch for database timeouts. You review and comment "@tembo add retry logic with exponential backoff, logging, and unit tests." Tembo processes your feedback, pushes a new commit with all changes, and you continue iterating until satisfied.
 
 ## What to Expect
 
