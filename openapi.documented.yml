@@ -135,7 +135,8 @@ paths:
                 'https://github.com/org/repo',
                 'https://gitlab.com/org/repo-2',
               ],
-              branch: 'dev',
+              targetBranch: 'dev',
+              branchName: "cooper-is-awesome",
             });
 
             console.log(task.id);
