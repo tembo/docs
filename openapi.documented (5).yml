@@ -1,0 +1,750 @@
+openapi: 3.1.0
+info:
+  title: Tembo Public API
+  description: Public API Endpoints for Tembo
+  version: 1.0.0
+servers:
+  - url: https://api.tembo.io/
+    description: Tembo API
+components:
+  securitySchemes:
+    apiKey:
+      type: http
+      scheme: bearer
+  schemas: {}
+paths:
+  /task/create:
+    post:
+      responses:
+        "200":
+          description: Task created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  title:
+                    type: string
+                  description:
+                    type: string
+                  status:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+                  organizationId:
+                    type: string
+                    format: uuid
+                  htmlUrl:
+                    type: string
+                    format: uri
+                    description: URL to view this task in the Tembo web application
+                    example: https://app.tembo.io/tasks/123e4567-e89b-12d3-a456-426614174000
+                required:
+                  - id
+                  - title
+                  - description
+                  - status
+                  - createdAt
+                  - updatedAt
+                  - organizationId
+                  - htmlUrl
+        "400":
+          description: Bad request - invalid input or missing organization ID
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                  - error
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                  - error
+      operationId: postPublic-apiTaskCreate
+      tags:
+        - public-api
+      parameters: []
+      description: Create a task for tembo to start working on in the background
+      summary: Create Task
+      requestBody:
+        description: Task creation payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+                  minLength: 1
+                  description: Description of the task to be performed. Supports tagging files.
+                  example: Fix the authentication bug in the login component
+                agent:
+                  type: string
+                  description: The agent to use for this task
+                  example: claudeCode:claude-4-5-sonnet
+                repositories:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of code repository urls that this task relates to
+                  example:
+                    - https://github.com/org/repo
+                    - https://gitlab.com/org/repo-2
+                targetBranch:
+                  type: string
+                  nullable: true
+                  description: The branch to open the pull request against (e.g. main, develop)
+                  example: main
+                branchName:
+                  type: string
+                  nullable: true
+                  description: The branch name to use for the work
+                  example: feature/auth-fix
+                queueRightAway:
+                  type: boolean
+                  nullable: true
+                  default: true
+                  description: Whether to immediately queue the task for processing (optional, defaults to true)
+                  example: false
+              anyOf:
+                - required:
+                    - prompt
+                - required:
+                    - description
+        required: true
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import Tembo from '@tembo-io/sdk';
+
+            const client = new Tembo({
+              apiKey: process.env['TEMBO_API_KEY'], // This is the default and can be omitted
+            });
+
+            const task = await client.task.create({
+              prompt: 'Fix the authentication bug in the login component',
+              agent: 'claudeCode:claude-4-5-sonnet',
+              repositories: [
+                'https://github.com/org/repo',
+                'https://gitlab.com/org/repo-2',
+              ],
+              branchName: 'feature/auth-fix',
+              targetBranch: 'main',
+            });
+
+            console.log(task.id);
+        - lang: Python
+          source: |-
+            import os
+            from tembo import Tembo
+
+            client = Tembo(
+                api_key=os.environ.get("TEMBO_API_KEY"),  # This is the default and can be omitted
+            )
+            task = client.task.create()
+            print(task.id)
+  /task/list:
+    get:
+      responses:
+        "200":
+          description: Successfully retrieved paginated list of issues
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        title:
+                          type: string
+                        description:
+                          type: string
+                        status:
+                          type: string
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                        organizationId:
+                          type: string
+                          format: uuid
+                        htmlUrl:
+                          type: string
+                          format: uri
+                          description: URL to view this task in the Tembo web application
+                          example: https://app.tembo.io/tasks/123e4567-e89b-12d3-a456-426614174000
+                      required:
+                        - id
+                        - title
+                        - description
+                        - status
+                        - createdAt
+                        - updatedAt
+                        - organizationId
+                        - htmlUrl
+                  meta:
+                    type: object
+                    properties:
+                      totalCount:
+                        type: integer
+                      totalPages:
+                        type: integer
+                      currentPage:
+                        type: integer
+                      pageSize:
+                        type: integer
+                      hasNext:
+                        type: boolean
+                      hasPrevious:
+                        type: boolean
+                    required:
+                      - totalCount
+                      - totalPages
+                      - currentPage
+                      - pageSize
+                      - hasNext
+                      - hasPrevious
+                required:
+                  - issues
+                  - meta
+      operationId: getPublic-apiTaskList
+      tags:
+        - public-api
+      parameters:
+        - name: limit
+          in: query
+          description: Number of items to return per page (max 100)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+            example: 10
+        - name: page
+          in: query
+          description: Page number to retrieve (starts from 1)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+            example: 1
+      description: Gets a paginated list of issues for the organization
+      summary: List Tasks
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import Tembo from '@tembo-io/sdk';
+
+            const client = new Tembo({
+              apiKey: process.env['TEMBO_API_KEY'], // This is the default and can be omitted
+            });
+
+            const tasks = await client.task.list();
+
+            console.log(tasks.issues);
+        - lang: Python
+          source: |-
+            import os
+            from tembo import Tembo
+
+            client = Tembo(
+                api_key=os.environ.get("TEMBO_API_KEY"),  # This is the default and can be omitted
+            )
+            tasks = client.task.list()
+            print(tasks.issues)
+  /task/search:
+    get:
+      responses:
+        "200":
+          description: Successfully retrieved search results with pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        title:
+                          type: string
+                        description:
+                          type: string
+                        status:
+                          type: string
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                        organizationId:
+                          type: string
+                          format: uuid
+                        htmlUrl:
+                          type: string
+                          format: uri
+                          description: URL to view this task in the Tembo web application
+                          example: https://app.tembo.io/tasks/123e4567-e89b-12d3-a456-426614174000
+                      required:
+                        - id
+                        - title
+                        - description
+                        - status
+                        - createdAt
+                        - updatedAt
+                        - organizationId
+                        - htmlUrl
+                  meta:
+                    type: object
+                    properties:
+                      totalCount:
+                        type: integer
+                      totalPages:
+                        type: integer
+                      currentPage:
+                        type: integer
+                      pageSize:
+                        type: integer
+                      hasNext:
+                        type: boolean
+                      hasPrevious:
+                        type: boolean
+                    required:
+                      - totalCount
+                      - totalPages
+                      - currentPage
+                      - pageSize
+                      - hasNext
+                      - hasPrevious
+                  query:
+                    type: string
+                required:
+                  - issues
+                  - meta
+                  - query
+        "400":
+          description: Bad request - invalid search query or missing organization ID
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                  - error
+      operationId: getPublic-apiTaskSearch
+      tags:
+        - public-api
+      parameters:
+        - name: q
+          in: query
+          description: Search query to find issues by title or description
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            example: authentication bug
+        - name: limit
+          in: query
+          description: Number of items to return per page (max 100)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+            example: 10
+        - name: page
+          in: query
+          description: Page number to retrieve (starts from 1)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+            example: 1
+      description: Search issues for the organization with pagination
+      summary: Search Tasks
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import Tembo from '@tembo-io/sdk';
+
+            const client = new Tembo({
+              apiKey: process.env['TEMBO_API_KEY'], // This is the default and can be omitted
+            });
+
+            const response = await client.task.search({ q: 'authentication bug' });
+
+            console.log(response.issues);
+        - lang: Python
+          source: |-
+            import os
+            from tembo import Tembo
+
+            client = Tembo(
+                api_key=os.environ.get("TEMBO_API_KEY"),  # This is the default and can be omitted
+            )
+            response = client.task.search(
+                q="authentication bug",
+            )
+            print(response.issues)
+  /repository/list:
+    get:
+      responses:
+        "200":
+          description: Successfully retrieved list of enabled code repositories
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  codeRepositories:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: Unique identifier for the code repository
+                          example: 123e4567-e89b-12d3-a456-426614174000
+                        name:
+                          type: string
+                          description: Name of the repository
+                          example: my-awesome-project
+                        url:
+                          type: string
+                          format: uri
+                          description: Repository URL
+                          example: https://github.com/username/my-awesome-project
+                        branch:
+                          type: string
+                          description: Default branch name
+                          example: main
+                        description:
+                          type: string
+                          description: Repository description
+                          example: An awesome web application built with React
+                        enabledAt:
+                          type: string
+                          format: date-time
+                          description: Timestamp when the repository was enabled
+                          example: "2023-12-01T10:30:00.000Z"
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: Timestamp when the repository record was created
+                          example: "2023-12-01T09:15:00.000Z"
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          description: Timestamp when the repository record was last updated
+                          example: "2023-12-01T11:45:00.000Z"
+                        organizationId:
+                          type: string
+                          format: uuid
+                          description: Organization ID that owns this repository
+                          example: 456e7890-e89b-12d3-a456-426614174001
+                        integration:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: Unique identifier for the integration
+                              example: 123e4567-e89b-12d3-a456-426614174000
+                            type:
+                              type: string
+                              description: Type of integration (e.g., github, gitlab)
+                              example: github
+                            name:
+                              type: string
+                              description: Name of the integration
+                              example: GitHub Integration
+                            configuration:
+                              type: object
+                              additionalProperties: {}
+                              description: Integration configuration settings
+                          required:
+                            - id
+                            - type
+                            - name
+                            - configuration
+                          description: Associated integration details
+                      required:
+                        - id
+                        - name
+                        - enabledAt
+                        - createdAt
+                        - updatedAt
+                        - organizationId
+                    description: Array of enabled code repositories for the organization
+                required:
+                  - codeRepositories
+        "400":
+          description: Bad request - missing organization ID
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Organization ID is required
+                required:
+                  - error
+      operationId: getPublic-apiRepositoryList
+      tags:
+        - public-api
+      parameters: []
+      description: Gets a list of enabled repositories for the organization
+      summary: List Repositories
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import Tembo from '@tembo-io/sdk';
+
+            const client = new Tembo({
+              apiKey: process.env['TEMBO_API_KEY'], // This is the default and can be omitted
+            });
+
+            const repositories = await client.repository.list();
+
+            console.log(repositories.codeRepositories);
+        - lang: Python
+          source: |-
+            import os
+            from tembo import Tembo
+
+            client = Tembo(
+                api_key=os.environ.get("TEMBO_API_KEY"),  # This is the default and can be omitted
+            )
+            repositories = client.repository.list()
+            print(repositories.code_repositories)
+  /automation:
+    post:
+      responses:
+        "200":
+          description: Automation created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  metadata:
+                    default: {}
+                  createdAt:
+                    type: string
+                    default: "2026-01-06T03:06:54.755Z"
+                  updatedAt:
+                    type: string
+                  name:
+                    type: string
+                  jsonContent:
+                    type: "null"
+                  agent:
+                    type:
+                      - string
+                      - "null"
+                  mcpServers:
+                    type: array
+                    items:
+                      type: string
+                  userState:
+                    default: {}
+                  templateId:
+                    type:
+                      - string
+                      - "null"
+                  archivedAt:
+                    type:
+                      - string
+                      - "null"
+                  enabledAt:
+                    type:
+                      - string
+                      - "null"
+                    default: "2026-01-06T03:06:54.756Z"
+                  solutionType:
+                    type:
+                      - string
+                      - "null"
+                    enum:
+                      - PullRequest
+                      - ToolCall
+                      - Response
+                      - null
+                  autoDetectRepositories:
+                    type: boolean
+                    default: true
+                  createdBy:
+                    type:
+                      - string
+                      - "null"
+                  organizationId:
+                    type: string
+                  organization:
+                    type: object
+                    additionalProperties: {}
+                  codeRepositories:
+                    type: array
+                    items: {}
+                  runs:
+                    type: array
+                    items: {}
+                  issues:
+                    type: array
+                    items: {}
+                  eventLogs:
+                    type: array
+                    items: {}
+                required:
+                  - id
+                  - metadata
+                  - createdAt
+                  - updatedAt
+                  - name
+                  - mcpServers
+                  - userState
+                  - autoDetectRepositories
+      operationId: postPublic-apiAutomation
+      tags:
+        - public-api
+      parameters: []
+      description: Create a new automation
+      summary: Create Automation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                jsonContent:
+                  type: object
+                  additionalProperties: {}
+                mcpServers:
+                  type: array
+                  items:
+                    type: string
+                agent:
+                  type: string
+                triggers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      integrationId:
+                        type: string
+                      filters:
+                        type: object
+                        additionalProperties: {}
+                    required:
+                      - name
+                      - integrationId
+                schedules:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      cron:
+                        type: string
+                    required:
+                      - cron
+              required:
+                - name
+                - jsonContent
+  /me:
+    get:
+      responses:
+        "200":
+          description: Successfully retrieved user information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orgId:
+                    type:
+                      - string
+                      - "null"
+                    format: uuid
+                    description: Organization ID for the authenticated user
+                    example: 123e4567-e89b-12d3-a456-426614174000
+                  userId:
+                    type:
+                      - string
+                      - "null"
+                    format: uuid
+                    description: User ID for the authenticated user
+                    example: 456e7890-e89b-12d3-a456-426614174001
+                required:
+                  - orgId
+                  - userId
+      operationId: getPublic-apiMe
+      tags:
+        - public-api
+      parameters: []
+      description: Get information about the current authenticated user
+      summary: Get Current User Info
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import Tembo from '@tembo-io/sdk';
+
+            const client = new Tembo({
+              apiKey: process.env['TEMBO_API_KEY'], // This is the default and can be omitted
+            });
+
+            const me = await client.me.retrieve();
+
+            console.log(me.orgId);
+        - lang: Python
+          source: |-
+            import os
+            from tembo import Tembo
+
+            client = Tembo(
+                api_key=os.environ.get("TEMBO_API_KEY"),  # This is the default and can be omitted
+            )
+            me = client.me.retrieve()
+            print(me.org_id)
