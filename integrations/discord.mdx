@@ -140,37 +140,9 @@ See the [Prompting Guide](/prompting-guide) for more tips on writing effective t
 
 ## Managing Your API Key
 
-### Registering Your Key
-
-When you first use the bot, you'll need to register your Tembo API key:
-
-```
-/setup key:YOUR_TEMBO_API_KEY
-```
-
-Your key is:
-- Validated against the Tembo API before storage
-- Encrypted using AES-256-GCM encryption
-- Stored securely in a Cloudflare D1 database
-- Never shared with other users
-
-### Updating Your Key
-
-To update your API key (for example, after rotation), simply run `/setup` again with your new key:
-
-```
-/setup key:YOUR_NEW_API_KEY
-```
-
-### Removing Your Key
-
-If you want to unregister and remove your API key from the bot:
-
-```
-/unregister
-```
-
-You'll need to re-register with `/setup` to use the bot again.
+- **Update key**: Run `/setup key:YOUR_NEW_API_KEY` (replaces existing key)
+- **Remove key**: Run `/unregister` to delete your stored key
+- **Security**: Keys are AES-256-GCM encrypted and never shared between users
 
 ## Privacy and Ephemeral Messages
 
