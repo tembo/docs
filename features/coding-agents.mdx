@@ -19,9 +19,9 @@ Powered by Anthropic's Claude models. Best balance of quality, reliability, and 
 
 ### Codex
 
-Powered by OpenAI's GPT-5 models with configurable reasoning levels.
+Powered by OpenAI's Responses API (GPT-5 family) with configurable reasoning effort.
 
-**Models:** `gpt-5-medium` (default), `gpt-5-minimal`, `gpt-5-low`, `gpt-5-high`, `gpt-5-codex`
+**Models:** `gpt-5.2` (default), `gpt-5.1-codex`, `gpt-5.1-codex-max`, `gpt-5.1-codex-mini`
 
 ### Opencode
 
@@ -45,7 +45,7 @@ Use the format `agentType:model`:
 
 ```
 claudeCode:claude-4-5-sonnet
-codex:gpt-5-high
+codex:gpt-5.2
 cursor:grok
 ```
 
@@ -55,9 +55,9 @@ Default: `claudeCode:claude-opus-4-5`
 
 | Use Case | Recommended Models |
 |----------|-------------------|
-| Most tasks | `claude-4-5-sonnet`, `gpt-5-medium` |
-| Quick fixes | `claude-4-5-haiku`, `gpt-5-minimal` |
-| Complex refactoring | `claude-opus-4-5`, `gpt-5-high` |
+| Most tasks | `claude-4-5-sonnet`, `gpt-5.2` |
+| Quick fixes | `claude-4-5-haiku`, `gpt-5.1-codex-mini` |
+| Complex refactoring | `claude-opus-4-5`, `gpt-5.1-codex-max` |
 
 ## Rule Files
 
