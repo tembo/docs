@@ -28,74 +28,30 @@ Tembo supports multiple file names for compatibility with other AI coding agents
 
 ## Creating Your First Rule File
 
-Create a file named `tembo.md` in your repository root and include relevant information about your project. Here's a complete example to get you started:
+Create a file named `tembo.md` in your repository root with project context. Here's a minimal example:
 
 ```markdown
 # Project Context
 
-This is a React + TypeScript web application with a Node.js backend API.
+React + TypeScript frontend with Node.js backend.
 
-## Setup Commands
-
+## Commands
 - `npm install` - Install dependencies
-- `npm run dev` - Start development server (frontend on :3000, backend on :4000)
-- `npm run build` - Build for production
-- `npm test` - Run test suite
-- `npm run lint` - Run ESLint and fix issues
+- `npm run dev` - Start dev server
+- `npm test` - Run tests
 
-## Code Style Guidelines
+## Code Style
+- TypeScript strict mode, explicit types
+- Functional React components with hooks
+- Conventional commits: `type(scope): message`
 
-### TypeScript
-- Use strict mode
-- Define explicit types, avoid `any`
-- Prefer interfaces for object shapes
-- Use type guards for runtime checks
-
-### React
-- Use functional components with hooks
-- Avoid class components
-- Extract reusable logic into custom hooks
-- Keep components focused on single responsibilities
-
-### Formatting
-- Follow ESLint and Prettier configurations
-- Use conventional commit format: `type(scope): message`
-- Sort imports alphabetically
-
-## Testing Guidelines
-
-- Write unit tests for all business logic
-- Use Jest for unit tests
-- Use React Testing Library for component tests
-- Target >80% code coverage
-- Run tests before committing: `npm test`
-
-## Project Structure
-
-- `/src/components` - Reusable UI components
-- `/src/pages` - Page-level components
-- `/src/hooks` - Custom React hooks
-- `/src/services` - API calls and business logic
-- `/src/utils` - Helper functions
-- `/src/types` - TypeScript type definitions
+## Structure
+- `/src/components` - UI components
+- `/src/services` - API and business logic
 - `/tests` - Test files
-- `/docs` - Documentation
-
-## Development Workflow
-
-- Create feature branches from `main`
-- Submit pull requests for code review
-- Squash commits when merging
-- Update documentation when adding features
-- Keep changelog up to date
-
-## Architecture Principles
-
-- Separation of concerns between UI and business logic
-- Use dependency injection for services
-- Implement error boundaries for React components
-- Handle errors gracefully with user-friendly messages
 ```
+
+Expand sections as needed for your project's complexity.
 
 ## What to Include
 
