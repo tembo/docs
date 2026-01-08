@@ -127,14 +127,28 @@ Without the `@tembo` tag, Tembo will not respond to the comment, allowing for cl
 
 ## Tagging Tembo in Issues
 
-You can tag Tembo directly in GitHub issues to start work on implementing the requested feature or fix.
+You can mention `@tembo` in GitHub issues to start work on implementing a feature or fix. Tembo supports two workflows:
 
-**Example usage:**
+### Commenting on Existing Issues
+
+Add a comment with `@tembo` to any existing issue to have Tembo start working on it:
 
 ```
 @tembo Please implement the API endpoint described in this issue.
 Include proper error handling and follow our existing patterns.
 ```
+
+Tembo will read the issue title and description for context, then create a PR addressing the request.
+
+### Mentioning Tembo in External PRs
+
+You can also mention `@tembo` in pull requests that weren't created by Tembo (external PRs). This is useful when you want Tembo to help with changes on a PR you or a teammate opened:
+
+```
+@tembo Can you add unit tests for this new component?
+```
+
+Tembo will push commits directly to the existing PR branch rather than creating a new PR.
 
 ## Failed Workflow Detection
 
