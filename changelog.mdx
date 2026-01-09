@@ -4,6 +4,40 @@ description: "Keep track of changes and updates to Tembo"
 icon: "clock-rotate-left"
 ---
 
+<Update label="2026-01-09" tags={["Codex", "OpenCode", "Cursor CLI", "Pull Requests", "MCP", "Automations"]}>
+
+## Codex support
+
+You can now run Tembo tasks with the Codex agent, powered by OpenAI.
+
+See [Coding Agents](/features/coding-agents).
+
+## OpenAI models in OpenCode
+
+OpenCode can now use OpenAI models in addition to Anthropic models.
+
+## Default PR review agent: Codex + GPT-5.2
+
+When Tembo reviews pull requests, it now defaults to `codex:gpt-5.2`.
+
+![Tembo Codex + OpenAI](/images/tembo-codex-openai.png)
+
+## Cursor CLI: Gemini 3 Flash
+
+Added Gemini 3 Flash as an available model in the Cursor CLI.
+
+Custom PR title instructions: You can now provide custom instructions for how Tembo titles pull requests, so generated PRs match your team’s conventions.
+
+New MCP servers:
+- Notion MCP
+- Postgres MCP
+
+New automation template: Enrich GitHub issues.
+
+Also shipped various bug fixes and stability improvements.
+
+</Update>
+
 <Update label="2025-12-11" tags={["Automations", "Templates", "Pricing", "UI"]}>
 
 ![Automations](/images/automation-light.png)
