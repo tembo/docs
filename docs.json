@@ -91,36 +91,6 @@
 				]
 			},
 			{
-				"tab": "Automations Library",
-				"icon": "robot",
-				"groups": [
-					{
-						"group": "Tutorials",
-						"pages": [
-							"automations-library/index",
-							"automations-library/auto-pr-description",
-							"automations-library/prioritize-sentry-errors",
-							"automations-library/automated-pr-reviews",
-							"automations-library/security-vulnerability-scan",
-							"automations-library/enrich-linear-issues",
-							"automations-library/product-changelog",
-							"automations-library/code-quality-cicd",
-							"automations-library/team-communication",
-							"automations-library/content-documentation"
-						]
-					},
-					{
-						"group": "Tips",
-						"pages": [
-							"automations-library/tips-writing-prompts",
-							"automations-library/tips-state-management",
-							"automations-library/tips-error-handling",
-							"automations-library/tips-performance"
-						]
-					}
-				]
-			},
-			{
 				"tab": "API Reference",
 				"icon": "code",
 				"openapi": "/openapi.documented.yml"
@@ -169,26 +139,6 @@
 		{
 			"source": "/billing",
 			"destination": "/admin/billing"
-		},
-		{
-			"source": "/automation-examples",
-			"destination": "/automations-library"
-		},
-		{
-			"source": "/automation-examples/:slug*",
-			"destination": "/automations-library/:slug*"
-		},
-		{
-			"source": "/automations-library/overview",
-			"destination": "/automations-library"
-		},
-		{
-			"source": "/automations-library/common-patterns",
-			"destination": "/automations-library"
-		},
-		{
-			"source": "/automations-library/advanced-tips",
-			"destination": "/automations-library/tips-writing-prompts"
 		}
 	]
 }
