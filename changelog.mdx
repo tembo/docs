@@ -4,6 +4,50 @@ description: "Keep track of changes and updates to Tembo"
 icon: "clock-rotate-left"
 ---
 
+<Update label="2026-01-10" tags={["Slack", "Linear", "GitHub", "Monitoring", "UI", "Automations"]}>
+
+## Slack Integration Enhancements
+
+New Slack CLI command for sending messages directly via the Tembo MCP. Additionally, Tembo now sends Slack alerts for GitHub feedback loop events, keeping your team informed in real-time when pull request feedback sessions start.
+
+## Linear Onboarding Improvement
+
+New users now see a Linear ticket assignment card during onboarding, making it easier to get started with issue automation. Also added a toggle filter in Linear settings to control which issues trigger Tembo automation.
+
+## GitHub Automation Updates
+
+- **Issue body mentions**: Tembo now detects `@tembo` mentions in GitHub issue bodies, not just comments
+- **Self-review for PRs**: Enable Tembo to automatically review its own pull requests for quality checks
+- **PR author filter**: Filter workflow run failed triggers by who opened the PR
+- **Improved webhook handling**: Better resilience for webhooks without installation data
+
+## Task Improvements
+
+- **Task cancellation**: You can now cancel tasks that are in active feedback loop sessions
+- **External links in logs**: Task logs now display extracted external links for easier navigation
+- **Automated issue resolution**: New `run_agent` task type for automated fixes and feedback loops
+
+## UI Enhancements
+
+- **Command menu shortcuts**: Dynamic platform-aware keyboard shortcuts (Cmd on Mac, Ctrl on Windows/Linux)
+- **Branch dropdown**: Added pagination and server-side search for repositories with many branches
+- **Out-of-credit banner**: Clear visibility when credits are low with dynamic call-to-action
+- **Auto-save settings**: Workspace and user names now save automatically when you click away
+- **Dark mode fixes**: Corrected icon inversions for GitLab, Sentry, and mentions
+
+## Settings
+
+- **AI branch naming**: Configure custom instructions for how Tembo names branches in organization settings
+- **Workspace slugs**: Added validation to prevent invalid workspace slug creation
+
+## Infrastructure
+
+Added comprehensive monitoring infrastructure with Tailscale service discovery for Prometheus, node exporter, and Grafana dashboards.
+
+Also shipped various bug fixes and stability improvements.
+
+</Update>
+
 <Update label="2026-01-09" tags={["Codex", "OpenCode", "Cursor CLI", "Pull Requests", "MCP", "Automations"]}>
 
 ![Tembo Codex + OpenAI](/images/tembo-codex-openai.png)
