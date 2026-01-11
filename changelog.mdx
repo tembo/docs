@@ -4,6 +4,39 @@ description: "Keep track of changes and updates to Tembo"
 icon: "clock-rotate-left"
 ---
 
+<Update label="2026-01-11" tags={["Billing", "Models", "Credits", "Bug Fixes"]}>
+
+## Plan Rename: Pro+ is now Max
+
+The Pro+ subscription plan has been renamed to **Max**. This is a naming change only—all features, pricing, and benefits remain the same. No action is required from existing subscribers.
+
+## New Model: Kimi K2
+
+Added support for **Kimi K2** via AWS Bedrock. This model is now available for use in your Tembo tasks.
+
+## Out of Credits Handling
+
+Improved user experience when credits are depleted:
+
+- Clear messaging when you run out of credits
+- Workflows are automatically prevented from running when credits are depleted
+- Better visibility into credit status across the dashboard
+
+## Editor Improvements
+
+Added support for custom images in the full-page editor, making it easier to include visual content in task descriptions and documentation.
+
+## Bug Fixes & Improvements
+
+- Fixed an issue where users couldn't select a repository if they only had one connected
+- Improved Claude Code output parsing with better type guards and null handling
+- Fixed automation integration icons display logic
+- Resolved queue job dependency issues for cancelled and failed jobs
+- Token usage tracking improvements
+- Simplified PR approval guidelines (silence-as-approval)
+
+</Update>
+
 <Update label="2026-01-09" tags={["Codex", "OpenCode", "Cursor CLI", "Pull Requests", "MCP", "Automations"]}>
 
 ![Tembo Codex + OpenAI](/images/tembo-codex-openai.png)
