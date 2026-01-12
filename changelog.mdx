@@ -4,6 +4,24 @@ description: "Keep track of changes and updates to Tembo"
 icon: "clock-rotate-left"
 ---
 
+<Update label="2026-01-12" tags={["Automations", "Linear", "Models", "UI"]}>
+
+## Linear issue automations
+
+- Added an `openedBy` filter so Linear issue automations only run for issues opened by specific users; defaults now include workspace members and the Tembo app actor.
+- Introduced a `temboIssues` toggle to safely opt into automations for Tembo-created Linear issues (off by default).
+- Expanded tests for Linear issue triggers and title formatting to keep the new filters reliable.
+
+## Model routing
+
+- Restored routing for `claude-opus-4-5` through Bedrock, keeping that model available for hosted runs.
+
+## UI polish
+
+- Sidebar stacked cards now fade in and recalculate height after sidebar changes, reducing layout jumps and keeping callouts readable.
+
+</Update>
+
 <Update label="2026-01-09" tags={["Codex", "OpenCode", "Cursor CLI", "Pull Requests", "MCP", "Automations"]}>
 
 ![Tembo Codex + OpenAI](/images/tembo-codex-openai.png)
