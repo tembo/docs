@@ -182,6 +182,25 @@ Tembo keeps you informed throughout the task lifecycle:
 **Channel updates when complete:**
 - Links to generated pull requests with summary of changes
 
+## Feedback Loop Integration
+
+When you create a task from Slack and later provide feedback on the pull request through GitHub or GitLab (using the [Feedback Loop](/features/feedback-loop)), Tembo will automatically notify you back in the Slack thread when your feedback has been processed:
+
+**What happens:**
+1. You mention `@tembo` in Slack to create a task
+2. Tembo creates a pull request on GitHub or GitLab
+3. You review the PR and leave feedback by mentioning `@tembo` in your GitHub/GitLab review or comments
+4. Tembo processes your feedback and updates the PR
+5. **Tembo posts a notification back to the original Slack thread** with a summary of changes and a link to the updated PR
+
+**Notification includes:**
+- A summary of the changes made based on your feedback
+- "View Updated PR" button to review the changes
+- "View on Tembo" button to see the full task details
+- Status reactions on your feedback messages (⌛️ while processing, ✅ when complete)
+
+This creates a seamless workflow where you can initiate tasks in Slack, review code in your Git provider, and get updates back in Slack without switching contexts.
+
 ## Best Practices
 
 **Write clear, specific task descriptions:**
