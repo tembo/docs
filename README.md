@@ -1,17 +1,23 @@
 # Tembo Documentation
 
-Tembo documentation is authored and published from this repository using [Mintlify](https://mintlify.com). You can use it to keep product guides, integration walkthroughs, API references, and release notes in sync with the Tembo platform.
+This repository is the single source for Tembo's public documentation site. It combines the copy, assets, configuration, and API schemas that Mintlify uses to publish product guides, integration walkthroughs, automation playbooks, and release notes.
 
-## Overview
+## Repository layout
 
-This repo contains everything that powers the public documentation site, including:
+| Path | What lives here |
+| --- | --- |
+| `docs.json` | Global Mintlify configuration that controls navigation, branding, and site settings. |
+| `welcome.mdx` | Landing page content for the documentation site. |
+| `features/` | Feature deep-dives and how-to guides for core product surfaces. |
+| `integrations/` | End-to-end setup guides for partner integrations. |
+| `automations-library/` | Automation-specific playbooks and templates. |
+| `admin/` | Account, billing, and security administration docs. |
+| `resources/` | Evergreen resources that support broader customer education. |
+| `snippets/` | Reusable callouts and shared content fragments. |
+| `images/` and `logo/` | Static assets referenced across pages. |
+| `openapi.documented*.yml` | Source OpenAPI specs that back the API reference experience. |
 
-- MDX pages for onboarding, feature guides, integrations, security, billing, and the API reference
-- Shared content snippets and Mintlify theme assets
-- `docs.json`, which controls navigation, branding, and global configuration
-- Two OpenAPI specs that back the reference experience
-
-## Quick Start
+## Local development
 
 ### Prerequisites
 
@@ -25,64 +31,52 @@ Install the CLI if you have not already:
 npm install --global mintlify
 ```
 
-### Run the docs locally
+### Install dependencies
 
-1. From the repository root (where `docs.json` lives) install dependencies for the Mintlify project:
+From the repository root (where `docs.json` lives) run:
 
 ```bash
 mintlify install
 ```
 
-2. Start the development server:
+### Start a local preview
 
 ```bash
 mintlify dev
 ```
 
-3. Open the preview (defaults to `http://localhost:3000`) and keep the server running while you edit content.
+The dev server defaults to `http://localhost:3000`. Keep it running while you edit content so you can preview changes in real time.
 
-### Before you open a PR
+### Validate before opening a PR
 
-- Validate the build with `mintlify build`
-- Click through pages you touched to confirm navigation, links, and assets render correctly
-- Run spelling/grammar checks in your editor when possible
+- Build the site locally with `mintlify build`.
+- Click through every page you touched to make sure navigation, links, and assets render correctly.
+- Run spelling and grammar checks from your editor or tooling where possible.
 
-## Content Workflow
+## Content workflow
 
-- Every MDX file must include `title` and `description` frontmatter.
-- Follow the voice, formatting, and accessibility guidance in `AGENTS.md`.
-- Use relative links for internal navigation and add language hints (for example, label JavaScript fences with `js`) on code blocks.
-- Test or run every code sample you include; remove stale snippets instead of guessing.
-- Keep the navigation tree in `docs.json` aligned with any new or renamed pages.
-- Reuse snippets from `snippets/` when you need repeated callouts or warnings.
+- Every MDX file must begin with `title` and `description` frontmatter.
+- Follow the voice, formatting, and accessibility guidance documented in `AGENTS.md`.
+- Use relative paths for internal links and add language tags (for example, ` ```ts `) on all code blocks.
+- Test or execute each code sample; remove stale snippets instead of guessing at fixes.
+- Update `docs.json` whenever you add, rename, or move pages so navigation stays accurate.
+- Prefer reusing snippets from `snippets/` for repeated callouts, warnings, and notes.
+- Store new images in `images/` (or `logo/` for brand assets) and reference them with relative paths.
+- When you edit the API reference, update the relevant `openapi.documented*.yml` file and confirm the changes render as expected in the preview.
 
-## Project Structure
+## Review and deployment
 
-```
-.
-├── docs.json                      # Global Mintlify config and navigation
-├── welcome.mdx                    # Landing page
-├── features/                      # Feature documentation
-├── integrations/                  # Integration guides
-├── automations-library/           # Automation-specific guides
-├── snippets/                      # Reusable content blocks
-├── images/ | logo/                # Static assets
-└── openapi.documented*.yml        # API reference specifications
-```
-
-## Review, Merge, and Publish
-
-- Open pull requests with a clear summary of the reader outcome you changed.
-- Request reviews from product or engineering owners when you touch technical workflows.
-- Merging to `main` triggers the Mintlify GitHub integration to deploy automatically, so double-check previews before merging.
-- After deployment, spot-check the live site for high-impact paths (welcome flow, current changelog, latest feature pages).
+- Summarize the reader benefit in every pull request description.
+- Request review from the product or engineering owner when you change technical workflows or add new code samples.
+- Merging to `main` triggers the Mintlify GitHub integration to deploy automatically, so double-check the local preview (and, if available, the generated preview URL) before merging.
+- After deployment, spot-check high-traffic flows such as the welcome page, current changelog, and any newly added guides.
 
 ## Troubleshooting
 
 - **Mintlify CLI missing or outdated**: Reinstall with `npm install --global mintlify`.
-- **Dev server fails to boot**: Run `mintlify install`, clear any local port conflicts, and retry `mintlify dev`.
-- **Broken links or 404s**: Confirm the page exists and is referenced in `docs.json`.
-- **Frontmatter errors**: Ensure every MDX file starts with a `title` and `description`.
+- **Dev server fails to boot**: Run `mintlify install`, resolve local port conflicts, then retry `mintlify dev`.
+- **Broken links or 404s**: Confirm the destination page exists and is referenced correctly in `docs.json`.
+- **Frontmatter errors**: Ensure every MDX file starts with `title` and `description`.
 
 ## Resources
 
