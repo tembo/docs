@@ -174,49 +174,24 @@ You can add custom MCP servers in your organization settings. Tembo supports thr
 
 ## Configuration Format
 
-Custom MCP servers can be configured using either object or array format:
+Custom MCP servers support two JSON formats:
 
-### Object Format
-
+**Object format** (recommended) - keyed by server name:
 ```json
 {
   "mcpServers": {
-    "my-server": {
-      "command": "node",
-      "args": ["server.js"],
-      "env": {
-        "API_KEY": "key"
-      }
-    },
-    "api-server": {
-      "url": "https://api.example.com/mcp",
-      "headers": {
-        "Authorization": "Bearer token"
-      }
-    }
+    "my-server": { "command": "node", "args": ["server.js"], "env": { "API_KEY": "key" } },
+    "api-server": { "url": "https://api.example.com/mcp" }
   }
 }
 ```
 
-### Array Format
-
+**Array format** - explicit name and type fields:
 ```json
 {
   "mcpServers": [
-    {
-      "name": "my-server",
-      "type": "stdio",
-      "command": "node",
-      "args": ["server.js"],
-      "env": {
-        "API_KEY": "key"
-      }
-    },
-    {
-      "name": "api-server",
-      "type": "http",
-      "url": "https://api.example.com/mcp"
-    }
+    { "name": "my-server", "type": "stdio", "command": "node", "args": ["server.js"] },
+    { "name": "api-server", "type": "http", "url": "https://api.example.com/mcp" }
   ]
 }
 ```
