@@ -4,6 +4,57 @@ description: "Keep track of changes and updates to Tembo"
 icon: "clock-rotate-left"
 ---
 
+<Update label="2026-01-14" tags={["Performance", "Integrations", "Payments", "CLI", "Monitoring", "UI"]}>
+
+## Payment Receipt Emails
+
+Tembo now sends automated payment receipt emails via Resend when Stripe payments are processed. Users receive professional, branded receipts for all transactions, improving payment transparency and record-keeping.
+
+## Instant Model Mode
+
+Added a new "instant mode" for faster AI generation. This mode optimizes response times for simpler tasks, allowing Tembo to complete quick operations more efficiently without spinning up full sandbox environments.
+
+## CLI Slack Integration
+
+New CLI command for sending Slack messages directly through Tembo MCP. Developers can now integrate Slack notifications into their workflows and automations via the command line.
+
+```bash
+tembo slack send --channel "#general" --message "Deployment complete"
+```
+
+## Performance Improvements
+
+- Added in-memory caching for tags, significantly reducing database queries and improving dashboard load times
+- Improved telemetry initialization and error handling for better observability
+- Streamlined configuration management across the platform
+
+## Linear Integration Enhancements
+
+- New toggle filter for Tembo issue automation, giving teams more control over which issues Tembo processes
+- Added Linear ticket assignment card during onboarding to help new users get started faster
+
+## GitHub Feedback Loop
+
+- Added Slack alerts for GitHub feedback loop events, keeping teams informed of PR review activity
+- Enabled Tembo self-review capability for pull request reviews
+- Repository polling now uses dynamic interval control for more efficient syncing
+
+## UI Updates
+
+- Replaced clock icon with branch icon for pull requests, improving visual clarity
+- Updated to custom Tembo icons throughout the interface
+- Improved default tag colors for better visual representation
+- Added external link extraction and rendering in task logs
+
+## Bug Fixes
+
+- Fixed GitHub organization connection error handling
+- Resolved CloudFront SSL certificate issues for staging API domain
+- Fixed alert button functionality
+- Various TypeScript type assertion and lint warning fixes
+
+</Update>
+
 <Update label="2026-01-09" tags={["Codex", "OpenCode", "Cursor CLI", "Pull Requests", "MCP", "Automations"]}>
 
 ![Tembo Codex + OpenAI](/images/tembo-codex-openai.png)
