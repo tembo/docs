@@ -4,6 +4,33 @@ description: "Keep track of changes and updates to Tembo"
 icon: "clock-rotate-left"
 ---
 
+<Update label="2026-01-13" tags={["Jira", "Automations", "Triggers"]}>
+
+## Jira Issue Triggers
+
+Tembo now supports Jira Issue Triggers, enabling automated workflows when issues are added to Jira boards. This powerful new feature allows you to automatically trigger tasks based on Jira board activity.
+
+### Key Features
+
+- **Board-based triggers**: Automatically trigger workflows when issues are added to specific Jira boards
+- **Status change detection**: Trigger automations when issues move between columns (status changes)
+- **Project filtering**: Configure triggers to only activate for specific Jira projects
+- **Status filtering**: Set up triggers for specific board statuses/columns
+- **New issue support**: Optionally trigger on newly created issues in addition to status changes
+
+### How to Use
+
+1. Connect your Jira integration in Tembo
+2. Create a new automation with the "Issue Added to Board" trigger
+3. Configure filters for projects, boards, and statuses
+4. Define your workflow actions
+
+This integration makes it easy to automate code changes, pull requests, and other development tasks directly from your Jira workflow.
+
+See [Jira integration documentation](/integrations/jira).
+
+</Update>
+
 <Update label="2026-01-09" tags={["Codex", "OpenCode", "Cursor CLI", "Pull Requests", "MCP", "Automations"]}>
 
 ![Tembo Codex + OpenAI](/images/tembo-codex-openai.png)
