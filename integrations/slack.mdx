@@ -13,26 +13,12 @@ Connect Tembo to Slack to trigger background tasks with any coding agent (Claude
     Navigate to the [Integrations page](https://app.tembo.io/integrations) in Tembo and click the `Install` button next to Slack.
   </Step>
   <Step title="Authorize Slack Permissions">
-    Authorize Tembo to access your Slack workspace. The bot requires the following permissions:
+    Authorize Tembo to access your Slack workspace. The bot requests permissions to:
 
-    | Permission | Purpose |
-    |------------|---------|
-    | `app_mentions:read` | Detect when users mention @tembo |
-    | `channels:history` | Read messages in public channels for context |
-    | `channels:read` | Access basic channel information |
-    | `chat:write` | Send messages and status updates |
-    | `commands` | Handle slash commands |
-    | `files:write` | Share diff images and code snippets |
-    | `groups:history` | Read messages in private channels for context |
-    | `groups:read` | Access private channel information |
-    | `im:history` | Read direct messages for context |
-    | `im:read` | Access direct message information |
-    | `im:write` | Send direct messages |
-    | `mpim:history` | Read group direct messages for context |
-    | `mpim:read` | Access group direct message information |
-    | `mpim:write` | Send group direct messages |
-    | `reactions:write` | Add status indicators to messages |
-    | `users:read` | Access user information for personalization |
+    - **Read messages** in channels, DMs, and threads (for conversation context)
+    - **Send messages** and status updates (including DMs and reactions)
+    - **Handle slash commands** and share files/code snippets
+    - **Access user info** for personalization
 
     You'll be redirected back to the Integrations page when authorization is complete.
 
