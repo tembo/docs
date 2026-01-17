@@ -8,78 +8,41 @@ The Tembo Sandbox provides a secure, isolated environment where Tembo operates t
 
 ## Pre-installed Tools and Runtimes
 
-The Tembo Sandbox includes the following base dependencies and their versions:
+Tembo builds the sandbox image from a pinned Nix flake. Tool versions track that pin and are updated regularly—run `tool --version` or `tembo --version` inside a session to check the current build.
 
-### System Tools
+### Core shell & diagnostics
 
-| Tool | Version | Description |
-|------|---------|-------------|
-| **curl** | 8.14.1 | Command-line tool for transferring data with URLs |
-| **lsof** | 4.99.4 | Lists open files and network connections |
-| **strace** | 6.15 | System call tracer for debugging and monitoring |
+- `bash`, `toybox`, `curl`, `wget`, `jq`, `ripgrep`, `ast-grep`, `bat`, `vim`, `lnav`, `direnv`, `httpie`, `strace`, `lsof`, `inotifywait`/`inotifywatch` (from `inotify-tools`), and `gnumake`
 
-### Version Control and Authentication
+### Version control & automation
 
-| Tool | Version | Description |
-|------|---------|-------------|
-| **git-credential-tembo** | unknown | Tembo-specific Git credential helper |
+- `git`, GitHub CLI (`gh`), the Tembo credential helper (`git-credential-tembo`), the `tembo` CLI, `awscli2`, and the `devcontainer` CLI (available in the QEMU sandbox)
+- Chromium is pre-installed for browser automation workflows (Playwright MCP, headless testing, etc.)
 
-### Code Quality and Analysis
+### JavaScript and TypeScript
 
-| Tool | Version | Description |
-|------|---------|-------------|
-| **ShellCheck** | 0.10.0 | Static analysis tool for shell scripts |
+- Node.js 22 LTS, pnpm, and Bun for installing and running modern JavaScript and TypeScript projects
 
-### HTTP and API Tools
+### Python
 
-| Tool | Version | Description |
-|------|---------|-------------|
-| **httpie** | 3.2.4 | Modern, user-friendly HTTP client for API testing |
+- `uv` (bundled with Python 3.12) and `ruff` for linting; use `uv python`/`uv pip` to manage virtual environments without needing `pipx`
 
-### JavaScript/Node.js Ecosystem
+### Go and Rust
 
-| Tool | Version | Description |
-|------|---------|-------------|
-| **nodejs** | 22.17.0 | JavaScript runtime built on Chrome's V8 engine |
-| **bun** | 1.2.18 | Fast all-in-one JavaScript runtime and toolkit |
-| **pnpm** | 10.12.4 | Fast, disk space efficient package manager |
+- Go 1.22+ and the Rust toolchain manager (`rustup`) so you can install and pin specific toolchains on demand
 
-### Python Ecosystem
+### Ruby
 
-| Tool | Version | Description |
-|------|---------|-------------|
-| **python3** | 3.12.11 | Modern Python programming language |
-| **pipx** | 1.7.1 | Install and run Python applications in isolated environments |
+- Ruby 3.3 with Bundler, RuboCop, and RSpec core
 
-### Ruby Ecosystem
+### Elixir and Erlang
 
-| Tool | Version | Description |
-|------|---------|-------------|
-| **ruby** | 3.3.6 | Dynamic, object-oriented programming language |
-| **bundler-2.6.9** | 2.6.9 | Manages Ruby gem dependencies |
-| **ruby3.3-rubocop-1.75.2** | 1.75.2 | Ruby static code analyzer and formatter |
+- Erlang/OTP 28, Elixir 1.18, Hex, Rebar3, and Erlfmt for BEAM-based projects
 
-### Elixir/Erlang Ecosystem
+### AI agent CLIs and MCP tooling
 
-| Tool | Version | Description |
-|------|---------|-------------|
-| **erlang-28.0.1** | 28.0.1 | Concurrent, fault-tolerant programming platform |
-| **elixir** | 1.18.4 | Dynamic, functional programming language |
-| **hex** | 2.2.2 | Package manager for the Erlang ecosystem |
-| **rebar3** | 3.25.0 | Erlang build tool and package manager |
-| **erlfmt** | 1.7.0 | Erlang code formatter |
-
-### Go Ecosystem
-
-| Tool | Version | Description |
-|------|---------|-------------|
-| **go** | 1.24.4 | Open source programming language from Google |
-
-### Rust Ecosystem
-
-| Tool | Version | Description |
-|------|---------|-------------|
-| **rustup** | 1.28.2 | Rust toolchain installer and version management tool |
+- CLI wrappers for Codex, Claude Code, Cursor, OpenCode, AMP, and Gemini so you can run the same assistants Tembo uses inside the sandbox
+- Pre-configured MCP servers (GitHub, GitLab, Notion, Playwright, Postgres, and Sentry) are exposed through `/etc/tembo/mcp.json`
 
 ## Sandbox Types
 
@@ -91,7 +54,7 @@ The Docker sandbox is the default environment type, offering:
 
 - **Fast startup**: Containers start quickly for rapid task execution
 - **Wide compatibility**: Works with most common development workflows
-- **Resource efficient**: Lightweight containerization with minimal overhead
+- **Resource efficient**: Lightweight containerization with minimal overhead (ideal for quick edits and lint/test loops)
 - **Best for**: Most general-purpose tasks, web applications, and standard development workflows
 
 ### QEMU
@@ -101,9 +64,10 @@ The QEMU sandbox provides full virtual machine isolation using QEMU/KVM virtuali
 - **Complete isolation**: Full VM-level isolation for enhanced security
 - **System-level access**: Support for tasks requiring deeper system integration
 - **Custom kernels**: Ability to run specialized kernel configurations
+- **Nested tooling**: Includes Docker-in-Docker support, the `devcontainer` CLI, and 4 vCPUs / 8 GB RAM by default for heavier workloads
 - **Best for**: Tasks requiring enhanced isolation, system-level operations, or specialized environments
 
-You can configure the sandbox type at the organization, issue, or job level. If not specified, Tembo defaults to the Docker sandbox type.
+You can configure the sandbox type at the organization, issue, or job level. Tembo resolves the selection in this order: job override → issue override → organization default. If nothing is specified, Tembo defaults to the Docker sandbox type.
 
 ## Environment Characteristics
 
@@ -116,6 +80,12 @@ The Tembo Sandbox provides strong isolation and security guarantees:
 - **Network security**: Controlled network access for security
 - **Resource limits**: CPU and memory constraints to ensure stability
 
+### Workspace Layout
+
+- The default working directory is `/workspace`
+- Each repository is cloned to `/workspace/repo-<repository-id>` to prevent naming collisions
+- Multi-repo tasks surface a `<multirepo_instructions>` block with the exact directories Tembo created
+
 ### Development Workflow Integration
 
 The sandbox environment is designed to integrate seamlessly with your development workflow:
@@ -124,11 +94,13 @@ The sandbox environment is designed to integrate seamlessly with your developmen
 - **Repository access**: Full access to your repository contents and history
 - **Build tool compatibility**: Support for common build systems and package managers
 - **Testing frameworks**: Compatible with popular testing tools and frameworks
-- **Nix dev shell support**: Automatically detects and uses Nix flakes for reproducible development environments
+- **Nix dev shell support (QEMU)**: Automatically detects Nix flakes and enters your `devShells.x86_64-linux.default`
+- **Dev container support (QEMU)**: Detects `.devcontainer/devcontainer.json` and can run the `devcontainer` CLI inside the VM
+- **Tembo & agent CLIs**: Access the `tembo` CLI, GitHub CLI, and agent CLIs (Claude, Cursor, Codex, etc.) for workflows that need direct command execution
 
 ### Nix Development Shells
 
-Tembo's sandbox environment supports Nix flakes for reproducible development environments. To use this feature, your repository must have a `flake.nix` file in the root directory that defines a development shell named `default` for the `x86_64-linux` platform.
+Tembo's QEMU sandbox supports Nix flakes for reproducible development environments. (Docker sandboxes warn and skip dev shells.) To use this feature, your repository must have a `flake.nix` file in the root directory that defines a development shell named `default` for the `x86_64-linux` platform.
 
 **Requirements:**
 - Your `flake.nix` must specify `devShells.x86_64-linux.default`
@@ -162,8 +134,35 @@ When configured correctly, Tembo will:
 - **Make available** all packages and environment variables defined in your Nix development shell
 - **Ensure reproducibility** across different tasks and environments
 
-**How it works:**
-When a coding agent executes commands in the sandbox, it automatically runs them within your Nix development shell if a `flake.nix` is detected. This means all build commands, tests, and scripts will have access to the exact dependencies specified in your flake, ensuring consistent behavior across all task executions.
+> Tip: run `nix develop` locally to confirm the shell resolves before relying on it in the sandbox.
+
+**How it works (QEMU only):**
+When a coding agent executes commands in the sandbox, Tembo automatically enters your Nix development shell if a `flake.nix` is detected. Docker sandboxes log a warning and continue with the base image so you always get a working shell, even without QEMU.
+
+### Dev Containers (QEMU only)
+
+When the QEMU sandbox finds `.devcontainer/devcontainer.json` in your repository it automatically runs `devcontainer up --workspace-folder .` and routes subsequent agent commands through `devcontainer exec`. This lets Tembo reuse the same Docker-based development environment your team uses locally (including nested Docker).
+
+**Example `.devcontainer/devcontainer.json`:**
+```json
+{
+  "name": "Tembo Devcontainer",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
+  "postCreateCommand": "pnpm install"
+}
+```
+
+Keep devcontainers lean—large image builds increase startup time even inside the VM. If you need to disable devcontainer support for a particular repo, remove or rename the `.devcontainer` directory.
+
+## Environment Variables
+
+Tembo injects several environment variables into every sandbox session:
+
+- `TEMBO_API_TOKEN` for authenticated API access back to Tembo
+- `TEMBO_ORG_ID`, `TEMBO_ISSUE_ID`, `TEMBO_SOLUTION_ID`, `TEMBO_JOB_ID`, and (when present) `TEMBO_WORKFLOW_ID` for contextual metadata
+- Built-in service URLs: `API_BASE_URL`, `OPENAI_BASE_URL`, and `ANTHROPIC_BASE_URL`
+
+You can add additional secrets or environment variables under **Settings → Sandbox** in the Tembo dashboard. These values are scoped to your organization and are injected into every command Tembo runs, including hooks and MCP servers.
 
 ## Best Practices
 
@@ -189,6 +188,7 @@ When working with the Tembo Sandbox environment:
 
 ### Nix Development Shell Tips
 
+- **Use the QEMU sandbox**: Dev shells currently require the VM; Docker sandboxes log a warning and continue without the flake
 - **Use Nix for complex dependencies**: If your project requires specific tool versions or uncommon dependencies, consider using a Nix development shell instead of relying on pre-installed tools
 - **Test locally**: Use `nix develop` locally to verify your flake configuration before relying on it in Tembo
 - **Keep flakes minimal**: Include only the dependencies your project needs to reduce environment setup time
