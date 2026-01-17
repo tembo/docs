@@ -8,6 +8,43 @@ import CodingAgentsTable from '/snippets/coding-agents-table.mdx';
 
 Tembo supports multiple coding agents to solve your software engineering tasks.
 
+## Supported LLMs
+
+Use these model IDs with your agent key (`agent:model` or `agent:model:reasoningLevel` for GPT-5 variants). Choose a model from a provider your agent supports and make sure any required API keys are configured.
+
+**Anthropic (no API key required)**
+- `claude-4-5-sonnet` (default for Claude Code/OpenCode/Cursor)
+- `claude-opus-4-5`
+- `claude-4.1-opus`
+- `claude-4-5-haiku`
+- `claude-4-sonnet`
+- `claude-3-5-sonnet`
+- `claude-3-5-haiku`
+
+**OpenAI (API key required)**
+- `gpt-5`, `gpt-5-minimal`, `gpt-5-low`, `gpt-5-medium`, `gpt-5-high`
+- `gpt-5.1`, `gpt-5.2`
+- `gpt-5-codex`, `gpt-5-codex-high`
+- `gpt-5.1-codex`, `gpt-5.1-codex-max`, `gpt-5.1-codex-mini`, `gpt-5.1-codex-high`
+- `gpt-5.2-codex`
+- `zai-glm-4.7` (OpenAI-compatible)
+
+**Google (no API key required)**
+- `gemini-2.5-pro`
+- `gemini-3-pro`
+- `gemini-3-flash`
+
+**Moonshot via Bedrock (no API key required)**
+- `bedrock-kimi-k2-thinking`
+
+**Cursor (Cursor API key required)**
+- `composer-1`
+
+**XAI (XAI API key required)**
+- `grok`
+
+For GPT-5 and GPT-5.2 families you can append a reasoning effort (`:minimal`, `:low`, `:medium`, `:high`) when the agent supports it.
+
 ## Available Coding Agents
 
 <CodingAgentsTable />
@@ -16,7 +53,7 @@ Tembo supports multiple coding agents to solve your software engineering tasks.
 
 Powered by Anthropic's Claude models. Best balance of quality, reliability, and cost.
 
-**Models:** `claude-opus-4-5` (default), `claude-4-5-sonnet`, `claude-4.1-opus`, `claude-4-5-haiku`, `claude-4-sonnet`
+**Models:** `claude-4-5-sonnet` (default), `claude-opus-4-5`, `claude-4.1-opus`, `claude-4-5-haiku`, `claude-4-sonnet`
 
 ### Codex
 
@@ -24,11 +61,13 @@ Powered by OpenAI's Responses API (GPT-5 family) with configurable reasoning eff
 
 **Models:** `gpt-5.2` (default), `gpt-5.1-codex`, `gpt-5.1-codex-max`, `gpt-5.1-codex-mini`
 
+Add `:minimal`, `:low`, `:medium`, or `:high` to `gpt-5.2` to control reasoning effort.
+
 ### Opencode
 
 Alternative agent supporting multiple model providers.
 
-**Models:** `claude-opus-4-5` (default), `claude-4-5-sonnet`, `claude-4.1-opus`, `claude-4-5-haiku`, `claude-4-sonnet`
+**Models:** `claude-4-5-sonnet` (default), `claude-opus-4-5`, `claude-4.1-opus`, `claude-4-5-haiku`, `claude-4-sonnet`, `gpt-5.2`, `gpt-5.1-codex`, `gpt-5.1-codex-max`, `gpt-5.1-codex-mini`
 
 Also supports OpenAI models.
 
@@ -40,21 +79,21 @@ Powered by Claude models. Manages model selection automatically, defaults to `cl
 
 Supports Claude, GPT, Gemini, Composer, and Grok through the Cursor CLI.
 
-**Models:** `claude-opus-4-5` (default), `claude-4-5-sonnet`, `claude-4.1-opus`, `gpt-5.1`, `gpt-5.1-codex`, `gpt-5.1-codex-high`, `gpt-5.2`, `gemini-3-pro`, `composer-1`, `grok`
+**Models:** `claude-4-5-sonnet` (default), `claude-opus-4-5`, `claude-4.1-opus`, `gpt-5.1`, `gpt-5.1-codex`, `gpt-5.1-codex-high`, `gpt-5.2`, `gemini-3-pro`, `gemini-3-flash`, `composer-1`, `grok`
 
 Also supports Gemini 3 Flash.
 
 ## Selecting an Agent
 
-Use the format `agentType:model`:
+Use the format `agentType:model[:reasoningLevel]`:
 
 ```
 claudeCode:claude-4-5-sonnet
-codex:gpt-5.2
+codex:gpt-5.2:high
 cursor:grok
 ```
 
-Default: `claudeCode:claude-opus-4-5`
+Default: `claudeCode:claude-4-5-sonnet`
 
 ## Choosing the Right Model
 
