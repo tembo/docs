@@ -4,6 +4,53 @@ description: "Keep track of changes and updates to Tembo"
 icon: "clock-rotate-left"
 ---
 
+<Update label="2026-01-18" tags={["Integrations", "Analytics", "Performance", "UI", "Monitoring"]}>
+
+## New Integrations
+
+### Trello Integration
+
+Tembo now integrates with Trello! Connect your Trello boards and let Tembo automate tasks from your Trello cards.
+
+### Jira Issue Comments
+
+Tembo can now fetch and process Jira issue comments, giving agents more context when working on Jira-assigned tasks.
+
+### Augmentcode Agent Support
+
+Added support for the Augmentcode coding agent, expanding the range of AI coding tools you can use with Tembo.
+
+## Improved Analytics
+
+Issue IDs are now included in Slack feedback messages and PR events, making it easier to track and correlate activity across your workflow.
+
+## Performance Improvements
+
+- **Tags caching**: Added in-memory cache for tags to reduce database queries and improve dashboard responsiveness.
+- **Weekly reports**: Optimized PR count checks and logging for organizations with fewer active PRs.
+- **Sentry optimization**: Issue triggers now only fire for first-time issues, reducing noise and improving alerting accuracy.
+
+## UI Enhancements
+
+- **AI summarize icons**: Added dynamic AI summarize icons with links in the footer for quick access to AI-powered summaries.
+- **Icon improvements**: Fixed icon stroke colors to properly respect theme settings (currentColor support).
+- **Improved Slack plan sharing**: Better formatting when sharing plans in Slack threads.
+
+## Bug Fixes
+
+- Fixed event log display issues that caused events to occasionally disappear.
+- Fixed ordinal suffix logic in date formatting utilities.
+- Fixed webhook handling when request body is missing.
+- Fixed API limit checks and key retrieval logic.
+
+## Monitoring & Observability
+
+Added Sentry performance spans to queue and worker modules for better visibility into background job processing.
+
+And as always, lots of refactoring and stability improvements under the hood.
+
+</Update>
+
 <Update label="2026-01-16" tags={["Agent Logs", "Codex", "CLI", "Models", "Reasoning"]}>
 
 ## New agent logs
