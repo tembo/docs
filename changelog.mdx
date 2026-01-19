@@ -4,6 +4,75 @@ description: "Keep track of changes and updates to Tembo"
 icon: "clock-rotate-left"
 ---
 
+<Update label="2026-01-19" tags={["Integrations", "Sentry", "Performance", "Slack", "Agents", "Billing"]}>
+
+## New Integrations
+
+### Trello Integration
+
+Tembo now integrates with Trello. Connect your Trello boards and let Tembo work on cards directly from your project management workflow.
+
+### Jira Comments Support
+
+Expanded Jira integration to fetch and process issue comments, giving Tembo better context when working on Jira tasks.
+
+### AugmentCode Agent Support
+
+Added support for the AugmentCode agent, expanding the range of coding agents available in Tembo.
+
+## Sentry Improvements
+
+### Optimized Issue Triggering
+
+Sentry integration now only triggers for first-time (net-new) issues, reducing noise and preventing duplicate automation runs for recurring errors.
+
+### Production-Only Events
+
+Webhook events are now restricted to production environments, ensuring Tembo only responds to errors that matter in your live systems.
+
+## Performance & Observability
+
+### Sentry Performance Spans
+
+Added Sentry performance spans to queue and worker modules for better observability and debugging of task execution.
+
+### In-Memory Tag Cache
+
+Implemented in-memory caching for tags to reduce database queries and improve response times across the dashboard.
+
+## Slack Enhancements
+
+### Improved Plan Sharing
+
+Plans are now shared more effectively in Slack threads, making it easier for teams to collaborate on task requirements.
+
+### Better Task Request Parsing
+
+Improved content validation when parsing task requests from Slack messages, resulting in more reliable task creation.
+
+## Billing
+
+### Payment Receipt Emails
+
+Stripe payment receipts are now sent via Resend, providing better visibility into your billing transactions.
+
+## UI Improvements
+
+- Updated icon stroke colors to use `currentColor` for better theme consistency
+- Improved weekly report optimization with smarter PR count checks for inactive orgs
+- Fixed event log display to prevent event disappearance and ensure consistent rendering
+- Corrected ordinal suffix logic and edge cases in date utilities
+- Better handling of empty JSON viewer data with fallback states
+
+## Bug Fixes
+
+- Fixed webhook handling for missing request bodies
+- Improved API limit checks and key retrieval logic
+- Removed unused parameters in event handlers for cleaner code
+- Enhanced error handling for custom job cancellations
+
+</Update>
+
 <Update label="2026-01-16" tags={["Agent Logs", "Codex", "CLI", "Models", "Reasoning"]}>
 
 ## New agent logs
