@@ -103,33 +103,13 @@ When Tembo creates a pull request:
 
 # Troubleshooting
 
-## Common Issues
+**Repositories not appearing?** Wait 2-5 minutes for initial sync, verify the service user has workspace/repository access, or click the sync button to refresh manually.
 
-### Repositories Not Appearing After Installation
+**Authentication errors?** Ensure the service user has proper permissions, verify workspace membership, and try disconnecting/reconnecting the integration.
 
-If repositories don't appear in the repository list after installation:
+**Repository access issues?** Confirm the service user has read/write access and repositories aren't archived.
 
-1. **Wait a few minutes** - Initial sync can take 2-5 minutes depending on the number of repositories
-2. **Check repository permissions** - Ensure the service user has access to the repositories in your Bitbucket workspace
-3. **Manual sync** - Click the sync button on the Bitbucket integration card to refresh the repository list
-4. **Verify workspace access** - Ensure the service user is a member of all required workspaces
-
-### Authentication Errors
-- Ensure the service user has proper permissions in the Bitbucket workspace
-- Check that OAuth tokens haven't expired (Tembo handles automatic refresh)
-- Verify the service user is a member of all required workspaces
-
-### Repository Access
-- Confirm the service user has read/write access to target repositories
-- Check that repositories aren't archived or have restricted permissions
-- Ensure the workspace has the correct access levels configured
-
-### Pull Request Creation
-- Verify branch protection rules don't prevent Tembo from creating PRs
-- Check that the default branch is correctly configured
-- Ensure the repository allows pull requests from the connected account
-
-If you encounter persistent authentication issues, try disconnecting and reconnecting the Bitbucket integration.
+**PRs not created?** Check branch protection rules allow Tembo to create branches and PRs.
 
 # Supported Webhooks
 
