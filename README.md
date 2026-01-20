@@ -10,7 +10,6 @@ This repository is the single source for Tembo's public documentation site. It c
 | `welcome.mdx` | Landing page content for the documentation site. |
 | `features/` | Feature deep-dives and how-to guides for core product surfaces. |
 | `integrations/` | End-to-end setup guides for partner integrations. |
-| `automations-library/` | Automation-specific playbooks and templates. |
 | `admin/` | Account, billing, and security administration docs. |
 | `resources/` | Evergreen resources that support broader customer education. |
 | `snippets/` | Reusable callouts and shared content fragments. |
