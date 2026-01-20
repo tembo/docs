@@ -167,31 +167,10 @@ When a coding agent executes commands in the sandbox, it automatically runs them
 
 ## Best Practices
 
-When working with the Tembo Sandbox environment:
-
-### Dependency Management
-
-- **Use existing tools**: Leverage the pre-installed package managers and tools when possible
-- **Specify versions**: When installing additional dependencies, pin to specific versions for reproducibility
-- **Cache efficiently**: Use package manager caching features to improve build times
-
-### Resource Optimization
-
-- **Minimize installations**: Avoid installing large dependencies unless necessary
-- **Clean up**: Remove temporary files and build artifacts when possible
-- **Use lightweight alternatives**: Choose lighter-weight tools when multiple options are available
-
-### Compatibility Considerations
-
-- **Version awareness**: Be aware of the pre-installed tool versions when writing build scripts
-- **Cross-language support**: Take advantage of the multi-language environment for polyglot projects
-- **Tool conflicts**: Be mindful of potential conflicts between different language ecosystems
-
-### Nix Development Shell Tips
-
-- **Use Nix for complex dependencies**: If your project requires specific tool versions or uncommon dependencies, consider using a Nix development shell instead of relying on pre-installed tools
-- **Test locally**: Use `nix develop` locally to verify your flake configuration before relying on it in Tembo
-- **Keep flakes minimal**: Include only the dependencies your project needs to reduce environment setup time
+- **Leverage pre-installed tools** and pin versions when adding dependencies
+- **Minimize installations** and clean up temporary files to optimize resources
+- **Be version-aware** when writing build scripts for the multi-language environment
+- **Use Nix for complex dependencies**—test locally with `nix develop` and keep flakes minimal
 
 ## Support and Updates
 
