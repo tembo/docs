@@ -4,6 +4,49 @@ description: "Keep track of changes and updates to Tembo"
 icon: "clock-rotate-left"
 ---
 
+<Update label="2026-01-21" tags={["Sandbox", "Search", "UI", "Billing", "Integrations"]}>
+
+## Java toolchain support in sandbox
+
+The Tembo sandbox now includes full Java development support with JDK 21, Gradle, and Maven pre-installed. Java and JVM-based projects now run out of the box without additional configuration.
+
+## Thinking mode visualization
+
+A new "thinking" feature provides visibility into agent reasoning processes. Watch how the agent thinks through problems in real-time, making it easier to understand its decision-making and debug complex tasks.
+
+## Improved search experience
+
+Search across your tasks, repositories, and workflows is now faster and more accurate. The enhanced search provides better relevance ranking and instant results.
+
+## File type icons
+
+The UI now displays file-type-specific icons throughout the interface, making it easier to identify files at a glance when browsing repositories and reviewing changes.
+
+## OSS Program support
+
+Organizations participating in open source programs can now be flagged for special program benefits and support.
+
+## Free tier repository limit
+
+Free accounts are now limited to 1 connected repository. This change helps ensure fair resource allocation. Upgrade to Pro or MAX for unlimited repositories.
+
+## Model updates
+
+Deprecated models `claude-3-5-sonnet` and `claude-3-5-haiku` have been removed from the available models. Use the latest Claude 4.x models for improved performance.
+
+## Bug fixes and improvements
+
+- Fixed Pro plan upgrade flow for smoother subscription changes
+- Improved Slack PR card image quality
+- Fixed Notion SVG color rendering in the integrations panel
+- Enhanced Jira board detection with improved JQL queries
+- Fixed GPT Codex proxy credit tracking accuracy
+- Improved GitHub PR diff handling in webhook processing
+- Better agent log streaming when tasks complete
+- Smarter weekly reports that skip when there are no PRs to report
+
+</Update>
+
 <Update label="2026-01-16" tags={["Agent Logs", "Codex", "CLI", "Models", "Reasoning"]}>
 
 ## New agent logs
