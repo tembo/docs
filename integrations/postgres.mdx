@@ -56,32 +56,11 @@ Once connected, Tembo continuously monitors your database performance:
 
 ## Pull Requests for Optimizations
 
-When Tembo identifies optimization opportunities, it will:
-
-1. **Create a Pull Request** - Opens a PR with database migration scripts (e.g., `CREATE INDEX` statements)
-2. **Add Context** - Includes detailed explanations of the performance issue and expected improvement
-3. **Provide Metrics** - Shows query execution times and estimated performance gains
-
-**Example PR Description:**
-```
-Add index on users.email for faster lookups
-
-This index will improve the performance of queries filtering by email,
-reducing query time from ~150ms to ~5ms for email-based lookups.
-```
+When Tembo identifies optimization opportunities, it creates a PR with migration scripts (e.g., `CREATE INDEX`), explains the performance issue, and shows expected improvement metrics.
 
 ## Postgres MCP Integration
 
-Beyond performance monitoring, Tembo's **Postgres MCP (Model Context Protocol)** may access your database during task execution. This happens when Tembo determines that querying your database would help complete a specific task more effectively.
-
-The MCP is powered by [crystaldba/postgres-mcp](https://github.com/crystaldba/postgres-mcp) and runs in **restricted mode**, ensuring read-only access.
-
-**Key Points:**
-- **Restricted Mode** - Runs in read-only mode, preventing any data modification operations
-- **Open Source** - Built on the crystaldba/postgres-mcp implementation
-- **Task-Driven** - Only accesses data when relevant to the current task being performed
-- **Same Connection** - Uses the same database connection and permissions you've configured
-- **Transparent** - You'll be informed when Tembo accesses your database for task completion
+Tembo's [Postgres MCP](https://github.com/crystaldba/postgres-mcp) may access your database during task execution when querying it would help complete a task. It runs in **restricted mode** (read-only), uses your configured connection, and notifies you when accessed.
 
 ## Best Practices
 
