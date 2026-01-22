@@ -4,6 +4,24 @@ description: "Keep track of changes and updates to Tembo"
 icon: "clock-rotate-left"
 ---
 
+<Update label="2026-01-22" tags={["Stability", "WebSocket"]}>
+
+## WebSocket Connection Stability
+
+Improved real-time connection reliability with a more robust WebSocket implementation. Connections now automatically recover from network interruptions with intelligent retry logic, ensuring you stay connected to live task updates and agent logs.
+
+### Fixed
+
+- **Connection Recovery** - WebSocket connections now automatically reconnect with exponential backoff (1-10 seconds), eliminating disconnection issues during long-running tasks
+- **Authentication Token Refresh** - Auth tokens are now refreshed proactively every 50 minutes, preventing session timeouts during extended work sessions
+- **Connection Status Accuracy** - Added connection status polling to ensure the UI accurately reflects your connection state
+
+These improvements mean fewer "connection lost" messages and a smoother experience when monitoring agent activity in real-time.
+
+*Contributors: @DarrenBaldwin07, @tembo-bot* ([#4239](https://github.com/AskTembo/monorepo/pull/4239))
+
+</Update>
+
 <Update label="2026-01-16" tags={["Agent Logs", "Codex", "CLI", "Models", "Reasoning"]}>
 
 ## New agent logs
