@@ -141,25 +141,10 @@ Adapt the commands to your stack—the pattern works for any language or framewo
 
 ## Best Practices
 
-### Keep Commands Fast
-- Avoid long-running processes in hooks as they extend the overall solution time
-- Use caching mechanisms where possible (`npm ci` instead of `npm install`)
-- Consider running only essential checks in `prePush` hooks
-
-### Error Handling
-- Include commands that verify successful execution where critical
-- Use `set -e` in shell scripts to fail fast on errors
-- Provide meaningful error messages for debugging
-
-### Security Considerations
-- Don't include sensitive information directly in hook commands
-- Use environment variables for credentials and API keys
-- Be cautious with commands that modify system-level configurations
-
-### Testing Hooks
-- Test your hooks locally before committing the `.tembo.json` file
-- Start with simple commands and gradually add complexity
-- Monitor Tembo's execution logs to verify hooks run as expected
+- **Keep commands fast** — Use caching (`npm ci`), run only essential checks in `prePush`
+- **Handle errors** — Use `set -e` in shell scripts; provide meaningful error messages
+- **Secure credentials** — Use environment variables, never hardcode secrets in commands
+- **Test locally first** — Verify hooks work before committing; check Tembo's execution logs
 
 ## Troubleshooting
 
