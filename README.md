@@ -78,6 +78,12 @@ The dev server defaults to `http://localhost:3000`. Keep it running while you ed
 - **Broken links or 404s**: Confirm the destination page exists and is referenced correctly in `docs.json`.
 - **Frontmatter errors**: Ensure every MDX file starts with `title` and `description`.
 
+## A little developer humor
+
+> Why did the developer go broke?
+>
+> Because they used up all their cache.
+
 ## Resources
 
 - [Tembo Website](https://tembo.io)
