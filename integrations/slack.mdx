@@ -77,7 +77,7 @@ Tembo supports flexible command syntax with multiple options. You can use either
 **Example:**
 
 ```
-@tembo [branch=dev, repo=owner/webapp, agent=claudeCode:claude-4-5-sonnet] Add password strength validation
+@tembo [branch=dev, repo=owner/webapp, agent=claudeCode:claude-opus-4-5] Add password strength validation
 ```
 
 ### Available Options
@@ -93,7 +93,7 @@ Tembo supports flexible command syntax with multiple options. You can use either
   - Example: `@tembo [repo=myorg/webapp,myorg/api] Add authentication to both frontend and backend`
 
 - **`agent=`** - Specify which coding agent and model to use (format: `agentType:model`)
-  - Example: `agent=claudeCode:claude-4-5-sonnet`, `agent=codex:gpt-5.2`
+  - Example: `agent=claudeCode:claude-opus-4-5`, `agent=codex:gpt-5.2`
   - Supported coding agents: `claudeCode`, `codex`, `opencode`, `amp`, `cursor`
   - If no coding agent is specified, Tembo uses your organization's default configuration
   - See [Coding Agents documentation](/features/coding-agents) for all available options
@@ -129,7 +129,7 @@ Tembo automatically determines the best coding agent for your task based on your
 
 **Specifying an Agent:**
 ```
-@tembo [agent=claudeCode:claude-4-5-sonnet] Your task description here
+@tembo [agent=claudeCode:claude-opus-4-5] Your task description here
 ```
 
 **Examples by Task Type:**

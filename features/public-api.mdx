@@ -65,7 +65,7 @@ Create a new task for Tembo to work on. Tasks run asynchronously in sandboxed en
 ```javascript
 const task = await client.task.create({
   prompt: 'Fix the authentication bug in the login component',
-  agent: 'claudeCode:claude-4-5-sonnet',
+  agent: 'claudeCode:claude-opus-4-5',
   repositories: ['https://github.com/org/repo'],
   branch: 'main',
 });
