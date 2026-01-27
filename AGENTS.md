@@ -34,6 +34,7 @@
 - Skip frontmatter on any MDX file
 - Use absolute URLs for internal links
 - Include untested code examples
+- Modify SVG icon attributes in integration MDX files (these use custom CSS mask-image syntax that is correct as-is)
 
 ---
 
