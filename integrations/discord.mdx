@@ -160,28 +160,12 @@ This is useful for:
 
 # Security
 
-The Tembo Discord bot implements several security measures to protect your data:
+The Tembo Discord bot protects your data with:
 
-**Per-User Authentication**
-- Each Discord user maintains their own Tembo API key
-- No cross-user access - your tasks and data remain private
-- Keys are validated before storage
-
-**Encrypted Storage**
-- API keys are encrypted with AES-256-GCM before storage
-- Unique initialization vector (IV) and salt per encryption
-- Master encryption key stored as a Cloudflare secret
-- Additional authenticated data prevents tampering
-
-**Request Verification**
-- All Discord interactions are verified using Discord's signature verification
-- Prevents unauthorized requests and impersonation
-- Implements Discord's security best practices
-
-**Minimal Permissions**
-- Bot only requests necessary Discord permissions (Send Messages, Use Slash Commands)
-- Serverless architecture on Cloudflare Workers with no persistent servers
-- All communication over HTTPS
+- **Per-user authentication** — Each user stores their own validated API key; no cross-user access
+- **AES-256-GCM encryption** — Keys encrypted with unique IV/salt per user, master key in Cloudflare secrets
+- **Request verification** — All Discord interactions verified using Discord's signature verification
+- **Minimal permissions** — Only requests necessary Discord permissions; serverless on Cloudflare Workers over HTTPS
 
 # Troubleshooting
 

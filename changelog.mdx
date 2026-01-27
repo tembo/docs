@@ -4,7 +4,95 @@ description: "Keep track of changes and updates to Tembo"
 icon: "clock-rotate-left"
 ---
 
-<Update label="2026-01-09" tags={["Codex", "OpenCode", "Cursor CLI", "Pull Requests", "MCP", "Automations"]}>
+<Update
+	label="2026-01-23">
+
+## Refreshed sandbox log viewer
+
+Sandbox logs are now easier to scan:
+
+- Clear event type labels and timestamps
+- Collapsible JSON payloads for deeper details
+- Improved scrolling behavior (including a scroll-to-bottom button)
+
+## Atlassian MCP (Jira + Confluence)
+
+If you’ve connected Atlassian, you can now enable an Atlassian MCP server for
+your tasks. This gives the agent direct access to Jira and Confluence actions
+from within the task environment.
+
+## New Jira automation trigger: ticket added to board
+
+You can now trigger Jira automations when a new ticket is added to a board, so
+your workflows can kick off earlier in triage.
+
+## Richer agent logs
+
+Agent logs got a few quality-of-life upgrades:
+
+- A “Planning next moves” indicator while the agent is thinking
+- File icons in diff views
+- Better icon mapping for Atlassian-related tool events
+
+## Redesigned PR description buttons
+
+When Tembo opens a pull request, you’ll now see beautifully redesigned buttons in
+the PR description (like **View on Tembo** and **View Agent Settings**) to jump
+to the right place faster.
+
+![Redesigned PR description buttons in a GitHub pull request description](/images/pr-description-buttons.png)
+
+## Linear automation trigger: filter by label on “Issue Created”
+
+When using the Linear “issue created” trigger, you can now optionally filter by
+label so automations only run for the issues you care about.
+
+## Redesigned Events tab (audit log)
+
+The **Events** tab in the app sidebar has been redesigned to make it easier to
+review the audit log of actions taken across your workspace.
+
+![Events tab in the Tembo sidebar showing the workspace audit log](/images/events-tab-audit-log.png)
+
+## Java toolchain in sandboxes
+
+Sandboxes now include Java (JDK 21) plus Gradle and Maven, so agents can build
+and run Java projects without extra setup.
+
+## Improvements
+
+Various bug fixes and improvements as always :)
+
+</Update>
+
+<Update label="2026-01-16">
+
+## New agent logs
+
+New agent logs have been shipped for all agents including Claude Code, Codex, and OpenCode. Works with all models. Agent logs got a full visual refresh with clearer event grouping, richer tool input rendering (diffs, commands, file writes), and easier-to-scan status/error states.
+
+![Agent Logs Redesign](/images/agent-logs-redesign.png)
+
+## GPT-5.2 Codex model support
+
+Added `gpt-5.2-codex` as an available model option for Codex CLI and Opencode agents.
+
+## Reasoning level controls
+
+You can now choose a reasoning level per task. The UI exposes supported levels, and the
+agent key format `agent:model:reasoningLevel` works across the tembo saas and SDK.
+
+![Tembo MAX](/images/tembo-max.png)
+
+## Tembo MAX
+
+This week we [announced](https://x.com/tembo/status/2011152668413346206?s=20) something new. One subscription all the coding agents. Introducing [Tembo MAX](https://tembo.io/max).
+
+And as always, lots of bug fixes and stability improvements.
+
+</Update>
+
+<Update label="2026-01-09">
 
 ![Tembo Codex + OpenAI](/images/tembo-codex-openai.png)
 
@@ -41,7 +129,7 @@ Also shipped various bug fixes and stability improvements.
 
 </Update>
 
-<Update label="2025-12-11" tags={["Automations", "Templates", "Pricing", "UI"]}>
+<Update label="2025-12-11">
 
 ![Automations](/images/automation-light.png)
 
@@ -92,7 +180,7 @@ Also various bug fixes and stability improvements were shipped this week.
 
 </Update>
 
-<Update label="2025-11-21" tags={["Cursor CLI", "Integrations", "Automations", "Slack", "Pull Requests"]}>
+<Update label="2025-11-21">
 
 ## Cursor CLI Model Support
 
@@ -130,7 +218,7 @@ Also various bug fixes and improvements were shipped this week.
 
 </Update>
 
-<Update label="2025-11-04" tags={["API", "Automations", "Billing", "MCP", "Multi-Agent Support", "Nix", "Raycast", "Sandbox"]}>
+<Update label="2025-11-04">
 
 We just shipped our biggest release yet - making background coding agents more autonomous, flexible, and secure than ever.
 
@@ -168,7 +256,7 @@ Let's build the future of engineering together.
 
 </Update>
 
-<Update label="2025-10-10" tags={["Coding Agents", "Design", "Slack"]}>
+<Update label="2025-10-10">
 
 Highlights since the last update:
 
@@ -198,7 +286,7 @@ Additional improvements are included in this release. Explore them in the [app](
 
 </Update>
 
-<Update label="2025-09-26" tags={["Coding Agents", "Design", "Settings"]}>
+<Update label="2025-09-26">
 
 ## More Coding Agents
 
@@ -253,7 +341,7 @@ Simply tag `@tembo` when you want Tembo to take action, ensuring cleaner communi
 
 </Update>
 
-<Update label="2025-09-05" tags={["Branch Management", "Claude Code", "File Mentions", "Image Support", "Pull Requests", "Settings"]}>
+<Update label="2025-09-05">
 
 ## Image Support
 
@@ -291,7 +379,7 @@ Support for [Gemini code assist](https://codeassist.google/) as a review bot.
 
 </Update>
 
-<Update label="2025-08-22" tags={["BitBucket", "GitLab", "Integrations", "Linear"]}>
+<Update label="2025-08-22">
 
 ## BitBucket Integration
 
@@ -332,7 +420,7 @@ Improved Linear workflow with better status tracking and repository management.
 
 </Update>
 
-<Update label="2025-07-04" tags={["Bug Fixes", "Jira", "Logs", "UI"]}>
+<Update label="2025-07-04">
 
 ## Jira Integration
 
@@ -366,7 +454,7 @@ Also shipped a bunch of smaller polish and fixes across the app.
 
 </Update>
 
-<Update label="2025-06-27" tags={["Rule Files", "Sentry", "Tasks"]}>
+<Update label="2025-06-27">
 
 ## Auto-fix for Sentry errors
 
@@ -395,7 +483,7 @@ Tembo now reads rule files to better understand your project’s structure and c
 
 </Update>
 
-<Update label="2025-06-20" tags={["Automations", "CI/CD", "Task Prioritization"]}>
+<Update label="2025-06-20">
 
 ## Task Prioritization
 
@@ -419,7 +507,7 @@ What integration should we build next? Email us at [support@tembo.ai](mailto:sup
 
 </Update>
 
-<Update label="2025-06-13" tags={["Feedback", "Models", "Pull Requests"]}>
+<Update label="2025-06-13">
 
 ## Feedback Loop in PRs
 
@@ -439,7 +527,7 @@ Task prioritization: Tembo will start finding the highest-impact tasks on its ow
 
 </Update>
 
-<Update label="2025-06-06" tags={["Linear", "Onboarding", "Stability"]}>
+<Update label="2025-06-06">
 
 If your first try with Tembo wasn't smooth, now's the perfect time to come back. We've made big stability improvements. Everything feels a lot snappier.
 

@@ -99,37 +99,39 @@ When Tembo creates a pull request:
 
 # Working with Pull Requests
 
-**Note**: Tembo doesn't respond to feedback on pull requests yet for Bitbucket (comments or PR reviews). If having this feature would be valuable to you, please contact [support@tembo.io](mailto:support@tembo.io).
+## Reviewing Pull Requests
+
+Review Tembo's PRs just like any other team member's work:
+
+- Examine the changes and verify they align with your requirements
+- Leave comments directly on the code if you need changes
+- Use the [Feedback Loop](/features/feedback-loop) feature to have Tembo address your review comments automatically
+
+## Commenting on PRs
+
+When reviewing Tembo's pull requests, you can request changes or improvements by adding `/tembo` in your comments. This ensures Tembo responds to your specific feedback while ignoring internal team discussions or comments directed at other team members.
+
+**Example:**
+
+![Tag Tembo in your PR](/images/bitbucket-feedback-loop-request.png)
+
+In Tembo's website, you'll be able to see the agent working on your request:
+
+![Tembo working on the user's request](/images/bitbucket-feedback-loop-logs.png)
+
+Once finished, Tembo will add a comment on the Bitbucket PR:
+
+![Feedback finished](/images/bitbucket-feedback-loop-complete.png)
 
 # Troubleshooting
 
-## Common Issues
+**Repositories not appearing?** Wait 2-5 minutes for initial sync, verify the service user has workspace/repository access, or click the sync button to refresh manually.
 
-### Repositories Not Appearing After Installation
+**Authentication errors?** Ensure the service user has proper permissions, verify workspace membership, and try disconnecting/reconnecting the integration.
 
-If repositories don't appear in the repository list after installation:
+**Repository access issues?** Confirm the service user has read/write access and repositories aren't archived.
 
-1. **Wait a few minutes** - Initial sync can take 2-5 minutes depending on the number of repositories
-2. **Check repository permissions** - Ensure the service user has access to the repositories in your Bitbucket workspace
-3. **Manual sync** - Click the sync button on the Bitbucket integration card to refresh the repository list
-4. **Verify workspace access** - Ensure the service user is a member of all required workspaces
-
-### Authentication Errors
-- Ensure the service user has proper permissions in the Bitbucket workspace
-- Check that OAuth tokens haven't expired (Tembo handles automatic refresh)
-- Verify the service user is a member of all required workspaces
-
-### Repository Access
-- Confirm the service user has read/write access to target repositories
-- Check that repositories aren't archived or have restricted permissions
-- Ensure the workspace has the correct access levels configured
-
-### Pull Request Creation
-- Verify branch protection rules don't prevent Tembo from creating PRs
-- Check that the default branch is correctly configured
-- Ensure the repository allows pull requests from the connected account
-
-If you encounter persistent authentication issues, try disconnecting and reconnecting the Bitbucket integration.
+**PRs not created?** Check branch protection rules allow Tembo to create branches and PRs.
 
 # Supported Webhooks
 
