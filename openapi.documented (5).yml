@@ -98,7 +98,7 @@ paths:
                 agent:
                   type: string
                   description: The agent to use for this task
-                  example: claudeCode:claude-4-5-sonnet
+                  example: claudeCode:claude-opus-4-5
                 repositories:
                   type: array
                   items:
@@ -140,7 +140,7 @@ paths:
 
             const task = await client.task.create({
               prompt: 'Fix the authentication bug in the login component',
-              agent: 'claudeCode:claude-4-5-sonnet',
+              agent: 'claudeCode:claude-opus-4-5',
               repositories: [
                 'https://github.com/org/repo',
                 'https://gitlab.com/org/repo-2',
