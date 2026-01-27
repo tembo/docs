@@ -12,15 +12,10 @@ Refine, iterate, and improve on Tembo's [pull requests](/features/pull-requests)
 ## Prerequisites
 
 The Feedback Loop works automatically once you have:
-- [GitHub integration](/integrations/github) or [GitLab integration](/integrations/gitlab) enabled in your Tembo workspace
+- [GitHub integration](/integrations/github), [GitLab integration](/integrations/gitlab) or the [BitBucket integration](/integrations/bitbucket) enabled in your Tembo workspace
 - At least one pull request or merge request created by Tembo (from error detection, manual assignment, etc.)
 
 That's it! No additional setup required.
-
-<Note>
-**Git Provider Support**: The Feedback Loop currently supports GitHub and GitLab. Support for [Bitbucket](/integrations/bitbucket) is coming soon!
-</Note>
-
 
 ## How it works
 
@@ -34,7 +29,9 @@ That's it! No additional setup required.
 </Note>
 
 <Warning>
-**Important**: You must mention `@tembo` in your PR/MR comments or reviews for Tembo to process your feedback. This prevents accidental triggers from internal team discussions or comments meant for other team members.
+**Important**: You must mention in your PR/MR comments or reviews for Tembo to process your feedback. This prevents accidental triggers from internal team discussions or comments meant for other team members.
+In GitHub and Gitlab, this is done by tagging `@tembo` in your comment. In Bitbucket, this is done instead by adding the `/tembo` command.
+For the rest of the article, Github will be used as an example.
 </Warning>
 
 ## Providing Feedback
@@ -98,7 +95,7 @@ That's it! No additional setup required.
 - Cleaner conversation thread and better context awareness
 
 **ℹ️ Tagging is required:**
-- Tembo only acts on PR/MR feedback that mentions "@tembo" (in reviews or regular comments)
+- Tembo only acts on PR/MR feedback that mentions `@tembo` (or `/tembo` in Bitbucket) (in reviews or regular comments)
 - This prevents accidental triggers from internal team discussions or other bot messages
 
 ### What Tembo's Feedback Loop Handles Well
