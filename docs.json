@@ -51,7 +51,8 @@
 							"features/feedback-loop",
 							"features/rule-files",
 							"features/hooks",
-							"features/public-api"
+							"features/public-api",
+							"features/max"
 						]
 					},
 					{

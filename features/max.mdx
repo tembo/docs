@@ -1,0 +1,75 @@
+---
+title: 'MAX'
+description: 'Connect Claude Code, Codex, and OpenCode to Tembo MAX for enhanced AI capabilities'
+icon: 'bolt'
+---
+
+Tembo MAX provides a high-performance proxy endpoint that allows you to connect your local AI coding tools to Tembo's infrastructure.
+
+## Connecting to Tembo MAX
+
+To use Tembo MAX with your AI coding tools, configure them to connect to:
+
+```
+proxy.tembo.io
+```
+
+## Supported Tools
+
+MAX works seamlessly with the following AI coding tools:
+
+- **Claude Code** - Anthropic's official CLI for Claude
+- **Codex** - OpenAI-powered coding agent
+- **OpenCode** - Multi-model coding assistant
+
+## Configuration
+
+Configure your tool to use the Tembo MAX proxy endpoint:
+
+### Claude Code
+
+Set the proxy URL in your Claude Code configuration:
+
+```bash
+export CLAUDE_PROXY_URL=https://proxy.tembo.io
+```
+
+### Codex
+
+Configure Codex to use the MAX endpoint:
+
+```bash
+codex config set proxy https://proxy.tembo.io
+```
+
+### OpenCode
+
+Update your OpenCode settings to point to MAX:
+
+```bash
+opencode config proxy https://proxy.tembo.io
+```
+
+## Authentication
+
+You'll need a valid Tembo API key to use MAX. Generate one from your [API Keys settings](https://app.tembo.io/settings/api-keys).
+
+Set your API key as an environment variable:
+
+```bash
+export TEMBO_API_KEY=your-api-key-here
+```
+
+## Benefits
+
+- **High Performance** - Optimized routing and caching for faster responses
+- **Reliability** - Enterprise-grade uptime and availability
+- **Integration** - Seamless connection to Tembo's ecosystem
+
+## Troubleshooting
+
+**Connection issues**: Verify your API key is set correctly and you have an active Tembo subscription.
+
+**Authentication errors**: Generate a new API key from your dashboard if your current key is invalid or expired.
+
+For additional help, contact [support@tembo.io](mailto:support@tembo.io).
