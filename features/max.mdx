@@ -24,14 +24,24 @@ MAX works seamlessly with the following AI coding tools:
 
 ## Configuration
 
-Configure your tool to use the Tembo MAX proxy endpoint:
+Configure your tool to use the Tembo MAX proxy endpoint by setting the appropriate environment variables.
 
 ### Claude Code
 
-Set the proxy URL in your Claude Code configuration:
+Set the Anthropic base URL and API key:
 
 ```bash
-export CLAUDE_PROXY_URL=https://proxy.tembo.io
+export ANTHROPIC_BASE_URL=https://proxy.tembo.io
+export ANTHROPIC_API_KEY=your-anthropic-api-key
+```
+
+### OpenCode
+
+Set the Anthropic base URL and API key:
+
+```bash
+export ANTHROPIC_BASE_URL=https://proxy.tembo.io
+export ANTHROPIC_API_KEY=your-anthropic-api-key
 ```
 
 ### Codex
@@ -40,24 +50,6 @@ Configure Codex to use the MAX endpoint:
 
 ```bash
 codex config set proxy https://proxy.tembo.io
-```
-
-### OpenCode
-
-Update your OpenCode settings to point to MAX:
-
-```bash
-opencode config proxy https://proxy.tembo.io
-```
-
-## Authentication
-
-You'll need a valid Tembo API key to use MAX. Generate one from your [API Keys settings](https://app.tembo.io/settings/api-keys).
-
-Set your API key as an environment variable:
-
-```bash
-export TEMBO_API_KEY=your-api-key-here
 ```
 
 ## Benefits
