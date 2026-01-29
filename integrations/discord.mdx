@@ -35,7 +35,7 @@ Manage your Tembo tasks directly from Discord. Create tasks, track progress, and
   </Step>
   <Step title="Register Your API Key">
     In Discord, run the `/setup` command with your API key:
-    ```
+    ```text
     /setup key:YOUR_TEMBO_API_KEY
     ```
     The bot will validate your key, encrypt it, and store it securely. You'll see a confirmation message with your account information.
@@ -54,7 +54,7 @@ Use the `/task create` command to create new Tembo tasks from Discord. You can s
 - Target branch (optional) - Specify the branch for the task
 
 **Example:**
-```
+```text
 /task create prompt:"Fix authentication bug in login flow" agent:"claudeCode:claude-sonnet-4-5" repositories:"myorg/myrepo"
 ```
 
@@ -68,7 +68,7 @@ The bot will create the task and respond with the task details including ID, tit
 
 Use `/task list` to view your tasks with pagination:
 
-```
+```text
 /task list page:1 limit:10
 ```
 
@@ -78,7 +78,7 @@ Navigate through pages using the Previous/Next buttons attached to the message.
 
 Use `/task search` to find specific tasks by keyword:
 
-```
+```text
 /task search query:"authentication" page:1
 ```
 
@@ -93,7 +93,7 @@ Both commands support:
 
 View all your connected repositories:
 
-```
+```text
 /repositories list
 ```
 
@@ -105,7 +105,7 @@ This shows your GitHub, GitLab, or other connected code repositories with their 
 
 Use `/whoami` to see your current Tembo account information:
 
-```
+```text
 /whoami ephemeral:true
 ```
 
@@ -113,7 +113,7 @@ This displays your name, email, organization, and account status.
 
 Use `/status` to check if your API key is registered with the bot:
 
-```
+```text
 /status
 ```
 
@@ -148,7 +148,7 @@ See the [Prompting Guide](/prompting-guide) for more tips on writing effective t
 
 Most commands support an `ephemeral` parameter. When set to `true`, the bot's response is only visible to you:
 
-```
+```text
 /task list ephemeral:true
 /whoami ephemeral:true
 ```

@@ -40,13 +40,13 @@ Connect Tembo to Slack to trigger background tasks with any coding agent (Claude
 
 ### Start a Background Coding Agent
 
-```
+```text
 @tembo [your task description]
 ```
 
 **Example:**
 
-```
+```text
 @tembo Fix the authentication bug in the login flow
 ```
 
@@ -56,13 +56,13 @@ Tembo supports flexible command syntax with multiple options. You can use either
 
 ### Bracket Format
 
-```
+```text
 @tembo [option1=value1, option2=value2] [your task description]
 ```
 
 **Example:**
 
-```
+```text
 @tembo [branch=dev, repo=owner/webapp, agent=claudeCode:claude-opus-4-5] Add password strength validation
 ```
 
@@ -89,11 +89,11 @@ Tembo supports flexible command syntax with multiple options. You can use either
 For tasks that span multiple repositories (e.g., full-stack features):
 
 1. **Specify multiple repos in the command:**
-   ```
+   ```text
    @tembo [repo=owner/frontend,owner/backend] Add user authentication
    ```
    or use space-separated format:
-   ```
+   ```text
    @tembo [repo=frontend backend] Add user authentication
    ```
 
@@ -114,13 +114,13 @@ Tembo automatically determines the best coding agent for your task based on your
 - Individual repositories can override these defaults in their settings
 
 **Specifying an Agent:**
-```
+```text
 @tembo [agent=claudeCode:claude-opus-4-5] Your task description here
 ```
 
 **Examples by Task Type:**
 
-```
+```text
 // Quick bug fix with Claude Code & Haiku
 @tembo [agent=claudeCode:claude-4-5-haiku] Fix the null pointer exception in utils/parser.ts
 
@@ -190,13 +190,13 @@ This creates a seamless workflow where you can initiate tasks in Slack, review c
 **Write clear, specific task descriptions:**
 
 Good examples:
-```
+```text
 @tembo Add error handling to the user registration endpoint
 @tembo Optimize the product search query by adding an index on the name column
 ```
 
 Less effective:
-```
+```text
 @tembo Fix the bug
 @tembo Make it faster
 ```
