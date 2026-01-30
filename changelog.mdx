@@ -4,6 +4,53 @@ description: "Keep track of changes and updates to Tembo"
 icon: "clock-rotate-left"
 ---
 
+<Update label="2026-01-30">
+
+## AWS Bedrock BYOK (bring your own keys)
+
+You can now use AWS Bedrock models in Tembo with your own AWS credentials. Add
+your **Access Key ID**, **Secret Access Key**, and **Region** in **Settings →
+Agents**.
+
+## Bitbucket Feedback Loop
+
+The Feedback Loop now supports Bitbucket pull requests. Leave a `/tembo` comment
+on a Tembo PR to request changes, and Tembo will iterate and post the result
+back to the PR.
+
+Learn more: [Feedback Loop](https://docs.tembo.io/features/feedback-loop)
+
+## More Jira automation options
+
+Jira automations got more powerful (and more precise):
+
+- New trigger: **Issue Assigned to User**
+- More filtering for **Issue Created**, including filtering by **labels**
+- Smarter repository detection using Jira issue labels
+
+## GitLab trigger parity
+
+GitLab automations now have trigger parity with GitHub, including merge request,
+issue, and CI events (like merge request opened/updated/merged, issue comments,
+pipeline failures, and new refs).
+
+## API keys improvements
+
+- Removed the API key limit of 10 per organization
+- Improved the API keys page empty state
+
+## Onboarding polish
+
+- Added an “Assign a Linear ticket” get-started card
+- Reduced onboarding and dashboard loading-state flicker
+- Tembo now remembers your last used repositories in the UI
+
+## Improvements
+
+Various bug fixes and improvements
+
+</Update>
+
 <Update
 	label="2026-01-23">
 
