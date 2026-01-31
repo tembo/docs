@@ -76,8 +76,6 @@ If Tembo cannot connect to your RDS instance:
 
 ## Best Practices
 
-- **Secure IAM Role** - The CloudFormation template creates a least-privilege IAM role for Tembo
-- **Monitor Production Databases** - Connect production RDS instances for the most accurate performance insights
-- **Review Migration Scripts** - Always review Tembo's suggested migrations before merging, especially for large tables
-- **Test in Staging** - Apply migrations to a staging environment first to verify performance improvements
-- **Enable pg_stat_statements** - Ensure the `pg_stat_statements` extension is enabled on your RDS instances for comprehensive query analysis
+- Connect production databases for accurate insights; test migrations in staging first
+- Review all suggested migrations before merging, especially for large tables
+- Ensure `pg_stat_statements` is enabled for comprehensive query analysis
