@@ -119,24 +119,7 @@ Use `/status` to check if your API key is registered with the bot:
 
 # Best Practices
 
-## Writing Effective Task Prompts
-
-When creating tasks through Discord, provide clear and specific descriptions:
-
-**Good Examples:**
-- "Fix memory leak in background job processor at workers/job-processor.ts"
-- "Add email validation to user registration form using RFC 5322 standard"
-- "Refactor authentication middleware to use async/await patterns"
-- "Update homepage design to match Figma mockups in src/components/Home.tsx"
-
-**Less Effective:**
-- "Fix the bug"
-- "Improve performance"
-- "Update the code"
-
-The more specific your prompt, the better Tembo agents can understand and execute your task.
-
-See the [Prompting Guide](/prompting-guide) for more tips on writing effective task descriptions.
+Write clear, specific task prompts with file paths, standards, or references (e.g., "Fix memory leak in workers/job-processor.ts" not "Fix the bug"). See the [Prompting Guide](/prompting-guide) for detailed tips.
 
 ## Managing Your API Key
 
@@ -144,19 +127,9 @@ See the [Prompting Guide](/prompting-guide) for more tips on writing effective t
 - **Remove key** - Run `/unregister` to delete your stored key (re-register with `/setup` to use the bot again)
 - Keys are encrypted with AES-256-GCM and validated before storage (see Security section below)
 
-## Privacy and Ephemeral Messages
+## Ephemeral Messages
 
-Most commands support an `ephemeral` parameter. When set to `true`, the bot's response is only visible to you:
-
-```text
-/task list ephemeral:true
-/whoami ephemeral:true
-```
-
-This is useful for:
-- Viewing sensitive task information in public channels
-- Checking your account status privately
-- Listing repositories without sharing with others
+Add `ephemeral:true` to any command (e.g., `/task list ephemeral:true`) to make responses visible only to you.
 
 # Security
 
