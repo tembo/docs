@@ -52,26 +52,9 @@ See Automations for creating triggers from these events.
 
 # Best Practices
 
-## Project Mapping
-
-- Map Sentry projects to the repositories where the errors actually occur
-- For monorepos, you may need multiple Sentry projects mapped to the same repository
-- Verify mappings are correct to ensure fixes target the right codebase
-
-## Error Context
-
-To help Tembo generate better fixes:
-
-- Configure Sentry to capture comprehensive stack traces
-- Enable source maps for minified JavaScript/TypeScript
-- Include relevant tags and custom context in your Sentry configuration
-- Set up breadcrumbs to track user actions leading to errors
-
-## Reviewing Auto-Generated Fixes
-
-- Always review PRs before merging - Tembo provides solutions, you decide what gets deployed
-- Use the [Feedback Loop](/features/feedback-loop) to request improvements by tagging `@tembo` in PR comments
-- Test the fix in a staging environment before deploying to production
+- **Map accurately** — Connect Sentry projects to the repositories where errors occur; verify mappings for monorepos
+- **Capture context** — Enable comprehensive stack traces, source maps, breadcrumbs, and custom tags in Sentry
+- **Review PRs** — Always review before merging; use the [Feedback Loop](/features/feedback-loop) to iterate; test in staging first
 
 # MCP Server Integration
 
