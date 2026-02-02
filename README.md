@@ -2,6 +2,8 @@
 
 This repository is the single source for Tembo's public documentation site. It combines the copy, assets, configuration, and API schemas that Mintlify uses to publish product guides, integration walkthroughs, automation playbooks, and release notes.
 
+> What do you call documentation that's always up-to-date? A rare find! 😄
+
 ## Repository layout
 
 | Path | What lives here |
