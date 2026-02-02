@@ -106,30 +106,9 @@ For tasks that span multiple repositories (e.g., full-stack features):
 
 ## Coding Agent Selection
 
-Tembo automatically determines the best coding agent for your task based on your organization's configuration. Here's how the selection works:
+Without an `agent=` option, Tembo uses your organization's default (configurable in [Settings](https://app.tembo.io/settings)). Individual repositories can override this default.
 
-**Default Behavior:**
-- If you don't specify an agent, Tembo uses your organization's default agent configuration
-- You can set organization-wide defaults in the [Settings page](https://app.tembo.io/settings)
-- Individual repositories can override these defaults in their settings
-
-**Specifying an Agent:**
-```text
-@tembo [agent=claudeCode:claude-opus-4-5] Your task description here
-```
-
-**Examples by Task Type:**
-
-```text
-// Quick bug fix with Claude Code & Haiku
-@tembo [agent=claudeCode:claude-4-5-haiku] Fix the null pointer exception in utils/parser.ts
-
-// Complex refactoring with Cursor & Grok
-@tembo [agent=cursor:grok] Refactor the authentication system to use OAuth2
-
-// Frontend work with OpenCode & Opus
-@tembo [agent=opencode:claude-4.1-opus] Add responsive design to the dashboard component
-```
+See [Coding Agents](/features/coding-agents) for available models. Quick examples: `agent=claudeCode:claude-4-5-haiku` for fast fixes, `agent=cursor:grok` for complex refactoring.
 
 ### Thread Context Utilization
 
