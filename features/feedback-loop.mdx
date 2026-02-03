@@ -75,41 +75,13 @@ For the rest of the article, Github will be used as an example.
 
 ## Best Practices
 
-### Writing Effective Feedback
+- **Be specific** — `@tembo Add retry logic with exponential backoff` beats `@tembo make it better`
+- **Batch feedback** — Use PR/MR reviews to tag multiple lines in one submission for cohesive changes
+- **Tag required** — Tembo only acts on comments mentioning `@tembo` (or `/tembo` in Bitbucket) to avoid triggering on internal discussions
 
-**✅ Be specific and actionable:**
-```
-@tembo Add input validation for the email field using regex
-@tembo Implement retry logic with exponential backoff for API calls
-```
+**Works well for:** Code improvements (refactoring, error handling), testing, documentation, security fixes, and changes that follow existing patterns.
 
-**❌ Too vague:**
-```
-@tembo fix the validation
-@tembo make it better
-```
-
-**✅ Batch feedback in a single review:**
-- Add multiple comments to different lines in one review (GitHub PR review or GitLab MR review)
-- Tag "@tembo" on the review summary or individual comments you want addressed; Tembo processes all tagged points together for cohesive improvements
-- Cleaner conversation thread and better context awareness
-
-**ℹ️ Tagging is required:**
-- Tembo only acts on PR/MR feedback that mentions `@tembo` (or `/tembo` in Bitbucket) (in reviews or regular comments)
-- This prevents accidental triggers from internal team discussions or other bot messages
-
-### What Tembo's Feedback Loop Handles Well
-
-- **Code improvements:** Performance, error handling, refactoring, type safety
-- **Testing and documentation:** Unit tests, code comments, README updates  
-- **Security and bugs:** Vulnerability fixes, edge cases, error handling
-- **Alignment:** Changes that follow your existing code patterns
-
-### Limitations
-
-- Complex architectural changes may need multiple iterations
-- Very large-scope changes are better as separate issues
-- Works best on code within the current PR scope
+**Limitations:** Complex architectural changes may need multiple iterations; large-scope changes are better as separate issues.
 
 ---
 
