@@ -166,24 +166,8 @@ This creates a seamless workflow where you can initiate tasks in Slack, review c
 
 ## Best Practices
 
-**Write clear, specific task descriptions:**
-
-Good examples:
-```text
-@tembo Add error handling to the user registration endpoint
-@tembo Optimize the product search query by adding an index on the name column
-```
-
-Less effective:
-```text
-@tembo Fix the bug
-@tembo Make it faster
-```
-
-**Use threads for collaboration:**
-1. Team discusses the problem and potential approaches in a thread
-2. When ready, mention `@tembo` with the final task description
-3. Tembo reads the full thread context and incorporates the discussion
+- **Write clear, specific prompts** with file paths and context (e.g., "Add error handling to the user registration endpoint" not "Fix the bug"). See the [Prompting Guide](/prompting-guide) for detailed tips.
+- **Use threads for collaboration** — discuss the problem in a thread, then mention `@tembo` with the final task description. Tembo reads the full thread context.
 
 # Troubleshooting
 
