@@ -34,25 +34,16 @@ Max works seamlessly with the following AI coding tools:
 
 Configure your tool to use the Tembo Max proxy endpoint by setting the appropriate environment variables.
 
-### Claude Code
-
-Set the Anthropic base URL and API key:
+### Claude Code / OpenCode (Anthropic)
 
 ```bash
 export ANTHROPIC_BASE_URL=https://proxy.tembo.io/anthropic
 export ANTHROPIC_API_KEY=your-tembo-api-key
 ```
 
-### OpenCode
+### OpenCode (OpenAI)
 
-Set the Anthropic base URL and API key:
-
-```bash
-export ANTHROPIC_BASE_URL=https://proxy.tembo.io/anthropic
-export ANTHROPIC_API_KEY=your-tembo-api-key
-```
-
-Alternatively, you can configure OpenCode using a `opencode.json` configuration file:
+OpenCode can also use OpenAI models via `opencode.json`:
 
 ```json
 {
