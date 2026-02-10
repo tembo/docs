@@ -36,50 +36,13 @@ Create a `.tembo.json` file in your repository root with the following structure
 
 Executes immediately after Tembo clones your repository and before it begins working on the issue.
 
-**Common use cases:**
-- Install dependencies (`npm install`, `pip install -r requirements.txt`)
-- Set up development environment
-- Download required assets or configurations
-- Initialize database connections or test data
-
-**Example:**
-```json
-{
-  "hooks": {
-    "postClone": [
-      "npm ci",
-      "cp .env.example .env.local",
-      "npm run db:migrate"
-    ]
-  }
-}
-```
+**Common use cases:** Install dependencies, set up environment, download assets, initialize databases.
 
 ### `prePush`
 
 Runs after Tembo has made changes to your code but before pushing the changes and creating a pull request.
 
-**Common use cases:**
-- Run linting and formatting (`eslint`, `prettier`, `black`)
-- Execute test suites
-- Build the project to ensure no compilation errors
-- Run security scans or code quality checks
-- Generate documentation or update version files
-
-**Example:**
-```json
-{
-  "hooks": {
-    "prePush": [
-      "npm run lint:fix",
-      "npm run test:unit",
-      "npm run build",
-      "npm run security:scan"
-    ]
-  }
-}
-```
-
+**Common use cases:** Run linting/formatting, execute tests, build the project, run security scans, generate documentation.
 
 ## Automatic Fix Mode
 
