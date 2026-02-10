@@ -71,7 +71,16 @@ OpenCode can also use OpenAI models via `opencode.json`:
 
 ### Codex
 
-Coming soon.
+Configure Codex to use Tembo Max by setting these environment variables:
+
+```bash
+export OPENAI_BASE_URL="https://proxy.tembo.io/proxy/openai"
+export OPENAI_API_KEY="your-tembo-api-key"
+```
+
+Replace `your-tembo-api-key` with your actual Tembo API key from the dashboard.
+
+<Note>There may be a `~/.codex/auth.json` file overriding your local `OPENAI_API_KEY` environment variable. Make sure to remove or update this file in order for the environment variable to work.</Note>
 
 ## Troubleshooting
 
