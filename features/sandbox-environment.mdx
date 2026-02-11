@@ -1,10 +1,35 @@
 ---
 title: 'Sandbox'
-description: 'Secure isolated environment with pre-installed development tools and runtimes for code analysis and modification.'
+description: 'Secure isolated VM environment with pre-installed development tools, Docker support, and nested virtualization for containerized applications.'
 icon: 'box'
 ---
 
 The Tembo Sandbox provides a secure, isolated environment where Tembo operates to analyze and modify your code. This environment comes pre-installed with a comprehensive set of development tools and runtime environments to support a wide variety of programming languages and frameworks.
+
+## Sandbox Types
+
+Tembo supports two sandbox environment types, each designed for different use cases:
+
+### Standard (Default)
+
+The Standard sandbox provides a lightweight container-based environment:
+
+- **Fast startup**: Starts quickly for rapid task execution
+- **Wide compatibility**: Works with most common development workflows
+- **Resource efficient**: Minimal overhead for general development tasks
+- **Best for**: Most general-purpose tasks, web applications, and standard development workflows
+
+### Large VM
+
+The Large VM sandbox provides a full virtual machine with enhanced capabilities:
+
+- **Complete isolation**: Full VM-level isolation for enhanced security
+- **Nested virtualization**: Enables agents to run Docker containers inside the sandbox (an alternative to traditional Docker-in-Docker approaches)
+- **System-level access**: Support for tasks requiring deeper system integration
+- **Custom kernels**: Ability to run specialized kernel configurations
+- **Best for**: Testing and building containerized applications, running databases in Docker, and complex multi-container setups
+
+**Note**: For agents to run Docker containers inside the sandbox (e.g., for testing with Postgres, Redis, or other services), you must use the **Large VM** sandbox type.
 
 ## Pre-installed Tools and Runtimes
 
@@ -17,6 +42,13 @@ The Tembo Sandbox includes the following base dependencies and their versions:
 | **curl** | 8.14.1 | Command-line tool for transferring data with URLs |
 | **lsof** | 4.99.4 | Lists open files and network connections |
 | **strace** | 6.15 | System call tracer for debugging and monitoring |
+
+### Docker and Container Tools
+
+| Tool | Version | Description |
+|------|---------|-------------|
+| **docker** | 28.0.0 | Container runtime for building and running containers |
+| **docker-compose** | 2.31.0 | Multi-container orchestration tool |
 
 ### Version Control and Authentication
 
@@ -89,29 +121,44 @@ The Tembo Sandbox includes the following base dependencies and their versions:
 |------|---------|-------------|
 | **rustup** | 1.28.2 | Rust toolchain installer and version management tool |
 
-## Sandbox Types
+## Docker-in-Docker Support
 
-Tembo supports multiple sandbox environment types to accommodate different use cases and requirements:
+The Large VM sandbox supports running Docker containers inside the environment. When Tembo agents operate in this sandbox, they can use Docker to:
 
-### Docker (Default)
+- Run integration tests with databases (Postgres, MySQL, Redis, etc.)
+- Build Docker images as part of CI/CD workflows
+- Test multi-container applications with Docker Compose
 
-The Docker sandbox is the default environment type, offering:
+### Example: Running Postgres in Docker
 
-- **Fast startup**: Containers start quickly for rapid task execution
-- **Wide compatibility**: Works with most common development workflows
-- **Resource efficient**: Lightweight containerization with minimal overhead
-- **Best for**: Most general-purpose tasks, web applications, and standard development workflows
+Here's how an agent might run a Postgres database inside the sandbox for testing:
 
-### QEMU
+```bash
+# Start a Postgres container
+docker run -d \
+  --name postgres-test \
+  -e POSTGRES_USER=testuser \
+  -e POSTGRES_PASSWORD=testpass \
+  -e POSTGRES_DB=testdb \
+  -p 5432:5432 \
+  postgres:16
 
-The QEMU sandbox provides full virtual machine isolation using QEMU/KVM virtualization:
+# Wait for the database to be ready
+until docker exec postgres-test pg_isready -U testuser; do
+  echo "Waiting for Postgres..."
+  sleep 1
+done
 
-- **Complete isolation**: Full VM-level isolation for enhanced security
-- **System-level access**: Support for tasks requiring deeper system integration
-- **Custom kernels**: Ability to run specialized kernel configurations
-- **Best for**: Tasks requiring enhanced isolation, system-level operations, or specialized environments
+echo "Postgres is ready!"
+```
 
-You can configure the sandbox type at the organization, issue, or job level. If not specified, Tembo defaults to the Docker sandbox type.
+### Prerequisites for Docker-in-Docker
+
+- Use the **Large VM** sandbox type
+- Docker daemon is pre-installed and ready to use
+- No additional configuration required
+
+You can configure the sandbox type in your organization settings, per issue, or per job.
 
 ## Environment Characteristics
 
@@ -123,6 +170,13 @@ The Tembo Sandbox provides strong isolation and security guarantees:
 - **File system isolation**: Changes are contained within the sandbox
 - **Network security**: Controlled network access for security
 - **Resource limits**: CPU and memory constraints to ensure stability
+
+### Resource Limits
+
+| Sandbox Type | CPU | Memory | Disk | Nested Virtualization |
+|-------------|-----|--------|------|---------------------|
+| **Standard** | 4 cores | 8 GB | 20 GB | No |
+| **Large VM** | 8 cores | 32 GB | 100 GB | Yes |
 
 ### Development Workflow Integration
 
@@ -175,10 +229,24 @@ When a coding agent executes commands in the sandbox, it automatically runs them
 
 ## Best Practices
 
+### Choosing the Right Sandbox
+
+| Use Case | Recommended Sandbox |
+|----------|-------------------|
+| Code analysis, simple fixes | Standard (default) |
+| Agent needs to run tests with Docker databases | Large VM |
+| Agent needs to build Docker images | Large VM |
+| Complex multi-container setups | Large VM |
+| System-level operations | Large VM |
+| General development | Standard |
+
+### General Tips
+
 - **Leverage pre-installed tools** and pin versions when adding dependencies
 - **Minimize installations** and clean up temporary files to optimize resources
 - **Be version-aware** when writing build scripts for the multi-language environment
 - **Use Nix for complex dependencies**—test locally with `nix develop` and keep flakes minimal
+- **Use Large VM when agents need Docker**—Standard sandbox cannot run nested containers
 
 ## Support and Updates
 
