@@ -127,38 +127,22 @@ Update openapi.yml.
 
 ## Less Effective Prompts
 
-**Too Vague:**
-```text
-Title: Fix the bug
-Description: The app is broken, please fix it.
-```
-No specific issue, no context, no verification criteria.
-
-**Missing Context:**
-```text
-Title: Improve performance
-Description: Make the dashboard load faster.
-```
-No metrics, no target, no scope defined.
-
-**Overly Broad:**
-```text
-Title: Update the app
-Description: Modernize the codebase and add new features.
-```
-Multiple unrelated tasks, no priorities—break into smaller issues.
+| Type | Example | Problem |
+|------|---------|---------|
+| **Too Vague** | "Fix the bug" / "The app is broken" | No specific issue, context, or verification criteria |
+| **Missing Context** | "Improve performance" / "Make it faster" | No metrics, target, or scope defined |
+| **Overly Broad** | "Update the app and add new features" | Multiple unrelated tasks—break into smaller issues |
 
 ---
 
 ## Tips by Issue Type
 
-**Bug Reports:** Steps to reproduce, expected vs actual behavior, error messages, environment details, links to error tracking.
-
-**Feature Requests:** User story/use case, mockups if visual, success metrics, edge cases, dependencies.
-
-**Refactoring:** Current state problems, desired end state, constraints (backward compatibility), specific files, related tech debt.
-
-**Documentation:** What to document and why, target audience, existing docs to reference, examples to include, format preferences.
+| Type | Include |
+|------|---------|
+| **Bug** | Steps to reproduce, expected vs actual, error messages, environment, error tracking links |
+| **Feature** | User story, mockups, success metrics, edge cases, dependencies |
+| **Refactor** | Current problems, desired state, constraints, specific files, related tech debt |
+| **Docs** | What/why, audience, existing docs to reference, examples, format preferences |
 
 ## Working with Jira and Linear
 
