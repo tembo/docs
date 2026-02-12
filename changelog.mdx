@@ -4,6 +4,36 @@ description: "Keep track of changes and updates to Tembo"
 icon: "clock-rotate-left"
 ---
 
+<Update label="2026-02-12">
+
+## GitHub Force Merge
+
+Tembo now supports force merging pull requests using your OAuth token. This enables admin-level PR merging capabilities for users with appropriate permissions.
+
+## Slack Feedback Loop Improvements
+
+Slack integration now accepts follow-up feedback requests and queues them with proper dependencies, making it easier to iterate on code changes directly from Slack threads.
+
+## UI Improvements
+
+- Added templates tab to view all automations link for easier navigation
+- Fixed alignment of the full VM sandbox option dropdown icon
+- Fixed PR header button behavior when closing pull requests
+
+## API Key Validation
+
+Fixed validation logic for Anthropic API keys - keys are now only validated when using Anthropic models, preventing unnecessary validation errors with other providers.
+
+## Pricing Updates
+
+Updated GLM 5 pricing to $1.00/$3.20 per 1M tokens to reflect current model costs.
+
+## Billing Fixes
+
+Fixed webhook handling to check for existing plans before awarding full credits, ensuring proper credit allocation.
+
+</Update>
+
 <Update label="2026-02-06">
 
 ## New models
