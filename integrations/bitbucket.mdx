@@ -78,24 +78,7 @@ The sync process will discover any new repositories you've granted access to and
 
 # Usage
 
-## Automatic Repository Sync
-
-Tembo periodically syncs with your Bitbucket account to discover new repositories and update existing ones. The sync process:
-
-1. Fetches all workspaces accessible to the connected account
-2. Lists repositories within each workspace
-3. Creates or updates repository records in Tembo
-4. Maintains metadata about workspace and repository relationships
-
-## Pull Request Creation
-
-When Tembo creates a pull request:
-
-1. **Branch Creation**: Creates a new branch from the default branch
-2. **Code Changes**: Applies AI-generated changes to the branch
-3. **PR Creation**: Opens a pull request with generated title and description
-4. **Draft Status**: Respects your draft PR settings
-5. **Source Branch Cleanup**: Automatically deletes the source branch when merged
+Tembo periodically syncs with your Bitbucket account to discover new repositories. When creating a pull request, Tembo creates a branch from the default branch, applies AI-generated changes, opens a PR with a generated description, respects your draft PR settings, and automatically deletes the source branch when merged.
 
 # Working with Pull Requests
 
