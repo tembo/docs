@@ -10,26 +10,27 @@ The Tembo Sandbox provides a secure, isolated environment where Tembo operates t
 
 Tembo supports two sandbox environment types, each designed for different use cases:
 
-### Standard (Default)
+### Small (Default)
 
-The Standard sandbox provides a lightweight container-based environment:
+The Small sandbox provides a lightweight container-based environment:
 
 - **Fast startup**: Starts quickly for rapid task execution
 - **Wide compatibility**: Works with most common development workflows
 - **Resource efficient**: Minimal overhead for general development tasks
 - **Best for**: Most general-purpose tasks, web applications, and standard development workflows
+- **Limitation**: Cannot run Docker containers inside the sandbox (no Docker-in-Docker support)
 
-### Large VM
+### Large Full VM
 
-The Large VM sandbox provides a full virtual machine with enhanced capabilities:
+The Large Full VM sandbox provides a full Linux virtual machine with enhanced capabilities:
 
 - **Complete isolation**: Full VM-level isolation for enhanced security
-- **Nested virtualization**: Enables agents to run Docker containers inside the sandbox (an alternative to traditional Docker-in-Docker approaches)
+- **Nested virtualization**: Enables agents to run Docker containers inside the sandbox
 - **System-level access**: Support for tasks requiring deeper system integration
 - **Custom kernels**: Ability to run specialized kernel configurations
 - **Best for**: Testing and building containerized applications, running databases in Docker, and complex multi-container setups
 
-**Note**: For agents to run Docker containers inside the sandbox (e.g., for testing with Postgres, Redis, or other services), you must use the **Large VM** sandbox type.
+**Note**: For agents to run Docker containers inside the sandbox (e.g., for testing with Postgres, Redis, or other services), you must use the **Large Full VM** sandbox type.
 
 ## Pre-installed Tools and Runtimes
 
@@ -123,7 +124,7 @@ The Tembo Sandbox includes the following base dependencies and their versions:
 
 ## Docker-in-Docker Support
 
-The Large VM sandbox supports running Docker containers inside the environment. When Tembo agents operate in this sandbox, they can use Docker to:
+The Large Full VM sandbox supports running Docker containers inside the environment. When Tembo agents operate in this sandbox, they can use Docker to:
 
 - Run integration tests with databases (Postgres, MySQL, Redis, etc.)
 - Build Docker images as part of CI/CD workflows
@@ -154,11 +155,15 @@ echo "Postgres is ready!"
 
 ### Prerequisites for Docker-in-Docker
 
-- Use the **Large VM** sandbox type
+- Use the **Large Full VM** sandbox type
 - Docker daemon is pre-installed and ready to use
 - No additional configuration required
 
 You can configure the sandbox type in your organization settings, per issue, or per job.
+
+## Multiple Sandboxes
+
+Each Tembo task runs in its own isolated sandbox instance. There is no limit to how many sandboxes can run concurrently across your repositories—each task gets a fresh, isolated environment automatically.
 
 ## Environment Characteristics
 
@@ -175,8 +180,8 @@ The Tembo Sandbox provides strong isolation and security guarantees:
 
 | Sandbox Type | CPU | Memory | Disk | Nested Virtualization |
 |-------------|-----|--------|------|---------------------|
-| **Standard** | 4 cores | 8 GB | 20 GB | No |
-| **Large VM** | 8 cores | 32 GB | 100 GB | Yes |
+| **Small** | 4 cores | 8 GB | 20 GB | No |
+| **Large Full VM** | 4 cores | 8 GB | 100 GB | Yes |
 
 ### Development Workflow Integration
 
@@ -233,12 +238,12 @@ When a coding agent executes commands in the sandbox, it automatically runs them
 
 | Use Case | Recommended Sandbox |
 |----------|-------------------|
-| Code analysis, simple fixes | Standard (default) |
-| Agent needs to run tests with Docker databases | Large VM |
-| Agent needs to build Docker images | Large VM |
-| Complex multi-container setups | Large VM |
-| System-level operations | Large VM |
-| General development | Standard |
+| Code analysis, simple fixes | Small (default) |
+| Agent needs to run tests with Docker databases | Large Full VM |
+| Agent needs to build Docker images | Large Full VM |
+| Complex multi-container setups | Large Full VM |
+| System-level operations | Large Full VM |
+| General development | Small |
 
 ### General Tips
 
@@ -246,7 +251,7 @@ When a coding agent executes commands in the sandbox, it automatically runs them
 - **Minimize installations** and clean up temporary files to optimize resources
 - **Be version-aware** when writing build scripts for the multi-language environment
 - **Use Nix for complex dependencies**—test locally with `nix develop` and keep flakes minimal
-- **Use Large VM when agents need Docker**—Standard sandbox cannot run nested containers
+- **Use Large Full VM when agents need Docker**—Small sandbox cannot run nested containers
 
 ## Support and Updates
 
