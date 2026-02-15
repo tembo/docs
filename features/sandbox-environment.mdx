@@ -8,28 +8,14 @@ The Tembo Sandbox provides a secure, isolated environment where Tembo operates t
 
 ## Sandbox Types
 
-Tembo supports two sandbox environment types, each designed for different use cases:
+| Feature | Standard (Default) | Large VM |
+|---------|-------------------|----------|
+| **Startup** | Fast, lightweight container | Full VM with nested virtualization |
+| **Docker Support** | No | Yes (run containers inside sandbox) |
+| **Isolation** | Container-level | Full VM-level |
+| **Best For** | General development, web apps | Docker-based testing, multi-container setups |
 
-### Standard (Default)
-
-The Standard sandbox provides a lightweight container-based environment:
-
-- **Fast startup**: Starts quickly for rapid task execution
-- **Wide compatibility**: Works with most common development workflows
-- **Resource efficient**: Minimal overhead for general development tasks
-- **Best for**: Most general-purpose tasks, web applications, and standard development workflows
-
-### Large VM
-
-The Large VM sandbox provides a full virtual machine with enhanced capabilities:
-
-- **Complete isolation**: Full VM-level isolation for enhanced security
-- **Nested virtualization**: Enables agents to run Docker containers inside the sandbox (an alternative to traditional Docker-in-Docker approaches)
-- **System-level access**: Support for tasks requiring deeper system integration
-- **Custom kernels**: Ability to run specialized kernel configurations
-- **Best for**: Testing and building containerized applications, running databases in Docker, and complex multi-container setups
-
-**Note**: For agents to run Docker containers inside the sandbox (e.g., for testing with Postgres, Redis, or other services), you must use the **Large VM** sandbox type.
+**Note**: Use **Large VM** when agents need to run Docker containers (e.g., for testing with Postgres, Redis, or other services).
 
 ## Pre-installed Tools and Runtimes
 
