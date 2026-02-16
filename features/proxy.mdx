@@ -1,0 +1,130 @@
+---
+title: 'Proxy'
+description: 'Route your local AI coding tools through Tembo Proxy for unified access, billing, and team management.'
+icon: 'globe'
+---
+
+Tembo Proxy is a high-performance AI gateway that routes requests from your local coding tools — Claude Code, Codex, OpenCode, Cursor, and others — through Tembo's infrastructure. Instead of managing separate API keys and accounts for each model provider, you connect once to Tembo Proxy and get access to models from Anthropic, OpenAI, and Google through a single API key.
+
+## How It Works
+
+Tembo Proxy sits between your local coding tool and the upstream model providers. When your tool sends a request:
+
+1. Your tool connects to `proxy.tembo.io` with your Tembo API key
+2. Tembo Proxy authenticates the request and routes it to the correct provider
+3. The response streams back to your tool with no added latency
+
+This means you don't need individual API keys for Anthropic, OpenAI, or Google — Tembo handles provider authentication on your behalf for supported models.
+
+## Supported Providers and Endpoints
+
+| Provider | Proxy Endpoint | Used By |
+|----------|---------------|---------|
+| **Anthropic** | `https://proxy.tembo.io/anthropic` | Claude Code, OpenCode, Cursor |
+| **OpenAI** | `https://proxy.tembo.io/openai` | OpenCode |
+| **OpenAI (Codex)** | `https://proxy.tembo.io/proxy/openai` | Codex |
+
+For a full list of available models, see [Coding Agents](/features/coding-agents).
+
+## Getting Your API Key
+
+1. Log in to your [Tembo dashboard](https://app.tembo.io)
+2. Navigate to **Settings** → **API Keys**
+3. Click **Create API Key** and copy the generated key
+
+<Note>Keep your API key secure. If compromised, revoke it immediately and generate a new one from your dashboard.</Note>
+
+## Configuration
+
+### Claude Code
+
+Set these environment variables before launching Claude Code:
+
+```bash
+export ANTHROPIC_BASE_URL=https://proxy.tembo.io/anthropic
+export ANTHROPIC_API_KEY=your-tembo-api-key
+```
+
+### OpenCode (Anthropic)
+
+The same environment variables work for OpenCode when using Anthropic models:
+
+```bash
+export ANTHROPIC_BASE_URL=https://proxy.tembo.io/anthropic
+export ANTHROPIC_API_KEY=your-tembo-api-key
+```
+
+### OpenCode (OpenAI)
+
+For OpenAI models, configure `opencode.json`:
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "openai/gpt-5.2",
+  "provider": {
+    "openai": {
+      "models": {
+        "gpt-5.2": {
+          "id": "gpt-5.2",
+          "name": "GPT-5.2"
+        }
+      },
+      "options": {
+        "baseURL": "https://proxy.tembo.io/openai",
+        "apiKey": "your-tembo-api-key",
+        "headers": {
+          "x-reasoning-level": "high"
+        }
+      }
+    }
+  }
+}
+```
+
+### Codex
+
+```bash
+export OPENAI_BASE_URL="https://proxy.tembo.io/proxy/openai"
+export OPENAI_API_KEY="your-tembo-api-key"
+```
+
+<Note>Codex may store credentials in `~/.codex/auth.json` that override environment variables. Remove or update that file if your environment variables aren't taking effect.</Note>
+
+## Billing
+
+Proxy usage is included with your Tembo subscription. Requests through the proxy consume credits based on token usage — the same credit system used across all Tembo features. See [Billing](/admin/billing) for plan details and credit management.
+
+**Anthropic and Google models** require no additional API keys. Tembo provides access directly.
+
+**OpenAI models** currently require you to supply your own OpenAI API key alongside your Tembo API key for certain configurations.
+
+## Privacy and Data Handling
+
+- Tembo has a **zero data retention agreement** with Anthropic — your code and prompts are not stored or used for model training by the provider
+- All infrastructure is US-based with no infrastructure in China
+- Tembo is **SOC 2 Type 1 certified** and in SOC 2 Type 2 observation
+
+For full details, see [Security](/admin/security).
+
+## Team Management
+
+On team plans, administrators can:
+
+- **Manage API keys** — Create, revoke, and rotate keys for team members
+- **Monitor usage** — Track credit consumption per team member from the dashboard
+- **Set spending limits** — Configure overage limits to control costs
+
+See [Inviting Your Team](/admin/inviting-your-team) for setup instructions.
+
+## Troubleshooting
+
+**Connection refused or timeout** — Verify you're using the correct proxy endpoint for your provider. Anthropic tools use `proxy.tembo.io/anthropic`, not `proxy.tembo.io/openai`.
+
+**401 Authentication error** — Check that your API key is valid and hasn't been revoked. Generate a new key from **Settings** → **API Keys** in your dashboard.
+
+**Model not available** — Confirm the model ID matches one listed in [Coding Agents](/features/coding-agents). Some models require an additional provider API key.
+
+**Credential override** — Some tools cache credentials locally (e.g., `~/.codex/auth.json`). Remove cached credentials to ensure environment variables are used.
+
+For additional help, contact [support@tembo.io](mailto:support@tembo.io).
