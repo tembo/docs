@@ -4,59 +4,89 @@ description: 'Route your local AI coding tools through Tembo Proxy for unified a
 icon: 'globe'
 ---
 
-Tembo Proxy is a high-performance AI gateway that routes requests from your local coding tools — Claude Code, Codex, OpenCode, Cursor, and others — through Tembo's infrastructure. Instead of managing separate API keys and accounts for each model provider, you connect once to Tembo Proxy and get access to models from Anthropic, OpenAI, and Google through a single API key.
+## Overview
 
-## How It Works
+Tembo Proxy is an AI gateway that provides access to tested and verified models from Anthropic, OpenAI, and Google. You connect your local coding tools — Claude Code, Codex, OpenCode, Cursor, and others — to Tembo's infrastructure through a single API key, with no need to manage separate provider accounts.
 
-Tembo Proxy sits between your local coding tool and the upstream model providers. When your tool sends a request:
+Tembo Proxy is available on all Tembo subscription plans, including the free tier. It works the same way as configuring any other model provider — set a base URL and API key, and your tool connects through Tembo.
 
-1. Your tool connects to `proxy.tembo.io` with your Tembo API key
-2. Tembo Proxy authenticates the request and routes it to the correct provider
-3. The response streams back to your tool with no added latency
+---
 
-This means you don't need individual API keys for Anthropic, OpenAI, or Google — Tembo handles provider authentication on your behalf for supported models.
+## Background
 
-## Supported Providers and Endpoints
+There are dozens of AI models available, but not all of them work well for coding tasks. Getting reliable results from coding agents requires models that handle long context, follow complex instructions, and produce consistent output.
 
-| Provider | Proxy Endpoint | Used By |
-|----------|---------------|---------|
-| **Anthropic** | `https://proxy.tembo.io/anthropic` | Claude Code, OpenCode, Cursor |
-| **OpenAI** | `https://proxy.tembo.io/openai` | OpenCode |
-| **OpenAI (Codex)** | `https://proxy.tembo.io/proxy/openai` | Codex |
+<Tip>Tembo tests models across real-world coding tasks before making them available through the proxy. Models listed on this page have been verified to work with the supported coding agents.</Tip>
 
-For a full list of available models, see [Coding Agents](/features/coding-agents).
+Tembo Proxy solves the multi-provider problem by acting as a single gateway. Instead of juggling API keys and accounts across Anthropic, OpenAI, and Google, you authenticate once with your Tembo API key and get access to all supported models. Tembo handles provider authentication, routing, and billing on your behalf.
 
-## Getting Your API Key
+---
 
-1. Log in to your [Tembo dashboard](https://app.tembo.io)
-2. Navigate to **Settings** → **API Keys**
-3. Click **Create API Key** and copy the generated key
+## How it Works
 
-<Note>Keep your API key secure. If compromised, revoke it immediately and generate a new one from your dashboard.</Note>
+1. **Get your API key** from the [Tembo dashboard](https://app.tembo.io) under **Settings** → **API Keys**
+2. **Set environment variables** or config files to point your coding tool at `proxy.tembo.io`
+3. **Start coding** — requests route through Tembo to the correct provider and stream back to your tool
 
-## Configuration
+Proxy usage consumes credits from your Tembo subscription. All plans include a credit allocation, and paid plans support overage billing so you're never cut off mid-task. See [Pricing](#pricing) below for details.
 
-### Claude Code
+---
 
-Set these environment variables before launching Claude Code:
+## Endpoints
 
-```bash
+### Models
+
+The following models are available through Tembo Proxy. Use the endpoint and configuration that matches your coding tool.
+
+| Model | Model ID | Endpoint | Tools |
+|-------|----------|----------|-------|
+| Claude Opus 4.5 | `claude-opus-4-5` | `proxy.tembo.io/anthropic` | Claude Code, OpenCode, Cursor, Amp |
+| Claude 4.5 Sonnet | `claude-4-5-sonnet` | `proxy.tembo.io/anthropic` | Claude Code, OpenCode, Cursor, Amp |
+| Claude 4.1 Opus | `claude-4.1-opus` | `proxy.tembo.io/anthropic` | Claude Code, OpenCode, Cursor, Amp |
+| Claude 4.5 Haiku | `claude-4-5-haiku` | `proxy.tembo.io/anthropic` | Claude Code, OpenCode, Cursor, Amp |
+| Claude 4 Sonnet | `claude-4-sonnet` | `proxy.tembo.io/anthropic` | Claude Code, OpenCode, Cursor |
+| Claude 3.5 Sonnet | `claude-3-5-sonnet` | `proxy.tembo.io/anthropic` | Claude Code, OpenCode |
+| Claude 3.5 Haiku | `claude-3-5-haiku` | `proxy.tembo.io/anthropic` | Claude Code, OpenCode |
+| GPT-5.2 | `gpt-5.2` | `proxy.tembo.io/openai` | Codex, OpenCode, Cursor |
+| GPT-5.1 | `gpt-5.1` | `proxy.tembo.io/openai` | Cursor |
+| GPT-5.1 Codex | `gpt-5.1-codex` | `proxy.tembo.io/proxy/openai` | Codex, OpenCode, Cursor |
+| GPT-5.1 Codex Max | `gpt-5.1-codex-max` | `proxy.tembo.io/proxy/openai` | Codex, OpenCode |
+| GPT-5.1 Codex Mini | `gpt-5.1-codex-mini` | `proxy.tembo.io/proxy/openai` | Codex, OpenCode |
+| GPT-5.1 Codex High | `gpt-5.1-codex-high` | `proxy.tembo.io/proxy/openai` | Codex, Cursor |
+| GPT-5.2 Codex | `gpt-5.2-codex` | `proxy.tembo.io/proxy/openai` | Codex |
+| GPT-5 | `gpt-5` | `proxy.tembo.io/openai` | OpenCode |
+| Gemini 2.5 Pro | `gemini-2.5-pro` | `proxy.tembo.io/anthropic` | Claude Code, OpenCode |
+| Gemini 3 Pro | `gemini-3-pro` | `proxy.tembo.io/anthropic` | Cursor |
+| Gemini 3 Flash | `gemini-3-flash` | `proxy.tembo.io/anthropic` | Cursor |
+| Kimi K2 (Bedrock) | `bedrock-kimi-k2-thinking` | `proxy.tembo.io/anthropic` | Claude Code, OpenCode |
+| ZAI GLM-4.7 | `zai-glm-4.7` | `proxy.tembo.io/openai` | OpenCode |
+| Grok | `grok` | Cursor API | Cursor |
+| Composer 1 | `composer-1` | Cursor API | Cursor |
+
+Configure your tool with the format `agent:model` or `agent:model:reasoningLevel` for GPT-5 variants. For example: `codex:gpt-5.2:high`.
+
+For full agent configuration details, see [Coding Agents](/features/coding-agents).
+
+#### Tool Configuration
+
+<CodeGroup>
+```bash Claude Code
 export ANTHROPIC_BASE_URL=https://proxy.tembo.io/anthropic
 export ANTHROPIC_API_KEY=your-tembo-api-key
 ```
 
-### OpenCode (Anthropic)
-
-The same environment variables work for OpenCode when using Anthropic models:
-
-```bash
+```bash OpenCode (Anthropic)
 export ANTHROPIC_BASE_URL=https://proxy.tembo.io/anthropic
 export ANTHROPIC_API_KEY=your-tembo-api-key
 ```
 
-### OpenCode (OpenAI)
+```bash Codex
+export OPENAI_BASE_URL="https://proxy.tembo.io/proxy/openai"
+export OPENAI_API_KEY="your-tembo-api-key"
+```
+</CodeGroup>
 
-For OpenAI models, configure `opencode.json`:
+For OpenCode with OpenAI models, configure `opencode.json`:
 
 ```json
 {
@@ -82,49 +112,78 @@ For OpenAI models, configure `opencode.json`:
 }
 ```
 
-### Codex
-
-```bash
-export OPENAI_BASE_URL="https://proxy.tembo.io/proxy/openai"
-export OPENAI_API_KEY="your-tembo-api-key"
-```
-
 <Note>Codex may store credentials in `~/.codex/auth.json` that override environment variables. Remove or update that file if your environment variables aren't taking effect.</Note>
 
-## Billing
+---
 
-Proxy usage is included with your Tembo subscription. Requests through the proxy consume credits based on token usage — the same credit system used across all Tembo features. See [Billing](/admin/billing) for plan details and credit management.
+## Pricing
 
-**Anthropic and Google models** require no additional API keys. Tembo provides access directly.
+Proxy usage is billed through Tembo's credit system. Every request consumes credits based on token usage — more complex tasks use more tokens and therefore more credits.
 
-**OpenAI models** currently require you to supply your own OpenAI API key alongside your Tembo API key for certain configurations.
+| Plan | Monthly Cost | Credits Included | Overage |
+|------|-------------|-----------------|---------|
+| Free | $0 | 5 credits/day | None (paused until refresh) |
+| Pro | $60 | 100 credits/month | Pay-as-you-go |
+| Max | $200 | 400 credits/month | Pay-as-you-go |
 
-## Privacy and Data Handling
+**Anthropic and Google models** require no additional API keys — Tembo provides access directly.
 
-- Tembo has a **zero data retention agreement** with Anthropic — your code and prompts are not stored or used for model training by the provider
-- All infrastructure is US-based with no infrastructure in China
-- Tembo is **SOC 2 Type 1 certified** and in SOC 2 Type 2 observation
+**OpenAI models** require you to supply your own OpenAI API key alongside your Tembo API key.
 
-For full details, see [Security](/admin/security).
+### Auto-reload
 
-## Team Management
+Paid plans support auto-reload to prevent interruptions. When your credit balance drops below a threshold, Tembo automatically purchases additional credits. Configure the reload threshold, target balance, and monthly limit from [Billing settings](https://app.tembo.io/settings/billing).
 
-On team plans, administrators can:
+### Monthly Limits
 
-- **Manage API keys** — Create, revoke, and rotate keys for team members
-- **Monitor usage** — Track credit consumption per team member from the dashboard
-- **Set spending limits** — Configure overage limits to control costs
+You can set a maximum overage limit on paid plans to control spending. The auto-reload system respects this limit — even if your balance drops below the threshold, reloads won't exceed your monthly cap.
+
+For billing questions, contact [support@tembo.io](mailto:support@tembo.io). See [Billing](/admin/billing) for full details.
+
+---
+
+## Privacy
+
+All Tembo infrastructure is hosted in the United States, with no infrastructure in China. Tembo is **SOC 2 Type 1 certified** and in SOC 2 Type 2 observation.
+
+Tembo maintains zero data retention agreements with providers where available. Current retention policies by provider:
+
+| Provider | Data Retention |
+|----------|---------------|
+| **Anthropic** | Zero retention — code and prompts are not stored or used for training |
+| **Google** | Zero retention |
+| **OpenAI** | 30-day retention (OpenAI policy) |
+
+For full security details, see [Security](/admin/security).
+
+---
+
+## For Teams
+
+Tembo Proxy works with team accounts. Administrators manage access, monitor usage, and control spending from the dashboard.
+
+### Roles
+
+- **Admins** can create and revoke API keys, invite team members, set spending limits, and view usage across the team
+- **Members** receive their own API key and can use the proxy within the limits set by their admin
+
+### Model Access
+
+<Note>Per-model access controls for team administrators are coming soon. Today, all team members have access to all models available on your plan.</Note>
+
+### Bring Your Own Key
+
+For OpenAI models, team members supply their own OpenAI API key alongside the Tembo API key. Anthropic and Google models are accessed directly through Tembo — no additional keys needed.
+
+<Note>Bring-your-own-key support for additional providers is planned. Contact [support@tembo.io](mailto:support@tembo.io) for details.</Note>
 
 See [Inviting Your Team](/admin/inviting-your-team) for setup instructions.
 
-## Troubleshooting
+---
 
-**Connection refused or timeout** — Verify you're using the correct proxy endpoint for your provider. Anthropic tools use `proxy.tembo.io/anthropic`, not `proxy.tembo.io/openai`.
+## Goals
 
-**401 Authentication error** — Check that your API key is valid and hasn't been revoked. Generate a new key from **Settings** → **API Keys** in your dashboard.
-
-**Model not available** — Confirm the model ID matches one listed in [Coding Agents](/features/coding-agents). Some models require an additional provider API key.
-
-**Credential override** — Some tools cache credentials locally (e.g., `~/.codex/auth.json`). Remove cached credentials to ensure environment variables are used.
-
-For additional help, contact [support@tembo.io](mailto:support@tembo.io).
+- **Simplify multi-provider access** — One API key, one billing account, all major model providers
+- **Verify model quality** — Only expose models that have been tested and verified for coding agent use cases
+- **Enable team collaboration** — Shared billing, usage monitoring, and access controls for engineering teams
+- **Stay provider-agnostic** — Support the best models regardless of provider, so you can switch without reconfiguring infrastructure
