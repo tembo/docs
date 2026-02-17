@@ -25,7 +25,7 @@ Include your API key in the `Authorization` header for all requests:
 
 ```bash
 curl -H "Authorization: Bearer YOUR_API_KEY" \
-  https://internal.tembo.io/me
+  https://api.tembo.io/task/list
 ```
 
 ## SDK Installation
@@ -119,15 +119,6 @@ const { codeRepositories } = await client.repository.list();
 for (const repo of codeRepositories) {
   console.log(`${repo.name}: ${repo.url}`);
 }
-```
-
-### Get Current User
-
-Verify your authentication and retrieve organization info.
-
-```javascript
-const me = await client.me.retrieve();
-console.log(`Organization: ${me.orgId}`);
 ```
 
 ## Use Cases
