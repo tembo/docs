@@ -58,8 +58,7 @@
 					{
 						"group": "Integrations",
 						"pages": [
-							"integrations/overview",
-							"integrations/github",
+								"integrations/github",
 							"integrations/gitlab",
 							"integrations/bitbucket",
 							"integrations/slack",
