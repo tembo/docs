@@ -79,6 +79,7 @@
 						"pages": [
 							"admin/security",
 							"admin/billing",
+							"admin/support",
 							"admin/inviting-your-team"
 						]
 					},
