@@ -84,22 +84,9 @@ Tembo keeps you informed as it works on your Jira issues:
 
 ## Troubleshooting
 
-### Tembo Not Responding to Labeled Issues
+**Tembo not responding to labeled issues?** Verify the label is exactly "Tembo" (case-sensitive), confirm you installed using the dedicated Tembo Jira account, check Tembo has permission to read/comment, and verify the integration is active on the [Integrations page](https://app.tembo.io/integrations).
 
-If Tembo doesn't respond after adding the "Tembo" label:
-
-1. **Verify label name** - Ensure the label is exactly "Tembo" (case-sensitive)
-2. **Check account setup** - Confirm you completed the installation using the dedicated Tembo Jira account
-3. **Review permissions** - Verify the Tembo account has permission to read and comment on issues in the project
-4. **Check integration status** - Navigate to the [Integrations page](https://app.tembo.io/integrations) to ensure the Jira integration is active
-
-### Issues Not Being Processed
-
-If labeled issues aren't being processed:
-
-1. **Verify repository connection** - Ensure you have connected GitHub, GitLab, or Bitbucket repositories to Tembo
-2. **Check issue format** - Include clear descriptions and acceptance criteria to help Tembo understand the task
-3. **Review webhook status** - The Integrations page shows the live set of enabled webhooks; ensure `issue.labeled` is enabled
+**Issues not being processed?** Ensure GitHub/GitLab/Bitbucket is connected, include clear descriptions with acceptance criteria, and verify `issue.labeled` webhook is enabled.
 
 ## Best Practices
 
