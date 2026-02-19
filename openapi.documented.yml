@@ -4,7 +4,7 @@ info:
   description: Public API Endpoints for Tembo
   version: 1.0.0
 servers:
-  - url: https://internal.tembo.io/
+  - url: https://api.tembo.io/
     description: Tembo API
 components:
   securitySchemes:
@@ -491,48 +491,3 @@ paths:
             const repositories = await client.repository.list();
 
             console.log(repositories.codeRepositories);
-  /me:
-    get:
-      responses:
-        "200":
-          description: Successfully retrieved user information
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  orgId:
-                    type:
-                      - string
-                      - "null"
-                    format: uuid
-                    description: Organization ID for the authenticated user
-                    example: 123e4567-e89b-12d3-a456-426614174000
-                  userId:
-                    type:
-                      - string
-                      - "null"
-                    format: uuid
-                    description: User ID for the authenticated user
-                    example: 456e7890-e89b-12d3-a456-426614174001
-                required:
-                  - orgId
-                  - userId
-      operationId: getPublic-apiMe
-      tags:
-        - public-api
-      parameters: []
-      description: Get information about the current authenticated user
-      summary: Get Current User Info
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import Tembo from '@tembo-io/sdk';
-
-            const client = new Tembo({
-              apiKey: 'My API Key',
-            });
-
-            const me = await client.me.retrieve();
-
-            console.log(me.orgId);
