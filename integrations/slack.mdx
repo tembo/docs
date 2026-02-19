@@ -171,30 +171,11 @@ This creates a seamless workflow where you can initiate tasks in Slack, review c
 
 # Troubleshooting
 
-## Tembo Not Responding to Mentions
+**Tembo not responding to mentions?** Verify the bot is installed on the [Integrations page](https://app.tembo.io/integrations), invite it to the channel (`/invite @tembo`), and confirm permissions are still active.
 
-If Tembo doesn't respond when you mention `@tembo`:
+**Tasks not creating pull requests?** Ensure you have connected GitHub/GitLab/Bitbucket repositories, check that your default repository is set correctly in Slack integration settings, and provide clear task descriptions.
 
-1. **Check bot installation** - Verify Tembo is installed in your workspace on the [Integrations page](https://app.tembo.io/integrations)
-2. **Verify channel access** - Ensure the Tembo bot has been invited to the channel (`/invite @tembo`)
-3. **Review permissions** - Confirm all required permissions were granted during installation
-4. **Check integration status** - The integration may need to be reconnected if permissions were revoked
-
-## Tasks Not Creating Pull Requests
-
-If tasks are acknowledged but no pull requests appear:
-
-1. **Verify repository connection** - Ensure you have connected GitHub, GitLab, or Bitbucket repositories to Tembo
-2. **Check repository mapping** - Confirm your default repository is set correctly in the Slack integration settings
-3. **Review task description** - Provide clear, actionable task descriptions that specify what code changes are needed
-
-## Wrong Repository Targeted
-
-If Tembo creates PRs in the wrong repository:
-
-1. **Set default repository** - Configure your preferred repository in the Slack integration settings
-2. **Use explicit repo option** - Specify the repository in your command: `@tembo [repo=owner/repo] your task`
-3. **Check organization settings** - Verify the default repository setting at the organization level
+**Wrong repository targeted?** Set a default repository in Slack integration settings, or specify the repo explicitly: `@tembo [repo=owner/repo] your task`.
 
 # Privacy & Support
 
