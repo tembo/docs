@@ -48,31 +48,11 @@ Once connected, Tembo continuously monitors your RDS PostgreSQL instances for sl
 
 ## Troubleshooting
 
-### RDS Instances Not Appearing
+**RDS instances not appearing?** Wait a few minutes for region scanning, verify the CloudFormation stack deployed successfully, check IAM role permissions to describe RDS instances, and ensure instances are PostgreSQL.
 
-If your RDS instances don't appear after connecting:
+**Optimization PRs not being created?** Verify repository mapping for your RDS instance, ensure `pg_stat_statements` extension is enabled, allow time for statistics collection, and check branch permissions.
 
-1. **Wait for discovery** - Initial discovery can take a few minutes as Tembo scans multiple AWS regions
-2. **Check CloudFormation stack** - Verify the stack deployed successfully in your AWS console
-3. **Verify IAM permissions** - Ensure the IAM role has permission to describe RDS instances
-4. **Check instance type** - Only PostgreSQL RDS instances are supported
-
-### Optimization PRs Not Being Created
-
-If Tembo isn't creating optimization PRs:
-
-1. **Verify repository mapping** - Ensure your RDS instance is mapped to the correct repository
-2. **Check pg_stat_statements** - The extension must be enabled for query analysis
-3. **Review monitoring period** - Tembo needs time to collect query statistics before suggesting optimizations
-4. **Check branch permissions** - Ensure Tembo has permission to create branches in your repository
-
-### Connection Issues
-
-If Tembo cannot connect to your RDS instance:
-
-1. **Security groups** - Verify the RDS security group allows connections from Tembo's IP ranges
-2. **VPC configuration** - Ensure your RDS instance is accessible (public or via VPN/Direct Connect)
-3. **SSL/TLS settings** - Confirm SSL settings match your RDS configuration
+**Connection issues?** Verify security groups allow Tembo's IP ranges, ensure your RDS instance is accessible (public or via VPN/Direct Connect), and confirm SSL/TLS settings match your configuration.
 
 ## Best Practices
 
