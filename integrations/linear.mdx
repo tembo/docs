@@ -85,30 +85,11 @@ Tembo keeps you informed as it works on your Linear issues:
 
 # Troubleshooting
 
-## Tembo Not Responding to Assigned Issues
+**Tembo not responding?** Verify the issue is assigned to the Tembo bot user, check the [Integrations page](https://app.tembo.io/integrations) for integration status and webhook settings (`issue.assigned` should be enabled).
 
-If Tembo doesn't respond after assigning an issue:
+**Repository selection not appearing?** Ensure you've connected a code hosting provider (GitHub/GitLab) and that repositories are visible in your dashboard. Try unassigning and reassigning the issue.
 
-1. **Verify assignment** - Ensure the issue is assigned directly to the Tembo bot user
-2. **Check integration status** - Navigate to the [Integrations page](https://app.tembo.io/integrations) to ensure the Linear integration is active
-3. **Review permissions** - Confirm Tembo has access to the Linear workspace and project
-4. **Check webhook status** - The Integrations page shows enabled webhooks; ensure `issue.assigned` is enabled
-
-## Repository Selection Not Appearing
-
-If the repository selection prompt doesn't appear:
-
-1. **Verify GitHub/GitLab connection** - Ensure you have connected a code hosting provider to Tembo
-2. **Check repository access** - Confirm the repositories are visible in your Tembo dashboard
-3. **Try reassigning** - Unassign and reassign the issue to Tembo to trigger the prompt again
-
-## Pull Requests Not Being Created
-
-If issues are processed but PRs aren't created:
-
-1. **Check repository permissions** - Ensure Tembo has write access to the target repository
-2. **Review issue description** - Provide clearer requirements if Tembo couldn't determine the needed changes
-3. **Verify branch protection** - Ensure branch protection rules allow Tembo to create branches
+**PRs not being created?** Check that Tembo has write access to the repository, provide clearer requirements in the issue description, and verify branch protection rules allow new branches.
 
 # MCP Server Integration
 
