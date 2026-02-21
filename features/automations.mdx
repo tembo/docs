@@ -38,9 +38,10 @@ React to events from your connected integrations:
 | Integration | Events |
 |-------------|--------|
 | **GitHub** | PR opened, PR merged, issue created, comment added |
-| **GitLab** | Merge request opened, merged, issue created |
+| **GitLab** | Merge request opened/updated/merged, issue created, issue comments, pipeline failures, new refs |
+| **Jira** | Issue created, issue assigned to user, ticket added to board, with advanced filtering by labels and more |
 | **Sentry** | New error, error spike, regression detected |
-| **Linear** | Issue created, issue updated, status changed |
+| **Linear** | Issue created, issue updated, status changed, with label filtering |
 | **Slack** | Message in channel, @tembo mention |
 
 <Tip>Event triggers respond in real-time. A Sentry error can have a fix PR opened within seconds of detection.</Tip>
@@ -104,9 +105,10 @@ Enable the [MCP servers](/features/mcp-servers) your automation needs. Common co
 
 - **Code changes**: GitHub/GitLab
 - **Bug fixes**: GitHub + Sentry
-- **Issue triage**: GitHub + Linear
+- **Issue triage**: GitHub + Linear or GitHub + Jira (with Atlassian MCP)
 - **Team updates**: GitHub + Slack
 - **Full workflow**: GitHub + Linear + Slack + Sentry
+- **Atlassian workflows**: Enable the Atlassian MCP server to give agents direct access to Jira and Confluence actions
 
 ### Agent Selection
 

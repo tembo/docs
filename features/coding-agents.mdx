@@ -14,6 +14,7 @@ Use these model IDs with your agent key (`agent:model` or `agent:model:reasoning
 
 **Anthropic (no API key required)**
 - `claude-opus-4-5` (default for Claude Code/Opencode/Cursor/Amp)
+- `claude-opus-4-6`
 - `claude-4-5-sonnet`
 - `claude-4.1-opus`
 - `claude-4-5-haiku`
@@ -23,11 +24,13 @@ Use these model IDs with your agent key (`agent:model` or `agent:model:reasoning
 
 **OpenAI (API key required)**
 - `gpt-5`, `gpt-5-minimal`, `gpt-5-low`, `gpt-5-medium`, `gpt-5-high`
-- `gpt-5.1`, `gpt-5.2`
+- `gpt-5.1`, `gpt-5.1-minimal`, `gpt-5.1-low`, `gpt-5.1-medium`, `gpt-5.1-high`
+- `gpt-5.2`
 - `gpt-5-codex`, `gpt-5-codex-high`
 - `gpt-5.1-codex`, `gpt-5.1-codex-max`, `gpt-5.1-codex-mini`, `gpt-5.1-codex-high`
 - `gpt-5.2-codex`
-- `zai-glm-4.7` (OpenAI-compatible)
+- `gpt-oss` (OpenAI-compatible, OpenCode only)
+- `zai-glm-4.7` (OpenAI-compatible, OpenCode only)
 
 **Google (no API key required)**
 - `gemini-2.5-pro`
@@ -42,6 +45,9 @@ Use these model IDs with your agent key (`agent:model` or `agent:model:reasoning
 
 **XAI (XAI API key required)**
 - `grok`
+
+**Meta (OpenCode only)**
+- `llama-3.3-70b`
 
 For GPT-5 and GPT-5.2 families you can append a reasoning effort (`:minimal`, `:low`, `:medium`, `:high`) when the agent supports it.
 
@@ -65,11 +71,11 @@ Add `:minimal`, `:low`, `:medium`, or `:high` to `gpt-5.2` to control reasoning 
 
 ### Opencode
 
-Alternative agent supporting multiple model providers.
+Alternative agent supporting multiple model providers including Anthropic, OpenAI, Google, and Meta.
 
-**Models:** `claude-opus-4-5` (default), `claude-4-5-sonnet`, `claude-4.1-opus`, `claude-4-5-haiku`, `claude-4-sonnet`, `gpt-5.2`, `gpt-5.1-codex`, `gpt-5.1-codex-max`, `gpt-5.1-codex-mini`
+**Models:** `claude-opus-4-5` (default), `claude-opus-4-6`, `claude-4-5-sonnet`, `claude-4.1-opus`, `claude-4-5-haiku`, `claude-4-sonnet`, `gpt-5.2`, `gpt-oss`, `gpt-5.1-codex`, `gpt-5.1-codex-max`, `gpt-5.1-codex-mini`, `llama-3.3-70b`, `zai-glm-4.7`
 
-Also supports OpenAI models.
+Supports extensive model selection with flexible provider options.
 
 ### Amp
 
