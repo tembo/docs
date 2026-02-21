@@ -49,39 +49,13 @@ For GPT-5 and GPT-5.2 families you can append a reasoning effort (`:minimal`, `:
 
 <CodingAgentsTable />
 
-### Claude Code (Default)
-
-Powered by Anthropic's Claude models. Best balance of quality, reliability, and cost.
-
-**Models:** `claude-opus-4-5` (default), `claude-4-5-sonnet`, `claude-4.1-opus`, `claude-4-5-haiku`, `claude-4-sonnet`
-
-### Codex
-
-Powered by OpenAI's Responses API (GPT-5 family) with configurable reasoning effort.
-
-**Models:** `gpt-5.2` (default), `gpt-5.1-codex`, `gpt-5.1-codex-max`, `gpt-5.1-codex-mini`
-
-Add `:minimal`, `:low`, `:medium`, or `:high` to `gpt-5.2` to control reasoning effort.
-
-### Opencode
-
-Alternative agent supporting multiple model providers.
-
-**Models:** `claude-opus-4-5` (default), `claude-4-5-sonnet`, `claude-4.1-opus`, `claude-4-5-haiku`, `claude-4-sonnet`, `gpt-5.2`, `gpt-5.1-codex`, `gpt-5.1-codex-max`, `gpt-5.1-codex-mini`
-
-Also supports OpenAI models.
-
-### Amp
-
-Powered by Claude models. Manages model selection automatically, defaults to `claude-opus-4-5`.
-
-### Cursor
-
-Supports Claude, GPT, Gemini, Composer, and Grok through the Cursor CLI.
-
-**Models:** `claude-opus-4-5` (default), `claude-4-5-sonnet`, `claude-4.1-opus`, `gpt-5.1`, `gpt-5.1-codex`, `gpt-5.1-codex-high`, `gpt-5.2`, `gemini-3-pro`, `gemini-3-flash`, `composer-1`, `grok`
-
-Also supports Gemini 3 Flash.
+| Agent | Default Model | Supported Models | Notes |
+|-------|---------------|------------------|-------|
+| **Claude Code** | `claude-opus-4-5` | All Anthropic models | Best balance of quality, reliability, and cost |
+| **Codex** | `gpt-5.2` | GPT-5 family | Add `:minimal`/`:low`/`:medium`/`:high` for reasoning effort |
+| **Opencode** | `claude-opus-4-5` | Anthropic + OpenAI | Multi-provider support |
+| **Amp** | `claude-opus-4-5` | Anthropic | Auto-manages model selection |
+| **Cursor** | `claude-opus-4-5` | Claude, GPT, Gemini, Composer, Grok | Uses Cursor CLI |
 
 ## Selecting an Agent
 
