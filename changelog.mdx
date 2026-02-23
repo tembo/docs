@@ -4,6 +4,39 @@ description: "Keep track of changes and updates to Tembo"
 icon: "clock-rotate-left"
 ---
 
+<Update label="2026-02-23">
+
+## .NET SDK 9 in the sandbox
+
+.NET SDK 9 is now pre-installed in the Tembo sandbox, so agents can work on .NET and C# projects without any extra setup.
+
+## Sandbox performance improvements
+
+The Large Full VM sandbox now starts faster thanks to a pre-warmed QEMU VM pool. Startup latency is reduced significantly, so your agents get to work sooner.
+
+Docker sandbox containers also now enforce **4 GB hard / 3 GB soft memory limits**, keeping tasks stable and preventing out-of-memory failures.
+
+## Faster feedback loops with container reuse
+
+When iterating through feedback loops, the Docker sandbox can now reuse running containers rather than spinning up a fresh one each time. This cuts the overhead between feedback iterations and makes rapid back-and-forth collaboration with an agent much smoother.
+
+## PR header: repo and agent context
+
+The PR switcher dropdown now shows the repository and agent for each pull request, making it easier to orient yourself when switching between multiple open PRs.
+
+## Bitbucket: PR opened automation trigger
+
+The `bitbucket.pull_request.opened` event is now available as an automation trigger. Use it to kick off workflows—like automatic PR descriptions or review assignments—the moment a pull request is opened in your Bitbucket workspace.
+
+## Bug fixes and improvements
+
+- Queue jobs that fail no longer block dependent jobs—failed jobs now unblock their dependents so work continues
+- Messages sent while an agent is active are now shown in the queue immediately, giving better visibility into what's lined up
+- Uploaded images are now rendered inline in the action bar message composer
+- Various stability and UI polish improvements
+
+</Update>
+
 <Update label="2026-02-22">
 
 ## Full chat UX in tasks

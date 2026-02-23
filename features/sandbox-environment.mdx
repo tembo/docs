@@ -116,6 +116,12 @@ The Tembo Sandbox includes the following base dependencies and their versions:
 |------|---------|-------------|
 | **go** | 1.24.4 | Open source programming language from Google |
 
+### .NET Ecosystem
+
+| Tool | Version | Description |
+|------|---------|-------------|
+| **dotnet-sdk** | 9 | .NET SDK 9 for building C# and F# applications |
+
 ### Rust Ecosystem
 
 | Tool | Version | Description |
@@ -180,8 +186,12 @@ The Tembo Sandbox provides strong isolation and security guarantees:
 
 | Sandbox Type | CPU | Memory | Disk | Nested Virtualization |
 |-------------|-----|--------|------|---------------------|
-| **Small** | 4 cores | 8 GB | 20 GB | No |
+| **Small** | 4 cores | 4 GB hard / 3 GB soft | 20 GB | No |
 | **Large Full VM** | 4 cores | 8 GB | 100 GB | Yes |
+
+<Note>
+The Small sandbox enforces a **4 GB hard limit** and a **3 GB soft limit** on container memory. Tasks that exceed the hard limit will be terminated to protect overall system stability.
+</Note>
 
 ### Development Workflow Integration
 
