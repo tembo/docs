@@ -69,3 +69,13 @@ Tembo's [Postgres MCP](https://github.com/crystaldba/postgres-mcp) may access yo
 - **Review Migration Scripts** - Always review Tembo's suggested migrations before merging, especially for large tables
 - **Test in Staging** - Apply migrations to a staging environment first to verify performance improvements
 - **Enable pg_stat_statements** - Ensure the `pg_stat_statements` extension is enabled for comprehensive query analysis. Enable it by running `CREATE EXTENSION IF NOT EXISTS pg_stat_statements;` in your database. If the extension isn't available, add `pg_stat_statements` to `shared_preload_libraries` in your `postgresql.conf` and restart PostgreSQL.
+
+# Troubleshooting
+
+**Connection refused or timed out?** Verify your connection string is correct and that the host is reachable from outside your network. If your database is in a private network, you may need to allowlist Tembo's IP ranges or use a connection proxy.
+
+**No query statistics?** Verify `pg_stat_statements` is enabled by running `SELECT * FROM pg_extension WHERE extname = 'pg_stat_statements';`. If empty, run `CREATE EXTENSION IF NOT EXISTS pg_stat_statements;` or add `pg_stat_statements` to `shared_preload_libraries` and restart PostgreSQL.
+
+**Optimization PRs not being created?** Confirm the repository mapping is set (Step 4 of installation) and that Tembo has write access to create branches and pull requests on that repository.
+
+**pg_stat_statements permission denied?** Grant the monitoring user access to the stats view: `GRANT SELECT ON pg_stat_statements TO tembo_monitor;`

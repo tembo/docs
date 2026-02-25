@@ -58,4 +58,4 @@ Once connected, Tembo continuously monitors your RDS PostgreSQL instances for sl
 
 - Connect production databases for accurate insights; test migrations in staging first
 - Review all suggested migrations before merging, especially for large tables
-- Ensure `pg_stat_statements` is enabled for comprehensive query analysis
+- Ensure `pg_stat_statements` is enabled for comprehensive query analysis. On RDS, enable it by adding `pg_stat_statements` to the `shared_preload_libraries` parameter in your RDS parameter group, then reboot the instance. Once the instance restarts, connect to the database and run `CREATE EXTENSION IF NOT EXISTS pg_stat_statements;`
