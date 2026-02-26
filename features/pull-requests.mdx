@@ -86,30 +86,11 @@ This ensures that Tembo's pull requests maintain consistency with your team's ex
 
 ## Troubleshooting
 
-### Pull Request Not Created
+**PR not created?** Verify the repository is active in [Integrations](https://app.tembo.io/integrations), confirm Tembo has branch/PR creation permissions, check your Git provider integration is connected, and ensure Tembo isn't skipping duplicate PRs.
 
-If Tembo isn't creating pull requests for your tasks:
+**PR description missing context?** Provide clearer task descriptions, add a [PR template](/features/pull-requests#pr-template-support) to your repository, or add a [rule file](/features/rule-files) with PR formatting preferences.
 
-1. **Verify repository activation** - Ensure the repository is active in your Tembo dashboard under Integrations
-2. **Check branch permissions** - Confirm Tembo has permission to create branches in your repository
-3. **Review integration status** - Navigate to the [Integrations page](https://app.tembo.io/integrations) to verify your Git provider integration is connected
-4. **Check for existing PRs** - Tembo may skip creating duplicate PRs for the same issue
-
-### PR Description Missing Context
-
-If pull request descriptions lack sufficient detail:
-
-1. **Improve task descriptions** - Provide clear, detailed task descriptions with context about the problem and expected solution
-2. **Add PR templates** - Create a PR template in your repository to guide Tembo's PR descriptions
-3. **Use rule files** - Add a [rule file](/features/rule-files) with PR guidelines and formatting preferences
-
-### Commits Not Signed (GitHub)
-
-If commits appear without the "Verified" badge:
-
-1. **Reinstall the GitHub App** - Disconnect and reconnect the GitHub integration from the [Integrations page](https://app.tembo.io/integrations)
-2. **Check repository permissions** - Ensure the Tembo GitHub App has write access to the repository
-3. **Verify organization settings** - Some organizations require additional approval for GitHub App installations
+**Commits not signed (GitHub)?** Reinstall the GitHub App from [Integrations](https://app.tembo.io/integrations), verify the app has write access, and check if your organization requires additional approval for GitHub App installations.
 
 For additional help, contact [support@tembo.io](mailto:support@tembo.io).
 
