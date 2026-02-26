@@ -13,29 +13,31 @@ Tembo supports multiple coding agents to solve your software engineering tasks.
 Use these model IDs with your agent key (`agent:model` or `agent:model:reasoningLevel` for GPT-5 variants). Choose a model from a provider your agent supports and make sure any required API keys are configured.
 
 **Anthropic (no API key required)**
-- `claude-opus-4-5` (default for Claude Code/Opencode/Cursor/Amp)
+- `claude-opus-4-6`
+- `claude-sonnet-4-6`
+- `claude-opus-4-5` (default for Claude Code/Opencode/Cursor)
 - `claude-4-5-sonnet`
-- `claude-4.1-opus`
 - `claude-4-5-haiku`
-- `claude-4-sonnet`
-- `claude-3-5-sonnet`
-- `claude-3-5-haiku`
 
 **OpenAI (API key required)**
-- `gpt-5`, `gpt-5-minimal`, `gpt-5-low`, `gpt-5-medium`, `gpt-5-high`
-- `gpt-5.1`, `gpt-5.2`
-- `gpt-5-codex`, `gpt-5-codex-high`
-- `gpt-5.1-codex`, `gpt-5.1-codex-max`, `gpt-5.1-codex-mini`, `gpt-5.1-codex-high`
-- `gpt-5.2-codex`
-- `zai-glm-4.7` (OpenAI-compatible)
+- `gpt-5.3-codex`
+- `gpt-5.2` (default for Codex)
+- `gpt-5.2-codex`, `gpt-5.2-codex-high`
+- `gpt-5.1`
+- `gpt-5.1-codex-max`, `gpt-5.1-codex-mini`
+
+**OSS models (no API key required)**
+- `gpt-oss-120b`
+- `qwen-3-32b`
+- `llama-3.3-70b`
+- `zai-glm-4.7`
+- `kimi-k2p5`
+- `zai-glm-5`
+- `minimax-m2p5`
 
 **Google (no API key required)**
-- `gemini-2.5-pro`
 - `gemini-3-pro`
 - `gemini-3-flash`
-
-**Moonshot via Bedrock (no API key required)**
-- `bedrock-kimi-k2-thinking`
 
 **Cursor (Cursor API key required)**
 - `composer-1`
@@ -53,35 +55,34 @@ For GPT-5 and GPT-5.2 families you can append a reasoning effort (`:minimal`, `:
 
 Powered by Anthropic's Claude models. Best balance of quality, reliability, and cost.
 
-**Models:** `claude-opus-4-5` (default), `claude-4-5-sonnet`, `claude-4.1-opus`, `claude-4-5-haiku`, `claude-4-sonnet`
+**Models:** `claude-opus-4-6` (default), `claude-sonnet-4-6`, `claude-opus-4-5`, `claude-4-5-sonnet`, `claude-4-5-haiku`
 
 ### Codex
 
 Powered by OpenAI's Responses API (GPT-5 family) with configurable reasoning effort.
 
-**Models:** `gpt-5.2` (default), `gpt-5.1-codex`, `gpt-5.1-codex-max`, `gpt-5.1-codex-mini`
+**Models:** `gpt-5.2` (default), `gpt-5.3-codex`, `gpt-5.1-codex-max`, `gpt-5.1-codex-mini`
 
-Add `:minimal`, `:low`, `:medium`, or `:high` to `gpt-5.2` to control reasoning effort.
+Add `:minimal`, `:low`, `:medium`, or `:high` to control reasoning effort for supported models.
 
 ### Opencode
 
 Alternative agent supporting multiple model providers.
 
-**Models:** `claude-opus-4-5` (default), `claude-4-5-sonnet`, `claude-4.1-opus`, `claude-4-5-haiku`, `claude-4-sonnet`, `gpt-5.2`, `gpt-5.1-codex`, `gpt-5.1-codex-max`, `gpt-5.1-codex-mini`
-
-Also supports OpenAI models.
+**Models:** 
+- Anthropic: `claude-opus-4-6`, `claude-sonnet-4-6`, `claude-opus-4-5`, `claude-4-5-sonnet` (default), `claude-4-5-haiku`
+- OpenAI: `gpt-5.2`, `gpt-5.3-codex`, `gpt-5.1-codex-max`, `gpt-5.1-codex-mini`
+- OSS models: `gpt-oss-120b`, `qwen-3-32b`, `llama-3.3-70b`, `zai-glm-4.7`, `kimi-k2p5`, `zai-glm-5`, `minimax-m2p5`
 
 ### Amp
 
-Powered by Claude models. Manages model selection automatically, defaults to `claude-opus-4-5`.
+Powered by Claude models. Manages model selection automatically (no model selection available).
 
 ### Cursor
 
 Supports Claude, GPT, Gemini, Composer, and Grok through the Cursor CLI.
 
-**Models:** `claude-opus-4-5` (default), `claude-4-5-sonnet`, `claude-4.1-opus`, `gpt-5.1`, `gpt-5.1-codex`, `gpt-5.1-codex-high`, `gpt-5.2`, `gemini-3-pro`, `gemini-3-flash`, `composer-1`, `grok`
-
-Also supports Gemini 3 Flash.
+**Models:** `composer-1`, `claude-opus-4-6`, `claude-opus-4-5`, `claude-4-5-sonnet` (default), `gpt-5.2-codex`, `gpt-5.2-codex-high`, `gpt-5.1`, `gpt-5.2`, `gemini-3-pro`, `gemini-3-flash`, `grok`
 
 ## Selecting an Agent
 
@@ -93,7 +94,7 @@ codex:gpt-5.2:high
 cursor:grok
 ```
 
-Default: `claudeCode:claude-opus-4-5`
+Default: `claudeCode:claude-opus-4-6`
 
 ## Choosing the Right Model
 
