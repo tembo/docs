@@ -4,7 +4,7 @@ description: 'Secure isolated VM environment with pre-installed development tool
 icon: 'box'
 ---
 
-The Tembo Sandbox provides a secure, isolated environment where Tembo operates to analyze and modify your code. This environment comes pre-installed with a comprehensive set of development tools and runtime environments to support a wide variety of programming languages and frameworks.
+The Tembo Sandbox provides a secure, isolated environment where Tembo operates to analyze and modify your code. Each sandbox is **ephemeral** — it is spun up for the duration of a task, and **automatically discarded** once the task is complete. No code, files, or environment state persist after execution. This environment comes pre-installed with a comprehensive set of development tools and runtime environments to support a wide variety of programming languages and frameworks.
 
 ## Sandbox Types
 
@@ -171,6 +171,7 @@ Each Tembo task runs in its own isolated sandbox instance. There is no limit to 
 
 The Tembo Sandbox provides strong isolation and security guarantees:
 
+- **Ephemeral environments**: Each sandbox is created for a single task and **destroyed after execution completes**. Tembo does not retain copies of your repository or code in persistent storage.
 - **Process isolation**: Each task runs in its own isolated environment
 - **File system isolation**: Changes are contained within the sandbox
 - **Network security**: Controlled network access for security
