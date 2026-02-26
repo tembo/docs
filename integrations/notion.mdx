@@ -79,21 +79,9 @@ The integration requires the following Notion permissions:
 
 # Troubleshooting
 
-## Workspace Not Appearing
+**Workspace not appearing?** Verify you completed the OAuth flow and granted workspace access. Check that you selected pages Tembo can access, then [reauthorize](https://app.tembo.io/integrations) if needed.
 
-If your Notion workspace doesn't appear after authorization:
-
-1. **Verify authorization** - Ensure you completed the OAuth flow and granted access to the correct workspace
-2. **Check page permissions** - Confirm you selected pages Tembo can access during authorization
-3. **Reauthorize if needed** - Navigate to the [Integrations page](https://app.tembo.io/integrations) and reconnect
-
-## Agents Cannot Access Expected Content
-
-If agents report they cannot find content from Notion:
-
-1. **Verify page selection** - During Notion authorization, you must explicitly select which pages Tembo can access
-2. **Check page sharing** - Ensure the pages aren't restricted to specific workspace members only
-3. **Review workspace structure** - Nested pages inherit parent permissions but must be in an authorized section
+**Agents can't find content?** During authorization, explicitly select pages Tembo can access. Ensure pages aren't restricted to specific workspace members. Nested pages inherit parent permissions but must be in an authorized section.
 
 # Security & Privacy
 
