@@ -208,20 +208,15 @@ To add custom MCP servers to your organization:
 
 ## Best Practices
 
-**Security**: Store sensitive credentials as environment variables rather than hardcoding them in configuration.
-
-**Testing**: Test MCP servers locally before adding them to your organization configuration.
-
-**Documentation**: Document custom MCP servers for your team, including what tools they provide and when to use them.
-
-**Version Control**: Keep MCP server configurations in version control alongside your rule files for team consistency.
+- **Security** — Store credentials as environment variables, not hardcoded in configuration
+- **Testing** — Test MCP servers locally before adding to your organization
+- **Documentation** — Document custom servers for your team (tools provided, when to use)
+- **Version Control** — Keep configurations alongside rule files for team consistency
 
 ## Troubleshooting
 
-**MCP server not available**: Ensure the server configuration is valid JSON and all required fields are provided.
+- **Server not available?** Check that configuration is valid JSON with all required fields.
+- **Authentication errors?** Verify credentials and API keys have necessary permissions.
+- **Connection issues?** Ensure HTTP/SSE URLs are accessible and servers are running.
 
-**Authentication errors**: Verify credentials and API keys are correct and have the necessary permissions.
-
-**Connection issues**: For HTTP/SSE servers, check that the URL is accessible and the server is running.
-
-For additional help, contact [support](mailto:support@tembo.io).
+For help, contact [support](mailto:support@tembo.io).
