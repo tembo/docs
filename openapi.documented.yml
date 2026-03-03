@@ -42,6 +42,11 @@ paths:
                   organizationId:
                     type: string
                     format: uuid
+                  htmlUrl:
+                    type: string
+                    format: uri
+                    description: URL to view this task in the Tembo web application
+                    example: https://app.tembo.io/tasks/123e4567-e89b-12d3-a456-426614174000
                 required:
                   - id
                   - title
@@ -50,6 +55,7 @@ paths:
                   - createdAt
                   - updatedAt
                   - organizationId
+                  - htmlUrl
         "400":
           description: Bad request - invalid input or missing organization ID
           content:
@@ -90,6 +96,11 @@ paths:
                   minLength: 1
                   description: Description of the task to be performed. Supports tagging files.
                   example: Fix the authentication bug in the login component
+                description:
+                  type: string
+                  minLength: 1
+                  description: Detailed description of the task (alternative to prompt)
+                  example: Users are reporting they cannot log in. JWT token validation appears to be failing.
                 agent:
                   type: string
                   description: The agent to use for this task
@@ -102,10 +113,23 @@ paths:
                   example:
                     - https://github.com/org/repo
                     - https://gitlab.com/org/repo-2
-                branch:
+                codeRepoIds:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of Tembo code repository IDs to target directly
+                  example:
+                    - cbad4334-c844-4fef-a8da-d08f209f267e
+                    - 6307d53a-b99d-4e90-ab89-f29114f33d53
+                targetBranch:
                   type: string
                   nullable: true
-                  description: Specific git branch to target for this task
+                  description: The branch to open the pull request against (e.g. main, develop)
+                  example: main
+                branchName:
+                  type: string
+                  nullable: true
+                  description: The branch name to use for the work
                   example: feature/auth-fix
                 queueRightAway:
                   type: boolean
@@ -173,6 +197,11 @@ paths:
                         organizationId:
                           type: string
                           format: uuid
+                        htmlUrl:
+                          type: string
+                          format: uri
+                          description: URL to view this task in the Tembo web application
+                          example: https://app.tembo.io/tasks/123e4567-e89b-12d3-a456-426614174000
                       required:
                         - id
                         - title
@@ -181,6 +210,7 @@ paths:
                         - createdAt
                         - updatedAt
                         - organizationId
+                        - htmlUrl
                   meta:
                     type: object
                     properties:
@@ -276,6 +306,11 @@ paths:
                         organizationId:
                           type: string
                           format: uuid
+                        htmlUrl:
+                          type: string
+                          format: uri
+                          description: URL to view this task in the Tembo web application
+                          example: https://app.tembo.io/tasks/123e4567-e89b-12d3-a456-426614174000
                       required:
                         - id
                         - title
@@ -284,6 +319,7 @@ paths:
                         - createdAt
                         - updatedAt
                         - organizationId
+                        - htmlUrl
                   meta:
                     type: object
                     properties:
