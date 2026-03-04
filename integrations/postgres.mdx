@@ -64,8 +64,7 @@ Tembo's [Postgres MCP](https://github.com/crystaldba/postgres-mcp) may access yo
 
 ## Best Practices
 
-- **Use Read-Only Access** - Tembo only needs read access to monitor performance; it never modifies your database directly
-- **Monitor Production Databases** - Connect production databases for the most accurate performance insights
-- **Review Migration Scripts** - Always review Tembo's suggested migrations before merging, especially for large tables
-- **Test in Staging** - Apply migrations to a staging environment first to verify performance improvements
-- **Enable pg_stat_statements** - Ensure the `pg_stat_statements` extension is enabled for comprehensive query analysis. Enable it by running `CREATE EXTENSION IF NOT EXISTS pg_stat_statements;` in your database. If the extension isn't available, add `pg_stat_statements` to `shared_preload_libraries` in your `postgresql.conf` and restart PostgreSQL.
+- **Use read-only access** — Tembo only needs read access and never modifies your database directly
+- **Connect production databases** — Get the most accurate performance insights from real traffic
+- **Review migration PRs** — Always review suggested migrations before merging, especially for large tables
+- **Enable pg_stat_statements** — Required for query analysis. Run `CREATE EXTENSION IF NOT EXISTS pg_stat_statements;`
