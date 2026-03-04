@@ -67,7 +67,8 @@ const task = await client.task.create({
   prompt: 'Fix the authentication bug in the login component',
   agent: 'claudeCode:claude-opus-4-5',
   repositories: ['https://github.com/org/repo'],
-  branch: 'main',
+  targetBranch: 'main',
+  branchName: 'fix/auth-login-token-validation',
 });
 
 console.log(`Task created: ${task.id}`);
@@ -77,10 +78,13 @@ console.log(`Task created: ${task.id}`);
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `prompt` | string | Yes | Description of the task to perform |
+| `prompt` | string | Conditionally | Description of the task to perform (required if `description` is not provided) |
+| `description` | string | Conditionally | Detailed task description (required if `prompt` is not provided) |
 | `agent` | string | No | Coding agent to use (default: `claudeCode:claude-opus-4-5`) |
 | `repositories` | string[] | No | Repository URLs for the task |
-| `branch` | string | No | Target git branch |
+| `codeRepoIds` | string[] | No | Repository IDs to target directly instead of repository URLs |
+| `targetBranch` | string | No | Branch to open the pull request against |
+| `branchName` | string | No | Branch name Tembo should use for the working branch |
 | `queueRightAway` | boolean | No | Start immediately (default: `true`) |
 
 ### List Tasks
