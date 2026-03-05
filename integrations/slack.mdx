@@ -79,7 +79,7 @@ Tembo supports flexible command syntax with multiple options. You can use either
   - Example: `@tembo [repo=myorg/webapp,myorg/api] Add authentication to both frontend and backend`
 
 - **`agent=`** - Specify which coding agent and model to use (format: `agentType:model`)
-  - Example: `agent=claudeCode:claude-opus-4-5`, `agent=codex:gpt-5.2`
+  - Example: `agent=claudeCode:claude-opus-4-5`, `agent=codex:gpt-5.4`
   - Supported coding agents: `claudeCode`, `codex`, `opencode`, `amp`, `cursor`
   - If no coding agent is specified, Tembo uses your organization's default configuration
   - See [Coding Agents documentation](/features/coding-agents) for all available options
@@ -108,7 +108,7 @@ For tasks that span multiple repositories (e.g., full-stack features):
 
 Without an `agent=` option, Tembo uses your organization's default (configurable in [Settings](https://app.tembo.io/settings)). Individual repositories can override this default.
 
-See [Coding Agents](/features/coding-agents) for available models. Quick examples: `agent=claudeCode:claude-4-5-haiku` for fast fixes, `agent=cursor:grok` for complex refactoring.
+See [Coding Agents](/features/coding-agents) for available models. Quick examples: `agent=codex:gpt-5.4` for OpenAI-powered work, `agent=claudeCode:claude-4-5-haiku` for fast fixes, `agent=cursor:grok` for complex refactoring.
 
 ### Thread Context Utilization
 
