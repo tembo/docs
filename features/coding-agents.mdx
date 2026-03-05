@@ -20,6 +20,7 @@ Use these model IDs with your agent key (`agent:model` or `agent:model:reasoning
 - `claude-4-5-haiku`
 
 **OpenAI (API key required)**
+- `gpt-5.4`
 - `gpt-5.3-codex`
 - `gpt-5.2` (default for Codex)
 - `gpt-5.2-codex`, `gpt-5.2-codex-high`
@@ -45,7 +46,7 @@ Use these model IDs with your agent key (`agent:model` or `agent:model:reasoning
 **XAI (XAI API key required)**
 - `grok`
 
-For GPT-5 and GPT-5.2 families you can append a reasoning effort (`:minimal`, `:low`, `:medium`, `:high`) when the agent supports it.
+For GPT-5 family models you can append a reasoning effort (`:minimal`, `:low`, `:medium`, `:high`) when the agent supports it.
 
 ## Available Coding Agents
 
@@ -63,7 +64,7 @@ Use the format `agentType:model[:reasoningLevel]`:
 
 ```
 claudeCode:claude-opus-4-5
-codex:gpt-5.2:high
+codex:gpt-5.4:high
 cursor:grok
 ```
 
