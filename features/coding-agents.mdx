@@ -10,8 +10,6 @@ Tembo supports multiple coding agents to solve your software engineering tasks.
 
 ## Supported LLMs
 
-Use these model IDs with your agent key (`agent:model` or `agent:model:reasoningLevel` for GPT-5 variants). Choose a model from a provider your agent supports and make sure any required API keys are configured.
-
 **Anthropic (no API key required)**
 - `claude-opus-4-6`
 - `claude-sonnet-4-6`
@@ -20,6 +18,7 @@ Use these model IDs with your agent key (`agent:model` or `agent:model:reasoning
 - `claude-4-5-haiku`
 
 **OpenAI (API key required)**
+- `gpt-5.4` (available in both Codex and Opencode)
 - `gpt-5.3-codex`
 - `gpt-5.2` (default for Codex)
 - `gpt-5.2-codex`, `gpt-5.2-codex-high`
@@ -52,8 +51,8 @@ For GPT-5 and GPT-5.2 families you can append a reasoning effort (`:minimal`, `:
 <CodingAgentsTable />
 
 - **Claude Code** — Anthropic's Claude models. Best balance of quality, reliability, and cost.
-- **Codex** — OpenAI's GPT-5 family with configurable reasoning effort (`:minimal`, `:low`, `:medium`, `:high`).
-- **Opencode** — Multi-provider support: Anthropic, OpenAI, and OSS models.
+- **Codex** — OpenAI's GPT-5 family, including `gpt-5.4`, with configurable reasoning effort (`:minimal`, `:low`, `:medium`, `:high`).
+- **Opencode** — Multi-provider support: Anthropic, OpenAI, and OSS models, including `gpt-5.4`.
 - **Amp** — Claude-powered with automatic model selection.
 - **Cursor** — Multi-provider via Cursor CLI: Claude, GPT, Gemini, Composer, and Grok.
 
@@ -63,7 +62,8 @@ Use the format `agentType:model[:reasoningLevel]`:
 
 ```
 claudeCode:claude-opus-4-5
-codex:gpt-5.2:high
+codex:gpt-5.4:high
+opencode:gpt-5.4
 cursor:grok
 ```
 
@@ -73,7 +73,7 @@ Default: `claudeCode:claude-opus-4-6`
 
 | Use Case | Recommended Models |
 |----------|-------------------|
-| Most tasks | `claude-4-5-sonnet`, `gpt-5.2` |
+| Most tasks | `claude-4-5-sonnet`, `gpt-5.4` |
 | Quick fixes | `claude-4-5-haiku`, `gpt-5.1-codex-mini` |
 | Complex refactoring | `claude-opus-4-5`, `gpt-5.1-codex-max` |
 
