@@ -77,6 +77,18 @@ The dev server defaults to `http://localhost:3000`. Keep it running while you ed
 - **Broken links or 404s**: Confirm the destination page exists and is referenced correctly in `docs.json`.
 - **Frontmatter errors**: Ensure every MDX file starts with `title` and `description`.
 
+## Contributing
+
+Documentation is a core part of the Tembo product. We use a **Diátaxis framework** to organize content into tutorials, how-to guides, explanations, and reference material. When contributing:
+
+- Follow the content workflow outlined above
+- Review `AGENTS.md` for voice, tone, and accessibility standards
+- Test all code examples locally before submitting
+- Use Mintlify's preview to validate your changes
+- Request review from product or engineering owners for technical workflows
+
+See a typo or have an idea for improvement? Open a pull request or reach out to the team.
+
 ## Resources
 
 - [Tembo Website](https://tembo.io)
