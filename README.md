@@ -70,6 +70,18 @@ The dev server defaults to `http://localhost:3000`. Keep it running while you ed
 - Merging to `main` triggers the Mintlify GitHub integration to deploy automatically, so double-check the local preview (and, if available, the generated preview URL) before merging.
 - After deployment, spot-check high-traffic flows such as the welcome page, current changelog, and any newly added guides.
 
+## Documentation Standards
+
+We prioritize clarity and accuracy. Key guidelines:
+
+- **Frontmatter is non-negotiable** — Every MDX file must include `title` and `description` fields for SEO and navigation
+- **Code samples must be tested** — Never publish untested or guessed code. Execute each example locally
+- **Use relative paths for internal links** — Absolute URLs break if the site domain changes
+- **Alt text on all images** — Required for accessibility and SEO
+- **Language tags on code blocks** — Helps with syntax highlighting and accessibility (`\`\`ts`, `\`\`bash`, etc.)
+- **Keep content evergreen** — Avoid hardcoding dates or version numbers that become stale
+- **DRY principle** — Use snippets in `snippets/` for recurring callouts, warnings, and notes instead of copying
+
 ## Troubleshooting
 
 - **Mintlify CLI missing or outdated**: Reinstall with `npm install --global mintlify`.
