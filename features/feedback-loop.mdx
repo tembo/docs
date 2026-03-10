@@ -24,6 +24,14 @@ That's it! No additional setup required.
 3. **Automatic Retry** - Tembo processes your feedback and updates the PR/MR with improvements
 4. **Iteration** - Continue providing feedback until you're satisfied with the solution
 
+### Multi-Repository Support
+
+When your task spans multiple repositories (e.g., frontend and backend), feedback on one PR can trigger changes across all connected repositories:
+
+- **Existing PRs updated** — Tembo pushes new commits to all PRs that need changes
+- **New PRs created** — If changes are needed in a repository without an existing PR, Tembo creates one automatically
+- **Primary PR context** — Tembo understands which PR received the feedback and prioritizes that repository while coordinating changes across others
+
 <Note>
 **Credit Usage**: Processing feedback through the Feedback Loop consumes credits based on the complexity of the requested changes and the size of the codebase context. Each feedback iteration is treated as a separate task. Learn more about [credit consumption](/admin/billing#what-consumes-credits).
 </Note>
