@@ -240,6 +240,34 @@ When configured correctly, Tembo will:
 **How it works:**
 When a coding agent executes commands in the sandbox, it automatically runs them within your Nix development shell if a `flake.nix` is detected. This means all build commands, tests, and scripts will have access to the exact dependencies specified in your flake, ensuring consistent behavior across all task executions.
 
+### Dev Containers
+
+Tembo's sandbox environment can also run your task inside a **Dev Container** (the same `.devcontainer` format used by VS Code Dev Containers and GitHub Codespaces). This is useful when your project needs OS packages, language runtimes, or tooling that isn't already available in the base sandbox.
+
+**Requirements:**
+- Use the **Large Full VM** sandbox type (Dev Containers require Docker)
+- Dev Containers are not supported in the **Small** sandbox type
+- Commit a Dev Container configuration at `.devcontainer/devcontainer.json` in your repository root
+
+**How it works:**
+- Tembo detects `.devcontainer/devcontainer.json`
+- Tembo starts the container for your repo
+- All subsequent commands run *inside* that container environment
+
+**Minimal example: `.devcontainer/devcontainer.json`**
+```json
+{
+  "name": "tembo-sandbox",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "postCreateCommand": "echo 'Dev Container ready'"
+}
+```
+
+**Tips:**
+- Keep `postCreateCommand` **idempotent** and **fast** (it runs during container setup).
+- If your Dev Container build is slow or flaky, the task will be slow or fail early—test it locally with VS Code's "Dev Containers: Reopen in Container" before relying on it in Tembo.
+- For multi-repo tasks, only one Dev Container can be used per run; Tembo uses the first repo that has a `.devcontainer/devcontainer.json`.
+
 ## Best Practices
 
 ### Choosing the Right Sandbox
@@ -249,6 +277,7 @@ When a coding agent executes commands in the sandbox, it automatically runs them
 | Code analysis, simple fixes | Small (default) |
 | Agent needs to run tests with Docker databases | Large Full VM |
 | Agent needs to build Docker images | Large Full VM |
+| Repository uses Dev Containers | Large Full VM |
 | Complex multi-container setups | Large Full VM |
 | System-level operations | Large Full VM |
 | General development | Small |
