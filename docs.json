@@ -75,12 +75,12 @@
 						]
 					},
 					{
-						"group": "Admin",
+						"group": "Tylers Admin",
 						"pages": [
-							"admin/security",
-							"admin/billing",
-							"admin/support",
-							"admin/inviting-your-team"
+							"tylers-admin/security",
+							"tylers-admin/billing",
+							"tylers-admin/support",
+							"tylers-admin/inviting-your-team"
 						]
 					},
 					{
@@ -141,7 +141,11 @@
 		},
 		{
 			"source": "/billing",
-			"destination": "/admin/billing"
+			"destination": "/tylers-admin/billing"
+		},
+		{
+			"source": "/admin/:slug*",
+			"destination": "/tylers-admin/:slug*"
 		}
 	]
 }
