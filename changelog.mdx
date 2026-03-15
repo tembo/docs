@@ -4,6 +4,66 @@ description: "Keep track of changes and updates to Tembo"
 icon: "clock-rotate-left"
 ---
 
+<Update label="2026-03-15">
+
+## Reopen pull requests from a task
+
+You can now reopen a closed pull request directly from the task page. This
+works across supported Git providers, so it’s easier to keep iterating without
+leaving Tembo.
+
+## Multiple pull requests for multi-repo follow-up
+
+When a fix spans more than one repository, Tembo can now open multiple pull
+requests as part of the feedback loop instead of forcing everything into a
+single repo.
+
+## New Issue Status Changed trigger for Jira
+
+The Jira integration now includes a new **Issue Status Changed** trigger for
+automations. You can use it to kick off follow-up work automatically when
+issues move into states like **In Progress**, **In Review**, or **Done**.
+
+## CI checks on task pages
+
+Task pages now show pull request CI checks, so it’s much easier to see when CI
+is failing without leaving Tembo.
+
+## Org model controls
+
+Org admins can now control which models are available in Tembo from
+**Settings → Models**. Disabled models are removed from agent pickers, so it’s
+simpler to standardize which models your team can use.
+
+## Better task review ergonomics
+
+Task pages are now easier to review during longer runs. Prompt cards are easier
+to reference while you scroll, you can copy a prompt with one click, diff
+headers stay visible, and long folder chains are collapsed into cleaner file
+tree paths.
+
+## Richer task and agent logs
+
+Task logs are easier to follow now. File writes can render as diffs,
+structured JSON and JSONL command output is easier to read, and SQL query
+events have clearer dedicated rendering.
+
+## More repo connections on free plans with credits
+
+If your free workspace has at least **50 credits**, you can now connect more
+than one repository without needing to upgrade first.
+
+## Sentry Auto Fix automation template
+
+There is now a **Sentry Auto Fix** automation template that helps you monitor
+new Sentry issues, diagnose the root cause in your codebase, and open a pull
+request with a targeted fix.
+
+Also various bug fixes and improvements as always :)
+
+</Update>
+
+
 <Update label="2026-03-08">
 
 ## Automation templates
