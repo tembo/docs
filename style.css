@@ -1,3 +1,11 @@
+* {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+*::-webkit-scrollbar {
+    display: none !important;
+}
+
 ::selection {
     background-color: #eff8ff;
     color: #005cad;
@@ -54,6 +62,14 @@ span.method-nav-pill span {
     border-left: 1px solid #dedede !important;
 }
 
+.top-\[var\(--banner-height\,0px\)\] > div {
+    background-color: #dedede !important;
+}
+
+#chat-assistant-sheet {
+    background-color: #f8f8f8 !important;
+}
+
 #navbar {
     border-bottom: 1px solid #dedede !important;
 }
@@ -72,6 +88,14 @@ span.method-nav-pill span {
 
     #table-of-contents-content .border-gray-950\/5 {
         border-left: 1px solid #ffffff0f !important;
+    }
+
+    #chat-assistant-sheet {
+        background-color: #141414 !important;
+    }
+
+    .top-\[var\(--banner-height\,0px\)\] > div {
+        background-color: #ffffff0f !important;
     }
 
     #navbar {
