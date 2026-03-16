@@ -54,7 +54,7 @@ h3 {
     line-height: 1.25 !important;
 }
 
-.bg-gray-200\/70 {
+[data-component-part="step-line"] {
     background-color: #dedede !important;
 }
 
@@ -73,12 +73,13 @@ h3 {
 #navbar {
     border-bottom: 1px solid #dedede !important;
 }
+
 #sidebar-content {
     border-right: 1px solid #dedede !important;
 }
 
 .dark {
-    .bg-gray-200\/70 {
+    [data-component-part="step-line"] {
         background-color: #ffffff0f !important;
     }
 
