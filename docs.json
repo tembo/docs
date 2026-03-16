@@ -125,7 +125,6 @@
                     {
                         "group": "Use Cases",
                         "pages": [
-                            "learn/automate-recurring-tasks",
                             "learn/fix-production-bugs",
                             "learn/implement-from-issues",
                             "learn/keep-docs-in-sync",

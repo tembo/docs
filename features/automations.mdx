@@ -8,7 +8,7 @@ description: "Run coding agents on a schedule or triggered by events."
   <img src="/images/automation-dark.png" alt="Automations" className="hidden dark:block" />
 </Frame>
 
-Run agents in the background, on a schedule or triggered by events. A Sentry error gets fixed within seconds. Docs stay in sync with your code. Security vulnerabilities get caught before they become problems.
+Run coding agents in the background, on a schedule or triggered by events. A Sentry error gets fixed within seconds. Docs stay in sync with your code. Security vulnerabilities get caught before they become problems.
 
 Each automation runs in a secure [sandbox](/features/sandbox-environment) with full repository access and your configured [MCP servers](/integrations/mcp).
 
@@ -65,9 +65,20 @@ Automations aren't limited to engineering tasks. With [MCP servers](/integration
 
 | Example | Trigger | What it does |
 |---------|---------|-------------|
-| Daily ARR report | Daily | Pulls revenue data from Stripe and posts to Slack |
-| Feature requests from calls | Daily | Scans call transcripts for feature requests and creates Linear tickets |
-| Customer health check | Weekly | Summarizes support tickets, usage trends, and churn signals in Slack |
-| Enrich CRM records | New deal created | Pulls company info and adds context to Attio or your CRM |
+| Daily ARR report | Daily | Pulls revenue data from [Stripe](/integrations/mcp) and posts to [Slack](/integrations/slack) |
+| Feature requests from calls | Daily | Scans call transcripts for feature requests and creates [Linear](/integrations/linear) tickets |
+| Customer health check | Weekly | Summarizes support tickets, usage trends, and churn signals in [Slack](/integrations/slack) |
+| Enrich CRM records | New deal created | Pulls company info and adds context to [Attio](/integrations/mcp) or your CRM |
+| Create CRM tickets from Slack | `@tembo` in [Slack](/integrations/slack) | Creates a ticket in your CRM enriched with context from other connected integrations |
 
 Any tool with an [MCP server](/integrations/mcp) can be used in an automation.
+
+You can also do this on-demand from [Slack](/integrations/slack) without setting up an automation:
+
+```
+@tembo What's our ARR right now? Check Stripe.
+```
+
+```
+@tembo Summarize the feature requests from this week's sales calls and create Linear tickets for the top 5.
+```
