@@ -1,64 +1,47 @@
 ---
 title: "Supabase"
-description: "Connect Supabase PostgreSQL databases to Tembo for performance monitoring and optimization."
+description: "Database performance monitoring and optimization."
 ---
 
-Connect Supabase PostgreSQL databases to Tembo for performance monitoring and optimization.
+<Frame>
+  <img src="/images/integrations/supabase.png" alt="Supabase" />
+</Frame>
 
-# Features
+## Features
 
-- **Monitor slow queries** - Identifies queries that exceed performance thresholds and suggests optimizations
-- **Detect missing indexes** - Analyzes query patterns to find opportunities for new indexes that would improve performance
-- **Detect unused indexes** - Identifies indexes that are no longer being used, helping reduce storage overhead
-- **Automatic optimization PRs** - Generates pull requests with database migration scripts to implement recommended improvements
+- Monitor slow queries and suggest optimizations
+- Detect missing and unused indexes
+- Open PRs with migration scripts
 
-# Installation
+## Installation
 
 <Steps>
   <Step title="Install">
-    Navigate to the [Integrations page](https://app.tembo.io/integrations) in Tembo and click the `Install` button next to Supabase.
+    Go to [Integrations](https://app.tembo.io/integrations) and click **Install** next to Supabase.
   </Step>
   <Step title="Authorize">
-    Authorize Tembo to access your Supabase account. You'll be redirected back to the Integrations page when complete.
+    Authorize Tembo to access your Supabase account.
   </Step>
-  <Step title="Activate Projects">
-    After syncing completes (may take a few minutes), select which Supabase projects you want Tembo to monitor under "Active Projects" on the Integrations page.
-
-    Only projects you activate here will be monitored for performance issues and optimization opportunities.
+  <Step title="Activate projects">
+    Select which Supabase projects to monitor.
   </Step>
-  <Step title="Map Repository">
-    Map your Supabase project to the GitHub, GitLab, or Bitbucket repository where your database migrations are stored. This allows Tembo to create PRs with optimization suggestions.
+  <Step title="Map repository">
+    Map projects to the repository where migrations are stored.
   </Step>
 </Steps>
 
-# Usage
+## Usage
 
-## Automated Monitoring
+Tembo monitors your Supabase database using `pg_stat_statements`. When it finds optimization opportunities, it opens PRs with migration scripts and performance metrics.
 
-Once connected, Tembo continuously monitors your Supabase database performance:
+## Advanced
 
-- **Query Performance Analysis** - Tracks slow queries using PostgreSQL's `pg_stat_statements` extension
-- **Index Analysis** - Examines query execution plans to identify missing or unused indexes
-- **Performance Trends** - Monitors query performance over time to detect degradation
+<AccordionGroup>
+  <Accordion title="Projects not appearing">
+    Wait 2-5 minutes for initial sync. Verify you authorized access and projects are active (not paused). Try the sync button.
+  </Accordion>
 
-## Pull Requests for Optimizations
-
-When Tembo identifies optimization opportunities, it will:
-
-1. **Create a Pull Request** - Opens a PR with database migration scripts (e.g., `CREATE INDEX` statements)
-2. **Add Context** - Includes detailed explanations of the performance issue and expected improvement
-3. **Provide Metrics** - Shows query execution times and estimated performance gains
-
-## Best Practices
-
-- **Monitor Production Databases** - Connect production databases for the most accurate performance insights
-- **Review Migration Scripts** - Always review Tembo's suggested migrations before merging, especially for large tables
-- **Test in Staging** - Apply migrations to a staging environment first to verify performance improvements
-
-# Troubleshooting
-
-**Projects not appearing?** Wait 2-5 minutes for initial sync, verify you authorized Tembo to access the projects, ensure projects are active (not paused), and try the manual sync button on the Integrations page.
-
-**No query statistics?** Verify `pg_stat_statements` is active in your database, generate some query traffic, and wait 24-48 hours for new projects to collect data.
-
-**Optimization PRs not being created?** Ensure you've mapped your Supabase project to the correct repository with write access, and confirm your database migrations are stored there.
+  <Accordion title="No query statistics">
+    Verify `pg_stat_statements` is active. Generate some query traffic and wait 24-48 hours for new projects to collect data.
+  </Accordion>
+</AccordionGroup>

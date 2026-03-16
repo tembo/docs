@@ -1,32 +1,34 @@
 ---
-title: 'MCP Servers'
-description: 'Extend your agents with external tools and integrations.'
+title: 'MCP'
+description: 'Give your agents access to external tools and data sources.'
 ---
 
-MCP (Model Context Protocol) servers give your agents access to external tools, APIs, and data sources. Install them from the [Integrations page](https://app.tembo.io/integrations) in the app.
+<Frame>
+  <img src="/images/integrations/mcp.png" alt="MCP" />
+</Frame>
 
-Learn more about MCP at [modelcontextprotocol.io](https://modelcontextprotocol.io).
+MCP (Model Context Protocol) servers extend what your agents can access during tasks. Install them from the [Integrations page](https://app.tembo.io/integrations).
 
-## Available MCP servers
+## Available servers
 
 | Server | What it does |
 |--------|-------------|
-| **Kernel** | Launch Chromium browsers, execute Playwright code, capture video replays |
-| **Context7** | Up-to-date, version-specific documentation and code examples |
-| **PostHog** | Analytics, feature flags, experiments, error tracking |
-| **Neon** | Interact with Neon Postgres databases |
-| **Supabase** | Manage Supabase projects and databases |
-| **PlanetScale** | Access and manage PlanetScale databases |
+| **Kernel** | Chromium browsers, Playwright automation, video replays |
+| **Context7** | Version-specific documentation and code examples |
+| **PostHog** | Analytics, feature flags, error tracking |
+| **Neon** | Neon Postgres databases |
+| **Supabase** | Supabase projects and databases |
+| **PlanetScale** | PlanetScale databases |
 | **Stripe** | Customers, payments, subscriptions, invoices |
 | **Clerk** | Users, organizations, authentication |
 | **Notion** | Pages, databases, workspace content |
 | **Jam** | Bug reports, recordings, repro steps |
-| **Supermemory** | Long-term memory and context for AI apps |
+| **Supermemory** | Long-term memory and context |
 | **Attio** | CRM records, lists, workspace data |
 | **Firetiger** | Cloud tools and resources |
 
-Integration MCP servers (GitHub, Linear, Sentry, Postgres) are automatically available when you connect those integrations.
+GitHub, Linear, Sentry, and Postgres MCP servers are automatically available when you connect those integrations.
 
-## Custom MCP servers
+## Custom servers
 
-You can bring your own MCP servers too. Add them from the [Integrations page](https://app.tembo.io/integrations) using the **Custom MCP** option. Tembo supports stdio, HTTP, and SSE server types, including OAuth-based servers that require authorization.
+Bring your own MCP servers from the [Integrations page](https://app.tembo.io/integrations) using **Custom MCP**. Supports stdio, HTTP, and SSE, including OAuth.

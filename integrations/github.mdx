@@ -1,9 +1,20 @@
 ---
-title: 'GitHub'
-description: 'Connect GitHub to Tembo for pull requests, code review, and automated workflows.'
+title: "GitHub"
+description: "Pull requests, code review, and automated workflows."
 ---
 
-Connect GitHub to Tembo to open pull requests, review code, and respond to issues and comments.
+<Frame>
+  <img src="/images/integrations/github.png" alt="GitHub" />
+</Frame>
+
+## Features
+
+- Open pull requests with code changes
+- Review PRs with inline comments
+- Respond to PR feedback and iterate
+- Start work from GitHub issues
+- Auto-fix failed GitHub Actions workflows
+- Signed and verified commits on all Tembo PRs
 
 ## Installation
 
@@ -19,13 +30,11 @@ Connect GitHub to Tembo to open pull requests, review code, and respond to issue
   </Step>
 </Steps>
 
-To disconnect, go to Integrations and click **Disconnect**.
-
-## Using @tembo in GitHub
+## Usage
 
 ### PR comments
 
-Comment `@tembo` on any pull request to request changes. Tembo reads the feedback, updates the code, and pushes new commits.
+Comment `@tembo` on any pull request to request changes. Works in the main thread or as inline review comments on specific lines. Tembo reads the feedback, updates the code, and pushes new commits.
 
 ```
 @tembo Please add error handling to this function
@@ -35,43 +44,51 @@ Works on PRs created by Tembo and PRs created by your team.
 
 ### Issues
 
-Comment `@tembo` on any issue to start implementation. Tembo reads the issue title and description for context, then opens a PR.
+Comment `@tembo` on any issue to start implementation. Tembo reads the issue title and description, then opens a PR.
 
 ```
 @tembo Implement the API endpoint described in this issue
 ```
 
+## Automations
+
+See [Automations](/features/automations#event-driven) for available GitHub event triggers.
+
+### PR reviews
+
+Reviews pull requests for bugs, security issues, and code quality. Leaves inline comments automatically when a PR is opened.
+
+### Enrich issues
+
+Adds codebase context to new GitHub issues, helping agents and teammates understand the relevant code before starting work.
+
 ### Failed workflows
 
-Tembo monitors GitHub Actions and detects failures. When a workflow fails (broken tests, lint errors), Tembo analyzes the failure and opens a fix PR.
+Detects GitHub Actions failures and opens fix PRs automatically.
 
-## Webhooks
-
-Tembo listens to the following GitHub events for [automation triggers](/features/automations):
-
-- `pull_request.opened`, `pull_request.closed`, `pull_request.reopened`
-- `pull_request.ready_for_review`, `pull_request.edited`
-- `pull_request_review.submitted`
-- `issue_comment.created`
-
-Need an event not listed here? Contact support@tembo.io.
-
-## Signed commits
-
-All commits in Tembo PRs are automatically signed and verified with a "Verified" badge in GitHub.
-
-## Troubleshooting
+## Advanced
 
 <AccordionGroup>
-  <Accordion title="Repositories not appearing">
-    Wait 2-5 minutes for initial sync. If they still don't show, click the sync button on the GitHub integration card. Check that you granted Tembo access to the repositories during installation and that you have permission to install GitHub Apps for your organization.
+  <Accordion title="Attribution">
+    By default, PRs and commits are made under the Tembo bot account. To attribute them to your GitHub user instead, connect your personal GitHub account in your [Tembo user settings](https://app.tembo.io/settings).
   </Accordion>
 
-  <Accordion title="@tembo not responding">
-    Make sure you're using `@tembo` (lowercase). Verify the repository is activated in Integrations and that `issue_comment.created` webhook is enabled.
-  </Accordion>
+<Accordion title="Signed commits">
+  All commits in Tembo PRs are automatically signed and verified with a "Verified" badge in GitHub.
+  No configuration needed.
+</Accordion>
+
+<Accordion title="Repositories not appearing">
+  Wait 2-5 minutes for initial sync. If they still don't show, click the sync button on the GitHub
+  integration card. Check that you granted Tembo access during installation and that you have
+  permission to install GitHub Apps for your organization.
+</Accordion>
+
+<Accordion title="@tembo not responding">
+  Make sure you're using `@tembo` (lowercase) and that the repository is activated in Integrations.
+</Accordion>
 
   <Accordion title="PRs not being created">
-    Check that the repository is activated, Tembo has permission to create branches and open PRs, and there isn't already an open PR for the same issue.
+    Check that the repository is activated and there isn't already an open PR for the same issue.
   </Accordion>
 </AccordionGroup>

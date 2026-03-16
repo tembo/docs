@@ -1,217 +1,93 @@
 ---
 title: "Slack"
-description: "Trigger coding agents from Slack by mentioning @tembo with task descriptions in any channel."
+description: "Trigger tasks by mentioning @tembo in any channel."
 ---
 
-Connect Tembo to Slack to trigger background tasks with any coding agent (Claude Code, Codex, OpenCode, Amp, Cursor, etc.).
+<Frame>
+  <img src="/images/integrations/slack.png" alt="Slack" />
+</Frame>
 
-# Installation
+## Features
+
+- Create tasks by mentioning `@tembo` in any channel or DM
+- Specify repos, branches, and agents inline
+- Thread context is automatically read
+- Status reactions and PR notifications in Slack
+
+## Installation
 
 <Steps>
   <Step title="Install">
-    Navigate to the [Integrations page](https://app.tembo.io/integrations) in Tembo and click the `Install` button next to Slack.
+    Go to [Integrations](https://app.tembo.io/integrations) and click **Install** next to Slack.
   </Step>
-  <Step title="Authorize Slack Permissions">
-    Authorize Tembo to access your Slack workspace. The bot requests permissions to:
-
-    - **Read messages** in channels, DMs, and threads (for conversation context)
-    - **Send messages** and status updates (including DMs and reactions)
-    - **Share files** and code snippets
-    - **Access user info** for personalization
-
-    You'll be redirected back to the Integrations page when authorization is complete.
-
+  <Step title="Authorize">
+    Authorize Tembo to access your Slack workspace.
   </Step>
-  <Step title="Configure Repositories">
-    Ensure you have connected your GitHub, GitLab, or Bitbucket repositories to Tembo first, as these will be available for selection in Slack commands.
-  </Step>
-  <Step title="Set Preferences">
-    After installation, you can select a default repository for Slack tasks.
-
-    ![Select Model](/images/slack-integration-settings.png)
-
+  <Step title="Configure">
+    Connect your repositories first (GitHub, GitLab, or Bitbucket), then set a default repository in the Slack integration settings.
   </Step>
 </Steps>
 
-# Usage
+## Usage
 
-## Basic Commands
+### Basic
 
-### Start a Background Coding Agent
-
-```text
-@tembo [your task description]
 ```
-
-**Example:**
-
-```text
 @tembo Fix the authentication bug in the login flow
 ```
 
-## Advanced Command Options
+### With options
 
-Tembo supports flexible command syntax with multiple options. You can use either bracket format or inline format:
-
-### Bracket Format
-
-```text
-@tembo [option1=value1, option2=value2] [your task description]
+```
+@tembo [repo=owner/webapp, branch=dev] Add password strength validation
 ```
 
-**Example:**
+**Options:** `repo=`, `branch=`, `agent=`
 
-```text
-@tembo [branch=dev, repo=owner/webapp, agent=claudeCode:claude-opus-4-5] Add password strength validation
+### Multiple repositories
+
+```
+@tembo [repo=owner/frontend,owner/backend] Add user authentication
 ```
 
-### Available Options
+Tembo creates separate PRs for each repo and coordinates changes.
 
-- **`branch=`** - Specify the base branch for the PR
+### Thread context
 
-  - Example: `branch=main`, `branch=develop`, `branch=feature/auth`
+Mention `@tembo` in a thread and it reads the full conversation history for context.
 
-- **`repo=`** - Target a specific repository or multiple repositories
+### Iterate in Slack
 
-  - Single repository: `repo=owner/repository`, `repo=myorg/webapp`
-  - Multiple repositories: `repo=owner/frontend,owner/backend` or `repo=frontend backend` (space-separated)
-  - Example: `@tembo [repo=myorg/webapp,myorg/api] Add authentication to both frontend and backend`
+After Tembo opens a PR, you can keep mentioning `@tembo` in the same Slack thread to give feedback and iterate. No need to leave comments on the PR itself.
 
-- **`agent=`** - Specify which coding agent and model to use (format: `agentType:model`)
-  - Example: `agent=claudeCode:claude-opus-4-5`, `agent=codex:gpt-5.4`
-  - Supported coding agents: `claudeCode`, `codex`, `opencode`, `amp`, `cursor`
-  - If no coding agent is specified, Tembo uses your organization's default configuration
-  - See [Coding Agents documentation](/features/coding-agents) for all available options
+### Cancel tasks
 
-### Working with Multiple Repositories
+Click the options on Tembo's message in Slack to stop a running task without leaving Slack.
 
-For tasks that span multiple repositories (e.g., full-stack features):
+### Status indicators
 
-1. **Specify multiple repos in the command:**
-   ```text
-   @tembo [repo=owner/frontend,owner/backend] Add user authentication
-   ```
-   or use space-separated format:
-   ```text
-   @tembo [repo=frontend backend] Add user authentication
-   ```
+- ⌛️ Working
+- ✅ Complete
+- ❌ Failed
 
-2. **Tembo will create separate pull requests** for each repository and coordinate changes across all selected repositories
+When done, Tembo posts PR links back to the thread.
 
-3. **Example use cases:**
-   - Full-stack features requiring both frontend and backend changes
-   - API changes that need updates in multiple service repositories
-   - Documentation updates across multiple repos
+## Automations
 
-## Coding Agent Selection
+See [Automations](/features/automations) for available Slack event triggers.
 
-Without an `agent=` option, Tembo uses your organization's default (configurable in [Settings](https://app.tembo.io/settings)). Individual repositories can override this default.
+## Advanced
 
-See [Coding Agents](/features/coding-agents) for available models. Quick examples: `agent=codex:gpt-5.4` for OpenAI-powered work, `agent=claudeCode:claude-4-5-haiku` for fast fixes, `agent=cursor:grok` for complex refactoring.
+<AccordionGroup>
+  <Accordion title="Tembo not responding">
+    Verify Tembo is installed on the [Integrations page](https://app.tembo.io/integrations). Invite the bot to the channel with `/invite @tembo`.
+  </Accordion>
 
-### Thread Context Utilization
+  <Accordion title="Wrong repository targeted">
+    Set a default repository in Slack integration settings, or use `[repo=owner/repo]` in your message.
+  </Accordion>
 
-When you mention `@tembo` in a thread, the coding agent automatically:
-
-- Reads the entire conversation history
-- Understands the context from previous messages
-- Incorporates team discussions into the solution
-
-# Supported Triggers
-
-Tembo reacts to Slack interactions and maps them to automation triggers (use a `slack.*` naming convention in your `triggerName`, e.g., `slack.app_mention`). The Integrations page in the app shows the live set enabled for your org. Supported events:
-
-- `app_mention`
-- `message_action`
-- `thread_reply`
-
-See Automations for how to create triggers from Slack events.
-## Status Updates
-
-Tembo keeps you informed throughout the task lifecycle:
-
-**Reaction indicators on your message:**
-- ⌛️ **Hourglass** - Tembo is working on the task
-- ✅ **Check mark** - Task completed successfully
-- ❌ **X mark** - Task failed or encountered an error
-
-**Direct messages for longer tasks:**
-- Progress updates as the coding agent works
-- Pull request links when code changes are ready
-- Error details if the task cannot be completed
-
-**Channel updates when complete:**
-- Links to generated pull requests with summary of changes
-
-## Feedback Loop Integration
-
-When you create a task from Slack and later provide feedback on the pull request through GitHub or GitLab (using the [Feedback Loop](/features/feedback-loop)), Tembo will automatically notify you back in the Slack thread when your feedback has been processed:
-
-**What happens:**
-1. You mention `@tembo` in Slack to create a task
-2. Tembo creates a pull request on GitHub or GitLab
-3. You review the PR and leave feedback by mentioning `@tembo` in your GitHub/GitLab review or comments
-4. Tembo processes your feedback and updates the PR
-5. **Tembo posts a notification back to the original Slack thread** with a summary of changes and a link to the updated PR
-
-**Notification includes:**
-- A summary of the changes made based on your feedback
-- "View Updated PR" button to review the changes
-- "View on Tembo" button to see the full task details
-- Status reactions on your feedback messages (⌛️ while processing, ✅ when complete)
-
-This creates a seamless workflow where you can initiate tasks in Slack, review code in your Git provider, and get updates back in Slack without switching contexts.
-
-## Best Practices
-
-- **Write clear, specific prompts** with file paths and context (e.g., "Add error handling to the user registration endpoint" not "Fix the bug").
-- **Use threads for collaboration** — discuss the problem in a thread, then mention `@tembo` with the final task description. Tembo reads the full thread context.
-
-# Troubleshooting
-
-## Tembo Not Responding to Mentions
-
-If Tembo doesn't respond when you mention `@tembo`:
-
-1. **Check bot installation** - Verify Tembo is installed in your workspace on the [Integrations page](https://app.tembo.io/integrations)
-2. **Verify channel access** - Ensure the Tembo bot has been invited to the channel (`/invite @tembo`)
-3. **Review permissions** - Confirm all required permissions were granted during installation
-4. **Check integration status** - The integration may need to be reconnected if permissions were revoked
-
-## Tasks Not Creating Pull Requests
-
-If tasks are acknowledged but no pull requests appear:
-
-1. **Verify repository connection** - Ensure you have connected GitHub, GitLab, or Bitbucket repositories to Tembo
-2. **Check repository mapping** - Confirm your default repository is set correctly in the Slack integration settings
-3. **Review task description** - Provide clear, actionable task descriptions that specify what code changes are needed
-
-## Wrong Repository Targeted
-
-If Tembo creates PRs in the wrong repository:
-
-1. **Set default repository** - Configure your preferred repository in the Slack integration settings
-2. **Use explicit repo option** - Specify the repository in your command: `@tembo [repo=owner/repo] your task`
-3. **Check organization settings** - Verify the default repository setting at the organization level
-
-# Privacy & Support
-
-## Privacy Policy
-
-The Tembo Slack integration collects and processes data in accordance with our [Privacy Policy](https://tembo.io/privacy). This includes:
-
-- Message content when you mention `@tembo` (used to process your task requests)
-- Thread context for conversation history (to provide relevant responses)
-- User information for personalization and attribution
-
-For questions about how your data is handled, please review our full [Privacy Policy](https://tembo.io/privacy).
-
-## Support
-
-Need help with the Slack integration? Contact us at [support@tembo.io](mailto:support@tembo.io).
-
-<Warning>
-  **AI-Generated Content Disclaimer**
-
-  Of course Tembo uses large language models (LLMs) and coding agents under the hood. While these agents are awesome at completing most engineering tasks, they may occasionally generate inaccurate, incomplete, or incorrect responses. Always review code changes, pull requests, and suggestions carefully before merging or deploying. Use your best judgment and verify critical changes through your standard code review process.
-</Warning>
+  <Accordion title="Feedback loop">
+    When you leave feedback on a PR created from Slack, Tembo posts a notification back to the original Slack thread with a summary of changes.
+  </Accordion>
+</AccordionGroup>

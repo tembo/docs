@@ -12,6 +12,10 @@
     background: #212121 !important;
 }
 
+[data-callout-type="note"] svg {
+    margin-top: 4px;
+}
+
 h1,
 h2,
 h3 {

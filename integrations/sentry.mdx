@@ -1,68 +1,56 @@
 ---
 title: "Sentry"
-description: "Connect Sentry to Tembo for automatic error detection and pull requests with targeted fixes."
+description: "Automatic error detection and fix PRs."
 ---
 
-Connect Sentry to Tembo for automatic error detection and code fixes. When Sentry detects an error in your application, Tembo analyzes the stack trace and creates a pull request with a targeted fix.
+<Frame>
+  <img src="/images/integrations/sentry.png" alt="Sentry" />
+</Frame>
 
-# Features
+## Features
 
-- **Automatic error monitoring** - Detects new errors as they occur in your production environment
-- **Stack trace analysis** - Analyzes error context, breadcrumbs, and related data to understand root causes
-- **Intelligent fixes** - Generates pull requests with code changes that address the specific error
-- **Webhook-driven** - Responds immediately when Sentry reports new issues
+- Detect errors as they occur in production
+- Analyze stack traces, breadcrumbs, and error context
+- Open fix PRs automatically
+- MCP server for real-time error data access during tasks
 
-# Installation
+## Installation
 
 <Steps>
   <Step title="Connect">
-    Navigate to the [Integrations page](https://app.tembo.io/integrations) in Tembo and click the `Connect` button next to Sentry.
+    Go to [Integrations](https://app.tembo.io/integrations) and click **Connect** next to Sentry.
   </Step>
   <Step title="Authorize">
-    Authorize Tembo to access your Sentry account with permissions to read error data and receive webhook events. You'll be redirected back to the Integrations page when authorization is complete.
+    Authorize Tembo to read error data and receive webhook events.
   </Step>
-  <Step title="Map Projects">
-    Map your Sentry projects to GitHub repositories under "Projects" on the Integrations page.
-
-    Only mapped projects will generate pull requests with code fixes.
-
+  <Step title="Map projects">
+    Map Sentry projects to the repositories where errors occur. Only mapped projects generate fix PRs.
   </Step>
 </Steps>
 
-# Supported Webhooks
+## Usage
 
-Tembo listens to Sentry issue lifecycle events and maps them to automation triggers (reference them as `sentry.<event>` in your `triggerName`). The Integrations page in the app shows the live set enabled for your org. Supported events:
+1. Sentry captures an error and sends a webhook to Tembo
+2. Tembo retrieves the full error context (stack traces, breadcrumbs, environment)
+3. Tembo analyzes the codebase and opens a fix PR
+4. Use the [feedback loop](/features/feedback-loop) to iterate
 
-- `issue.created`
-- `issue.regression`
-- `issue.resolved`
-- `issue.ignored`
-- `issue.assigned`
+## Automations
 
-See Automations for creating triggers from these events.
+See [Automations](/features/automations) for available Sentry event triggers.
 
-# How It Works
+## Advanced
 
-1. **Error Detected** - Sentry captures an error in your application and sends a webhook to Tembo
-2. **Analysis** - Tembo retrieves the full error context, including stack traces, breadcrumbs, and environment details
-3. **Solution Generation** - Tembo analyzes your codebase and creates an appropriate fix
-4. **Pull Request** - A PR is automatically opened in your repository with the fix and context
-5. **Review & Iterate** - Use the [Feedback Loop](/features/feedback-loop) to refine the solution if needed
+<AccordionGroup>
+  <Accordion title="MCP server">
+    When connected, a Sentry MCP server is automatically available to agents. They can query error data, retrieve stack traces, and analyze trends in real-time.
+  </Accordion>
 
-# Best Practices
+  <Accordion title="Errors not triggering fixes">
+    Check project mapping on the Integrations page. Ensure Sentry captures sufficient stack trace info. Tembo deduplicates fixes for already-addressed errors.
+  </Accordion>
 
-- **Map accurately** — Connect Sentry projects to the repositories where errors occur; verify mappings for monorepos
-- **Capture context** — Enable comprehensive stack traces, source maps, breadcrumbs, and custom tags in Sentry
-- **Review PRs** — Always review before merging; use the [Feedback Loop](/features/feedback-loop) to iterate; test in staging first
-
-# MCP Server Integration
-
-When you connect Sentry to Tembo, an [MCP server](/features/mcp-servers) is automatically available to agents. Agents can query error data, retrieve stack traces, check issue status, and analyze error trends in real-time while fixing bugs.
-
-# Troubleshooting
-
-**Errors not triggering fixes?** Check project mapping on the Integrations page, verify webhooks are receiving events, and ensure Sentry captures sufficient stack trace info. Tembo may deduplicate fixes for already-addressed errors.
-
-**Project mapping issues?** Use the sync button to refresh projects, verify Tembo has access to the projects, and confirm the Sentry organization is connected.
-
-**Webhook not receiving events?** Verify integration status on the Integrations page, trigger a test error to check the pipeline, and ensure webhooks are enabled in Sentry settings.
+  <Accordion title="Project mapping issues">
+    Use the sync button to refresh projects. Verify Tembo has access and the Sentry organization is connected.
+  </Accordion>
+</AccordionGroup>

@@ -1,148 +1,61 @@
 ---
 title: "Bitbucket"
-description: "Connect Bitbucket to Tembo to create pull requests with AI-generated code changes in your workspace."
+description: "Pull requests and code changes in your Bitbucket workspace."
 ---
 
-Connect your Bitbucket repositories so that Tembo can open pull requests directly in your workspace.
+<Frame>
+  <img src="/images/integrations/bitbucket.png" alt="Bitbucket" />
+</Frame>
 
-# Features
+## Features
 
-- Automatically sync repositories from your Bitbucket workspaces
-- Create and manage pull requests with AI-generated code changes
-- Support for both draft and regular pull requests
-- Repository selection for targeted automation
+- Open pull requests with code changes
+- Respond to PR feedback and iterate
+- Draft PR support with automatic branch cleanup
+- Multi-workspace repository sync
 
-# Installation
+## Installation
 
 <Steps>
-  <Step title="Create Service User">
-    Create a dedicated Bitbucket account for Tembo using either an email alias
-    (`youremail+tembo@company.com`) or a dedicated email (`tembo@company.com`).
-    Invite this account to your Bitbucket workspace and complete the sign-up process
-    using the name "Tembo". This ensures that PRs are opened as "Tembo" rather than
-    your personal account.
+  <Step title="Create service user">
+    Create a dedicated Bitbucket account for Tembo using an email alias (`you+tembo@company.com`) or dedicated email. Invite it to your workspace.
   </Step>
-  <Step title="Connect Integration">
-    Navigate to the [Integrations page](https://app.tembo.io/integrations) in
-    Tembo and click the `Install` button next to Bitbucket. Make sure you're logged
-    into the Tembo Bitbucket account (not your personal account) when completing this
-    step.
+  <Step title="Install">
+    Go to [Integrations](https://app.tembo.io/integrations) and click **Install** next to Bitbucket. Log in as the Tembo service account.
   </Step>
-  <Step title="OAuth Authorization">
-    Complete the OAuth flow to grant Tembo access to your Bitbucket account.
-    This will allow Tembo to:
-    - Read your repositories and workspaces
-    - Create branches and pull requests
-    - Access repository metadata
-  </Step>
-  <Step title="Select Repositories">
-    After connecting, Tembo will sync all accessible repositories from your
-    Bitbucket workspaces. Choose the repositories you want Tembo to work with,
-    including both your monorepo and docs repositories for full coverage.
-
-    **Tip:** If repositories don't appear after a few minutes, use the sync button on the Integrations page to manually trigger a refresh.
+  <Step title="Activate">
+    Select which repositories Tembo should work with.
   </Step>
 </Steps>
 
-# Configuration
+## Usage
 
-## Repository Settings
+### PR comments
 
-Once connected, you can configure which repositories Tembo should monitor:
+Add `/tembo` in any pull request comment to request changes. Tembo reads the feedback, updates the code, and pushes new commits.
 
-1. **Workspace Selection**: Tembo automatically discovers all workspaces your service user has access to
-2. **Repository Selection**: Choose specific repositories from each workspace
-3. **Default Branch**: Tembo will use the repository's default branch as the base for PRs
+```
+/tembo Please add error handling to this function
+```
 
-## Pull Request Settings
+Works on PRs created by Tembo and PRs created by your team.
 
-Configure how Tembo creates pull requests:
+## Automations
 
-- **Draft PRs**: Enable to create pull requests as drafts by default
-- **Branch Cleanup**: Pull requests automatically delete source branches when merged
-- **PR Templates**: Use your repository's existing PR template if configured
+See [Automations](/features/automations) for available Bitbucket event triggers.
 
-# Managing Your Integration
+## Advanced
 
-## Manual Sync
+<AccordionGroup>
+  <Accordion title="Repositories not appearing">
+    Wait 2-5 minutes for initial sync. Click the sync button to refresh. Verify the service user has workspace access.
+  </Accordion>
 
-If you've added new repositories to your Bitbucket workspace or modified repository permissions, you can manually sync to refresh the list:
+  <Accordion title="PRs not being created">
+    Check that the repository is activated and branch protection rules allow Tembo to create branches.
+  </Accordion>
 
-1. Navigate to the [Integrations page](https://app.tembo.io/integrations)
-2. Find the Bitbucket integration card
-3. Click the sync button (circular arrow icon)
-4. Wait for the sync to complete - the button will show a loading indicator while syncing
-
-The sync process will discover any new repositories you've granted access to and update existing repository metadata.
-
-# Usage
-
-## Automatic Repository Sync
-
-Tembo periodically syncs with your Bitbucket account to discover new repositories and update existing ones. The sync process:
-
-1. Fetches all workspaces accessible to the connected account
-2. Lists repositories within each workspace
-3. Creates or updates repository records in Tembo
-4. Maintains metadata about workspace and repository relationships
-
-## Pull Request Creation
-
-When Tembo creates a pull request:
-
-1. **Branch Creation**: Creates a new branch from the default branch
-2. **Code Changes**: Applies AI-generated changes to the branch
-3. **PR Creation**: Opens a pull request with generated title and description
-4. **Draft Status**: Respects your draft PR settings
-5. **Source Branch Cleanup**: Automatically deletes the source branch when merged
-
-# Working with Pull Requests
-
-## Reviewing Pull Requests
-
-Review Tembo's PRs just like any other team member's work:
-
-- Examine the changes and verify they align with your requirements
-- Leave comments directly on the code if you need changes
-- Use the [Feedback Loop](/features/feedback-loop) feature to have Tembo address your review comments automatically
-
-## Commenting on PRs
-
-When reviewing Tembo's pull requests, you can request changes or improvements by adding `/tembo` in your comments. This ensures Tembo responds to your specific feedback while ignoring internal team discussions or comments directed at other team members.
-
-**Example:**
-
-![Tag Tembo in your PR](/images/bitbucket-feedback-loop-request.png)
-
-In Tembo's website, you'll be able to see the agent working on your request:
-
-![Tembo working on the user's request](/images/bitbucket-feedback-loop-logs.png)
-
-Once finished, Tembo will add a comment on the Bitbucket PR:
-
-![Feedback finished](/images/bitbucket-feedback-loop-complete.png)
-
-# Troubleshooting
-
-**Repositories not appearing?** Wait 2-5 minutes for initial sync, verify the service user has workspace/repository access, or click the sync button to refresh manually.
-
-**Authentication errors?** Ensure the service user has proper permissions, verify workspace membership, and try disconnecting/reconnecting the integration.
-
-**Repository access issues?** Confirm the service user has read/write access and repositories aren't archived.
-
-**PRs not created?** Check branch protection rules allow Tembo to create branches and PRs.
-
-# Supported Webhooks
-
-Tembo listens to common Bitbucket events and maps them to automation triggers (reference them as `bitbucket.<category>` in your `triggerName`, e.g., `bitbucket.pull_request.opened`). The Integrations page in the app shows the live set enabled for your org. Supported events:
-
-- `pull_request.opened`
-- `pull_request.updated`
-- `pull_request.reopened`
-- `pull_request.approved`
-- `pull_request.unapproved`
-- `pull_request.merged`
-- `pull_request.closed`
-- `pull_request.comment_created`
-
-See Automations for creating triggers from these events.
+  <Accordion title="Authentication errors">
+    Ensure the service user has proper permissions and workspace membership. Try disconnecting and reconnecting.
+  </Accordion>
+</AccordionGroup>

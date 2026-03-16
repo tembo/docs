@@ -1,111 +1,65 @@
 ---
 title: 'GitLab'
-description: 'Connect GitLab to Tembo for automated code scanning, merge request generation, and pipeline monitoring.'
+description: 'Merge requests, code scanning, and pipeline monitoring.'
 ---
 
-Connect GitLab to Tembo to open merge requests to improve your codebase.
+<Frame>
+  <img src="/images/integrations/gitlab.png" alt="GitLab" />
+</Frame>
 
-# Features
+## Features
 
-- Scan for TODO comments in your codebase
-- Scan for security issues
-- Scan for performance issues
-- Scan for technical debt
-- Scan for refactoring opportunities
-- Automatically fix failed CI/CD pipelines
-- Respond to MR comments and review feedback
+- Open merge requests with code changes
+- Respond to MR feedback and iterate
+- Auto-fix failed CI/CD pipelines
+- Scan for TODOs, security issues, and tech debt
 
-# Installation
+## Installation
 
 <Steps>
   <Step title="Install">
-    Navigate to the [Integrations page](https://app.tembo.io/integrations) in Tembo and click the `Install` button next to GitLab.
+    Go to [Integrations](https://app.tembo.io/integrations) and click **Install** next to GitLab.
   </Step>
   <Step title="Authorize">
-    Before authorizing, create a new GitLab account specifically for Tembo (just like you'd create a personal account). Use this dedicated account, not your personal one, during the integration process.
-
-    Authorize Tembo to access your GitLab account. You can select specific repositories or all repositories. You'll be redirected back to the Integrations page when complete.
+    We recommend creating a dedicated GitLab account for Tembo. Authorize access and select repositories.
   </Step>
-  <Step title="Activate Repositories">
-    After syncing completes (may take a few minutes), select which repositories you want Tembo to scan under "Active Repositories" on the Integrations page.
-
-    Only repositories you activate here will be scanned for issues and receive improvement merge requests.
-
-    **Tip:** If repositories don't appear after a few minutes, use the sync button on the Integrations page to manually trigger a refresh.
+  <Step title="Activate">
+    Select which repositories Tembo should work with under "Active Repositories".
   </Step>
 </Steps>
 
-# Managing Your Integration
+## Usage
 
-## Manual Sync
+### MR comments
 
-If you've added new repositories to your GitLab account or modified repository permissions, you can manually sync to refresh the list:
-
-1. Navigate to the [Integrations page](https://app.tembo.io/integrations)
-2. Find the GitLab integration card
-3. Click the sync button (circular arrow icon)
-4. Wait for the sync to complete - the button will show a loading indicator while syncing
-
-The sync process will discover any new repositories you've granted access to and update existing repository metadata.
-
-# Supported Webhooks
-
-Tembo listens to the following GitLab events and maps them to automation triggers (reference them as `gitlab.<event>` in your `triggerName`, e.g., `gitlab.merge_request.opened`). Tembo subscribes only to the events listed here (not every GitLab webhook). The Integrations page in the app shows the live set enabled for your org. If you need an additional event, contact support@tembo.io.
-
-- `merge_request.opened`
-- `merge_request.updated`
-- `merge_request.closed`
-- `merge_request.merged`
-- `note.created` (for comments on merge requests)
-
-See Automations for how to create triggers that start automations from these events.
-
-# Usage
-
-## Automated Scanning
-
-Once activated, Tembo automatically scans for TODO comments, security issues, performance problems, technical debt, and code quality issues.
-
-## Merge Requests
-
-When Tembo finds an addressable issue, it creates a merge request with the proposed fix, detailed description, and assigns it for team review.
-
-# Working with Merge Requests
-
-## Reviewing Merge Requests
-
-Review Tembo's MRs just like any other team member's work:
-
-- Examine the changes and verify they align with your requirements
-- Leave comments directly on the code if you need changes
-- Use the [Feedback Loop](/features/feedback-loop) feature to have Tembo address your review comments automatically
-
-## Commenting on MRs
-
-When reviewing Tembo's merge requests, you can request changes or improvements by tagging `@tembo` in your comments. This ensures Tembo responds to your specific feedback while ignoring internal team discussions or comments directed at other team members.
-
-**Example:**
+Comment `@tembo` on any merge request to request changes. Works in the main thread or as inline review comments.
 
 ```
-@tembo Please update this function to include error handling
+@tembo Please add error handling to this function
 ```
 
-Without the `@tembo` tag, Tembo will not respond to the comment, allowing for cleaner team communication.
+Works on MRs created by Tembo and MRs created by your team.
 
-## Failed Pipeline Detection
+## Automations
 
-Tembo automatically monitors your GitLab CI/CD pipelines and detects when they fail. When a pipeline fails due to broken tests, linting errors, or other issues, Tembo will analyze the failure, identify the root cause, and create an MR with a fix.
+See [Automations](/features/automations) for available GitLab event triggers.
 
-This helps maintain a healthy CI/CD pipeline without manual intervention.
+### Failed pipelines
 
-## Troubleshooting
+Tembo can detect CI/CD pipeline failures and open fix MRs automatically. Set up an [automation](/features/automations) with a pipeline failure trigger.
 
-- **Repositories not appearing?** Wait 2-5 minutes for initial sync, verify permissions were granted during installation, try the manual sync button, and check group access permissions if applicable.
-- **@tembo mentions ignored?** Use exact format `@tembo` (case-sensitive), verify the repository is activated, and ensure `note.created` webhook is enabled on the Integrations page.
-- **MRs not being created?** Confirm the repository is activated, check that Tembo has branch creation permissions, and verify no duplicate MRs already exist for the issue.
+## Advanced
 
-## Best Practices
+<AccordionGroup>
+  <Accordion title="Repositories not appearing">
+    Wait 2-5 minutes for initial sync. Click the sync button on the GitLab integration card to refresh. Check that you granted access during installation.
+  </Accordion>
 
-- Configure repository settings to match your team's preferences
-- Use [Rule Files](/features/rule-files) to help Tembo understand your coding standards
-- Set up [Hooks](/features/hooks) to customize Tembo's behavior for your workflow
+  <Accordion title="@tembo not responding">
+    Make sure you're using `@tembo` (lowercase) and that the repository is activated in Integrations.
+  </Accordion>
+
+  <Accordion title="MRs not being created">
+    Check that the repository is activated and there isn't already an open MR for the same issue.
+  </Accordion>
+</AccordionGroup>
