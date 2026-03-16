@@ -1,15 +1,13 @@
 ---
 title: 'Rule Files'
-description: 'Add project context and conventions to help Tembo work effectively in your codebase'
+description: 'Define project context and conventions for Tembo to follow.'
 ---
 
-After connecting your source control, configure your repository with context that helps Tembo understand your project's conventions, architecture, and requirements.
+Add a rule file to your repository root so Tembo understands your project's conventions, architecture, and coding standards. Tembo reads it before every task.
 
-Tembo automatically looks for configuration files in your repository's root directory. These files provide persistent context that Tembo uses when solving issues and creating pull requests.
+## Supported files
 
-## Supported Configuration Files
-
-Tembo supports multiple file names for compatibility with other AI coding agents. Place one of these files in your repository root:
+Tembo uses the first file it finds from this list:
 
 - `tembo.md` (recommended)
 - `AGENTS.md`
@@ -21,13 +19,7 @@ Tembo supports multiple file names for compatibility with other AI coding agents
 - `AGENT.md`
 - `.github/copilot-instructions.md`
 
-<Note>
-  Tembo will use the first file it finds from this list, so you only need one configuration file per repository.
-</Note>
-
-## Creating Your First Rule File
-
-Create a file named `tembo.md` in your repository root with project context. Here's a minimal example:
+## Example
 
 ```markdown
 # Project Context
@@ -50,69 +42,10 @@ React + TypeScript frontend with Node.js backend.
 - `/tests` - Test files
 ```
 
-Expand sections as needed for your project's complexity.
+## What to include
 
-## What to Include
-
-**Essential:**
-- **Build/dev commands** — How to build, test, and run the project
-- **Code style** — Naming conventions, formatting rules, standards
-- **Testing** — Frameworks, expectations, coverage targets
-- **Architecture** — Project structure, design patterns, where code belongs
-
-**Optional but helpful:**
-- **Common pitfalls** — Known issues, gotchas to avoid
-- **Performance** — Sensitive areas, optimization requirements
-- **Security** — Auth patterns, data handling rules
-- **Integrations** — External services, API details
-
-## Best Practices
-
-### Keep It Focused
-
-Rule files become part of Tembo's context, so keep them concise and relevant:
-
-- Focus on information that impacts code generation
-- Remove outdated or obsolete information
-- Use clear, direct language
-- Organize with headings for easy scanning
-
-### Use Emphasis for Important Points
-
-Highlight critical information that Tembo should always follow:
-
-```markdown
-**IMPORTANT**: Always validate user input before database queries
-**NOTE**: The API rate limit is 100 requests per minute
-**WARNING**: Never commit API keys or secrets to the repository
-```
-
-### Update Regularly
-
-Keep your rule file current as your project evolves:
-
-- Update when conventions change
-- Add new patterns as they emerge
-- Remove deprecated guidelines
-- Review quarterly to ensure accuracy
-
-## How Tembo Uses Rule Files
-
-When Tembo receives an issue assignment:
-
-1. **Loads the rule file** from your repository root
-2. **Includes the content** as part of its context
-3. **Follows the guidelines** when generating code
-4. **Applies conventions** throughout the solution
-
-The rule file context persists across all interactions, ensuring consistency in every pull request Tembo creates for your repository.
-
-## Next Steps
-
-After configuring your repository:
-
-1. Test it by assigning a small issue to Tembo
-2. Review the generated pull request for adherence to your guidelines
-3. Refine your rule file based on results
-4. Use the [Feedback Loop](/features/feedback-loop) to iterate on Tembo's work
-
+- **Build/dev commands** - How to build, test, and run the project
+- **Code style** - Naming conventions, formatting, standards
+- **Testing** - Frameworks, expectations, coverage targets
+- **Architecture** - Project structure, design patterns, where code belongs
+- **Pitfalls** - Known issues or gotchas to avoid

@@ -53,10 +53,15 @@
                             "features/automations",
                             "features/sandbox-environment",
                             "features/feedback-loop",
-                            "features/rule-files",
-                            "features/hooks",
                             "features/self-hosted",
-                            "features/max"
+                            "features/max",
+                            {
+                                "group": "Configuration",
+                                "pages": [
+                                    "features/rule-files",
+                                    "features/hooks"
+                                ]
+                            }
                         ]
                     },
                     {
