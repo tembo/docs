@@ -65,8 +65,8 @@
                         ]
                     },
                     {
-                        "group": "Output",
-                        "pages": ["features/pull-requests"]
+                        "group": "Actions",
+                        "pages": ["features/pull-requests", "features/agent-actions"]
                     },
                     {
                         "group": "Integrations",
