@@ -45,12 +45,12 @@ h3 {
     margin-top: 30px !important;
 }
 
-span {
+#body-content span {
     line-height: 1.75rem !important;
     letter-spacing: -0.1px !important;
 }
 
-span.method-nav-pill span {
+#body-content span.method-nav-pill span {
     line-height: 1.25 !important;
 }
 
