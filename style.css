@@ -11,6 +11,32 @@
     color: #005cad;
 }
 
+#navigation-items {
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+#navbar div {
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+@media (min-width: 1536px) {
+    [data-page-mode="wide"] #content-area {
+        --default-max-w: 696px;
+        --effective-max-w: 1150px;
+        --max-w-offset: calc(var(--effective-max-w) - var(--default-max-w));
+        --default-ml: max(0px, calc(50vw - 348px - 14rem));
+        --effective-ml: calc(var(--default-ml) - var(--max-w-offset, 0px) / 2);
+        max-width: var(--effective-max-w);
+        margin-left: var(--effective-ml);
+    }
+}
+
+#sidebar-content .sidebar-group-header {
+    margin-bottom: 4px;
+}
+
 .dark ::selection {
     background-color: #299bff;
     color: #fff;
@@ -18,10 +44,6 @@
 
 .dark .card {
     background: #212121 !important;
-}
-
-[data-callout-type="note"] svg {
-    margin-top: 4px;
 }
 
 h1,

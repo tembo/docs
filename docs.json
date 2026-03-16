@@ -1,6 +1,6 @@
 {
     "$schema": "https://mintlify.com/docs.json",
-    "theme": "aspen",
+    "theme": "luma",
     "name": "Tembo Docs",
     "banner": {
         "content": "Have questions? Chat with our team in real time – open the support chat in the app.",
@@ -67,7 +67,10 @@
                     },
                     {
                         "group": "Actions",
-                        "pages": ["features/agent-actions", "features/pull-requests"]
+                        "pages": [
+                            "features/agent-actions",
+                            "features/pull-requests"
+                        ]
                     },
                     {
                         "group": "Integrations",
