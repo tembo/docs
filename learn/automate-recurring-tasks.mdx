@@ -22,7 +22,7 @@ Tembo [automations](/features/automations) handle recurring engineering tasks, o
   </Step>
 </Steps>
 
-## Common automations
+## Engineering automations
 
 | Automation | Trigger | What it does |
 |------------|---------|-------------|
@@ -33,6 +33,26 @@ Tembo [automations](/features/automations) handle recurring engineering tasks, o
 | CI auto-fix | Workflow failed | Analyzes CI failures and opens fix PRs |
 
 See all [automation templates](https://tembo.io/for) for more examples.
+
+## Beyond engineering
+
+Tembo isn't limited to code tasks. With [MCP servers](/integrations/mcp) and integrations, you can automate work across your business.
+
+| Automation | Trigger | What it does |
+|------------|---------|-------------|
+| Daily ARR report | Daily | Pulls revenue data from [Stripe](/integrations/mcp) and posts to Slack |
+| Feature requests from calls | Daily | Scans call transcripts (Avoma, Granola, etc.) for feature requests and creates [Linear](/integrations/linear) tickets |
+| Customer health check | Weekly | Summarizes support tickets, usage trends, and churn signals in Slack |
+
+You can also do this on-demand from [Slack](/integrations/slack) without an automation:
+
+```
+@tembo What's our ARR right now? Check Stripe.
+```
+
+```
+@tembo Summarize the feature requests from this week's sales calls and create Linear tickets for the top 5.
+```
 
 ## Set up an automation
 
