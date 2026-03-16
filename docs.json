@@ -125,12 +125,12 @@
                     {
                         "group": "Use Cases",
                         "pages": [
+                            "learn/automate-recurring-tasks",
                             "learn/fix-production-bugs",
                             "learn/implement-from-issues",
-                            "learn/review-changes",
-                            "learn/reduce-technical-debt",
                             "learn/keep-docs-in-sync",
-                            "learn/automate-recurring-tasks"
+                            "learn/reduce-technical-debt",
+                            "learn/review-changes"
                         ]
                     }
                 ]

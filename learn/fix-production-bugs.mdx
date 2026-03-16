@@ -3,7 +3,7 @@ title: "Fix bugs"
 description: "Detect errors from Sentry, analyze the root cause, and open fix PRs automatically."
 ---
 
-Tembo monitors your error tracking tools and automatically generates pull requests to fix bugs as they happen in production.
+Tembo monitors your error tracking tools and automatically generates [pull requests](/features/pull-requests) to fix bugs as they happen in production.
 
 ## How it works
 
@@ -35,7 +35,7 @@ See the full [Sentry integration guide](/integrations/sentry) for details.
 Go to **Automations** in your dashboard and create a new automation with a Sentry event trigger.
 
 **Trigger**: `sentry.issue.created` or `sentry.issue.regression`
-**MCP Servers**: GitHub + Sentry
+**[MCP Servers](/integrations/mcp)**: GitHub + Sentry
 
 Example instructions:
 
@@ -64,18 +64,8 @@ Add [rule files](/features/rule-files) to your repo so the agent follows your co
 
 ## Best practices
 
-- **Map projects accurately**:Connect Sentry projects to the correct repos, especially for monorepos.
-- **Enable rich context**:Turn on source maps, breadcrumbs, and custom tags in Sentry so the agent has more to work with.
-- **Review before merging**:Always review the PR. Use the [feedback loop](/features/feedback-loop) to refine the fix.
-- **Test in staging first**:Validate fixes in a staging environment before merging to production.
+- **Map projects accurately**: Connect [Sentry](/integrations/sentry) projects to the correct repos, especially for monorepos.
+- **Enable rich context**: Turn on source maps, breadcrumbs, and custom tags in Sentry so the agent has more to work with.
+- **Review before merging**: Always review the PR. Use the [feedback loop](/features/feedback-loop) to refine the fix.
+- **Test in staging first**: Validate fixes in a staging environment before merging to production.
 
-## Next steps
-
-<CardGroup cols={2}>
-  <Card title="Sentry integration" icon="circle-alert" href="/integrations/sentry">
-    Full setup and configuration guide.
-  </Card>
-  <Card title="Automations" icon="repeat" href="/features/automations">
-    Learn more about triggers, templates, and custom workflows.
-  </Card>
-</CardGroup>

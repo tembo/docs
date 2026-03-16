@@ -15,7 +15,7 @@ Tembo monitors your codebase for changes and automatically updates your document
     The agent compares the code changes against your existing documentation to identify gaps, outdated sections, or missing pages.
   </Step>
   <Step title="Docs updated">
-    A PR is opened in your docs repo with updated content that reflects the code changes.
+    A [PR](/features/pull-requests) is opened in your docs repo with updated content that reflects the code changes.
   </Step>
 </Steps>
 
@@ -24,7 +24,7 @@ Tembo monitors your codebase for changes and automatically updates your document
 ### On PR merge
 
 **Trigger**: PR merged to main
-**MCP Servers**: GitHub
+**[MCP Servers](/integrations/mcp)**: [GitHub](/integrations/github)
 
 ```text
 When a PR is merged:
@@ -37,7 +37,7 @@ When a PR is merged:
 ### Weekly docs review
 
 **Trigger**: Weekly
-**MCP Servers**: GitHub, Notion
+**[MCP Servers](/integrations/mcp)**: [GitHub](/integrations/github), [Notion](/integrations/notion)
 
 ```text
 Compare the codebase against the docs repo:
@@ -49,17 +49,6 @@ Compare the codebase against the docs repo:
 
 ## Best practices
 
-- **Use a separate docs repo**:Tembo can open PRs across repositories, so keep docs in their own repo for clean separation.
-- **Add rule files**:Include a rule file in your docs repo with style guidelines, formatting conventions, and tone.
-- **Start with API docs**:API documentation is the easiest to keep in sync since changes are mechanical and well-scoped.
-
-## Next steps
-
-<CardGroup cols={2}>
-  <Card title="Automations" icon="repeat" href="/features/automations">
-    Set up triggers for docs updates.
-  </Card>
-  <Card title="Rule files" icon="file-cog" href="/features/rule-files">
-    Define your docs style for consistent output.
-  </Card>
-</CardGroup>
+- **Use a separate docs repo**: Tembo can open PRs across repositories, so keep docs in their own repo for clean separation.
+- **Add [rule files](/features/rule-files)**: Include a rule file in your docs repo with style guidelines, formatting conventions, and tone.
+- **Start with API docs**: API documentation is the easiest to keep in sync since changes are mechanical and well-scoped.

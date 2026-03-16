@@ -3,7 +3,7 @@ title: "Review changes"
 description: "Get automated code reviews on every PR with inline comments."
 ---
 
-Tembo reviews pull requests automatically, checking for bugs, security issues, and style guide compliance, then leaving inline comments on specific lines.
+Tembo reviews [pull requests](/features/pull-requests) automatically, checking for bugs, security issues, and style guide compliance, then leaving inline comments on specific lines.
 
 ## How it works
 
@@ -27,10 +27,10 @@ Navigate to the [Integrations page](https://app.tembo.io/integrations) and conne
 
 ### 2. Create an automation
 
-Go to **Automations** in your dashboard and use the **Automated PR Reviews** template, or create one from scratch.
+Go to [Automations](/features/automations) in your dashboard and use the **Automated PR Reviews** template, or create one from scratch.
 
 **Trigger**: PR opened / PR updated
-**MCP Servers**: GitHub (or GitLab/Bitbucket)
+**[MCP Servers](/integrations/mcp)**: GitHub (or GitLab/Bitbucket)
 
 Example instructions:
 
@@ -63,17 +63,6 @@ Add [rule files](/features/rule-files) to your repo so the reviewer knows your t
 
 ## Best practices
 
-- **Add rule files**:The more context the reviewer has about your standards, the better the review.
-- **Start with one repo**:Test the review quality on a single repo before rolling out to all.
-- **Combine with human review**:Use automated reviews to catch the obvious stuff so human reviewers can focus on architecture and design.
-
-## Next steps
-
-<CardGroup cols={2}>
-  <Card title="Automations" icon="repeat" href="/features/automations">
-    Full guide to triggers and configuration.
-  </Card>
-  <Card title="Feedback loop" icon="message-circle" href="/features/feedback-loop">
-    Iterate on PR reviews and agent output.
-  </Card>
-</CardGroup>
+- **Add [rule files](/features/rule-files)**: The more context the reviewer has about your standards, the better the review.
+- **Start with one repo**: Test the review quality on a single repo before rolling out to all.
+- **Combine with human review**: Use automated reviews to catch the obvious stuff so human reviewers can focus on architecture and design.

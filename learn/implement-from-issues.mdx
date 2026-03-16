@@ -9,13 +9,13 @@ Tembo picks up issues from your project management tools and writes code to solv
 
 <Steps>
   <Step title="Issue assigned">
-    Create or assign an issue in Linear, Jira, GitHub, or mention it in Slack. Tembo picks it up via webhook or automation trigger.
+    Create or assign an issue in [Linear](/integrations/linear), [Jira](/integrations/jira), [GitHub](/integrations/github), or mention it in [Slack](/integrations/slack). Tembo picks it up via webhook or [automation](/features/automations) trigger.
   </Step>
   <Step title="Context gathered">
     Tembo reads the issue description, pulls in related code, linked docs, and conversation history to understand the full picture.
   </Step>
   <Step title="Code written">
-    A coding agent works in an isolated [sandbox](/features/sandbox-environment), implements the solution, and opens a PR linked back to the original issue.
+    A [coding agent](/features/coding-agents) works in an isolated [sandbox](/features/sandbox-environment), implements the solution, and opens a [PR](/features/pull-requests) linked back to the original issue.
   </Step>
   <Step title="Review and iterate">
     Review the PR. Use the [feedback loop](/features/feedback-loop) to request changes. The agent iterates until the solution is right.
@@ -37,7 +37,7 @@ Navigate to the [Integrations page](https://app.tembo.io/integrations) and conne
 ### Create an automation
 
 **Trigger**: Issue created, issue assigned, or label added
-**MCP Servers**: GitHub + your issue tracker
+**[MCP Servers](/integrations/mcp)**: GitHub + your issue tracker
 
 Example instructions:
 
@@ -50,8 +50,6 @@ When a new issue is assigned to Tembo:
 5. Open a PR and link it to the original issue
 ```
 
-<Tip>Use the **Enrich Linear Issues** template to automatically add codebase context, related Slack conversations, and Notion docs to new issues before implementation.</Tip>
-
 ## Your team stays in control
 
 Tembo generates solutions autonomously, but your team decides what gets deployed:
@@ -59,21 +57,9 @@ Tembo generates solutions autonomously, but your team decides what gets deployed
 - Review PRs using your standard review process
 - Mention `@tembo` in PR comments to request changes. It iterates on the feedback
 - Approve and merge when you're satisfied
-- If you use AI-powered review tools like Graphite or CodeRabbit, Tembo validates and commits relevant changes
 
 ## Best practices
 
-- **Write clear issue descriptions**:The more context in the issue, the better the implementation.
-- **Use labels**:Trigger automations only on specific labels (e.g., `tembo`, `auto-implement`) to control which issues get picked up.
-- **Start with small tasks**:Begin with well-scoped bugs and small features before tackling larger work.
-
-## Next steps
-
-<CardGroup cols={2}>
-  <Card title="Coding agents" icon="bot" href="/features/coding-agents">
-    Choose the right agent for your tasks.
-  </Card>
-  <Card title="Integrations" icon="plug" href="/integrations/github">
-    Connect your issue trackers and tools.
-  </Card>
-</CardGroup>
+- **Write clear issue descriptions**: The more context in the issue, the better the implementation.
+- **Use labels**: Trigger [automations](/features/automations) only on specific labels (e.g., `tembo`, `auto-implement`) to control which issues get picked up.
+- **Start with small tasks**: Begin with well-scoped bugs and small features before tackling larger work.
