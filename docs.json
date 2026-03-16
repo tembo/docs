@@ -49,42 +49,42 @@
                     {
                         "group": "Features",
                         "pages": [
-                            "features/coding-agents",
                             "features/automations",
-                            "features/sandbox-environment",
+                            "features/coding-agents",
                             "features/feedback-loop",
-                            "features/self-hosted",
                             "features/max",
+                            "features/sandbox-environment",
+                            "features/self-hosted",
                             {
                                 "group": "Configuration",
                                 "pages": [
-                                    "features/rule-files",
-                                    "features/hooks"
+                                    "features/hooks",
+                                    "features/rule-files"
                                 ]
                             }
                         ]
                     },
                     {
                         "group": "Actions",
-                        "pages": ["features/pull-requests", "features/agent-actions"]
+                        "pages": ["features/agent-actions", "features/pull-requests"]
                     },
                     {
                         "group": "Integrations",
                         "pages": [
-                            "integrations/mcp",
+                            "integrations/aws",
+                            "integrations/bitbucket",
+                            "integrations/discord",
                             "integrations/github",
                             "integrations/gitlab",
-                            "integrations/bitbucket",
-                            "integrations/slack",
-                            "integrations/sentry",
-                            "integrations/linear",
                             "integrations/jira",
+                            "integrations/linear",
+                            "integrations/mcp",
                             "integrations/notion",
                             "integrations/postgres",
-                            "integrations/aws",
-                            "integrations/supabase",
                             "integrations/raycast",
-                            "integrations/discord"
+                            "integrations/sentry",
+                            "integrations/slack",
+                            "integrations/supabase"
                         ]
                     }
                 ]
