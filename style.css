@@ -78,10 +78,6 @@ span.method-nav-pill span {
 }
 
 .dark {
-    body > div {
-        background-color: #141414;
-    }
-
     .bg-gray-200\/70 {
         background-color: #ffffff0f !important;
     }
