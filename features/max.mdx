@@ -1,90 +1,71 @@
 ---
 title: 'Max'
-description: 'Connect Claude Code, Codex, and OpenCode to Tembo Max'
+description: 'One subscription, all coding agents. Connect your local tools through Tembo Proxy.'
 ---
 
-Tembo Max provides a high-performance proxy endpoint that allows you to connect your local AI coding tools to Tembo's infrastructure. [Read more about Tembo Max](https://tembo.io/max).
+Tembo Max gives you access to all coding agents and models through a single subscription. Connect your local tools to Tembo's proxy with one API key, no separate provider accounts needed.
 
-## Connecting to Tembo Max
+Available on all plans, including the free tier. [Read more about Tembo Max](https://tembo.io/max).
 
-To use Tembo Max with your coding agents, configure them to connect to:
+## Setup
 
-```
-proxy.tembo.io/anthropic
-```
+1. Get your API key from **Settings > API Keys** in the [dashboard](https://app.tembo.io)
+2. Point your tool at `proxy.tembo.io`
 
-## Getting Your API Key
-
-1. Log in to your [Tembo dashboard](https://app.tembo.io)
-2. Navigate to **Settings** → **API Keys**
-3. Click **Create API Key** and copy the generated key
-
-<Note>Keep your API key secure. If compromised, revoke it immediately and generate a new one.</Note>
-
-## Supported Tools
-
-Max works seamlessly with the following AI coding tools:
-
-- **Claude Code** - Anthropic's official CLI for Claude
-- **Codex** - OpenAI-powered coding agent
-- **OpenCode** - Multi-model coding assistant
-
-## Configuration
-
-Configure your tool to use the Tembo Max proxy endpoint by setting the appropriate environment variables.
-
-### Claude Code / OpenCode (Anthropic)
-
-```bash
+<CodeGroup>
+```bash Claude Code / OpenCode
 export ANTHROPIC_BASE_URL=https://proxy.tembo.io/anthropic
 export ANTHROPIC_API_KEY=your-tembo-api-key
 ```
 
-### OpenCode (OpenAI)
-
-OpenCode can also use OpenAI models, including `gpt-5.4`, via `opencode.json`:
-
-```json
-{
-  "$schema": "https://opencode.ai/config.json",
-  "model": "openai/gpt-5.4",
-  "provider": {
-    "openai": {
-      "models": {
-        "gpt-5.4": {
-          "id": "gpt-5.4",
-          "name": "GPT-5.4"
-        }
-      },
-      "options": {
-        "baseURL": "https://proxy.tembo.io/openai",
-        "apiKey": "<your-tembo-api-key>",
-        "headers": {
-          "x-reasoning-level": "high"
-        }
-      }
-    }
-  }
-}
-```
-
-### Codex
-
-Configure Codex to use Tembo Max by setting these environment variables:
-
-```bash
+```bash Codex
 export OPENAI_BASE_URL="https://proxy.tembo.io/proxy/openai"
 export OPENAI_API_KEY="your-tembo-api-key"
 ```
+</CodeGroup>
 
-Replace `your-tembo-api-key` with your actual Tembo API key from the dashboard.
+<Note>Codex may store credentials in `~/.codex/auth.json` that override environment variables.</Note>
 
-<Note>There may be a `~/.codex/auth.json` file overriding your local `OPENAI_API_KEY` environment variable. Make sure to remove or update this file in order for the environment variable to work.</Note>
+## Proxy models
 
-## Troubleshooting
+All models are tested across real-world coding tasks before being made available.
 
-**Connection issues**: Verify your API key is set correctly and you have an active Tembo subscription.
+| Model | Model ID | Endpoint |
+|-------|----------|----------|
+| Claude Opus 4.5 | `claude-opus-4-5` | `proxy.tembo.io/anthropic` |
+| Claude 4.5 Sonnet | `claude-4-5-sonnet` | `proxy.tembo.io/anthropic` |
+| Claude 4.1 Opus | `claude-4.1-opus` | `proxy.tembo.io/anthropic` |
+| Claude 4.5 Haiku | `claude-4-5-haiku` | `proxy.tembo.io/anthropic` |
+| Claude 4 Sonnet | `claude-4-sonnet` | `proxy.tembo.io/anthropic` |
+| GPT-5.4 | `gpt-5.4` | `proxy.tembo.io/openai` |
+| GPT-5.2 | `gpt-5.2` | `proxy.tembo.io/openai` |
+| GPT-5.1 Codex | `gpt-5.1-codex` | `proxy.tembo.io/proxy/openai` |
+| GPT-5.1 Codex Max | `gpt-5.1-codex-max` | `proxy.tembo.io/proxy/openai` |
+| GPT-5.2 Codex | `gpt-5.2-codex` | `proxy.tembo.io/proxy/openai` |
+| Gemini 2.5 Pro | `gemini-2.5-pro` | `proxy.tembo.io/anthropic` |
+| Gemini 3 Pro | `gemini-3-pro` | `proxy.tembo.io/anthropic` |
+| Gemini 3 Flash | `gemini-3-flash` | `proxy.tembo.io/anthropic` |
+| Kimi K2 | `bedrock-kimi-k2-thinking` | `proxy.tembo.io/anthropic` |
+| Grok | `grok` | Cursor API |
 
-**Authentication errors**: Generate a new API key from your dashboard if your current key is invalid or expired.
+Anthropic and Google models require no additional API keys. OpenAI models require your own OpenAI API key alongside your Tembo key.
 
-For additional help, contact [support@tembo.io](mailto:support@tembo.io).
+## Pricing
+
+Usage consumes credits from your Tembo subscription.
+
+| Plan | Cost | Credits |
+|------|------|---------|
+| Free | $0 | 5 credits/day |
+| Pro | $60/mo | 100 credits/mo |
+| Max | $200/mo | 400 credits/mo |
+
+Paid plans support pay-as-you-go overage and auto-reload from [Billing settings](https://app.tembo.io/settings/billing).
+
+## Privacy
+
+| Provider | Data Retention |
+|----------|---------------|
+| Anthropic | Zero retention |
+| Google | Zero retention |
+| OpenAI | 30-day retention |
