@@ -71,6 +71,7 @@
                     {
                         "group": "Integrations",
                         "pages": [
+                            "integrations/mcp",
                             "integrations/aws",
                             "integrations/bitbucket",
                             "integrations/discord",
@@ -78,7 +79,6 @@
                             "integrations/gitlab",
                             "integrations/jira",
                             "integrations/linear",
-                            "integrations/mcp",
                             "integrations/notion",
                             "integrations/postgres",
                             "integrations/raycast",
