@@ -32,3 +32,34 @@ GitHub, Linear, Sentry, and Postgres MCP servers are automatically available whe
 ## Custom servers
 
 Bring your own MCP servers from the [Integrations page](https://app.tembo.io/integrations) using **Custom MCP**. Supports stdio, HTTP, and SSE, including OAuth.
+
+### Connection types
+
+#### Remote (HTTP/SSE)
+
+Use this for hosted MCP servers.
+
+- Required: `name`, `serverUrl`
+- Optional: static `headers` (for example, `Authorization`)
+- If the server requires OAuth, Tembo returns an authorization URL and completes setup after you authorize
+
+#### Stdio
+
+Use this for command-based MCP servers started in the sandbox.
+
+- Required: `name`, `command`
+- Optional: `args` (space-separated in UI), `env` variables
+
+Example:
+
+```json
+{
+  "type": "stdio",
+  "name": "github-mcp",
+  "command": "npx",
+  "args": ["-y", "@modelcontextprotocol/server-github"],
+  "env": {
+    "GITHUB_TOKEN": "ghp_xxx"
+  }
+}
+```

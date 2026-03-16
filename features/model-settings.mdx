@@ -1,0 +1,59 @@
+---
+title: "Model Settings"
+description: "Configure default agents, provider keys, custom MCP servers, and model availability."
+---
+
+Use **Settings > Models** in the [dashboard](https://app.tembo.io) to control how your workspace selects and runs models.
+
+## Default agent
+
+Set the default agent and model Tembo uses for new tasks and automations.
+
+- Pick the default from a single dropdown in **Settings > Models**
+- You can still override agent/model per task or automation
+
+## Provider API keys
+
+You can manage model provider credentials in one place:
+
+- Anthropic API key
+- OpenAI API key
+- Amp API key
+- Cursor API key
+- AWS Bedrock access key, secret key, and region
+
+Keys are saved at the workspace level and used when a selected model requires that provider.
+
+## Custom MCP servers (global JSON)
+
+`globalMcpServers` lets you define shared MCP servers available across tasks and automations.
+
+```json
+{
+  "mcpServers": {
+    "my-server": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_TOKEN": "ghp_xxx"
+      }
+    }
+  }
+}
+```
+
+<Note>
+  This JSON is workspace-wide. Invalid JSON is rejected when you save.
+</Note>
+
+## Available models
+
+The **Available Models** list lets you enable or disable specific models for your organization.
+
+- Models are enabled by default
+- Org admins can toggle models on/off
+- Non-admin members can view status but cannot change it
+
+<Warning>
+  You cannot disable the model currently used by your default agent. Change the default agent model first.
+</Warning>
