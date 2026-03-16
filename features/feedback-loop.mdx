@@ -1,19 +1,17 @@
 ---
 title: "Feedback Loop"
-description: "Iterate on Tembo's work by leaving feedback, just like you would with any teammate."
+description: "Iterate on Tembo's work just like you would with any teammate."
 ---
 
-Tembo opens a PR. You review it. If something needs to change, mention `@tembo` in a comment and describe what you want. Tembo reads your feedback, updates the code, and pushes new commits. Keep iterating until it's right.
+Mention `@tembo` in a PR comment to request changes. Tembo updates the code and pushes new commits. Keep iterating until it's right.
 
-Works on GitHub, GitLab, and Bitbucket (use `/tembo` instead of `@tembo` on Bitbucket).
+- **Inline review comments**: Comment on specific lines. Tembo knows exactly which code you mean.
+- **Regular comments**: Comment anywhere on the PR.
+- **Slack threads**: If the task started from Slack, keep mentioning `@tembo` in the same thread.
 
-## How to give feedback
+On Bitbucket, use `/tembo` instead of `@tembo`.
 
-**PR review comments** (recommended): Use your Git provider's review feature. Comment on specific lines and tag `@tembo`. Tembo knows exactly which code you're referring to.
-
-**Regular comments**: Leave a comment on the PR and mention `@tembo`.
-
-Only comments that mention `@tembo` are picked up. This prevents Tembo from responding to internal team discussions.
+Only comments that mention `@tembo` are picked up.
 
 ## Examples
 
@@ -25,22 +23,6 @@ Only comments that mention `@tembo` are picked up. This prevents Tembo from resp
 @tembo This function should handle the case where the user doesn't exist
 ```
 
-```
-@tembo Refactor this to use the existing auth middleware instead
-```
+## Multi-repo
 
-## What happens
-
-1. Tembo reacts with 👀 (seen) then 🚀 (working)
-2. New commits appear on the PR within a few minutes
-3. If the task started from Slack, Tembo posts a summary back to the thread
-
-Be specific. `@tembo add error handling for timeouts` works better than `@tembo make it better`.
-
-## Multi-repository support
-
-When your task spans multiple repositories, feedback on one PR can trigger changes across all connected repos:
-
-- **Existing PRs updated**: Tembo pushes new commits to all PRs that need changes
-- **New PRs created**: If changes are needed in a repo without an existing PR, Tembo creates one
-- **Primary PR context**: Tembo prioritizes the repo where you left feedback while coordinating changes across others
+Feedback on one PR can trigger changes across all connected repos. Tembo updates existing PRs and creates new ones where needed.
