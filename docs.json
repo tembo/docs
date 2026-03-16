@@ -56,7 +56,8 @@
                             "features/rule-files",
                             "features/hooks",
                             "features/self-hosted",
-                            "features/max"
+                            "features/max",
+                            "features/proxy"
                         ]
                     },
                     {

@@ -36,3 +36,11 @@ Only comments that mention `@tembo` are picked up. This prevents Tembo from resp
 3. If the task started from Slack, Tembo posts a summary back to the thread
 
 Be specific. `@tembo add error handling for timeouts` works better than `@tembo make it better`.
+
+## Multi-repository support
+
+When your task spans multiple repositories, feedback on one PR can trigger changes across all connected repos:
+
+- **Existing PRs updated**: Tembo pushes new commits to all PRs that need changes
+- **New PRs created**: If changes are needed in a repo without an existing PR, Tembo creates one
+- **Primary PR context**: Tembo prioritizes the repo where you left feedback while coordinating changes across others
