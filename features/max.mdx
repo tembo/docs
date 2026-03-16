@@ -1,7 +1,12 @@
 ---
-title: 'Max'
-description: 'One subscription, all coding agents. Connect your local tools through Tembo Proxy.'
+title: "Max"
+description: "One subscription, all coding agents and models."
 ---
+
+<Frame>
+  <img src="/images/max-light.png" alt="Tembo Max" className="block dark:hidden" />
+  <img src="/images/max-dark.png" alt="Tembo Max" className="hidden dark:block" />
+</Frame>
 
 Tembo Max gives you access to all coding agents and models through a single subscription. Connect your local tools to Tembo's proxy with one API key, no separate provider accounts needed.
 
@@ -22,31 +27,34 @@ export ANTHROPIC_API_KEY=your-tembo-api-key
 export OPENAI_BASE_URL="https://proxy.tembo.io/proxy/openai"
 export OPENAI_API_KEY="your-tembo-api-key"
 ```
+
 </CodeGroup>
 
-<Note>Codex may store credentials in `~/.codex/auth.json` that override environment variables.</Note>
+<Note>
+  Codex may store credentials in `~/.codex/auth.json` that override environment variables.
+</Note>
 
 ## Proxy models
 
 All models are tested across real-world coding tasks before being made available.
 
-| Model | Model ID | Endpoint |
-|-------|----------|----------|
-| Claude Opus 4.5 | `claude-opus-4-5` | `proxy.tembo.io/anthropic` |
-| Claude 4.5 Sonnet | `claude-4-5-sonnet` | `proxy.tembo.io/anthropic` |
-| Claude 4.1 Opus | `claude-4.1-opus` | `proxy.tembo.io/anthropic` |
-| Claude 4.5 Haiku | `claude-4-5-haiku` | `proxy.tembo.io/anthropic` |
-| Claude 4 Sonnet | `claude-4-sonnet` | `proxy.tembo.io/anthropic` |
-| GPT-5.4 | `gpt-5.4` | `proxy.tembo.io/openai` |
-| GPT-5.2 | `gpt-5.2` | `proxy.tembo.io/openai` |
-| GPT-5.1 Codex | `gpt-5.1-codex` | `proxy.tembo.io/proxy/openai` |
-| GPT-5.1 Codex Max | `gpt-5.1-codex-max` | `proxy.tembo.io/proxy/openai` |
-| GPT-5.2 Codex | `gpt-5.2-codex` | `proxy.tembo.io/proxy/openai` |
-| Gemini 2.5 Pro | `gemini-2.5-pro` | `proxy.tembo.io/anthropic` |
-| Gemini 3 Pro | `gemini-3-pro` | `proxy.tembo.io/anthropic` |
-| Gemini 3 Flash | `gemini-3-flash` | `proxy.tembo.io/anthropic` |
-| Kimi K2 | `bedrock-kimi-k2-thinking` | `proxy.tembo.io/anthropic` |
-| Grok | `grok` | Cursor API |
+| Model             | Model ID                   | Endpoint                      |
+| ----------------- | -------------------------- | ----------------------------- |
+| Claude Opus 4.5   | `claude-opus-4-5`          | `proxy.tembo.io/anthropic`    |
+| Claude 4.5 Sonnet | `claude-4-5-sonnet`        | `proxy.tembo.io/anthropic`    |
+| Claude 4.1 Opus   | `claude-4.1-opus`          | `proxy.tembo.io/anthropic`    |
+| Claude 4.5 Haiku  | `claude-4-5-haiku`         | `proxy.tembo.io/anthropic`    |
+| Claude 4 Sonnet   | `claude-4-sonnet`          | `proxy.tembo.io/anthropic`    |
+| GPT-5.4           | `gpt-5.4`                  | `proxy.tembo.io/openai`       |
+| GPT-5.2           | `gpt-5.2`                  | `proxy.tembo.io/openai`       |
+| GPT-5.1 Codex     | `gpt-5.1-codex`            | `proxy.tembo.io/proxy/openai` |
+| GPT-5.1 Codex Max | `gpt-5.1-codex-max`        | `proxy.tembo.io/proxy/openai` |
+| GPT-5.2 Codex     | `gpt-5.2-codex`            | `proxy.tembo.io/proxy/openai` |
+| Gemini 2.5 Pro    | `gemini-2.5-pro`           | `proxy.tembo.io/anthropic`    |
+| Gemini 3 Pro      | `gemini-3-pro`             | `proxy.tembo.io/anthropic`    |
+| Gemini 3 Flash    | `gemini-3-flash`           | `proxy.tembo.io/anthropic`    |
+| Kimi K2           | `bedrock-kimi-k2-thinking` | `proxy.tembo.io/anthropic`    |
+| Grok              | `grok`                     | Cursor API                    |
 
 Anthropic and Google models require no additional API keys. OpenAI models require your own OpenAI API key alongside your Tembo key.
 
@@ -56,8 +64,8 @@ See [tembo.io/pricing](https://tembo.io/pricing) for plans and credits.
 
 ## Privacy
 
-| Provider | Data Retention |
-|----------|---------------|
-| Anthropic | Zero retention |
-| Google | Zero retention |
-| OpenAI | 30-day retention |
+| Provider  | Data Retention   |
+| --------- | ---------------- |
+| Anthropic | Zero retention   |
+| Google    | Zero retention   |
+| OpenAI    | 30-day retention |
