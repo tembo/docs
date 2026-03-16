@@ -1,95 +1,38 @@
 ---
 title: "Feedback Loop"
-description: "Refine and iterate on pull requests by leaving natural language feedback directly in your Git provider."
-icon: "message"
+description: "Iterate on Tembo's work by leaving feedback, just like you would with any teammate."
 ---
 
+Tembo opens a PR. You review it. If something needs to change, mention `@tembo` in a comment and describe what you want. Tembo reads your feedback, updates the code, and pushes new commits. Keep iterating until it's right.
 
-![How Tembo Works](/images/feedback-loop.png)
+Works on GitHub, GitLab, and Bitbucket (use `/tembo` instead of `@tembo` on Bitbucket).
 
-Refine, iterate, and improve on Tembo's [pull requests](/features/pull-requests) using natural language feedback directly in your Git provider.
+## How to give feedback
 
-## Prerequisites
+**PR review comments** (recommended): Use your Git provider's review feature. Comment on specific lines and tag `@tembo`. Tembo knows exactly which code you're referring to.
 
-The Feedback Loop works automatically once you have:
-- [GitHub integration](/integrations/github), [GitLab integration](/integrations/gitlab) or the [BitBucket integration](/integrations/bitbucket) enabled in your Tembo workspace
-- At least one pull request or merge request created by Tembo (from error detection, manual assignment, etc.)
+**Regular comments**: Leave a comment on the PR and mention `@tembo`.
 
-That's it! No additional setup required.
+Only comments that mention `@tembo` are picked up. This prevents Tembo from responding to internal team discussions.
 
-## How it works
+## Examples
 
-1. **Initial Solution** - Tembo creates a pull request (GitHub) or merge request (GitLab) to solve an issue
-2. **Review & Comment** - You review the PR/MR and leave feedback (tag @tembo in your review or comments)
-3. **Automatic Retry** - Tembo processes your feedback and updates the PR/MR with improvements
-4. **Iteration** - Continue providing feedback until you're satisfied with the solution
+```
+@tembo Add retry logic with exponential backoff and a unit test
+```
 
-<Note>
-**Credit Usage**: Processing feedback through the Feedback Loop consumes credits based on the complexity of the requested changes and the size of the codebase context. Each feedback iteration is treated as a separate task. Learn more about [credit consumption](/admin/billing#what-consumes-credits).
-</Note>
+```
+@tembo This function should handle the case where the user doesn't exist
+```
 
-<Warning>
-**Important**: You must mention in your PR/MR comments or reviews for Tembo to process your feedback. This prevents accidental triggers from internal team discussions or comments meant for other team members.
-In GitHub and Gitlab, this is done by tagging `@tembo` in your comment. In Bitbucket, this is done instead by adding the `/tembo` command.
-For the rest of the article, Github will be used as an example.
-</Warning>
+```
+@tembo Refactor this to use the existing auth middleware instead
+```
 
-## Providing Feedback
+## What happens
 
-### Option 1: Use PR/MR Review function
+1. Tembo reacts with 👀 (seen) then 🚀 (working)
+2. New commits appear on the PR within a few minutes
+3. If the task started from Slack, Tembo posts a summary back to the thread
 
-![GitHub Review Interface](/images/request-review.png)
-
-- Submit a formal review using your Git provider's built-in review feature (GitHub PR reviews or GitLab MR reviews)
-- Tag "@tembo" in your review summary or in any specific comments you want Tembo to act on (untagged feedback is ignored)
-- **Advantages:**
-  - Tembo knows exactly which lines you're commenting on for precise fixes
-  - You can batch multiple feedback points in a single review
-  - Cleaner conversation thread with organized feedback
-  - Standard workflow that integrates with your team's process
-
-### Option 2: Add comments
-- Leave regular comments in the PR/MR conversation
-- You must mention "@tembo" in the comment to trigger processing (untagged comments are ignored)
-
-![Comment Review Example](/images/comment-review.png)
-
-## Example Workflow
-
-> **Scenario:** Tembo creates a PR with a basic try-catch for database timeouts. You review and comment "@tembo add retry logic with exponential backoff, logging, and unit tests." Tembo processes your feedback, pushes a new commit with all changes, and you continue iterating until satisfied.
-
-## What to Expect
-
-**Response Time:**
-- Tembo typically acknowledges feedback within 1-2 minutes (👀 reaction)
-- Processing and implementing changes usually takes 3-10 minutes depending on complexity
-- You'll see new commits appear in the PR once changes are complete
-
-**Processing Indicators:**
-- **👀** = Tembo has seen your feedback and is analyzing it
-- **🚀** = Tembo is actively working on implementing changes
-- **New commits** = Changes are complete and ready for your review
-
-**Slack Notifications:**
-- If you created the task from [Slack](/integrations/slack), Tembo will post a notification back to the original Slack thread when your feedback has been processed, including a summary of changes and a link to the updated PR
-
-## Best Practices
-
-- **Be specific** — `@tembo Add retry logic with exponential backoff` beats `@tembo make it better`
-
-**✅ Batch feedback in a single review:**
-- Add multiple comments to different lines in one review (GitHub PR review or GitLab MR review)
-- Tag "@tembo" on the review summary or individual comments you want addressed; Tembo processes all tagged points together for cohesive improvements
-- Cleaner conversation thread and better context awareness
-
-**ℹ️ Tagging is required:**
-- Tembo only acts on PR/MR feedback that mentions `@tembo` (or `/tembo` in Bitbucket) (in reviews or regular comments)
-- This prevents accidental triggers from internal team discussions or other bot messages
-
-**Works well for:** Code improvements (refactoring, error handling), testing, documentation, security fixes, and changes that follow existing patterns.
-
-**Limitations:** Complex architectural changes may need multiple iterations; large-scope changes are better as separate issues.
-
----
-
-You are responsible for all merged code. Read our [AI First Software Development](https://github.com/tembo/aifsd) guide for more information.
+Be specific. `@tembo add error handling for timeouts` works better than `@tembo make it better`.

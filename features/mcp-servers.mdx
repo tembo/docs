@@ -1,134 +1,32 @@
 ---
 title: 'MCP Servers'
-icon: 'plug'
-description: 'Extend your agents with Model Context Protocol servers for additional tools and integrations'
+description: 'Extend your agents with external tools and integrations.'
 ---
 
-MCP (Model Context Protocol) servers extend your agents with additional tools, integrations, and capabilities. Tembo supports both built-in MCP servers and custom configurations.
+MCP (Model Context Protocol) servers give your agents access to external tools, APIs, and data sources. Install them from the [Integrations page](https://app.tembo.io/integrations) in the app.
 
-## What is MCP?
+Learn more about MCP at [modelcontextprotocol.io](https://modelcontextprotocol.io).
 
-The Model Context Protocol is an open standard that allows AI agents to connect to external tools, APIs, and data sources. MCP servers provide tools that your agents can use to interact with external systems, from browser automation to project management integrations.
+## Available MCP servers
 
-Learn more at [modelcontextprotocol.io](https://modelcontextprotocol.io).
+| Server | What it does |
+|--------|-------------|
+| **Kernel** | Launch Chromium browsers, execute Playwright code, capture video replays |
+| **Context7** | Up-to-date, version-specific documentation and code examples |
+| **PostHog** | Analytics, feature flags, experiments, error tracking |
+| **Neon** | Interact with Neon Postgres databases |
+| **Supabase** | Manage Supabase projects and databases |
+| **PlanetScale** | Access and manage PlanetScale databases |
+| **Stripe** | Customers, payments, subscriptions, invoices |
+| **Clerk** | Users, organizations, authentication |
+| **Notion** | Pages, databases, workspace content |
+| **Jam** | Bug reports, recordings, repro steps |
+| **Supermemory** | Long-term memory and context for AI apps |
+| **Attio** | CRM records, lists, workspace data |
+| **Firetiger** | Cloud tools and resources |
 
-## Built-in MCP Servers
+Integration MCP servers (GitHub, Linear, Sentry, Postgres) are automatically available when you connect those integrations.
 
-Tembo provides several MCP servers out of the box:
+## Custom MCP servers
 
-| Server       | Type    | Description                                  |
-| ------------ | ------- | -------------------------------------------- |
-| **Playwright** | `stdio` | Browser automation and web testing         |
-| **Context7** | `stdio` | Context management and search              |
-
-### Playwright MCP
-
-Enables agents to automate browser interactions:
-
-- Navigate web pages
-- Fill forms and click elements
-- Take screenshots
-- Run automated tests
-
-### Context7 MCP
-
-Provides enhanced context management capabilities for your agents.
-
-## Integration MCP Servers
-
-When you connect integrations to Tembo, additional MCP servers become available automatically:
-
-| Integration | Server Type | Tools Provided                                |
-| ----------- | ----------- | --------------------------------------------- |
-| **GitHub**  | `stdio`     | Repository management, issues, pull requests |
-| **Linear**  | `http`      | Issue tracking, project management            |
-| **Notion**  | `http`      | Pages, databases, blocks, workspace structure |
-| **Postgres** | `http`     | Read-only database queries, schema, performance stats |
-
-These servers are automatically configured with the appropriate authentication when you connect the integration.
-
-## Custom MCP Servers
-
-You can add custom MCP servers in your organization settings. Tembo supports three types of MCP servers:
-
-### Server Types
-
-**stdio** - Local process-based servers
-```json
-{
-  "command": "node",
-  "args": ["path/to/server.js"],
-  "env": {
-    "API_KEY": "your-key"
-  }
-}
-```
-
-**http** - HTTP-based servers
-```json
-{
-  "url": "https://example.com/mcp",
-  "headers": {
-    "Authorization": "Bearer token"
-  }
-}
-```
-
-**sse** - Server-Sent Events servers
-```json
-{
-  "url": "https://example.com/mcp/sse",
-  "headers": {
-    "Authorization": "Bearer token"
-  }
-}
-```
-
-## Configuration Format
-
-Custom MCP servers support two JSON formats:
-
-**Object format** (recommended) - keyed by server name:
-```json
-{
-  "mcpServers": {
-    "my-server": { "command": "node", "args": ["server.js"], "env": { "API_KEY": "key" } },
-    "api-server": { "url": "https://api.example.com/mcp" }
-  }
-}
-```
-
-**Array format** - explicit name and type fields:
-```json
-{
-  "mcpServers": [
-    { "name": "my-server", "type": "stdio", "command": "node", "args": ["server.js"] },
-    { "name": "api-server", "type": "http", "url": "https://api.example.com/mcp" }
-  ]
-}
-```
-
-## Adding Custom MCP Servers
-
-To add custom MCP servers to your organization:
-
-1. Navigate to **Settings** > **Models** in your Tembo dashboard
-2. Scroll to the **Custom MCP Servers** section
-3. Enter your MCP configuration in JSON format
-4. Press `Cmd+Enter` (Mac) or `Ctrl+Enter` (Windows/Linux) to save
-5. New tasks will automatically use the configured MCP servers
-
-## Best Practices
-
-- **Security** — Store credentials as environment variables, not hardcoded in configuration
-- **Testing** — Test MCP servers locally before adding to your organization
-- **Documentation** — Document custom servers for your team (tools provided, when to use)
-- **Version Control** — Keep configurations alongside rule files for team consistency
-
-## Troubleshooting
-
-- **Server not available?** Check that configuration is valid JSON with all required fields.
-- **Authentication errors?** Verify credentials and API keys have necessary permissions.
-- **Connection issues?** Ensure HTTP/SSE URLs are accessible and servers are running.
-
-For help, contact [support](mailto:support@tembo.io).
+You can bring your own MCP servers too. Add them from the [Integrations page](https://app.tembo.io/integrations) using the **Custom MCP** option. Tembo supports stdio, HTTP, and SSE server types, including OAuth-based servers that require authorization.

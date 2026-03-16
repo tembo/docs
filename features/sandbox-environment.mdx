@@ -1,301 +1,57 @@
 ---
 title: 'Sandbox'
-description: 'Secure isolated VM environment with pre-installed development tools, Docker support, and nested virtualization for containerized applications.'
-icon: 'box'
+description: 'Secure, isolated environments where coding agents execute tasks.'
 ---
 
-The Tembo Sandbox provides a secure, isolated environment where Tembo operates to analyze and modify your code. Each sandbox is **ephemeral** — it is spun up for the duration of a task, and **automatically discarded** once the task is complete. No code, files, or environment state persist after execution. This environment comes pre-installed with a comprehensive set of development tools and runtime environments to support a wide variety of programming languages and frameworks.
+Every task runs in its own isolated sandbox. Sandboxes are ephemeral: spun up for the task, destroyed when it's done. No code or state persists after execution.
 
-## Sandbox Types
+## Sandbox types
 
-Tembo supports two sandbox environment types, each designed for different use cases:
+### Small (default)
 
-### Small (Default)
+Container-based. Fast startup, scalable, no infrastructure to manage.
 
-The Small sandbox provides a lightweight container-based environment:
+- Workloads run as non-root
+- Docker daemon is not exposed inside the sandbox
+- Each task gets its own isolated network namespace
+- Standard container hardening best practices
 
-- **Fast startup**: Starts quickly for rapid task execution
-- **Wide compatibility**: Works with most common development workflows
-- **Resource efficient**: Minimal overhead for general development tasks
-- **Best for**: Most general-purpose tasks, web applications, and standard development workflows
-- **Limitation**: Cannot run Docker containers inside the sandbox (no Docker-in-Docker support)
+Best for most tasks: code analysis, fixes, features, reviews.
 
-### Large Full VM
+### Large (Full VM)
 
-The Large Full VM sandbox provides a full Linux virtual machine with enhanced capabilities:
+Dedicated Linux VM per task. No two tasks share the same VM.
 
-- **Complete isolation**: Full VM-level isolation for enhanced security
-- **Nested virtualization**: Enables agents to run Docker containers inside the sandbox
-- **System-level access**: Support for tasks requiring deeper system integration
-- **Custom kernels**: Ability to run specialized kernel configurations
-- **Best for**: Testing and building containerized applications, running databases in Docker, and complex multi-container setups
+- 4 vCPU / 8 GB RAM (adjustable)
+- 100 GB disk
+- Full nested virtualization (Docker-in-Docker)
+- Stronger isolation boundary
 
-**Note**: For agents to run Docker containers inside the sandbox (e.g., for testing with Postgres, Redis, or other services), you must use the **Large Full VM** sandbox type.
+Best for tasks that need Docker (integration tests, building images, multi-container setups) or when your security posture requires VM-level isolation.
 
-## Pre-installed Tools and Runtimes
+If your org requires that untrusted code only runs with a VM boundary, we can enforce a VM-only posture. Contact support@tembo.io.
 
-The Tembo Sandbox includes the following base dependencies and their versions:
+## Pre-installed tools
 
-### System Tools
+Both sandbox types come with:
 
-| Tool | Version | Description |
-|------|---------|-------------|
-| **curl** | 8.14.1 | Command-line tool for transferring data with URLs |
-| **lsof** | 4.99.4 | Lists open files and network connections |
-| **strace** | 6.15 | System call tracer for debugging and monitoring |
+| Category | Tools |
+|----------|-------|
+| **JavaScript** | Node.js 22, Bun, pnpm, Yarn |
+| **Python** | Python 3.12, pipx |
+| **Go** | Go 1.24 |
+| **Rust** | Rustup 1.28 |
+| **Ruby** | Ruby 3.3, Bundler, RuboCop |
+| **Java** | JDK 21, Gradle, Maven |
+| **Elixir** | Elixir 1.18, Erlang 28, Hex, Rebar3 |
+| **.NET** | .NET SDK 9 |
+| **Containers** | Docker 28, Docker Compose 2.31 (Large VM only) |
+| **Other** | Git, curl, ShellCheck, httpie |
 
-### Docker and Container Tools
+## Nix support
 
-| Tool | Version | Description |
-|------|---------|-------------|
-| **docker** | 28.0.0 | Container runtime for building and running containers |
-| **docker-compose** | 2.31.0 | Multi-container orchestration tool |
+If your repo has a `flake.nix` with `devShells.x86_64-linux.default`, Tembo automatically detects it and runs commands inside your Nix dev shell.
 
-### Version Control and Authentication
+## Dev Containers
 
-| Tool | Version | Description |
-|------|---------|-------------|
-| **git-credential-tembo** | unknown | Tembo-specific Git credential helper |
-
-### Code Quality and Analysis
-
-| Tool | Version | Description |
-|------|---------|-------------|
-| **ShellCheck** | 0.10.0 | Static analysis tool for shell scripts |
-
-### HTTP and API Tools
-
-| Tool | Version | Description |
-|------|---------|-------------|
-| **httpie** | 3.2.4 | Modern, user-friendly HTTP client for API testing |
-
-### JavaScript/Node.js Ecosystem
-
-| Tool | Version | Description |
-|------|---------|-------------|
-| **nodejs** | 22.17.0 | JavaScript runtime built on Chrome's V8 engine |
-| **bun** | 1.2.18 | Fast all-in-one JavaScript runtime and toolkit |
-| **pnpm** | 10.12.4 | Fast, disk space efficient package manager |
-| **yarn** | 1.22.x | Popular JavaScript package manager |
-
-### Python Ecosystem
-
-| Tool | Version | Description |
-|------|---------|-------------|
-| **python3** | 3.12.11 | Modern Python programming language |
-| **pipx** | 1.7.1 | Install and run Python applications in isolated environments |
-
-### Ruby Ecosystem
-
-| Tool | Version | Description |
-|------|---------|-------------|
-| **ruby** | 3.3.6 | Dynamic, object-oriented programming language |
-| **bundler-2.6.9** | 2.6.9 | Manages Ruby gem dependencies |
-| **ruby3.3-rubocop-1.75.2** | 1.75.2 | Ruby static code analyzer and formatter |
-
-### Elixir/Erlang Ecosystem
-
-| Tool | Version | Description |
-|------|---------|-------------|
-| **erlang-28.0.1** | 28.0.1 | Concurrent, fault-tolerant programming platform |
-| **elixir** | 1.18.4 | Dynamic, functional programming language |
-| **hex** | 2.2.2 | Package manager for the Erlang ecosystem |
-| **rebar3** | 3.25.0 | Erlang build tool and package manager |
-| **erlfmt** | 1.7.0 | Erlang code formatter |
-
-### Java Ecosystem
-
-| Tool | Version | Description |
-|------|---------|-------------|
-| **jdk** | 21 | Java Development Kit for building and running Java applications |
-| **gradle** | latest | Build tool for Java projects |
-| **maven** | latest | Project management and build tool for Java |
-
-### Go Ecosystem
-
-| Tool | Version | Description |
-|------|---------|-------------|
-| **go** | 1.24.4 | Open source programming language from Google |
-
-### Rust Ecosystem
-
-| Tool | Version | Description |
-|------|---------|-------------|
-| **rustup** | 1.28.2 | Rust toolchain installer and version management tool |
-
-### .NET Ecosystem
-
-| Tool | Version | Description |
-|------|---------|-------------|
-| **dotnet-sdk** | 9 | .NET SDK for building and running C#, F#, and Visual Basic applications |
-
-## Docker-in-Docker Support
-
-The Large Full VM sandbox supports running Docker containers inside the environment. When Tembo agents operate in this sandbox, they can use Docker to:
-
-- Run integration tests with databases (Postgres, MySQL, Redis, etc.)
-- Build Docker images as part of CI/CD workflows
-- Test multi-container applications with Docker Compose
-
-### Example: Running Postgres in Docker
-
-Here's how an agent might run a Postgres database inside the sandbox for testing:
-
-```bash
-# Start a Postgres container
-docker run -d \
-  --name postgres-test \
-  -e POSTGRES_USER=testuser \
-  -e POSTGRES_PASSWORD=testpass \
-  -e POSTGRES_DB=testdb \
-  -p 5432:5432 \
-  postgres:16
-
-# Wait for the database to be ready
-until docker exec postgres-test pg_isready -U testuser; do
-  echo "Waiting for Postgres..."
-  sleep 1
-done
-
-echo "Postgres is ready!"
-```
-
-### Prerequisites for Docker-in-Docker
-
-- Use the **Large Full VM** sandbox type
-- Docker daemon is pre-installed and ready to use
-- No additional configuration required
-
-You can configure the sandbox type in your organization settings, per issue, or per job.
-
-## Multiple Sandboxes
-
-Each Tembo task runs in its own isolated sandbox instance. There is no limit to how many sandboxes can run concurrently across your repositories—each task gets a fresh, isolated environment automatically.
-
-## Environment Characteristics
-
-### Isolation and Security
-
-The Tembo Sandbox provides strong isolation and security guarantees:
-
-- **Ephemeral environments**: Each sandbox is created for a single task and **destroyed after execution completes**. Tembo does not retain copies of your repository or code in persistent storage.
-- **Process isolation**: Each task runs in its own isolated environment
-- **File system isolation**: Changes are contained within the sandbox
-- **Network security**: Controlled network access for security
-- **Resource limits**: CPU and memory constraints to ensure stability
-
-### Resource Limits
-
-| Sandbox Type | CPU | Memory | Disk | Nested Virtualization |
-|-------------|-----|--------|------|---------------------|
-| **Small** | 4 cores | 8 GB | 20 GB | No |
-| **Large Full VM** | 4 cores | 8 GB | 100 GB | Yes |
-
-### Development Workflow Integration
-
-The sandbox environment is designed to integrate seamlessly with your development workflow:
-
-- **Hook support**: Execute custom commands at different stages via [Tembo Hooks](/features/hooks)
-- **Repository access**: Full access to your repository contents and history
-- **Build tool compatibility**: Support for common build systems and package managers
-- **Testing frameworks**: Compatible with popular testing tools and frameworks
-- **Nix dev shell support**: Automatically detects and uses Nix flakes for reproducible development environments
-
-### Nix Development Shells
-
-Tembo's sandbox environment supports Nix flakes for reproducible development environments. To use this feature, your repository must have a `flake.nix` file in the root directory that defines a development shell named `default` for the `x86_64-linux` platform.
-
-**Requirements:**
-- Your `flake.nix` must specify `devShells.x86_64-linux.default`
-- The development shell must target the x86_64-linux platform (Tembo's sandbox runs on x86_64 Linux)
-- The flake must be in your repository's root directory
-
-**Example flake.nix:**
-```nix
-{
-  description = "My project development environment";
-
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-  };
-
-  outputs = { self, nixpkgs }: {
-    devShells.x86_64-linux.default = nixpkgs.legacyPackages.x86_64-linux.mkShell {
-      packages = with nixpkgs.legacyPackages.x86_64-linux; [
-        nodejs
-        python3
-        # Add any other tools your project needs
-      ];
-    };
-  };
-}
-```
-
-When configured correctly, Tembo will:
-- **Automatically detect** your `flake.nix` file at the repository root
-- **Load the default devshell** for the x86_64-linux platform
-- **Make available** all packages and environment variables defined in your Nix development shell
-- **Ensure reproducibility** across different tasks and environments
-
-**How it works:**
-When a coding agent executes commands in the sandbox, it automatically runs them within your Nix development shell if a `flake.nix` is detected. This means all build commands, tests, and scripts will have access to the exact dependencies specified in your flake, ensuring consistent behavior across all task executions.
-
-### Dev Containers
-
-Tembo's sandbox environment can also run your task inside a **Dev Container** (the same `.devcontainer` format used by VS Code Dev Containers and GitHub Codespaces). This is useful when your project needs OS packages, language runtimes, or tooling that isn't already available in the base sandbox.
-
-**Requirements:**
-- Use the **Large Full VM** sandbox type (Dev Containers require Docker)
-- Dev Containers are not supported in the **Small** sandbox type
-- Commit a Dev Container configuration at `.devcontainer/devcontainer.json` in your repository root
-
-**How it works:**
-- Tembo detects `.devcontainer/devcontainer.json`
-- Tembo starts the container for your repo
-- All subsequent commands run *inside* that container environment
-
-**Minimal example: `.devcontainer/devcontainer.json`**
-```json
-{
-  "name": "tembo-sandbox",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
-  "postCreateCommand": "echo 'Dev Container ready'"
-}
-```
-
-**Tips:**
-- Keep `postCreateCommand` **idempotent** and **fast** (it runs during container setup).
-- If your Dev Container build is slow or flaky, the task will be slow or fail early—test it locally with VS Code's "Dev Containers: Reopen in Container" before relying on it in Tembo.
-- For multi-repo tasks, only one Dev Container can be used per run; Tembo uses the first repo that has a `.devcontainer/devcontainer.json`.
-
-## Best Practices
-
-### Choosing the Right Sandbox
-
-| Use Case | Recommended Sandbox |
-|----------|-------------------|
-| Code analysis, simple fixes | Small (default) |
-| Agent needs to run tests with Docker databases | Large Full VM |
-| Agent needs to build Docker images | Large Full VM |
-| Repository uses Dev Containers | Large Full VM |
-| Complex multi-container setups | Large Full VM |
-| System-level operations | Large Full VM |
-| General development | Small |
-
-### General Tips
-
-- **Leverage pre-installed tools** and pin versions when adding dependencies
-- **Minimize installations** and clean up temporary files to optimize resources
-- **Be version-aware** when writing build scripts for the multi-language environment
-- **Use Nix for complex dependencies**—test locally with `nix develop` and keep flakes minimal
-- **Use Large Full VM when agents need Docker**—Small sandbox cannot run nested containers
-
-## Support and Updates
-
-The Tembo Sandbox environment is regularly updated to include:
-
-- Security patches for all installed tools
-- Updates to major language runtimes and package managers  
-- New tools based on community feedback and usage patterns
-
-If you need a specific tool or version that isn't currently available, please reach out to the Tembo team through your dashboard or contact support.
+Tembo can run tasks inside a Dev Container (`.devcontainer/devcontainer.json`). Requires the Large VM sandbox. Same format as VS Code Dev Containers and GitHub Codespaces.

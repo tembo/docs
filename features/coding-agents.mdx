@@ -1,98 +1,40 @@
 ---
-title: 'Coding Agents'
-description: 'Choose from multiple AI coding agents including Claude Code, Codex, and Cursor to solve your software engineering tasks.'
-icon: 'robot-astromech'
+title: "Coding Agents"
+description: "Choose from multiple AI coding agents to solve your software engineering tasks."
 ---
 
-import CodingAgentsTable from '/snippets/coding-agents-table.mdx';
+Tembo is agent and model agnostic. Set a default agent and model per automation (e.g. all Linear issues use Codex with GPT-5.2) or override per task.
 
-Tembo supports multiple coding agents to solve your software engineering tasks.
+<AccordionGroup>
+  <Accordion title="Claude Code" icon={<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.43196 10.4658L6.39022 8.81139L6.43971 8.66719L6.39022 8.58751H6.24554L5.7506 8.55715L4.06016 8.51161L2.59436 8.4509L1.17425 8.37501L0.816364 8.29912L0.481323 7.85894L0.515589 7.63886L0.816364 7.43775L1.24659 7.47569L2.19841 7.5402L3.62613 7.63886L4.66171 7.69957L6.19605 7.85894H6.43971L6.47398 7.76028L6.39022 7.69957L6.32549 7.63886L4.84827 6.64088L3.24921 5.58599L2.41161 4.97885L1.95855 4.67149L1.73011 4.3831L1.63112 3.7532L2.04231 3.30165L2.59436 3.33959L2.73523 3.37754L3.2949 3.80633L4.49039 4.72841L6.05137 5.87438L6.27981 6.06411L6.37118 5.9996L6.3826 5.95406L6.27981 5.78331L5.43078 4.25409L4.52465 2.69831L4.12108 2.05323L4.01448 1.66618C3.9764 1.50681 3.94975 1.374 3.94975 1.21083L4.41805 0.577133L4.67694 0.493652L5.30134 0.577133L5.56404 0.804808L5.95238 1.68895L6.58058 3.08156L7.55524 4.97506L7.84079 5.53666L7.99308 6.05652L8.05019 6.21589H8.14918V6.12482L8.22913 5.05854L8.37762 3.74941L8.52229 2.06461L8.57179 1.59029L8.80784 1.0211L9.27613 0.713738L9.64163 0.888289L9.94241 1.31708L9.90053 1.59408L9.72159 2.75143L9.37132 4.56524L9.14288 5.77951H9.27613L9.42842 5.62773L10.0452 4.81189L11.0808 3.52173L11.5377 3.00946L12.0707 2.44407L12.4133 2.17465H13.0606L13.5365 2.88045L13.3233 3.60901L12.657 4.45141L12.1049 5.16479L11.313 6.22727L10.8181 7.07726L10.8638 7.14556L10.9818 7.13418L12.7712 6.75472L13.7383 6.58017L14.8919 6.38285L15.4135 6.6257L15.4706 6.87235L15.265 7.37703L14.0314 7.6806L12.5847 7.96899L10.4297 8.47746L10.4031 8.49644L10.4335 8.53438L11.4044 8.62545L11.8194 8.64822H12.8359L14.7282 8.78862L15.2231 9.11495L15.5201 9.51338L15.4706 9.81695L14.7091 10.204L13.6812 9.96115L11.2826 9.39196L10.4602 9.18705H10.346V9.25535L11.0313 9.9232L12.2877 11.054L13.8601 12.5111L13.94 12.8716L13.7383 13.1562L13.5251 13.1258L12.143 12.0899L11.61 11.6232L10.4031 10.61H10.3231V10.7163L10.6011 11.1223L12.0707 13.3231L12.1468 13.9986L12.0402 14.2187L11.6595 14.3515L11.2407 14.2756L10.3802 13.0727L9.49315 11.718L8.77738 10.5038L8.68981 10.5531L8.26721 15.0876L8.06923 15.3191L7.61235 15.4937L7.23163 15.2053L7.02984 14.7385L7.23163 13.8164L7.47529 12.6136L7.67327 11.6573L7.85221 10.4696L7.95882 10.075L7.9512 10.0484L7.86363 10.0598L6.96512 11.2893L5.5983 13.1296L4.51704 14.2832L4.25814 14.3856L3.80888 14.1542L3.85076 13.7406L4.10204 13.3725L5.5983 11.4752L6.50063 10.2989L7.08314 9.61963L7.07933 9.52097H7.04507L3.07027 12.0937L2.36212 12.1848L2.05754 11.9002L2.09561 11.4334L2.24029 11.2817L3.43577 10.462L3.43196 10.4658Z" fill="#D97757"/></svg>}>
+    Anthropic's Claude models. Best balance of quality, reliability, and cost.
 
-## Supported LLMs
+    **Models:** Opus 4.6, Sonnet 4.6, Opus 4.5, Sonnet 4.5, Haiku 4.5
 
-Use these model IDs with your agent key (`agent:model` or `agent:model:reasoningLevel` for GPT-5 variants). Choose a model from a provider your agent supports and make sure any required API keys are configured.
+  </Accordion>
 
-**Anthropic (no API key required)**
-- `claude-opus-4-6`
-- `claude-sonnet-4-6`
-- `claude-opus-4-5` (default for Claude Code/Opencode/Cursor)
-- `claude-4-5-sonnet`
-- `claude-4-5-haiku`
+  <Accordion title="Codex" icon={<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.268 8C13.268 5.09056 10.9094 2.73203 8 2.73203C5.09056 2.73203 2.73203 5.09056 2.73203 8C2.73203 10.9094 5.09056 13.268 8 13.268C10.9094 13.268 13.268 10.9094 13.268 8ZM10.6664 9.1344L10.7742 9.14528C11.0164 9.19504 11.1983 9.40952 11.1984 9.6664C11.1984 9.92336 11.0165 10.1378 10.7742 10.1875L10.6664 10.1984H8.6664C8.37272 10.1983 8.1344 9.96016 8.1344 9.6664C8.13448 9.3728 8.3728 9.13448 8.6664 9.1344H10.6664ZM6.12266 9.94064C5.97142 10.1923 5.64482 10.2738 5.39297 10.1226C5.14114 9.97152 5.05913 9.64488 5.21016 9.39296L6.12266 9.94064ZM7.12266 7.72656C7.22365 7.89498 7.22365 8.10504 7.12266 8.27344L6.12266 9.94064L5.66641 9.6664L5.21016 9.39296L6.04531 8L5.21016 6.60703L5.66641 6.33359L6.12266 6.05938L7.12266 7.72656ZM5.39297 5.87735C5.64482 5.72623 5.97142 5.80764 6.12266 6.05938L5.21016 6.60703C5.05913 6.35514 5.14114 6.0285 5.39297 5.87735ZM14.332 8C14.332 11.497 11.497 14.332 8 14.332C4.50294 14.332 1.66797 11.497 1.66797 8C1.66797 4.50294 4.50294 1.66797 8 1.66797C11.497 1.66797 14.332 4.50294 14.332 8Z" fill="currentColor"/></svg>}>
+    OpenAI's GPT-5 family with configurable reasoning effort (minimal, low, medium, high).
 
-**OpenAI (API key required)**
-- `gpt-5.4`
-- `gpt-5.3-codex`
-- `gpt-5.2` (default for Codex)
-- `gpt-5.2-codex`, `gpt-5.2-codex-high`
-- `gpt-5.1`
-- `gpt-5.1-codex-max`, `gpt-5.1-codex-mini`
+    **Models:** GPT-5.4, GPT-5.3 Codex, GPT-5.2, GPT-5.2 Codex, GPT-5.1, GPT-5.1 Codex Max, GPT-5.1 Codex Mini
 
-**OSS models (no API key required)**
-- `gpt-oss-120b`
-- `qwen-3-32b`
-- `llama-3.3-70b`
-- `zai-glm-4.7`
-- `kimi-k2p5`
-- `zai-glm-5`
-- `minimax-m2p5`
+  </Accordion>
 
-**Google (no API key required)**
-- `gemini-3-pro`
-- `gemini-3-flash`
+  <Accordion title="Cursor" icon={<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.4734 3.9527L8.31773 0.398522C8.22052 0.342485 8.11029 0.312988 7.99809 0.312988C7.88589 0.312988 7.77566 0.342485 7.67846 0.398522L1.52355 3.9527C1.44182 3.99989 1.37394 4.06773 1.32671 4.14942C1.27948 4.23112 1.25457 4.32379 1.25446 4.41816V11.584C1.25457 11.6783 1.27948 11.771 1.32671 11.8527C1.37394 11.9344 1.44182 12.0022 1.52355 12.0494L7.67918 15.6036C7.77636 15.6597 7.8866 15.6893 7.99882 15.6893C8.11103 15.6893 8.22127 15.6597 8.31846 15.6036L14.4741 12.0502C14.5558 12.003 14.6237 11.9351 14.6709 11.8534C14.7182 11.7717 14.7431 11.6791 14.7432 11.5847V4.41743C14.7431 4.32307 14.7182 4.23039 14.6709 4.14869C14.6237 4.067 14.5558 3.99916 14.4741 3.95198L14.4734 3.9527ZM14.0872 4.70543L8.14464 14.9978C8.10464 15.0669 7.99846 15.0385 7.99846 14.9578V8.21889C7.99841 8.15254 7.98092 8.08738 7.94773 8.02993C7.91454 7.97249 7.86682 7.92478 7.80936 7.89161L1.97373 4.52361C1.90391 4.48289 1.93227 4.3767 2.013 4.3767H13.8966C14.0661 4.3767 14.1715 4.55925 14.0872 4.70543Z" fill="currentColor"/></svg>}>
+    Multi-provider via Cursor CLI.
 
-**Cursor (Cursor API key required)**
-- `composer-1`
+    **Models:** Sonnet 4.5, GPT-5.2, Gemini 3 Pro, Gemini 3 Flash, Composer 1, Grok
 
-**XAI (XAI API key required)**
-- `grok`
+  </Accordion>
 
-For GPT-5 family models you can append a reasoning effort (`:minimal`, `:low`, `:medium`, `:high`) when the agent supports it.
+  <Accordion title="Opencode" icon={<svg viewBox="0 0 240 300" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M180 240H60V120H180V240Z" fill="currentColor" opacity="0.4"/><path d="M180 60H60V240H180V60ZM240 300H0V0H240V300Z" fill="currentColor"/></svg>}>
+    Multi-provider support: Anthropic, OpenAI, and OSS models.
 
-## Available Coding Agents
+    **Models:** Opus 4.6, Sonnet 4.5, GPT-5.2, GPT-OSS 120B, Qwen 3 32B, Llama 3.3 70B, Kimi K2.5, GLM 5
 
-<CodingAgentsTable />
+  </Accordion>
 
-- **Claude Code** — Anthropic's Claude models. Best balance of quality, reliability, and cost.
-- **Codex** — OpenAI's GPT-5 family with configurable reasoning effort (`:minimal`, `:low`, `:medium`, `:high`).
-- **Opencode** — Multi-provider support: Anthropic, OpenAI, and OSS models.
-- **Amp** — Claude-powered with automatic model selection.
-- **Cursor** — Multi-provider via Cursor CLI: Claude, GPT, Gemini, Composer, and Grok.
-
-## Selecting an Agent
-
-Use the format `agentType:model[:reasoningLevel]`:
-
-```
-claudeCode:claude-opus-4-5
-codex:gpt-5.4:high
-cursor:grok
-```
-
-Default: `claudeCode:claude-opus-4-6`
-
-## Choosing the Right Model
-
-| Use Case | Recommended Models |
-|----------|-------------------|
-| Most tasks | `claude-4-5-sonnet`, `gpt-5.2` |
-| Quick fixes | `claude-4-5-haiku`, `gpt-5.1-codex-mini` |
-| Complex refactoring | `claude-opus-4-5`, `gpt-5.1-codex-max` |
-
-## Rule Files
-
-All agents use rule files (`AGENTS.md`, `tembo.md`, `.cursorrules`, etc.) to understand your coding standards. See [Rule Files](/features/rule-files) for details.
-
-## Configuration
-
-Set your coding agent via:
-- **Dashboard Settings** — Default for all tasks
-- **API** — Specify per-task with agent key
-- **Integration Settings** — Per-integration preferences
-
-## Troubleshooting
-
-**Task taking too long?** Break into smaller tasks, or use a faster model (Sonnet/Haiku instead of Opus).
-
-**Unexpected output?** Check your [rule files](/features/rule-files), add more context to task descriptions, or use the Feedback Loop via PR comments.
-
-**Model unavailable?** Verify the model ID or omit it to use the default. Contact [support@tembo.io](mailto:support@tembo.io) if issues persist.
+  <Accordion title="Amp" icon={<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.8757 14.567L6.63971 10.7497L8.0095 15.9505L9.99942 15.4062L8.01684 7.8548L0.585336 5.84207L0.0561523 7.87535L5.16975 9.26441L1.42137 13.0761L2.8757 14.567Z" fill="#F34E3F"/><path d="M13.7302 10.142L15.7201 9.59774L13.7376 2.04635L6.30603 0.0336304L5.77686 2.06691L12.0524 3.77164L13.7302 10.142Z" fill="#F34E3F"/><path d="M10.8738 13.0444L12.8637 12.5001L10.8811 4.9487L3.44959 2.93597L2.92041 4.96925L9.19587 6.67399L10.8738 13.0444Z" fill="#F34E3F"/></svg>}>
+    Claude-powered with automatic model selection.
+  </Accordion>
+</AccordionGroup>

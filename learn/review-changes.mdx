@@ -1,0 +1,79 @@
+---
+title: "Review changes"
+description: "Get automated code reviews on every PR with inline comments."
+---
+
+Tembo reviews pull requests automatically, checking for bugs, security issues, and style guide compliance, then leaving inline comments on specific lines.
+
+## How it works
+
+<Steps>
+  <Step title="PR opened">
+    A pull request is opened or updated in your repository. Tembo picks it up via webhook.
+  </Step>
+  <Step title="Code analyzed">
+    The agent reads the diff, understands the context of the changes, and evaluates them against your coding standards.
+  </Step>
+  <Step title="Review posted">
+    Inline comments are added to specific lines in the PR. If no issues are found, the PR can be auto-approved.
+  </Step>
+</Steps>
+
+## Set up automated PR reviews
+
+### 1. Connect your source control
+
+Navigate to the [Integrations page](https://app.tembo.io/integrations) and connect [GitHub](/integrations/github), [GitLab](/integrations/gitlab), or [Bitbucket](/integrations/bitbucket).
+
+### 2. Create an automation
+
+Go to **Automations** in your dashboard and use the **Automated PR Reviews** template, or create one from scratch.
+
+**Trigger**: PR opened / PR updated
+**MCP Servers**: GitHub (or GitLab/Bitbucket)
+
+Example instructions:
+
+```text
+Review this PR for:
+- Bugs and logic errors
+- Security vulnerabilities
+- Performance issues
+- Style guide compliance
+
+Leave inline comments on specific lines.
+Auto-approve if no issues found.
+```
+
+[Use the PR review template →](https://tembo.io/for/pr-reviews)
+
+### 3. Customize with rule files
+
+Add [rule files](/features/rule-files) to your repo so the reviewer knows your team's conventions: naming patterns, test requirements, forbidden patterns, and more.
+
+## What gets checked
+
+| Category | Examples |
+|----------|---------|
+| **Correctness** | Logic errors, off-by-one bugs, null handling |
+| **Security** | SQL injection, XSS, hardcoded secrets |
+| **Performance** | N+1 queries, unnecessary allocations, missing indexes |
+| **Style** | Naming conventions, formatting, import order |
+| **Testing** | Missing tests, untested edge cases |
+
+## Best practices
+
+- **Add rule files**:The more context the reviewer has about your standards, the better the review.
+- **Start with one repo**:Test the review quality on a single repo before rolling out to all.
+- **Combine with human review**:Use automated reviews to catch the obvious stuff so human reviewers can focus on architecture and design.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Automations" icon="repeat" href="/features/automations">
+    Full guide to triggers and configuration.
+  </Card>
+  <Card title="Feedback loop" icon="message-circle" href="/features/feedback-loop">
+    Iterate on PR reviews and agent output.
+  </Card>
+</CardGroup>

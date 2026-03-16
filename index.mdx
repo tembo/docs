@@ -1,0 +1,78 @@
+---
+title: "Tembo Documentation"
+mode: "wide"
+sidebarTitle: "Welcome"
+description: "Tembo is the orchestration layer for running engineering work across agents, repos and integrations."
+---
+
+<Frame>
+  <img src="/images/hero-light.png" alt="Tembo" className="block dark:hidden" />
+  <img src="/images/hero-dark.png" alt="Tembo" className="hidden dark:block" />
+</Frame>
+
+Delegate work to any coding agent. Tembo works autonomously with Claude Code, Cursor, Codex, and more to ship features, review code, and take on work from Slack, Linear, or anywhere else.
+
+## What you can do with Tembo
+
+<CardGroup cols={3}>
+  <Card title="Fix bugs" icon="bug" href="/learn/fix-production-bugs">
+    Detect errors from Sentry, analyze the root cause, and open fix PRs automatically.
+  </Card>
+  <Card title="Implement issues" icon="sparkles" href="/learn/implement-from-issues">
+    Assign issues from Linear, Jira, or GitHub and get code written for you.
+  </Card>
+  <Card title="Review changes" icon="git-pull-request" href="/learn/review-changes">
+    Get automated code reviews on every PR with inline comments.
+  </Card>
+  <Card title="Reduce tech debt" icon="wrench" href="/learn/reduce-technical-debt">
+    Scan for vulnerabilities, stale TODOs, and refactoring opportunities on a schedule.
+  </Card>
+  <Card title="Update docs" icon="file-text" href="/learn/keep-docs-in-sync">
+    Keep documentation in sync with your codebase as code changes.
+  </Card>
+  <Card title="Automate tasks" icon="repeat" href="/learn/automate-recurring-tasks">
+    Set up recurring workflows triggered by events or schedules.
+  </Card>
+</CardGroup>
+
+## Agents & integrations
+
+Tembo is agent and model agnostic. Pick the right tool for each task. Tag `@tembo` from wherever you already work.
+
+<Tabs>
+  <Tab title="Coding agents">
+    | Agent | Providers | Default Model |
+    |-------|-----------|---------------|
+    | **Claude Code** | Anthropic | `claude-opus-4-6` |
+    | **Codex** | OpenAI | `gpt-5.2` |
+    | **Cursor** | Anthropic, OpenAI, Google, xAI | `claude-4-5-sonnet` |
+    | **Opencode** | Anthropic, OpenAI, OSS | `claude-4-5-sonnet` |
+    | **Amp** | Anthropic (auto-selected) | `auto` |
+
+    See [all agents and models →](/features/coding-agents)
+
+  </Tab>
+  <Tab title="Integrations">
+    | Type | Integrations |
+    |------|-------------|
+    | **Source Control** | GitHub, GitLab, Bitbucket |
+    | **Project Management** | Linear, Jira, Notion |
+    | **Monitoring** | Sentry |
+    | **Databases** | PostgreSQL, Supabase, AWS RDS |
+    | **Communication** | Slack, Discord, Raycast |
+
+    See [all integrations →](/integrations/github)
+
+  </Tab>
+</Tabs>
+
+## Get started
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Get up and running with Tembo in minutes.
+  </Card>
+  <Card title="Automations" icon="repeat" href="/features/automations">
+    Set up event-driven workflows that run automatically.
+  </Card>
+</CardGroup>

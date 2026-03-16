@@ -1,0 +1,88 @@
+::selection {
+    background-color: #eff8ff;
+    color: #005cad;
+}
+
+.dark ::selection {
+    background-color: #299bff;
+    color: #fff;
+}
+
+.dark .card {
+    background: #212121 !important;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: 500 !important;
+}
+
+h1 {
+    line-height: 2.5rem !important;
+    letter-spacing: -0.025em !important;
+}
+
+h2,
+h3 {
+    line-height: 18px !important;
+    letter-spacing: -1.5% !important;
+}
+
+h3 {
+    margin-top: 30px !important;
+}
+
+span {
+    line-height: 1.75rem !important;
+    letter-spacing: -0.1px !important;
+}
+
+span.method-nav-pill span {
+    line-height: 1.25 !important;
+}
+
+.bg-gray-200\/70 {
+    background-color: #dedede !important;
+}
+
+#table-of-contents-content .border-gray-950\/5 {
+    border-left: 1px solid #dedede !important;
+}
+
+#navbar {
+    border-bottom: 1px solid #dedede !important;
+}
+#sidebar-content {
+    border-right: 1px solid #dedede !important;
+}
+
+.dark {
+    body > div {
+        background-color: #141414;
+    }
+
+    .bg-gray-200\/70 {
+        background-color: #ffffff0f !important;
+    }
+
+    #table-of-contents-content .border-gray-950\/5 {
+        border-left: 1px solid #ffffff0f !important;
+    }
+
+    #navbar {
+        border-bottom: 1px solid #ffffff0f !important;
+    }
+
+    #navbar > .dark\:bg-background-dark {
+        background-color: #202020 !important;
+    }
+
+    .group-hover\:opacity-\[0\.9\]:hover {
+        opacity: 0.2 !important;
+    }
+
+    #sidebar-content {
+        border-right: 1px solid #ffffff0f !important;
+    }
+}

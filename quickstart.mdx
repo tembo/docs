@@ -1,0 +1,59 @@
+---
+title: "Quickstart"
+description: "Get up and running with Tembo in minutes."
+---
+
+<Steps>
+  <Step title="Connect a repository">
+    Go to [Integrations](https://app.tembo.io/integrations) and connect GitHub, GitLab, or Bitbucket. Select the repositories you want Tembo to access.
+  </Step>
+  <Step title="Create a task">
+    Open the [Tembo Dashboard](https://app.tembo.io) and click **New Task**. Pick a repo, choose your [coding agent](/features/coding-agents), and describe the work.
+  </Step>
+  <Step title="Review the PR">
+    Tembo works in a [sandbox](/features/sandbox-environment), writes the code, and opens a pull request. Review it, then mention `@tembo` in PR comments to request changes.
+  </Step>
+  <Step title="Set up automations">
+    Go to [Automations](https://app.tembo.io/automations) and pick a template or create your own with custom triggers and schedules. See [Automations](/features/automations).
+  </Step>
+</Steps>
+
+---
+
+## Where to tag @tembo
+
+**Tag required:** PR comments, GitHub issues, Slack messages.
+
+**No tag needed:** Dashboard tasks, Linear/Jira issues assigned to Tembo.
+
+## Writing good prompts
+
+Include: **what** needs to change, **where** (file paths), **why**, and **how you'll know it's done**.
+
+```text
+Fix memory leak in workers/job-processor.ts
+
+Heap grows from 512MB to 4GB and crashes after ~6 hours.
+Likely in cleanup logic around line 156. See Sentry #12345.
+
+Done when: memory stable over 24+ hours, no queued jobs lost.
+```
+
+**Avoid:** "Fix the bug", "Make it faster", "Update the app and add new features". Be specific, scope to one task, and include acceptance criteria.
+
+| Type | What to include |
+|------|----------------|
+| **Bug** | Steps to reproduce, expected vs actual, error messages, Sentry link |
+| **Feature** | Requirements, file locations, edge cases, dependencies |
+| **Refactor** | Current problems, desired state, constraints, specific files |
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Coding Agents" icon="bot" href="/features/coding-agents">
+    Choose the right agent and model.
+  </Card>
+  <Card title="Rule Files" icon="file-cog" href="/features/rule-files">
+    Define coding standards for agents to follow.
+  </Card>
+</CardGroup>

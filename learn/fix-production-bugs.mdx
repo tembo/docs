@@ -1,0 +1,81 @@
+---
+title: "Fix bugs"
+description: "Detect errors from Sentry, analyze the root cause, and open fix PRs automatically."
+---
+
+Tembo monitors your error tracking tools and automatically generates pull requests to fix bugs as they happen in production.
+
+## How it works
+
+<Steps>
+  <Step title="Error detected">
+    Sentry captures an error in your application and sends a webhook to Tembo.
+  </Step>
+  <Step title="Analysis">
+    Tembo retrieves the full error context (stack traces, breadcrumbs, environment details) and analyzes your codebase to understand the root cause.
+  </Step>
+  <Step title="Fix generated">
+    A coding agent writes the fix in an isolated [sandbox](/features/sandbox-environment), runs tests, and opens a PR with the change and full context.
+  </Step>
+  <Step title="Review and merge">
+    You review the PR and use the [feedback loop](/features/feedback-loop) to iterate if needed. Merge when ready.
+  </Step>
+</Steps>
+
+## Set up automatic bug fixes
+
+### 1. Connect Sentry
+
+Navigate to the [Integrations page](https://app.tembo.io/integrations) and connect your Sentry account. Map your Sentry projects to the repositories where errors occur.
+
+See the full [Sentry integration guide](/integrations/sentry) for details.
+
+### 2. Create an automation
+
+Go to **Automations** in your dashboard and create a new automation with a Sentry event trigger.
+
+**Trigger**: `sentry.issue.created` or `sentry.issue.regression`
+**MCP Servers**: GitHub + Sentry
+
+Example instructions:
+
+```text
+When a new Sentry error is detected:
+1. Retrieve the full stack trace and error context
+2. Identify the root cause in the codebase
+3. Write a fix and add tests
+4. Open a PR with a clear description of what went wrong and how it's fixed
+```
+
+<Tip>You can also use the **Prioritize Sentry Errors** template to get a daily ranked report of the most impactful bugs posted to Slack with Linear tickets created automatically.</Tip>
+
+### 3. Fine-tune with rule files
+
+Add [rule files](/features/rule-files) to your repo so the agent follows your coding standards, test patterns, and PR conventions when generating fixes.
+
+## Supported triggers
+
+| Event | Description |
+|-------|-------------|
+| `sentry.issue.created` | New error detected |
+| `sentry.issue.regression` | Previously resolved error reappeared |
+| `sentry.issue.resolved` | Error marked as resolved |
+| `sentry.issue.assigned` | Error assigned to a team member |
+
+## Best practices
+
+- **Map projects accurately**:Connect Sentry projects to the correct repos, especially for monorepos.
+- **Enable rich context**:Turn on source maps, breadcrumbs, and custom tags in Sentry so the agent has more to work with.
+- **Review before merging**:Always review the PR. Use the [feedback loop](/features/feedback-loop) to refine the fix.
+- **Test in staging first**:Validate fixes in a staging environment before merging to production.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Sentry integration" icon="circle-alert" href="/integrations/sentry">
+    Full setup and configuration guide.
+  </Card>
+  <Card title="Automations" icon="repeat" href="/features/automations">
+    Learn more about triggers, templates, and custom workflows.
+  </Card>
+</CardGroup>

@@ -1,0 +1,67 @@
+---
+title: "Automate tasks"
+description: "Set up recurring workflows triggered by events or schedules."
+---
+
+Tembo automations handle recurring engineering tasks, on a schedule or triggered by events from your connected tools.
+
+## How it works
+
+<Steps>
+  <Step title="Define the task">
+    Write instructions describing what the automation should do. Use natural language.
+  </Step>
+  <Step title="Set a trigger">
+    Choose a schedule (hourly, daily, weekly, monthly) or an event trigger from GitHub, Slack, Linear, Sentry, or other integrations.
+  </Step>
+  <Step title="Enable MCP servers">
+    Connect the tools the agent needs: GitHub for code, Slack for messaging, Linear for tickets, Sentry for errors.
+  </Step>
+  <Step title="Runs automatically">
+    The automation fires on its trigger, runs in a [sandbox](/features/sandbox-environment), and takes action: opening PRs, posting messages, creating tickets.
+  </Step>
+</Steps>
+
+## Common automations
+
+| Automation | Trigger | What it does |
+|------------|---------|-------------|
+| PR descriptions | PR opened | Generates clear PR descriptions from the diff |
+| PR reviews | PR opened | Reviews code for bugs, security issues, and style |
+| Daily changelog | Daily | Posts a summary of merged PRs to Slack |
+| Sentry triage | Daily | Ranks errors by impact and creates tickets |
+| CI auto-fix | Workflow failed | Analyzes CI failures and opens fix PRs |
+
+See all [automation templates](https://tembo.io/for) for more examples.
+
+## Set up an automation
+
+1. Navigate to **Automations** in your [Tembo dashboard](https://app.tembo.io)
+2. Click **New Automation** or browse **Templates**
+3. Write instructions or customize a template
+4. Add triggers and select MCP servers
+5. Enable the automation
+
+See the full [automations guide](/features/automations) for detailed configuration options.
+
+## Trigger from anywhere
+
+Tag `@tembo` from wherever you already work: Slack, Linear, Jira, GitHub, Raycast, or the Tembo Dashboard. No context switching required.
+
+## Best practices
+
+- **Start with templates**:Customize a proven starting point rather than building from scratch.
+- **Be specific**:Tell the automation exactly what to do, where to post, and how to format output.
+- **Test first**:Use a test repo or Slack channel before running against production.
+- **Monitor results**:Check run history and adjust instructions as needed.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Automations" icon="repeat" href="/features/automations">
+    Full guide to triggers, templates, and configuration.
+  </Card>
+  <Card title="MCP servers" icon="server" href="/features/mcp-servers">
+    Connect the tools your automations need.
+  </Card>
+</CardGroup>
