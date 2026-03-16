@@ -8,7 +8,7 @@ description: "Run coding agents on a schedule or triggered by events."
   <img src="/images/automation-dark.png" alt="Automations" className="hidden dark:block" />
 </Frame>
 
-Run coding agents in the background, on a schedule or triggered by events. A Sentry error gets fixed within seconds. Docs stay in sync with your code. Security vulnerabilities get caught before they become problems.
+Run agents in the background, on a schedule or triggered by events. A Sentry error gets fixed within seconds. Docs stay in sync with your code. Security vulnerabilities get caught before they become problems.
 
 Each automation runs in a secure [sandbox](/features/sandbox-environment) with full repository access and your configured [MCP servers](/integrations/mcp).
 
@@ -58,3 +58,16 @@ React to events from your integrations in real-time.
 4. Select [coding agent](/features/coding-agents)
 5. Instruct MCP servers or integrations
 6. Save and enable
+
+## Beyond code
+
+Automations aren't limited to engineering tasks. With [MCP servers](/integrations/mcp), agents can work across your entire stack.
+
+| Example | Trigger | What it does |
+|---------|---------|-------------|
+| Daily ARR report | Daily | Pulls revenue data from Stripe and posts to Slack |
+| Feature requests from calls | Daily | Scans call transcripts for feature requests and creates Linear tickets |
+| Customer health check | Weekly | Summarizes support tickets, usage trends, and churn signals in Slack |
+| Enrich CRM records | New deal created | Pulls company info and adds context to Attio or your CRM |
+
+Any tool with an [MCP server](/integrations/mcp) can be used in an automation.
