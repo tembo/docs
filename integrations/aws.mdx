@@ -1,61 +1,52 @@
 ---
 title: 'AWS'
-description: 'Connect AWS RDS PostgreSQL databases to Tembo for performance monitoring and optimization.'
-icon: 'aws'
+description: 'RDS PostgreSQL performance monitoring and optimization.'
 ---
 
-<Note>
-Email support@tembo.io for access to this integration.
-</Note>
+<Frame>
+  <img src="/images/integrations/aws.png" alt="AWS" />
+</Frame>
 
-Connect AWS RDS PostgreSQL databases to Tembo for performance monitoring and optimization.
+<Note>Email support@tembo.io for access to this integration.</Note>
 
-# Features
+## Features
 
-- **Monitor slow queries** - Identifies queries that exceed performance thresholds and suggests optimizations
-- **Detect missing indexes** - Analyzes query patterns to find opportunities for new indexes that would improve performance
-- **Detect unused indexes** - Identifies indexes that are no longer being used, helping reduce storage overhead and write performance impact
-- **Automatic optimization PRs** - Generates pull requests with database migration scripts to implement recommended improvements
-- **Multi-region support** - Automatically discovers RDS instances across multiple AWS regions
+- Monitor slow queries across RDS PostgreSQL instances
+- Detect missing and unused indexes
+- Open PRs with migration scripts
+- Multi-region RDS instance discovery
 
-# Installation
+## Installation
 
 <Steps>
-  <Step title="Connect AWS Account">
-    Navigate to the [Integrations page](https://app.tembo.io/integrations) in
-    Tembo and click the `Connect` button next to AWS. You'll be redirected to
-    AWS CloudFormation to create a connection using a secure IAM role.
+  <Step title="Connect">
+    Go to [Integrations](https://app.tembo.io/integrations) and click **Connect** next to AWS. You'll be redirected to CloudFormation.
   </Step>
-  <Step title="Deploy CloudFormation Stack">
-    Follow the CloudFormation wizard to deploy the connection stack. This creates
-    an IAM role that allows Tembo to discover and monitor your RDS instances securely.
+  <Step title="Deploy stack">
+    Deploy the CloudFormation stack to create an IAM role for Tembo.
   </Step>
-  <Step title="Activate RDS Instances">
-    After the connection is established, Tembo will automatically discover your
-    RDS PostgreSQL instances across supported regions. Select which instances
-    you want to monitor under "Active Instances" on the Integrations page.
+  <Step title="Activate instances">
+    Select which RDS PostgreSQL instances to monitor under "Active Instances".
   </Step>
-  <Step title="Map Repository">
-    Map your RDS instances to the GitHub, GitLab, or Bitbucket repository where
-    your database migrations are stored. This allows Tembo to create PRs with
-    optimization suggestions.
+  <Step title="Map repository">
+    Map instances to the repository where migrations are stored.
   </Step>
 </Steps>
 
-# Usage
+## Usage
 
-Once connected, Tembo continuously monitors your RDS PostgreSQL instances for slow queries, missing indexes, and unused indexes using PostgreSQL's `pg_stat_statements` extension. When optimization opportunities are identified, Tembo creates pull requests with database migration scripts, detailed explanations, and performance metrics.
+Tembo monitors your RDS instances using `pg_stat_statements`. When it finds optimization opportunities, it opens PRs with migration scripts.
 
-## Troubleshooting
+Requires `pg_stat_statements` extension enabled on your RDS instances.
 
-**RDS instances not appearing?** Wait a few minutes for region scanning, verify the CloudFormation stack deployed successfully, check IAM role permissions to describe RDS instances, and ensure instances are PostgreSQL.
+## Advanced
 
-**Optimization PRs not being created?** Verify repository mapping for your RDS instance, ensure `pg_stat_statements` extension is enabled, allow time for statistics collection, and check branch permissions.
+<AccordionGroup>
+  <Accordion title="Instances not appearing">
+    Wait a few minutes for region scanning. Verify the CloudFormation stack deployed successfully and the IAM role has permission to describe RDS instances.
+  </Accordion>
 
-**Connection issues?** Verify security groups allow Tembo's IP ranges, ensure your RDS instance is accessible (public or via VPN/Direct Connect), and confirm SSL/TLS settings match your configuration.
-
-## Best Practices
-
-- Connect production databases for accurate insights; test migrations in staging first
-- Review all suggested migrations before merging, especially for large tables
-- Ensure `pg_stat_statements` is enabled for comprehensive query analysis
+  <Accordion title="Connection issues">
+    Verify security groups allow Tembo's IP ranges. Ensure your RDS instance is accessible and SSL/TLS settings are correct.
+  </Accordion>
+</AccordionGroup>

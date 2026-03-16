@@ -1,179 +1,94 @@
 ---
-title: 'GitHub'
-description: 'Connect GitHub to Tembo for automated code scanning, pull request generation, and repository management.'
-icon: 'github'
+title: "GitHub"
+description: "Pull requests, code review, and automated workflows."
 ---
 
-Connect GitHub to Tembo to open pull requests to improve your codebase.
+<Frame>
+  <img src="/images/integrations/github.png" alt="GitHub" />
+</Frame>
 
-# Features
+## Features
 
-- Scan for TODO comments in your codebase
-- Scan for security issues
-- Scan for performance issues
-- Scan for technical debt
-- Scan for refactoring opportunities
-- Automatically fix failed workflows and CI/CD pipelines
-- Automatically sign commits for verified contributions
-- Respond to PR comments and review feedback
-- Mention `@tembo` in GitHub issues to kick off work
+- Open pull requests with code changes
+- Review PRs with inline comments
+- Respond to PR feedback and iterate
+- Start work from GitHub issues
+- Auto-fix failed GitHub Actions workflows
+- Signed and verified commits on all Tembo PRs
 
-# Installation
+## Installation
 
 <Steps>
   <Step title="Install">
-    Navigate to the [Integrations page](https://app.tembo.io/integrations) in Tembo and click the `Install` button next to GitHub.
+    Go to [Integrations](https://app.tembo.io/integrations) and click **Install** next to GitHub.
   </Step>
   <Step title="Authorize">
-    Authorize Tembo to access your GitHub account. You can select specific repositories or all repositories. You'll be redirected back to the Integrations page when complete.
+    Choose **All repositories** or **Selected repositories** and authorize.
   </Step>
-  <Step title="Activate Repositories">
-    After syncing completes (may take a few minutes), select which repositories you want Tembo to scan under "Active Repositories" on the Integrations page.
-
-    Only repositories you activate here will be scanned for issues and receive improvement PRs.
-
-    **Tip:** If repositories don't appear after a few minutes, use the sync button on the Integrations page to manually trigger a refresh.
-
+  <Step title="Activate">
+    Select which repositories Tembo should work with under "Active Repositories".
   </Step>
 </Steps>
 
-# Managing Your Integration
+## Usage
 
-## Manual Sync
+### PR comments
 
-If repositories don't appear immediately after setup or if you've added new repositories to your GitHub account, use the manual sync feature to refresh the list:
-
-1. Navigate to the [Integrations page](https://app.tembo.io/integrations)
-2. Find the GitHub integration card
-3. Click the sync button (circular arrow icon)
-4. Wait for completion - the button will show a loading indicator while syncing
-
-**When to sync:**
-- After adding new repositories to GitHub
-- After modifying repository permissions
-- If repositories don't appear after 5 minutes
-- After revoking/granting organization access
-
-# Supported Webhooks
-
-Tembo listens to the following GitHub events and maps them to automation triggers (reference them as `github.<event>` in your `triggerName`, e.g., `github.pull_request.opened`). Tembo subscribes only to the events listed here (not every GitHub webhook). The Integrations page in the app shows the live set enabled for your org. If you need an additional event (for example, tag creation), contact support@tembo.io.
-
-- `pull_request.opened`
-- `pull_request.closed`
-- `pull_request.reopened`
-- `pull_request.ready_for_review`
-- `pull_request.converted_to_draft`
-- `pull_request.edited`
-- `pull_request_review.submitted`
-- `issue_comment.created`
-- `installation.created`
-- `installation.deleted`
-- `installation.new_permissions_accepted`
-- `installation_repositories.added`
-- `installation_repositories.removed`
-
-See Automations for how to create triggers that start automations from these events.
-
-# Usage
-
-## Automated Scanning
-
-Once you've activated repositories, Tembo automatically scans for the issues listed in Features above (TODOs, security, performance, technical debt, refactoring, code quality).
-
-## Pull Requests
-
-When Tembo finds an issue it can address, it will:
-
-1. **Create a Pull Request** - Opens a PR with the proposed fix or improvement
-2. **Add Context** - Includes a detailed description of what was changed and why
-3. **Request Review** - Assigns the PR for team review following your repository's workflow
-
-All commits in Tembo PRs are automatically signed and verified, displaying a "Verified" badge in GitHub. This provides cryptographic proof of origin, helps meet compliance requirements, and requires no configuration. See the [Pull Requests documentation](/features/pull-requests#signed-commits) for details.
-
-# Working with Pull Requests
-
-## Reviewing Pull Requests
-
-Review Tembo's PRs just like any other team member's work:
-
-- Examine the changes and verify they align with your requirements
-- Leave comments directly on the code if you need changes
-- Use the [Feedback Loop](/features/feedback-loop) feature to have Tembo address your review comments automatically
-
-## Commenting on PRs
-
-When reviewing Tembo's pull requests, you can request changes or improvements by tagging `@tembo` in your comments. This ensures Tembo responds to your specific feedback while ignoring internal team discussions or comments directed at other team members.
-
-**Example:**
+Comment `@tembo` on any pull request to request changes. Works in the main thread or as inline review comments on specific lines. Tembo reads the feedback, updates the code, and pushes new commits.
 
 ```
-@tembo Please update this function to include error handling
+@tembo Please add error handling to this function
 ```
 
-Without the `@tembo` tag, Tembo will not respond to the comment, allowing for cleaner team communication.
+Works on PRs created by Tembo and PRs created by your team.
 
-## Tagging Tembo in Issues
+### Issues
 
-You can mention `@tembo` in GitHub issues to start work on implementing a feature or fix. Tembo supports two workflows:
-
-### Commenting on Existing Issues
-
-Add a comment with `@tembo` to any existing issue to have Tembo start working on it:
+Comment `@tembo` on any issue to start implementation. Tembo reads the issue title and description, then opens a PR.
 
 ```
-@tembo Please implement the API endpoint described in this issue.
-Include proper error handling and follow our existing patterns.
+@tembo Implement the API endpoint described in this issue
 ```
 
-Tembo will read the issue title and description for context, then create a PR addressing the request.
+## Automations
 
-### Mentioning Tembo in External PRs
+See [Automations](/features/automations#event-driven) for available GitHub event triggers.
 
-You can also mention `@tembo` in pull requests that weren't created by Tembo (external PRs). This is useful when you want Tembo to help with changes on a PR you or a teammate opened:
+### PR reviews
 
-```
-@tembo Can you add unit tests for this new component?
-```
+Reviews pull requests for bugs, security issues, and code quality. Leaves inline comments automatically when a PR is opened.
 
-Tembo will push commits directly to the existing PR branch rather than creating a new PR.
+### Enrich issues
 
-## Failed Workflow Detection
+Adds codebase context to new GitHub issues, helping agents and teammates understand the relevant code before starting work.
 
-Tembo automatically monitors your GitHub Actions workflows and detects when they fail. When a workflow fails due to broken tests, linting errors, or other issues, Tembo will analyze the failure, identify the root cause, and create a PR with a fix.
+### Failed workflows
 
-This helps maintain a healthy CI/CD pipeline without manual intervention.
+Detects GitHub Actions failures and opens fix PRs automatically.
 
-## Troubleshooting
+## Advanced
 
-### Repositories Not Appearing After Installation
+<AccordionGroup>
+  <Accordion title="Attribution">
+    By default, PRs and commits are made under the Tembo bot account. To attribute them to your GitHub user instead, connect your personal GitHub account in your [Tembo user settings](https://app.tembo.io/settings).
+  </Accordion>
 
-If repositories don't appear in the "Active Repositories" list after installation:
+<Accordion title="Signed commits">
+  All commits in Tembo PRs are automatically signed and verified with a "Verified" badge in GitHub.
+  No configuration needed.
+</Accordion>
 
-1. **Wait a few minutes** - Initial sync can take 2-5 minutes depending on the number of repositories
-2. **Check repository permissions** - Ensure you granted Tembo access to the repositories during installation
-3. **Manual sync** - Click the sync button on the GitHub integration card to refresh the repository list
-4. **Verify organization access** - If repositories belong to an organization, ensure you have permission to install GitHub Apps for that organization
+<Accordion title="Repositories not appearing">
+  Wait 2-5 minutes for initial sync. If they still don't show, click the sync button on the GitHub
+  integration card. Check that you granted Tembo access during installation and that you have
+  permission to install GitHub Apps for your organization.
+</Accordion>
 
-### Tembo Not Responding to @tembo Mentions
+<Accordion title="@tembo not responding">
+  Make sure you're using `@tembo` (lowercase) and that the repository is activated in Integrations.
+</Accordion>
 
-If Tembo doesn't respond when you mention `@tembo` in issues or PR comments:
-
-1. **Check the mention format** - Ensure you're using `@tembo` (not variations like `@Tembo` or `@TEMBO`)
-2. **Verify repository activation** - Confirm the repository is activated in the Integrations page
-3. **Check webhook status** - The Integrations page shows the live set of enabled webhooks; ensure `issue_comment.created` is enabled
-4. **Review permissions** - Verify Tembo has the necessary permissions to read issues and comments
-
-### Pull Requests Not Being Created
-
-If Tembo isn't creating PRs for detected issues:
-
-1. **Verify repository activation** - Only activated repositories receive automated scanning
-2. **Check branch protection** - Ensure Tembo has permission to create branches and open PRs
-3. **Review scanning settings** - Confirm automated scanning is enabled for your organization
-4. **Check for existing PRs** - Tembo may not create duplicate PRs for issues already addressed
-
-## Best Practices
-
-- Configure repository settings to match your team's preferences
-- Use [Rule Files](/features/rule-files) to help Tembo understand your coding standards
-- Set up [Hooks](/features/hooks) to customize Tembo's behavior for your workflow
+  <Accordion title="PRs not being created">
+    Check that the repository is activated and there isn't already an open PR for the same issue.
+  </Accordion>
+</AccordionGroup>

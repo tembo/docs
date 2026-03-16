@@ -1,0 +1,73 @@
+---
+title: "Reduce tech debt"
+description: "Scan for vulnerabilities, stale TODOs, and refactoring opportunities on a schedule."
+---
+
+Tembo periodically analyzes your codebase to find technical debt, security vulnerabilities, and refactoring opportunities, then submits [PRs](/features/pull-requests) for quick wins.
+
+## How it works
+
+<Steps>
+  <Step title="Scheduled scan">
+    An [automation](/features/automations) runs on a schedule (daily, weekly, or monthly) and scans your codebase for issues.
+  </Step>
+  <Step title="Issues identified">
+    The agent finds stale TODOs, security vulnerabilities, outdated dependencies, duplicated code, and other debt.
+  </Step>
+  <Step title="PRs submitted">
+    For quick wins, the agent opens PRs with fixes. For larger issues, it creates tickets in [Linear](/integrations/linear) or [Jira](/integrations/jira) with implementation plans.
+  </Step>
+</Steps>
+
+## Set up tech debt automation
+
+### Security vulnerability scan
+
+**Trigger**: Daily or weekly
+**[MCP Servers](/integrations/mcp)**: [GitHub](/integrations/github), [Linear](/integrations/linear)
+
+```text
+Scan the codebase for:
+- SQL injection vulnerabilities
+- XSS vulnerabilities
+- Hardcoded secrets or credentials
+- Authentication and authorization flaws
+
+Create Linear tickets for each finding with severity ratings.
+Generate fix PRs for critical issues.
+```
+
+[Browse all templates →](https://tembo.io/for)
+
+### Stale TODO cleanup
+
+**Trigger**: Weekly
+**[MCP Servers](/integrations/mcp)**: [GitHub](/integrations/github)
+
+```text
+Find all TODO, FIXME, and HACK comments in the codebase.
+For each one that's older than 30 days:
+1. Determine if it's still relevant
+2. If it's a quick fix, open a PR to resolve it
+3. If it needs discussion, create an issue
+```
+
+### Dependency updates
+
+**Trigger**: Monthly
+**[MCP Servers](/integrations/mcp)**: [GitHub](/integrations/github)
+
+```text
+Check for outdated dependencies.
+For each outdated package:
+1. Check the changelog for breaking changes
+2. Update the dependency
+3. Run tests to verify compatibility
+4. Open a PR with a summary of changes
+```
+
+## Best practices
+
+- **Start weekly**: Run scans weekly to build a habit of reviewing and merging debt-reduction PRs.
+- **Prioritize security**: Set security scans to run more frequently than cosmetic cleanup.
+- **Scope by directory**: Focus on one area of your codebase at a time rather than scanning everything at once.

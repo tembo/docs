@@ -1,0 +1,38 @@
+---
+title: 'Agent Actions'
+description: 'Tembo agents can do more than open PRs.'
+---
+
+Pull requests are the most common output, but Tembo agents can take any action available through your connected integrations and [MCP servers](/integrations/mcp).
+
+## What agents can do
+
+| Action | Integration |
+|--------|-------------|
+| Open and update pull requests | GitHub, GitLab, Bitbucket |
+| Post messages and summaries | Slack |
+| Create, update, and comment on issues | Linear, Jira |
+| Create and update pages | Notion |
+| Query databases | Postgres, Supabase, Neon, PlanetScale |
+| Analyze errors and stack traces | Sentry |
+| Run browser automation | Kernel (Playwright) |
+| Access analytics and feature flags | PostHog |
+| Manage users and auth | Clerk |
+| Access payments and subscriptions | Stripe |
+| Access CRM data | Attio |
+
+## Examples
+
+**Triage a Linear ticket in Slack**: A Slack message triggers Tembo to read the Linear ticket, scan the codebase for context, and post an explanation back to the Slack thread.
+
+**Summarize Sentry errors**: A daily automation fetches errors from Sentry, ranks them by impact, creates Linear tickets, and posts a summary to Slack.
+
+**Enrich issues with context**: When a new issue is created, Tembo searches the codebase, pulls related Notion docs, and adds implementation hints as a comment.
+
+**Query production data**: During a task, an agent queries your Postgres database to understand the schema and writes a migration based on actual table structure.
+
+## How it works
+
+Agents access integrations through MCP servers. When you connect an integration or install an MCP server, it becomes available to agents during tasks and automations. No extra configuration needed.
+
+See [MCP](/integrations/mcp) for available servers.

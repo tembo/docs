@@ -1,161 +1,74 @@
 ---
-title: 'Discord (Community)'
-description: 'Create and manage Tembo tasks directly from Discord with slash commands and secure per-user authentication'
-icon: 'discord'
+title: "Discord"
+description: "Slash commands for Tembo tasks. Community project."
 ---
 
-
+<Frame>
+  <img src="/images/integrations/discord.png" alt="Discord" />
+</Frame>
 
 <Note>
-This is a community-driven project and is not officially associated with Tembo. For developers interested in contributing or understanding the codebase, see the [GitHub repository](https://github.com/mezotv/tembo-discord-bot).
-
+  Community project, not officially maintained by Tembo. See the [GitHub
+  repo](https://github.com/mezotv/tembo-discord-bot).{" "}
 </Note>
 
-Manage your Tembo tasks directly from Discord. Create tasks, track progress, and view repositories with slash commands in your servers or DMs.
+## Features
 
-# Features
+- Create, list, and search tasks with slash commands
+- Per-user authentication with AES-256-GCM encryption
+- Works in servers and DMs
+- Autocomplete for agents and repositories
 
-- **Create Tasks** - Create new Tembo tasks with natural language prompts directly from Discord
-- **View Tasks** - List and search through all your tasks with interactive pagination
-- **Repository Management** - View connected repositories and their status
-- **Per-User Authentication** - Each Discord user securely stores their own Tembo API key with AES-256-GCM encryption
-- **Works Anywhere** - Use in Discord servers or DMs with user-installable bot support
-- **Autocomplete Support** - Smart autocomplete for agents and repositories when creating tasks
-
-# Installation
+## Installation
 
 <Steps>
-  <Step title="Install Bot to Discord">
-    Add the Tembo Discord bot to your server or user account by visiting the [installation link](https://discord.com/oauth2/authorize?client_id=1438564757358645298). You can install it for personal use (works in DMs) or add it to a server you manage.
-
-    <img src="/images/discord/discord_installation_popup.png" alt="Discord bot installation popup showing options to add to My Apps or Add to Server" />
+  <Step title="Install">
+    Add the bot via the [installation link](https://discord.com/oauth2/authorize?client_id=1438564757358645298). Install for personal use (DMs) or add to a server.
   </Step>
-  <Step title="Get Your Tembo API Key">
-    Sign up for a Tembo account at [app.tembo.io](https://app.tembo.io) if you haven't already, then generate an API key from your Tembo dashboard under Settings → API Keys.
+  <Step title="API key">
+    Generate an API key from **Settings > API Keys** in the [Tembo dashboard](https://app.tembo.io).
   </Step>
-  <Step title="Register Your API Key">
-    In Discord, run the `/setup` command with your API key:
-    ```text
-    /setup key:YOUR_TEMBO_API_KEY
-    ```
-    The bot will validate your key, encrypt it, and store it securely. You'll see a confirmation message with your account information.
+  <Step title="Register">
+    Run `/setup key:YOUR_TEMBO_API_KEY` in Discord.
   </Step>
 </Steps>
 
-# Usage
+## Usage
 
-## Creating Tasks
+### Create a task
 
-Use the `/task create` command to create new Tembo tasks from Discord. You can specify:
-
-- Task prompt (required) - Natural language description of what you want to build or fix
-- Agent model (optional) - Select from available Tembo agents with autocomplete
-- Repositories (optional) - Choose which repository to work on with autocomplete
-- Target branch (optional) - Specify the branch for the task
-
-**Example:**
-```text
-/task create prompt:"Fix authentication bug in login flow" agent:"claudeCode:claude-sonnet-4-5" repositories:"myorg/myrepo"
+```
+/task create prompt:"Fix authentication bug" agent:"claudeCode:claude-sonnet-4-5" repositories:"myorg/myrepo"
 ```
 
-<img src="/images/discord/discord_create_task.png" alt="Discord slash command interface for creating Tembo tasks" />
+### List tasks
 
-The bot will create the task and respond with the task details including ID, title, and repository information.
-
-## Viewing and Searching Tasks
-
-### List All Tasks
-
-Use `/task list` to view your tasks with pagination:
-
-```text
+```
 /task list page:1 limit:10
 ```
 
-Navigate through pages using the Previous/Next buttons attached to the message.
+### Search tasks
 
-### Search Tasks
-
-Use `/task search` to find specific tasks by keyword:
-
-```text
-/task search query:"authentication" page:1
+```
+/task search query:"authentication"
 ```
 
-<img src="/images/discord/discord_task_list.png" alt="Discord task list with pagination controls" />
+### Other commands
 
-Both commands support:
-- **Interactive pagination** - Use Previous/Next buttons to navigate
-- **Adjustable page size** - Set limit from 1-25 tasks per page
-- **Ephemeral responses** - Add `ephemeral:true` to make responses visible only to you
+`/repositories list`, `/whoami`, `/status`, `/unregister`
 
-## Managing Repositories
+Add `ephemeral:true` to any command to make responses visible only to you.
 
-View all your connected repositories:
+## Advanced
 
-```text
-/repositories list
-```
+<AccordionGroup>
+  <Accordion title="Bot not responding">
+    Verify the bot is installed. Register your API key with `/setup`. Use `/status` to check registration.
+  </Accordion>
 
-<img src="/images/discord/discord_repo_list.png" alt="Discord repository list" />
+  <Accordion title="Security">
+    Per-user API keys encrypted with AES-256-GCM. All interactions verified using Discord's signature verification. Serverless on Cloudflare Workers.
+  </Accordion>
+</AccordionGroup>
 
-This shows your GitHub, GitLab, or other connected code repositories with their URLs and IDs.
-
-## Checking Your Status
-
-Use `/whoami` to see your current Tembo account information:
-
-```text
-/whoami ephemeral:true
-```
-
-This displays your name, email, organization, and account status.
-
-Use `/status` to check if your API key is registered with the bot:
-
-```text
-/status
-```
-
-# Best Practices
-
-Write clear, specific task prompts with file paths, standards, or references (e.g., "Fix memory leak in workers/job-processor.ts" not "Fix the bug"). See the [Prompting Guide](/prompting-guide) for detailed tips.
-
-## Managing Your API Key
-
-- **Update key** - Run `/setup key:YOUR_NEW_API_KEY` to replace your existing key
-- **Remove key** - Run `/unregister` to delete your stored key (re-register with `/setup` to use the bot again)
-- Keys are encrypted with AES-256-GCM and validated before storage (see Security section below)
-
-## Ephemeral Messages
-
-Add `ephemeral:true` to any command (e.g., `/task list ephemeral:true`) to make responses visible only to you.
-
-# Security
-
-The Tembo Discord bot protects your data with:
-
-- **Per-user authentication** — Each user stores their own validated API key; no cross-user access
-- **AES-256-GCM encryption** — Keys encrypted with unique IV/salt per user, master key in Cloudflare secrets
-- **Request verification** — All Discord interactions verified using Discord's signature verification
-- **Minimal permissions** — Only requests necessary Discord permissions; serverless on Cloudflare Workers over HTTPS
-
-# Troubleshooting
-
-**Bot doesn't respond?** Verify the bot is installed, register your API key with `/setup`, and check command syntax (use `/` to see options).
-
-**"Register your API key" error?** Run `/setup key:YOUR_KEY` and verify your key at [app.tembo.io](https://app.tembo.io). Use `/status` to check registration.
-
-**"Application did not respond"?** The API may be slow—try again. The bot uses background processing. [Open an issue](https://github.com/mezotv/tembo-discord-bot/issues) if it persists.
-
-**Tasks not appearing?** Check you're in the correct account with `/whoami`, verify tasks exist in your dashboard, and ensure your API key has permissions.
-
-**Can't receive DMs?** Check Discord privacy settings allow DMs from server members. If blocked, instructions appear in the channel instead.
-
-For additional help, visit the [GitHub repository](https://github.com/mezotv/tembo-discord-bot) or join our Tembo discord [server](https://discord.gg/h9NXBgmapj)
-
-Made by [Anurag Dhungana](https://anuragd.me) and [Dominik Koch](https://dominikkoch.dev/)
-
-For developers interested in contributing or understanding the codebase, see the [GitHub repository](https://github.com/mezotv/tembo-discord-bot).
-
-
+Made by [Anurag Dhungana](https://anuragd.me) and [Dominik Koch](https://dominikkoch.dev/).

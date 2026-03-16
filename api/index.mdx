@@ -1,0 +1,50 @@
+---
+title: 'Overview'
+description: 'Create tasks, manage repositories, and automate workflows programmatically.'
+---
+
+## Authentication
+
+Generate an API key from **Settings > API Keys** in the [dashboard](https://app.tembo.io).
+
+```bash
+curl -H "Authorization: Bearer YOUR_API_KEY" \
+  https://api.tembo.io/task/list
+```
+
+## SDK
+
+<CodeGroup>
+```bash npm
+npm install @tembo-io/sdk
+```
+
+```bash yarn
+yarn add @tembo-io/sdk
+```
+
+```bash pnpm
+pnpm add @tembo-io/sdk
+```
+
+```bash bun
+bun add @tembo-io/sdk
+```
+</CodeGroup>
+
+```javascript
+import Tembo from '@tembo-io/sdk';
+
+const client = new Tembo({
+  apiKey: process.env.TEMBO_API_KEY,
+});
+
+const task = await client.task.create({
+  prompt: 'Fix the authentication bug in the login component',
+  repositories: ['https://github.com/org/repo'],
+});
+```
+
+## Rate limits
+
+100 requests per minute per API key. 1,000 requests per hour per organization.

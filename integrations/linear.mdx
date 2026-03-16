@@ -1,96 +1,55 @@
 ---
 title: "Linear"
-description: "Assign Linear issues to Tembo and automatically generate pull requests with code solutions."
-icon: "); -webkit-mask-image: url('/images/linear.svg'); mask-image: url('/images/linear.svg');/*"
+description: "Assign issues to Tembo and get PRs back."
 ---
 
-Assign Linear issues to Tembo and turn them into PRs.
+<Frame>
+  <img src="/images/integrations/linear.png" alt="Linear" />
+</Frame>
 
-# Features
+## Features
 
-- Assign issues to Tembo to trigger work
-- AI-powered code solutions with pull request generation
-- Interactive repository selection when starting tasks
+- Assign issues to Tembo to trigger implementation
+- Multi-repository support for full-stack features
+- Status updates and PR links posted to issues
+- MCP server for real-time issue data access during tasks
 
-# Installation
+## Installation
 
 <Steps>
   <Step title="Install">
-    Navigate to the [Integrations page](https://app.tembo.io/integrations) in Tembo and click the `Install` button next to Linear.
+    Go to [Integrations](https://app.tembo.io/integrations) and click **Install** next to Linear.
   </Step>
   <Step title="Authorize">
-    Authorize Tembo to access your Linear workspace. You'll be redirected back to the Integrations page when complete.
+    Authorize Tembo to access your Linear workspace.
   </Step>
-  <Step title="Repository Labels">
-    Tembo automatically creates a "Tembo Git Repositories" label group with all your GitHub repositories. Use these labels to specify which repository Tembo should target for each issue.
-
-    You can set a default repository to avoid adding labels to every issue.
-
-  </Step>
-  <Step title="Start Using Tembo">
-    Now you can assign Linear issues to Tembo to trigger solutions.
+  <Step title="Configure">
+    Tembo creates a "Tembo Git Repositories" label group with your repos. Set a default repository to avoid labeling every issue.
   </Step>
 </Steps>
 
-# Supported Triggers
+## Usage
 
-Tembo maps Linear activity to automation triggers (use a `linear.*` naming convention in your `triggerName`). The Integrations page in the app shows the live set enabled for your org. Supported events:
+Assign a Linear issue to Tembo. Select one or more repositories when prompted. Tembo reads the issue, writes the code, and opens PRs.
 
-- `issue.created`
-- `issue.updated`
-- `issue.labeled`
-- `issue.assigned`
-- `comment.created`
+For multi-repo tasks, select multiple repositories and Tembo coordinates changes across all of them.
 
-See Automations for how to create triggers from these events.
+## Automations
 
-# Usage
+See [Automations](/features/automations) for available Linear event triggers.
 
-## Triggering Tembo
+## Advanced
 
-Assign the issue directly to Tembo. The bot user should appear in your Linear workspace after completing the integration setup.
+<AccordionGroup>
+  <Accordion title="MCP server">
+    When connected, a Linear MCP server is automatically available to agents. They can query issues, access project details, and read comments in real-time.
+  </Accordion>
 
-## Repository Selection
+  <Accordion title="Tembo not responding">
+    Verify the issue is assigned to the Tembo bot user. Check integration status on the [Integrations page](https://app.tembo.io/integrations).
+  </Accordion>
 
-When you assign a Linear issue to Tembo, you'll be prompted to select which repository to work on:
-
-1. **Assign the issue** - Assign the Linear issue to Tembo
-2. **Select repository** - Tembo will present you with a dropdown menu of available repositories
-3. **Choose your repository** - Select one repository from the list, or type to select multiple repositories
-4. **Tembo starts work** - Once you've made your selection, Tembo will automatically begin working on the task
-
-### Working with Multiple Repositories
-
-For tasks that span multiple repositories (e.g., full-stack features):
-
-1. When prompted for repository selection, type the names of multiple repositories
-2. Example: Type "frontend backend" or select both repositories
-3. Tembo will create separate pull requests for each repository and coordinate changes across all selected repositories
-
-## Status Updates
-
-Tembo keeps you informed as it works on your Linear issues:
-
-- **Interactive Prompts** - Tembo will ask you to select a repository and confirm before starting work
-- **Progress Updates** - Tembo provides real-time updates as it works through the task
-- **Status Changes** - Tembo automatically updates the Linear issue status as it progresses through the task
-- **Comments** - Tembo adds comments to the issue with progress updates and links to pull requests
-- **Pull Request Links** - When code changes are ready, Tembo comments with a link to the generated PR
-
-## Best Practices
-
-- **Write clear, actionable descriptions** — "Add email validation to registration form" not "Fix the bug"
-- **Include relevant context** — Add screenshots, error logs, acceptance criteria, or related issues
-- **Choose all needed repositories** — For full-stack features, select both frontend and backend repos
-
-# Troubleshooting
-
-**Tembo not responding?** Verify the issue is assigned to the Tembo bot user, check the [Integrations page](https://app.tembo.io/integrations) for integration status and webhook settings (`issue.assigned` should be enabled).
-
-**Repository selection not appearing?** Ensure you've connected a code hosting provider (GitHub/GitLab) and that repositories are visible in your dashboard. Try unassigning and reassigning the issue.
-
-**PRs not being created?** Check that Tembo has write access to the repository, provide clearer requirements in the issue description, and verify branch protection rules allow new branches.
-
-# MCP Server Integration
-
-When you connect Linear to Tembo, an [MCP server](/features/mcp-servers) is automatically available to agents. Agents can query and filter issues, access project details and milestones, check issue relationships, and read comments and activity in real-time while implementing features or fixes.
+  <Accordion title="Repository selection not appearing">
+    Ensure you've connected a code hosting provider (GitHub/GitLab/Bitbucket) and repositories are visible in your dashboard.
+  </Accordion>
+</AccordionGroup>

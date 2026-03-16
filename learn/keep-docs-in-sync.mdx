@@ -1,0 +1,54 @@
+---
+title: "Update docs"
+description: "Keep documentation in sync with your codebase as code changes."
+---
+
+Tembo monitors your codebase for changes and automatically updates your documentation repo to keep features well-documented.
+
+## How it works
+
+<Steps>
+  <Step title="Code changes detected">
+    A PR is merged or code is pushed to your main branch. Tembo detects the change via webhook.
+  </Step>
+  <Step title="Docs analyzed">
+    The agent compares the code changes against your existing documentation to identify gaps, outdated sections, or missing pages.
+  </Step>
+  <Step title="Docs updated">
+    A [PR](/features/pull-requests) is opened in your docs repo with updated content that reflects the code changes.
+  </Step>
+</Steps>
+
+## Set up docs automation
+
+### On PR merge
+
+**Trigger**: PR merged to main
+**[MCP Servers](/integrations/mcp)**: [GitHub](/integrations/github)
+
+```text
+When a PR is merged:
+1. Analyze the changes for user-facing impact
+2. Check if existing docs cover the changed functionality
+3. If docs are outdated or missing, open a PR in the docs repo with updates
+4. Match the existing docs style and formatting
+```
+
+### Weekly docs review
+
+**Trigger**: Weekly
+**[MCP Servers](/integrations/mcp)**: [GitHub](/integrations/github), [Notion](/integrations/notion), [Slack](/integrations/slack)
+
+```text
+Compare the codebase against the docs repo:
+1. Find new features or API changes that aren't documented
+2. Identify docs pages that reference removed or renamed functionality
+3. Open a PR with updates for the most impactful gaps
+4. Post a summary to #engineering in Slack
+```
+
+## Best practices
+
+- **Use a separate docs repo**: Tembo can open PRs across repositories, so keep docs in their own repo for clean separation.
+- **Add [rule files](/features/rule-files)**: Include a rule file in your docs repo with style guidelines, formatting conventions, and tone.
+- **Start with API docs**: API documentation is the easiest to keep in sync since changes are mechanical and well-scoped.

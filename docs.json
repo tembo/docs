@@ -1,148 +1,167 @@
 {
-	"$schema": "https://mintlify.com/docs.json",
-	"theme": "palm",
-	"name": "Tembo Docs",
-	"colors": {
-		"primary": "#141414",
-		"light": "#FAFAFA",
-		"dark": "#141414"
-	},
-	"background": {
-		"color": {
-			"light": "#F8F8F8",
-			"dark": "#080808"
-		}
-	},
-	"appearance": {
-		"default": "system",
-		"strict": false
-	},
-	"favicon": "/favicon.ico",
-	"api": {
-		"openapi": "/openapi.documented.yml"
-	},
-	"integrations": {
-		"posthog": {
-			"apiKey": "phc_Gx2xD1dreOAEWo4EkDeFoKMSwMsKkx6FUeMH90J97sT",
-			"sessionRecording": true
-		}
-	},
-	"navigation": {
-		"tabs": [
-			{
-				"tab": "Documentation",
-				"icon": "book",
-				"groups": [
-					{
-						"group": "Get Started",
-						"pages": [
-							"welcome",
-							"prompting-guide"
-						]
-					},
-					{
-						"group": "Features",
-						"pages": [
-							"features/coding-agents",
-							"features/automations",
-							"features/sandbox-environment",
-							"features/mcp-servers",
-							"features/pull-requests",
-							"features/feedback-loop",
-							"features/rule-files",
-							"features/hooks",
-							"features/public-api",
-							"features/self-hosted",
-							"features/max"
-						]
-					},
-					{
-						"group": "Integrations",
-						"pages": [
-							"integrations/overview",
-							"integrations/github",
-							"integrations/gitlab",
-							"integrations/bitbucket",
-							"integrations/slack",
-							"integrations/sentry",
-							"integrations/linear",
-							"integrations/jira",
-							"integrations/notion",
-							"integrations/postgres",
-							"integrations/aws",
-							"integrations/supabase",
-							"integrations/raycast",
-							"integrations/discord"
-						]
-					},
-					{
-						"group": "Admin",
-						"pages": [
-							"admin/security",
-							"admin/billing",
-							"admin/support",
-							"admin/inviting-your-team"
-						]
-					},
-					{
-						"group": "Resources",
-						"pages": [
-							"resources/aifsd-manifesto",
-							"resources/pwa",
-							"changelog"
-						]
-					}
-				]
-			},
-			{
-				"tab": "API Reference",
-				"icon": "code",
-				"openapi": "/openapi.documented.yml"
-			}
-		]
-	},
-	"logo": {
-		"light": "/logo/light.svg",
-		"dark": "/logo/dark.svg"
-	},
-	"navbar": {
-		"links": [
-			{
-				"label": "Get Help",
-				"href": "mailto:support@tembo.io"
-			},
-			{
-				"label": "Book a Demo",
-				"href": "https://book.avoma.com/tembo/tembo-demo/"
-			}
-		],
-		"primary": {
-			"type": "button",
-			"label": "Dashboard",
-			"href": "https://app.tembo.io"
-		}
-	},
-	"footer": {
-		"socials": {
-			"x": "https://x.com/tembo",
-			"github": "https://github.com/tembo",
-			"discord": "https://discord.gg/anPdgArb",
-			"linkedin": "https://www.linkedin.com/company/tembo-inc/",
-			"youtube": "https://www.youtube.com/@tembo_io"
-		}
-	},
-	"redirects": [
-		{
-			"source": "/ai-agent/:slug*",
-			"destination": "/features/:slug*"
-		},
-		{
-			"source": "/ai-agent/tembo-md",
-			"destination": "/features/rule-files"
-		},
-		{
-			"source": "/billing",
-			"destination": "/admin/billing"
-		}
-	]
+    "$schema": "https://mintlify.com/docs.json",
+    "theme": "aspen",
+    "name": "Tembo Docs",
+    "banner": {
+        "content": "Have questions? Chat with our team in real time – open the support chat in the app.",
+        "dismissible": true
+    },
+    "icons": {
+        "library": "lucide"
+    },
+    "fonts": {
+        "family": "Inter"
+    },
+    "colors": {
+        "primary": "#676767",
+        "light": "#FAFAFA",
+        "dark": "#141414"
+    },
+    "background": {
+        "color": {
+            "light": "#F8F8F8",
+            "dark": "#080808"
+        }
+    },
+    "appearance": {
+        "default": "system",
+        "strict": false
+    },
+    "favicon": "/favicon.ico",
+    "api": {
+        "openapi": "/openapi.documented.yml"
+    },
+    "integrations": {
+        "posthog": {
+            "apiKey": "phc_Gx2xD1dreOAEWo4EkDeFoKMSwMsKkx6FUeMH90J97sT",
+            "sessionRecording": true
+        }
+    },
+    "navigation": {
+        "tabs": [
+            {
+                "tab": "Docs",
+                "groups": [
+                    {
+                        "group": "Get Started",
+                        "pages": ["index", "quickstart"]
+                    },
+                    {
+                        "group": "Features",
+                        "pages": [
+                            "features/automations",
+                            "features/coding-agents",
+                            "features/feedback-loop",
+                            "features/max",
+                            "features/sandbox-environment",
+                            "features/self-hosted",
+                            {
+                                "group": "Configuration",
+                                "pages": [
+                                    "features/agent-skills",
+                                    "features/hooks",
+                                    "features/rule-files"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "group": "Actions",
+                        "pages": ["features/agent-actions", "features/pull-requests"]
+                    },
+                    {
+                        "group": "Integrations",
+                        "pages": [
+                            "integrations/mcp",
+                            "integrations/aws",
+                            "integrations/bitbucket",
+                            "integrations/discord",
+                            "integrations/github",
+                            "integrations/gitlab",
+                            "integrations/jira",
+                            "integrations/linear",
+                            "integrations/notion",
+                            "integrations/postgres",
+                            "integrations/raycast",
+                            "integrations/sentry",
+                            "integrations/slack",
+                            "integrations/supabase"
+                        ]
+                    }
+                ]
+            },
+            {
+                "tab": "API",
+                "groups": [
+                    {
+                        "group": "Overview",
+                        "pages": ["api/index"]
+                    },
+                    {
+                        "group": "Tembo API",
+                        "openapi": {
+                            "source": "/openapi.documented.yml",
+                            "directory": "api"
+                        },
+                        "pages": [
+                            {
+                                "group": "Tasks",
+                                "pages": [
+                                    "POST /task/create",
+                                    "GET /task/list",
+                                    "GET /task/search"
+                                ]
+                            },
+                            {
+                                "group": "Repositories",
+                                "pages": ["GET /repository/list"]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "tab": "Learn",
+                "groups": [
+                    {
+                        "group": "Use Cases",
+                        "pages": [
+                            "learn/fix-production-bugs",
+                            "learn/implement-from-issues",
+                            "learn/keep-docs-in-sync",
+                            "learn/reduce-technical-debt",
+                            "learn/review-changes"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "logo": {
+        "light": "/logo/light.svg",
+        "dark": "/logo/dark.svg"
+    },
+    "navbar": {
+        "links": [
+            {
+                "label": "Book a Demo",
+                "href": "https://book.avoma.com/tembo/tembo-demo/"
+            }
+        ],
+        "primary": {
+            "type": "button",
+            "label": "Dashboard",
+            "href": "https://app.tembo.io"
+        }
+    },
+    "footer": {
+        "socials": {
+            "x": "https://x.com/tembo",
+            "github": "https://github.com/tembo",
+            "discord": "https://discord.gg/anPdgArb",
+            "linkedin": "https://www.linkedin.com/company/tembo-inc/",
+            "youtube": "https://www.youtube.com/@tembo_io"
+        }
+    },
+    "redirects": []
 }

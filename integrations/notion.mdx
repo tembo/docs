@@ -1,102 +1,41 @@
 ---
 title: "Notion"
-description: "Connect Notion to Tembo so AI agents can access your documentation and workspace content."
-icon: "notion"
+description: "Access workspace content and documentation."
 ---
 
-Connect Notion to Tembo to access your workspace content through MCP (Model Context Protocol) servers.
+<Frame>
+  <img src="/images/integrations/notion.png" alt="Notion" />
+</Frame>
 
-# Overview
+## Features
 
-The Notion integration allows Tembo to connect to your Notion workspaces, enabling AI agents to access and work with your documentation, databases, and other Notion content through the Model Context Protocol (MCP).
+- MCP server access to pages, databases, and workspace content
+- Agents can reference documentation during tasks
+- OAuth authentication with workspace-scoped access
 
-# Features
-
-- **MCP Server Access** - Connect your Notion workspace content to AI agents
-- **OAuth Authentication** - Secure connection to your Notion account
-- **Workspace Integration** - Access all pages and databases in connected workspaces
-
-# Installation
+## Installation
 
 <Steps>
   <Step title="Install">
-    Navigate to the [Integrations page](https://app.tembo.io/integrations) in Tembo and click the `Install` button next to Notion.
+    Go to [Integrations](https://app.tembo.io/integrations) and click **Install** next to Notion.
   </Step>
   <Step title="Authorize">
-    Authorize Tembo to access your Notion account. You'll be prompted to grant access to your Notion workspaces and choose specific pages Tembo will be able to access. You'll be redirected back to the Integrations page when complete.
-  </Step>
-  <Step title="Configure Workspace">
-    After authorization, your Notion workspace will be connected and available for use with MCP-enabled agents.
+    Authorize Tembo and select which pages it can access.
   </Step>
 </Steps>
 
-# Usage
+## Usage
 
-## MCP Server Access
+Once connected, the Notion MCP server is automatically available to agents. They can read pages, query databases, and navigate your workspace to pull context during tasks.
 
-Once connected, the Notion MCP server provides AI agents with access to:
+## Advanced
 
-- **Pages** - Read and interact with Notion pages
-- **Databases** - Query and manipulate database content
-- **Blocks** - Access individual content blocks within pages
-- **Workspace Structure** - Navigate through your workspace hierarchy
+<AccordionGroup>
+  <Accordion title="Workspace not appearing">
+    Verify you completed the OAuth flow and granted access to the correct workspace. Check that you selected pages during authorization.
+  </Accordion>
 
-## Integration with Coding Agents
-
-The Notion integration enables coding agents to:
-
-- Reference documentation stored in Notion
-- Pull context from Notion databases for development tasks
-- Access project requirements and specifications
-- Maintain consistency between documentation and code
-
-# Managing Your Integration
-
-## Reauthorization
-
-If you need to modify the permissions or reconnect your Notion account:
-
-1. Navigate to the [Integrations page](https://app.tembo.io/integrations)
-2. Find the Notion integration card
-3. Click the settings button to reauthorize or disconnect
-
-## Supported Permissions
-
-The integration requires the following Notion permissions:
-
-- Read access to pages and databases
-- Write access to pages it is allowed to access, including creating new subpages
-- Access to workspace content structure
-- Ability to read user information for workspace identification
-
-# Best Practices
-
-- **Organize content** — Use a dedicated workspace section with consistent page structures
-- **Keep specs current** — Ensure requirements match your project needs
-- **Use clear headings** — Structured headings help agents navigate content
-- **Include code examples** — Add code snippets when documenting technical requirements
-- **Link related pages** — Cross-reference documentation to provide complete context
-
-# Troubleshooting
-
-## Workspace Not Appearing
-
-If your Notion workspace doesn't appear after authorization:
-
-1. **Verify authorization** - Ensure you completed the OAuth flow and granted access to the correct workspace
-2. **Check page permissions** - Confirm you selected pages Tembo can access during authorization
-3. **Reauthorize if needed** - Navigate to the [Integrations page](https://app.tembo.io/integrations) and reconnect
-
-## Agents Cannot Access Expected Content
-
-If agents report they cannot find content from Notion:
-
-1. **Verify page selection** - During Notion authorization, you must explicitly select which pages Tembo can access
-2. **Check page sharing** - Ensure the pages aren't restricted to specific workspace members only
-3. **Review workspace structure** - Nested pages inherit parent permissions but must be in an authorized section
-
-# Security & Privacy
-
-- **OAuth 2.0** - Secure authentication using Notion's official OAuth flow
-- **Workspace-scoped** - Access is limited to the specific workspace you authorize
-- **Read and write operations** - Provides read access to content and write access to pages it is allowed to access, including creating new subpages
+  <Accordion title="Agents can't find content">
+    During authorization, you must explicitly select which pages Tembo can access. Nested pages inherit parent permissions.
+  </Accordion>
+</AccordionGroup>

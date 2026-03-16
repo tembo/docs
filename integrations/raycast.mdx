@@ -1,97 +1,51 @@
 ---
 title: "Raycast"
-description: "Create and manage Tembo coding tasks directly from Raycast with quick commands and menubar access."
-icon: "); -webkit-mask-image: url('/images/raycast.svg'); mask-image: url('/images/raycast.svg');/*"
+description: "Quick commands and menubar access for Tembo tasks."
 ---
 
-Create and manage coding tasks directly from Raycast. Quickly delegate development work to Tembo agents, track progress across repositories, and monitor task status from your menubar.
+<Frame>
+  <img src="/images/integrations/raycast.png" alt="Raycast" />
+</Frame>
 
-# Features
+## Features
 
-- **Create Task** - Create a new task in Tembo directly from Raycast
-- **View Tasks** - View and filter all tasks in your organization with search functionality
-- **Tembo in Menubar** - Show your tasks in the menubar for quick access
-- **Ask Tembo** - Use Raycast AI to create and view tasks with natural language
+- Create tasks from Raycast
+- View and filter tasks with search
+- Menubar integration for quick access
+- Raycast AI natural language support
 
-# Installation
+## Installation
 
 <Steps>
-  <Step title="Install Extension">
-    Install the Tembo extension from the [Raycast Store](https://www.raycast.com/store) or search for "Tembo" in the Raycast command palette.
+  <Step title="Install">
+    Install the Tembo extension from the [Raycast Store](https://www.raycast.com/store) or search "Tembo" in the command palette.
   </Step>
-  <Step title="Get API Key">
-    Sign up for a Tembo account at [app.tembo.io](https://app.tembo.io) if you haven't already, then generate an API key from your Tembo dashboard under Settings → API Keys.
+  <Step title="API key">
+    Generate an API key from **Settings > API Keys** in the [dashboard](https://app.tembo.io).
   </Step>
-  <Step title="Configure Extension">
-    Open Raycast preferences, navigate to Extensions → Tembo, and enter your API key in the extension settings.
+  <Step title="Configure">
+    Open Raycast preferences, go to Extensions > Tembo, and enter your API key.
   </Step>
 </Steps>
 
-# Usage
+## Usage
 
-## Creating Tasks
+**Create Task** - Enter a description, select a repository, and set priority.
 
-Use the "Create Task" command to quickly create new development tasks. You can:
+**View Tasks** - Filter by repository, status, or assignee. Search through descriptions.
 
-- Enter a task description
-- Select a target repository (if connected to GitHub/GitLab)
-- Set priority and other task metadata
+**Menubar** - See active tasks at a glance with status indicators.
 
-<img src="/images/raycast-create-task.png" alt="Raycast Create Task interface" />
+**Raycast AI** - Use natural language: "Create a task to fix the login bug" or "Show my in-progress tasks".
 
-## Viewing Tasks
+## Advanced
 
-The "View Tasks" command allows you to:
+<AccordionGroup>
+  <Accordion title="Keyboard shortcuts">
+    `⌘+K` open command palette, `⌘+Enter` create task, `⌘+R` refresh task list, `⌘+,` extension settings.
+  </Accordion>
 
-- View all tasks in your organization
-- Filter by repository, status, or assignee
-- Search through task descriptions
-- Open tasks directly in the Tembo dashboard
-
-<img src="/images/raycast-task-list.png" alt="Raycast task list interface showing task management" />
-
-## Menubar Integration
-
-Enable the "Tembo in Menubar" command to see your active tasks at a glance. This provides:
-
-- Quick access to current tasks
-- Status indicators for task progress
-- Direct links to task details
-
-## Ask Tembo with Raycast AI
-
-Use Raycast's AI features to interact with Tembo naturally:
-
-- "Show me my tasks for this repository"
-- "Create a task to fix the login bug"
-- "What tasks are currently in progress?"
-
-<img src="/images/raycast-ai.png" alt="Raycast AI integration with Tembo for natural language task interaction" />
-
-# Best Practices
-
-## Writing Effective Task Descriptions
-
-Be specific: include file paths, standards, or patterns (e.g., "Fix memory leak in workers/job-processor.ts" not "Fix the bug"). See the [Prompting Guide](/prompting-guide) for detailed tips.
-
-## Keyboard Shortcuts
-
-Speed up your workflow with these Raycast shortcuts:
-
-- `⌘+K` - Open command palette while viewing tasks
-- `⌘+Enter` - Create task immediately after entering description
-- `⌘+,` - Open extension settings to update API key or preferences
-- `⌘+R` - Refresh task list to see latest updates
-
-## Troubleshooting
-
-**Tasks not appearing:**
-- Verify your API key is correct in extension settings
-- Check that you have the necessary permissions in your Tembo organization
-- Try refreshing the task list with `⌘+R`
-
-**Cannot create tasks:**
-- Ensure your API key has write permissions
-- Verify the selected repository is active in your Tembo dashboard
-
-For additional help, contact [support@tembo.io](mailto:support@tembo.io).
+  <Accordion title="Tasks not appearing">
+    Verify your API key is correct in extension settings. Try refreshing with `⌘+R`.
+  </Accordion>
+</AccordionGroup>
