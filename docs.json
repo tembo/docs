@@ -58,6 +58,7 @@
                             {
                                 "group": "Configuration",
                                 "pages": [
+                                    "features/agent-skills",
                                     "features/hooks",
                                     "features/rule-files"
                                 ]
