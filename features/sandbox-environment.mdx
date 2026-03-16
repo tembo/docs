@@ -38,15 +38,14 @@ Both sandbox types come with:
 | Category | Tools |
 |----------|-------|
 | **JavaScript** | Node.js 22, Bun, pnpm, Yarn |
-| **Python** | Python 3.12, pipx |
-| **Go** | Go 1.24 |
-| **Rust** | Rustup 1.28 |
+| **Python** | Python 3.12, pipx, uv, ruff |
 | **Ruby** | Ruby 3.3, Bundler, RuboCop |
-| **Java** | JDK 21, Gradle, Maven |
-| **Elixir** | Elixir 1.18, Erlang 28, Hex, Rebar3 |
 | **.NET** | .NET SDK 9 |
+| **Cloud** | Google Cloud SDK |
 | **Containers** | Docker 28, Docker Compose 2.31 (Large VM only) |
 | **Other** | Git, curl, ShellCheck, httpie |
+
+<Note>Go, Rust, Java, and Elixir are available through Nix dev shells or Dev Containers. Use a `flake.nix` or `.devcontainer/devcontainer.json` to install language-specific tooling for your project.</Note>
 
 ## Nix support
 
