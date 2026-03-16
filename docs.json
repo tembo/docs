@@ -158,18 +158,5 @@
             "youtube": "https://www.youtube.com/@tembo_io"
         }
     },
-    "redirects": [
-        {
-            "source": "/ai-agent/:slug*",
-            "destination": "/features/:slug*"
-        },
-        {
-            "source": "/ai-agent/tembo-md",
-            "destination": "/features/rule-files"
-        },
-        {
-            "source": "/billing",
-            "destination": "/admin/billing"
-        }
-    ]
+    "redirects": []
 }
