@@ -135,5 +135,5 @@ h3 {
 }
 
 .chat-assistant-floating-input {
-    display: none;
+    visibility: hidden;
 }
