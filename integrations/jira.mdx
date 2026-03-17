@@ -9,7 +9,7 @@ description: "Assign tickets to Tembo and get PRs back."
 
 ## Features
 
-- Add a label containing `tembo` (recommended: `Tembo`) to trigger implementation
+- Add the `Tembo` label to trigger implementation
 - Use `tembo/{repo-name}` labels to target specific repositories
 - Status updates and PR links posted as comments
 
@@ -29,7 +29,9 @@ description: "Assign tickets to Tembo and get PRs back."
 
 ## Usage
 
-Add the `Tembo` label (or any label containing `tembo`) to any issue. Tembo reads the description, creates a coding session, and opens a PR.
+Add the `Tembo` label to any issue. Tembo reads the description, creates a coding session, and opens a PR.
+
+If you add a `tembo/{repo-name}` label, that also triggers Tembo and routes the task to the selected repository.
 
 ### Target a specific repository
 
@@ -54,9 +56,9 @@ See [Automations](/features/automations) for available Jira event triggers.
 
 ## Advanced
 
-<AccordionGroup>
+  <AccordionGroup>
   <Accordion title="Tembo not responding to labels">
-    Verify the issue has a label that contains `tembo` (for example, `Tembo` or `tembo/monorepo`). Confirm you installed using the dedicated Tembo Jira account. Check integration status on the [Integrations page](https://app.tembo.io/integrations).
+    Verify the issue has a `Tembo` label or a `tembo/{repo-name}` label (for example, `tembo/monorepo`). Confirm you installed using the dedicated Tembo Jira account. Check integration status on the [Integrations page](https://app.tembo.io/integrations).
   </Accordion>
 
   <Accordion title="Issues not being processed">
