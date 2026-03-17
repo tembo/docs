@@ -18,7 +18,7 @@ Available on all plans, including the free tier. [Read more about Tembo Max](htt
 2. Point your tool at `proxy.tembo.io`
 
 <CodeGroup>
-```bash Claude Code / OpenCode
+```bash Claude Code
 export ANTHROPIC_BASE_URL=https://proxy.tembo.io/anthropic
 export ANTHROPIC_API_KEY=your-tembo-api-key
 ```
@@ -26,6 +26,30 @@ export ANTHROPIC_API_KEY=your-tembo-api-key
 ```bash Codex
 export OPENAI_BASE_URL="https://proxy.tembo.io/proxy/openai"
 export OPENAI_API_KEY="your-tembo-api-key"
+```
+
+```json OpenCode (OpenAI)
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "openai/gpt-5.2",
+  "provider": {
+    "openai": {
+      "models": {
+        "gpt-5.2": {
+          "id": "gpt-5.2",
+          "name": "GPT-5.2"
+        }
+      },
+      "options": {
+        "baseURL": "https://proxy.tembo.io/openai",
+        "apiKey": "<your-tembo-api-key>",
+        "headers": {
+          "x-reasoning-level": "high"
+        }
+      }
+    }
+  }
+}
 ```
 
 </CodeGroup>
