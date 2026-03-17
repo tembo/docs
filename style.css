@@ -133,3 +133,7 @@ h3 {
         border-right: 1px solid #ffffff0f !important;
     }
 }
+
+.chat-assistant-floating-input {
+    display: none;
+}
