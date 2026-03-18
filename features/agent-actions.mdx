@@ -5,6 +5,8 @@ description: 'Tembo agents can do more than open PRs.'
 
 Pull requests are the most common output, but Tembo agents can take any action available through your connected integrations and [MCP servers](/integrations/mcp).
 
+A single task can span multiple repositories. Tembo can use context from connected integrations and MCP servers during the same task, make informed decisions, and open a pull request or merge request in each affected repository. It can also coordinate changes across different git providers when needed.
+
 ## What agents can do
 
 | Action | Integration |
@@ -30,6 +32,8 @@ Pull requests are the most common output, but Tembo agents can take any action a
 **Enrich issues with context**: When a new issue is created, Tembo searches the codebase, pulls related Notion docs, and adds implementation hints as a comment.
 
 **Query production data**: During a task, an agent queries your Postgres database to understand the schema and writes a migration based on actual table structure.
+
+**Ship a cross-repo change**: One task updates multiple services, uses Linear and Sentry context to verify the work, and opens a PR or MR in each affected repository.
 
 ## How it works
 
