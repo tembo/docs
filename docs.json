@@ -72,7 +72,6 @@
                         "group": "Integrations",
                         "pages": [
                             "integrations/mcp",
-                            "integrations/aws",
                             "integrations/bitbucket",
                             "integrations/github",
                             "integrations/gitlab",
@@ -83,7 +82,8 @@
                             "integrations/raycast",
                             "integrations/sentry",
                             "integrations/slack",
-                            "integrations/supabase"
+                            "integrations/supabase",
+                            "integrations/aws"
                         ]
                     }
                 ]
