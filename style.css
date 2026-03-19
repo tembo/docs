@@ -67,7 +67,10 @@ h3 {
     margin-top: 30px !important;
 }
 
-#body-content span {
+#body-content [data-as="p"],
+#body-content h2,
+#body-content h3,
+#body-content li {
     line-height: 1.75rem !important;
     letter-spacing: -0.1px !important;
 }
