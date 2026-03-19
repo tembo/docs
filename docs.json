@@ -85,6 +85,10 @@
                             "integrations/supabase",
                             "integrations/aws"
                         ]
+                    },
+                    {
+                        "group": "Other",
+                        "pages": ["resources/pwa"]
                     }
                 ]
             },
