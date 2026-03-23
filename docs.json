@@ -88,7 +88,11 @@
                     },
                     {
                         "group": "Other",
-                        "pages": ["resources/pwa", "resources/changelog"]
+                        "pages": [
+                            "resources/pwa",
+                            "resources/pricing",
+                            "resources/changelog"
+                        ]
                     }
                 ]
             },
@@ -169,6 +173,14 @@
         {
             "source": "/admin/support",
             "destination": "/support"
+        },
+        {
+            "source": "/billing",
+            "destination": "/resources/pricing"
+        },
+        {
+            "source": "/admin/billing",
+            "destination": "/resources/pricing"
         }
     ]
 }
