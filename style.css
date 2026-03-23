@@ -67,7 +67,7 @@
     border-width: 2px;
 
     &:hover {
-        border-color: rgba(0, 131, 245, 0.6) !important;
+        border-color: rgba(0, 131, 245, 1) !important;
 
         [data-component-part="card-icon"] svg {
             background-color: #0083f5 !important;
@@ -101,7 +101,6 @@
 
 #body-content [data-component-part="card-content"] [data-as="p"] {
     line-height: 1.5 !important;
-    color: #6b7280;
 }
 
 h1,
@@ -189,6 +188,10 @@ h3 {
 
     #navbar {
         border-bottom: 1px solid #ffffff0f !important;
+    }
+
+    .card:hover {
+        border-color: #0083f5 !important;
     }
 
     #navbar > .dark\:bg-background-dark {
