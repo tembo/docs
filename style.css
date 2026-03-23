@@ -62,6 +62,48 @@
     background: #212121 !important;
 }
 
+.card {
+    border-radius: 8px !important;
+    border-width: 2px;
+
+    &:hover {
+        border-color: rgba(0, 131, 245, 0.6) !important;
+
+        [data-component-part="card-icon"] svg {
+            background-color: #0083f5 !important;
+        }
+    }
+}
+
+[data-component-part="card-content-container"] {
+    padding: 14px 18px;
+}
+
+[data-component-part="card-icon"] {
+    margin-top: 3.5px;
+    width: 20px;
+    height: 20px;
+
+    svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+[data-component-part="card-title"] {
+    font-size: 15px !important;
+    margin-top: 10px;
+}
+
+[data-component-part="card-content"] {
+    font-size: 14px !important;
+}
+
+#body-content [data-component-part="card-content"] [data-as="p"] {
+    line-height: 1.5 !important;
+    color: #6b7280;
+}
+
 h1,
 h2,
 h3 {
