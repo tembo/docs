@@ -1,0 +1,91 @@
+---
+title: "Pricing"
+description: "Understand Tembo plans, credits, overages, and auto-reload."
+icon: "credit-card"
+---
+
+Tembo uses subscription plans with credits so you can match usage to your team's needs.
+
+## Plans
+
+- **Free ($0/month)**: 10 credits per week
+- **Pro ($60/month)**: 100 credits per month with overage billing
+- **Max ($200/month)**: 400 credits per month with overage billing
+
+Paid plans include overage billing so your work can continue after you use your monthly plan credits. You can set a maximum overage limit to control spend. On Free, tasks pause when credits are exhausted until your weekly refresh, an upgrade, or an additional credit purchase.
+
+## How credits work
+
+Credits are consumed when Tembo analyzes code and creates pull requests.
+
+- **Complex tasks can use more credits**: consumption depends on token usage, which varies by task complexity
+- **Simple tasks generally use fewer credits**: straightforward fixes usually consume fewer tokens
+- **Included monthly credits expire each billing cycle**
+- **Unused included monthly credits do not roll over**
+
+## What consumes credits
+
+Credits are used for:
+
+- Creating pull requests from assigned issues (Linear, Jira, Slack)
+- Fixing production errors from Sentry
+- Optimizing database queries and indexes
+- Processing pull request feedback through the [Feedback Loop](/features/feedback-loop)
+
+## Credit refunds
+
+You may receive automatic refunds in some cases:
+
+- **Failed tasks**: if Tembo cannot complete a task because of an internal error
+- **Duplicate issues**: if the same issue is queued more than once
+- **Invalid inputs**: if a task fails due to missing access or configuration problems
+
+## Usage and monitoring
+
+You can track credit usage in the [Billing dashboard](https://app.tembo.io/settings/billing).
+
+## Buying additional credits
+
+- **Free plan**: upgrade to Pro or Max for overages, or buy credit packs
+- **Pro and Max**: overage billing is automatic after included credits are used
+- **All plans**: credit packs can be purchased from [Billing settings](https://app.tembo.io/settings/billing) and do not expire
+
+To change plans, open [Billing settings](https://app.tembo.io/settings/billing).
+
+## Auto-reload
+
+Auto-reload buys credits when your balance drops below a threshold so tasks can keep running.
+
+### Set up auto-reload
+
+1. Go to [Billing settings](https://app.tembo.io/settings/billing)
+2. Add a payment method if needed
+3. Configure your threshold, target balance, and monthly limit
+4. Turn on auto-reload
+
+### Notes
+
+- You cannot remove a payment method while auto-reload is enabled
+- Monthly limits cap automatic purchases
+- You can still buy credits manually at any time
+
+## Troubleshooting
+
+**Auto-reload is not running**: confirm your payment method is valid, your balance is below threshold, your monthly limit is not reached, and auto-reload is enabled.
+
+**You cannot remove your payment method**: disable auto-reload first.
+
+**Payment failed**: confirm the card is valid and has available funds.
+
+**Credits did not appear immediately**: billing updates can take a few minutes.
+
+Need help? Contact [hi@tembo.io](mailto:hi@tembo.io).
+
+## Enterprise pricing
+
+If you need custom pricing, reach out to [support@tembo.io](mailto:support@tembo.io) for:
+
+- Custom credit allocations
+- Volume pricing
+- Dedicated support
+- Flexible billing options
