@@ -16,13 +16,9 @@
     padding-right: 6px;
 }
 
-#navbar div {
-    padding-left: 6px;
-    padding-right: 6px;
-}
-
-@media (min-width: 1536px) {
-    [data-page-mode="wide"] #content-area {
+/* wider homepage layout */
+[data-page-mode="wide"] #content-area {
+    @media screen and (width >= 1536px) {
         --default-max-w: 696px;
         --effective-max-w: min(calc(900px + 10vw), 1000px);
         --max-w-offset: calc(var(--effective-max-w) - var(--default-max-w));
@@ -31,6 +27,26 @@
         max-width: var(--effective-max-w);
         margin-left: var(--effective-ml);
     }
+    @media screen and (width < 1536px) {
+        width: 100%;
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* add support for responsive columns */
+.responsive-columns {
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(
+            max(
+                var(--min-col-width, 250px),
+                calc(100% / var(--cols, 4) - 1rem)
+            ),
+            1fr
+        )
+    ) !important;
 }
 
 #sidebar-content .sidebar-group-header {
@@ -97,6 +113,15 @@ h3 {
 
 #navbar {
     border-bottom: 1px solid #dedede !important;
+}
+
+#navbar .lg\:px-5 {
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+#navbar .nav-logo {
+    height: 30px;
 }
 
 #sidebar-content {
