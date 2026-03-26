@@ -50,21 +50,14 @@ The payload is passed to the automation as event context, so your instructions c
 
 #### API trigger (webhook)
 
-Call [`POST /automation/{slug}/trigger`](/api/post-automation-slug-trigger) with any JSON payload.
-
-```bash
-curl -X POST https://api.tembo.io/automation/my-automation/trigger \
-  -H "Authorization: Bearer YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"issue_url": "https://github.com/org/repo/issues/42"}'
-```
+You can trigger an automation programmatically using its slug via our SDK or an [API request](/api/trigger-automation).
 
 #### Slash command trigger
 
 You can trigger a task with the selected automation by using slash commands.
 
 ```txt
-@tembo /<automation-slug>
+@tembo /<automationSlug>
 ```
 
 ## Creating an automation
