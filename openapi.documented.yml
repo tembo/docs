@@ -398,6 +398,86 @@ paths:
                       const response = await client.task.search({ q: 'authentication bug' });
 
                       console.log(response.issues);
+    /automation/{key}/trigger:
+        post:
+            responses:
+                "200":
+                    description: Automation triggered successfully
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: string
+                                        format: uuid
+                                        description: Unique identifier for the queued job
+                                    task:
+                                        type: string
+                                        description: The type of job that was queued
+                                        example: RunWorkflow
+                                    status:
+                                        type: string
+                                        description: Current status of the job
+                                        example: pending
+                                    priority:
+                                        type: integer
+                                        description: Job priority
+                                        example: 5
+                                    createdAt:
+                                        type: string
+                                        format: date-time
+                                    updatedAt:
+                                        type: string
+                                        format: date-time
+                                required:
+                                    - id
+                                    - task
+                                    - status
+                                    - priority
+                                    - createdAt
+                                    - updatedAt
+                "404":
+                    description: Automation not found (no automation with the given key exists in your organization)
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: Automation not found
+                                required:
+                                    - error
+            operationId: postPublic-apiAutomationTrigger
+            parameters:
+                - name: key
+                  in: path
+                  description: The key of the automation to trigger. Set in the automation's properties panel.
+                  required: true
+                  schema:
+                      type: string
+                      example: my-automation
+            description: Trigger an automation with an arbitrary JSON payload, which is passed to the automation as event context. Only automations with a key set can be triggered.
+            summary: Trigger Automation
+            requestBody:
+                description: Arbitrary JSON payload passed to the automation as event context. Your automation instructions can reference any values in this payload.
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            additionalProperties: true
+                            example:
+                                issue_url: https://github.com/org/repo/issues/42
+                                priority: high
+                required: false
+            x-codeSamples:
+                - lang: bash
+                  source: |-
+                      curl -X POST https://api.tembo.io/public-api/automation/my-automation/trigger \
+                        -H "Authorization: Bearer YOUR_API_KEY" \
+                        -H "Content-Type: application/json" \
+                        -d '{"issue_url": "https://github.com/org/repo/issues/42"}'
     /repository/list:
         get:
             responses:
