@@ -61,16 +61,16 @@ curl -X POST https://api.tembo.io/automation/my-automation/trigger \
 
 #### Slash command trigger
 
-If you have Tembo slash commands enabled in your integration, pass the automation key as an argument.
+If you have Tembo slash commands enabled in your integration, trigger the automation with `@tembo /<automation-key>`.
 
 ```txt
-/<tembo-command> <automation-key>
+@tembo /<automation-key>
 ```
 
 You can also include JSON payload context.
 
 ```txt
-/<tembo-command> <automation-key> {"issue_url":"https://github.com/org/repo/issues/42"}
+@tembo /<automation-key> {"issue_url":"https://github.com/org/repo/issues/42"}
 ```
 
 ## Creating an automation
