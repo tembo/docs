@@ -41,16 +41,16 @@ React to events from your integrations in real-time.
 
 ### Automation slug
 
-Use an automation slug to trigger an automation on demand from external systems or chat commands.
+Use an `automationSlug` to trigger an automation on demand from external systems or chat commands.
 
 1. Set a **Slug** on your automation (in the automation's properties panel).
-2. Trigger the automation with that slug from API calls or slash commands.
+2. Trigger the automation with that `automationSlug` from API calls or slash commands.
 
 The payload is passed to the automation as event context, so your instructions can reference it directly. For example, you could write instructions like _"Fix the issue at the URL provided in the event payload"_.
 
 #### API trigger (webhook)
 
-You can trigger an automation programmatically using its slug via our SDK or an [API request](/api/trigger-automation).
+You can trigger an automation programmatically using its `automationSlug` via our SDK or an [API request](/api/trigger-automation).
 
 #### Slash command trigger
 
