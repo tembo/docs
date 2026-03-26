@@ -398,7 +398,7 @@ paths:
                       const response = await client.task.search({ q: 'authentication bug' });
 
                       console.log(response.issues);
-    /automation/{key}/trigger:
+    /automation/{slug}/trigger:
         post:
             responses:
                 "200":
@@ -451,14 +451,14 @@ paths:
                                     - error
             operationId: postPublic-apiAutomationTrigger
             parameters:
-                - name: key
+                - name: slug
                   in: path
-                  description: The key of the automation to trigger. Set in the automation's properties panel.
+                  description: The slug of the automation to trigger. Set in the automation's properties panel.
                   required: true
                   schema:
                       type: string
                       example: myAutomation
-            description: Trigger an automation with an arbitrary JSON payload, which is passed to the automation as event context. Only automations with a key set can be triggered.
+            description: Trigger an automation with an arbitrary JSON payload, which is passed to the automation as event context. Only automations with a slug set can be triggered.
             summary: Trigger Automation
             requestBody:
                 description: Arbitrary JSON payload passed to the automation as event context. Your automation instructions can reference any values in this payload.
