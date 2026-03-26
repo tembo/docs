@@ -39,6 +39,22 @@ React to events from your integrations in real-time.
 | **Linear**  | Issue created, issue updated, status changed       |
 | **Slack**   | Message in channel, @tembo mention                 |
 
+### Webhook
+
+Trigger any automation programmatically via the API. This lets you integrate Tembo into your own workflows, CI/CD pipelines, or any external system.
+
+1. Set a **Key** on your automation (in the automation's properties panel)
+2. Call the trigger endpoint with an arbitrary JSON payload:
+
+```bash
+curl -X POST https://api.tembo.io/public-api/automation/my-automation/trigger \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"issue_url": "https://github.com/org/repo/issues/42"}'
+```
+
+The payload is passed to the automation as event context, so your instructions can reference it directly. For example, you could write instructions like _"Fix the issue at the URL provided in the event payload"_.
+
 ## Creating an automation
 
 ### From a template

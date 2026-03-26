@@ -120,6 +120,12 @@
                                 ]
                             },
                             {
+                                "group": "Automations",
+                                "pages": [
+                                    "POST /automation/{key}/trigger"
+                                ]
+                            },
+                            {
                                 "group": "Repositories",
                                 "pages": ["GET /repository/list"]
                             }
