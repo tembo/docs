@@ -47,6 +47,7 @@
                         "pages": [
                             "features/automations",
                             "features/coding-agents",
+                            "features/models",
                             "features/feedback-loop",
                             "features/max",
                             "features/sandbox-environment",
