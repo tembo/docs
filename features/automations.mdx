@@ -39,15 +39,11 @@ React to events from your integrations in real-time.
 | **Linear**  | Issue created, issue updated, status changed       |
 | **Slack**   | Message in channel, @tembo mention                 |
 
-### Trigger by UUID
+#### Trigger through webhooks
 
-Trigger an automation on demand from external systems or chat commands using its UUID.
+You can trigger an automation on demand from external systems using the automation's [webhook trigger endpoint](/api/trigger-automation).
 
 The payload is passed to the automation as event context, so your instructions can reference it directly. For example, you could write instructions like _"Fix the issue at the URL provided in the event payload"_.
-
-#### API trigger (webhook)
-
-You can trigger an automation programmatically using its UUID via our SDK or an [API request](/api/trigger-automation).
 
 #### Slash command trigger
 
