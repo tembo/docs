@@ -45,12 +45,35 @@ Both sandbox types come with:
 | **Containers** | Docker 28, Docker Compose 2.31 (Large VM only) |
 | **Other** | Git, curl, ShellCheck, httpie |
 
-<Note>Go, Rust, Java, and Elixir are available through Nix dev shells or Dev Containers. Use a `flake.nix` or `.devcontainer/devcontainer.json` to install language-specific tooling for your project.</Note>
+<Note>Go, Rust, Java, and Elixir are available through Nix dev shells. Add a `flake.nix` to install language-specific tooling for your project.</Note>
 
 ## Nix support
 
 If your repo has a `flake.nix` with `devShells.x86_64-linux.default`, Tembo automatically detects it and runs commands inside your Nix dev shell.
 
-## Dev Containers
+Here is a minimal `flake.nix` example you can copy and adapt:
 
-Tembo can run tasks inside a Dev Container (`.devcontainer/devcontainer.json`). Requires the Large VM sandbox. Same format as VS Code Dev Containers and GitHub Codespaces.
+```nix
+{
+  description = "Dev shell";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
+
+  outputs = { self, nixpkgs, flake-utils }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
+      in {
+        devShells.default = pkgs.mkShell {
+          buildInputs = with pkgs; [
+            go
+            # Add other packages here, e.g. rustc cargo jdk
+          ];
+        };
+      }
+    );
+}
+```
