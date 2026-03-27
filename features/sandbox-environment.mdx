@@ -47,9 +47,9 @@ Both sandbox types come with:
 
 <Note>Go, Rust, Java, and Elixir are available through Nix dev shells. Add a `flake.nix` to install language-specific tooling for your project.</Note>
 
-## Nix support
+## Add custom dependencies
 
-If your repo has a `flake.nix` with `devShells.x86_64-linux.default`, Tembo automatically detects it and runs commands inside your Nix dev shell.
+To add custom dependencies in the sandbox, include a `flake.nix` with `devShells.x86_64-linux.default`. Tembo automatically detects it and runs commands inside your Nix dev shell.
 
 Here is a minimal `flake.nix` example you can copy and adapt:
 
