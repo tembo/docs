@@ -39,37 +39,15 @@ React to events from your integrations in real-time.
 | **Linear**  | Issue created, issue updated, status changed       |
 | **Slack**   | Message in channel, @tembo mention                 |
 
-### Automation slug
+### Trigger by UUID
 
-Use an automation slug to trigger an automation on demand from external systems or chat commands.
-
-1. Set a **Slug** on your automation (in the automation's properties panel).
-2. Trigger the automation with that slug or its UUID from API calls or slash commands.
+Trigger an automation on demand from external systems or chat commands using its UUID.
 
 The payload is passed to the automation as event context, so your instructions can reference it directly. For example, you could write instructions like _"Fix the issue at the URL provided in the event payload"_.
 
 #### API trigger (webhook)
 
-You can trigger an automation programmatically using its UUID or slug via our SDK or an [API request](/api/trigger-automation).
-
-The API key can be supplied either through the `Authorization: Bearer` header or the `apiKey` query parameter:
-
-```bash
-# Using Bearer auth
-curl -s -X POST \
-  "https://api.tembo.io/automation/${AUTOMATION_ID}/trigger" \
-  -H "Authorization: Bearer ${API_KEY}" \
-  -H "Content-Type: application/json" \
-  -d "${PAYLOAD}" | jq .
-```
-
-```bash
-# Using apiKey query parameter
-curl -s -X POST \
-  "https://api.tembo.io/automation/${AUTOMATION_ID}/trigger?apiKey=${API_KEY}" \
-  -H "Content-Type: application/json" \
-  -d "${PAYLOAD}" | jq .
-```
+You can trigger an automation programmatically using its UUID via our SDK or an [API request](/api/trigger-automation).
 
 #### Slash command trigger
 
