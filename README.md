@@ -84,3 +84,7 @@ The dev server defaults to `http://localhost:3000`. Keep it running while you ed
 - [Mintlify Documentation](https://mintlify.com/docs)
 - [Support](mailto:support@tembo.io)
 - [Book a Demo](https://book.avoma.com/tembo/tembo-demo/)
+
+## Documentation joke
+
+Why do technical writers love relative links? Because every good relationship is built on context.
