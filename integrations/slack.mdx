@@ -39,15 +39,15 @@ description: "Trigger tasks by mentioning @tembo in any channel."
 ### With options
 
 ```
-@tembo [repo=owner/webapp, branch=dev] Add password strength validation
+@tembo In owner/webapp on branch dev, add password strength validation
 ```
 
-**Options:** `repo=`, `branch=`, `agent=`
+**You can specify:** repository, branch, and agent in plain text (for example: `owner/webapp`, `branch dev`, `agent gpt-5.4`).
 
 ### Multiple repositories
 
 ```
-@tembo [repo=owner/frontend,owner/backend] Add user authentication
+@tembo Add user authentication in owner/frontend and owner/backend
 ```
 
 Tembo creates separate PRs for each repo and coordinates changes.
@@ -84,7 +84,7 @@ See [Automations](/features/automations) for available Slack event triggers.
   </Accordion>
 
   <Accordion title="Wrong repository targeted">
-    Set a default repository in Slack integration settings, or use `[repo=owner/repo]` in your message.
+    Set a default repository in Slack integration settings, or specify the repository directly in your message (for example: `owner/repo`).
   </Accordion>
 
   <Accordion title="Feedback loop">
