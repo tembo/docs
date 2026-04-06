@@ -1,0 +1,126 @@
+---
+title: 'MCP'
+description: 'Give your agents access to external tools and data sources.'
+---
+
+<Frame>
+	<img
+		src="/images/integrations/mcp.png"
+		alt="MCP"
+	/>
+</Frame>
+
+MCP (Model Context Protocol) servers extend what your agents can access during tasks. Install them from the [Integrations page](https://app.tembo.io/integrations).
+
+## Available servers
+
+| Server          | What it does                                            |
+| --------------- | ------------------------------------------------------- |
+| **Kernel**      | Chromium browsers, Playwright automation, video replays |
+| **Context7**    | Version-specific documentation and code examples        |
+| **PostHog**     | Analytics, feature flags, error tracking                |
+| **Neon**        | Neon Postgres databases                                 |
+| **Supabase**    | Supabase projects and databases                         |
+| **PlanetScale** | PlanetScale databases                                   |
+| **Stripe**      | Customers, payments, subscriptions, invoices            |
+| **Clerk**       | Users, organizations, authentication                    |
+| **Notion**      | Pages, databases, workspace content                     |
+| **Jam**         | Bug reports, recordings, repro steps                    |
+| **Supermemory** | Long-term memory and context                            |
+| **Attio**       | CRM records, lists, workspace data                      |
+| **Firetiger**   | Cloud tools and resources                               |
+
+GitHub, Linear, Sentry, and Postgres MCP servers are automatically available when you connect those integrations.
+
+## Custom servers
+
+Bring your own MCP servers from the [Integrations page](https://app.tembo.io/integrations) using **Custom MCP**. Supports stdio, HTTP, and SSE, including OAuth.
+
+### Connection types
+
+#### Remote (HTTP/SSE)
+
+Use this for hosted MCP servers.
+
+- Required: `name`, `serverUrl`
+- Optional: static `headers` (for example, `Authorization`)
+- If the server requires OAuth, Tembo returns an authorization URL and completes setup after you authorize
+
+```json
+{
+	"type": "http",
+	"name": "api-server",
+	"url": "https://example.com/mcp",
+	"headers": {
+		"Authorization": "Bearer token"
+	}
+}
+```
+
+For SSE servers, use the same format with `"type": "sse"` and point the URL to your SSE endpoint.
+
+#### Stdio
+
+Use this for command-based MCP servers started in the sandbox.
+
+- Required: `name`, `command`
+- Optional: `args` (space-separated in UI), `env` variables
+
+```json
+{
+	"type": "stdio",
+	"name": "github-mcp",
+	"command": "npx",
+	"args": ["-y", "@modelcontextprotocol/server-github"],
+	"env": {
+		"GITHUB_TOKEN": "ghp_xxx"
+	}
+}
+```
+
+### Configuration format
+
+Custom MCP servers support two JSON formats:
+
+**Object format** (recommended) — keyed by server name:
+
+```json
+{
+	"mcpServers": {
+		"my-server": { "command": "node", "args": ["server.js"], "env": { "API_KEY": "key" } },
+		"api-server": { "url": "https://api.example.com/mcp" }
+	}
+}
+```
+
+**Array format** — explicit name and type fields:
+
+```json
+{
+	"mcpServers": [
+		{ "name": "my-server", "type": "stdio", "command": "node", "args": ["server.js"] },
+		{ "name": "api-server", "type": "http", "url": "https://api.example.com/mcp" }
+	]
+}
+```
+
+### Adding custom MCP servers
+
+1. Navigate to the [Integrations page](https://app.tembo.io/integrations)
+2. Click **Custom MCP**
+3. Enter your MCP configuration in JSON format
+4. Save — new tasks will automatically use the configured MCP servers
+
+### Best practices
+
+- **Security** — Store sensitive credentials as environment variables rather than hardcoding them in configuration.
+- **Testing** — Test MCP servers locally before adding them to your organization configuration.
+- **Documentation** — Document custom MCP servers for your team, including what tools they provide and when to use them.
+
+### Troubleshooting
+
+- **MCP server not available** — Ensure the server configuration is valid JSON and all required fields are provided.
+- **Authentication errors** — Verify credentials and API keys are correct and have the necessary permissions.
+- **Connection issues** — For HTTP/SSE servers, check that the URL is accessible and the server is running.
+
+For additional help, contact [support](mailto:support@tembo.io).
