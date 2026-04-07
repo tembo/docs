@@ -398,6 +398,104 @@ paths:
                       const response = await client.task.search({ q: 'authentication bug' });
 
                       console.log(response.issues);
+    /automation/{keyOrId}/trigger:
+        post:
+            responses:
+                "200":
+                    description: Automation triggered successfully
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: string
+                                        format: uuid
+                                        description: Unique identifier for the queued job
+                                    task:
+                                        type: string
+                                        description: The type of job that was queued
+                                        example: RunWorkflow
+                                    status:
+                                        type: string
+                                        description: Current status of the job
+                                        example: pending
+                                    priority:
+                                        type: integer
+                                        description: Job priority
+                                        example: 5
+                                    createdAt:
+                                        type: string
+                                        format: date-time
+                                    updatedAt:
+                                        type: string
+                                        format: date-time
+                                required:
+                                    - id
+                                    - task
+                                    - status
+                                    - priority
+                                    - createdAt
+                                    - updatedAt
+                "404":
+                    description: Automation not found (no automation with the given key or ID exists in your organization)
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: Automation not found
+                                required:
+                                    - error
+            operationId: postPublic-apiAutomationTrigger
+            parameters:
+                - name: keyOrId
+                  in: path
+                  description: The automation's UUID or its slug (key). You can find the UUID in the automation's properties panel.
+                  required: true
+                  schema:
+                      type: string
+                      example: a1b2c3d4-5678-9abc-def0-1234567890ab
+                - name: apiKey
+                  in: query
+                  description: API key for authentication. Alternative to using the Authorization header.
+                  required: false
+                  schema:
+                      type: string
+            description: |-
+                Trigger an automation with an arbitrary JSON payload, which is passed to the automation as event context.
+
+                You can identify the automation by either its UUID or its slug (key). The API key can be supplied via the `Authorization: Bearer` header or the `apiKey` query parameter.
+            summary: Trigger Automation
+            requestBody:
+                description: Arbitrary JSON payload passed to the automation as event context. Your automation instructions can reference any values in this payload.
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            additionalProperties: true
+                            example:
+                                issue_url: https://github.com/org/repo/issues/42
+                                priority: high
+                required: false
+            x-codeSamples:
+                - lang: bash
+                  label: Bearer Auth
+                  source: |-
+                      curl -s -X POST \
+                        "https://api.tembo.io/automation/${AUTOMATION_ID}/trigger" \
+                        -H "Authorization: Bearer ${API_KEY}" \
+                        -H "Content-Type: application/json" \
+                        -d '{"issue_url": "https://github.com/org/repo/issues/42"}' | jq .
+                - lang: bash
+                  label: Query Param Auth
+                  source: |-
+                      curl -s -X POST \
+                        "https://api.tembo.io/automation/${AUTOMATION_ID}/trigger?apiKey=${API_KEY}" \
+                        -H "Content-Type: application/json" \
+                        -d '{"issue_url": "https://github.com/org/repo/issues/42"}' | jq .
     /repository/list:
         get:
             responses:

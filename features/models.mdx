@@ -1,0 +1,76 @@
+---
+title: "Models"
+description: "Supported models, providers, and BYOK options."
+---
+
+Tembo supports multiple model providers across coding agents. You can use Tembo-hosted models with [Max](/features/max), or connect your own keys with BYOK (Bring Your Own Key).
+
+## BYOK (Bring Your Own Key)
+
+BYOK lets your workspace call models with your own provider credentials instead of Tembo-managed credentials.
+
+- Add keys in **Settings -> Models -> API Keys**.
+- You can connect OpenAI, Anthropic, Cursor, Amp, and AWS Bedrock credentials.
+- Tembo still handles orchestration, task context, sandbox execution, and PR automation.
+
+### Bedrock BYOK support
+
+Tembo supports BYOK with Amazon Bedrock.
+
+To enable it, add:
+
+- **AWS Access Key ID**
+- **AWS Secret Access Key**
+- **AWS Region**
+
+in **Settings -> Models -> API Keys -> AWS Bedrock**.
+
+<Frame>
+  <img src="/images/models/aws-bedrock-byok.png" alt="AWS Bedrock BYOK API key fields in Tembo Settings" />
+</Frame>
+
+## Supported models
+
+The table below reflects the models currently supported by Tembo.
+
+| Model | Model ID | Provider | BYOK Required |
+| --- | --- | --- | --- |
+| Opus 4.6 | `claude-opus-4-6` | Anthropic | No |
+| Sonnet 4.6 | `claude-sonnet-4-6` | Anthropic | No |
+| Opus 4.5 | `claude-opus-4-5` | Anthropic | No |
+| Haiku 4.5 | `claude-4-5-haiku` | Anthropic | No |
+| GPT-5.4 | `gpt-5.4` | OpenAI | Yes |
+| GPT-5.4 Mini | `gpt-5.4-mini` | OpenAI | No |
+| GPT-5.4 Nano | `gpt-5.4-nano` | OpenAI | No |
+| GPT-5.3 Codex | `gpt-5.3-codex` | OpenAI | No |
+| GPT-5.3 Codex Spark | `gpt-5.3-codex-spark` | OpenAI | Yes |
+| GPT-5.2 Codex | `gpt-5.2-codex` | OpenAI | No |
+| GPT-5.2 | `gpt-5.2` | OpenAI | Yes |
+| GPT-5.1 Codex Max | `gpt-5.1-codex-max` | OpenAI | Yes |
+| GPT-5.1 Codex Mini | `gpt-5.1-codex-mini` | OpenAI | Yes |
+| GPT-5.1 Codex | `gpt-5.1-codex` | OpenAI | Yes |
+| GPT-5.1 | `gpt-5.1` | OpenAI | Yes |
+| GPT-5 Codex | `gpt-5-codex` | OpenAI | Yes |
+| GPT-5 | `gpt-5` | OpenAI | Yes |
+| GPT-5 High | `gpt-5-high` | OpenAI | Yes |
+| GPT-5 Medium | `gpt-5-medium` | OpenAI | Yes |
+| GPT-5 Low | `gpt-5-low` | OpenAI | Yes |
+| GPT-5 Minimal | `gpt-5-minimal` | OpenAI | Yes |
+| GPT-oss 120B | `gpt-oss-120b` | OpenAI | No |
+| GLM 5 | `zai-glm-5` | Z.ai | No |
+| GLM 4.7 | `zai-glm-4.7` | Z.ai | No |
+| Composer 1.5 | `composer-1.5` | Cursor | Yes |
+| Composer 2 | `composer-2` | Cursor | Yes |
+| Composer 2 Fast | `composer-2-fast` | Cursor | Yes |
+| Gemini 3 Pro | `gemini-3-pro` | Google | No |
+| Gemini 3.1 Pro | `gemini-3.1-pro` | Google | No |
+| Gemini 3 Flash | `gemini-3-flash` | Google | No |
+| Grok | `grok` | xAI | Yes |
+| Kimi K2.5 | `kimi-k2p5` | Fireworks | No |
+| MiniMax M2.5 | `minimax-m2p5` | MiniMax | No |
+| Qwen 3 32B | `qwen-3-32b` | Qwen | No |
+| Llama 3.3 70B | `llama-3.3-70b` | Meta | No |
+
+<Note>
+  Model availability can vary by agent and workspace configuration. If a model is disabled in your workspace, it will not appear in agent pickers until re-enabled.
+</Note>

@@ -1,34 +1,128 @@
 ---
-title: 'MCP'
-description: 'Give your agents access to external tools and data sources.'
+title: "MCP"
+description: "Connect built-in and custom MCP servers for agent tool access."
 ---
 
 <Frame>
   <img src="/images/integrations/mcp.png" alt="MCP" />
 </Frame>
 
-MCP (Model Context Protocol) servers extend what your agents can access during tasks. Install them from the [Integrations page](https://app.tembo.io/integrations).
+MCP (Model Context Protocol) servers let agents use external tools and data during tasks.
 
-## Available servers
+## Features
 
-| Server | What it does |
-|--------|-------------|
-| **Kernel** | Chromium browsers, Playwright automation, video replays |
-| **Context7** | Version-specific documentation and code examples |
-| **PostHog** | Analytics, feature flags, error tracking |
-| **Neon** | Neon Postgres databases |
-| **Supabase** | Supabase projects and databases |
-| **PlanetScale** | PlanetScale databases |
-| **Stripe** | Customers, payments, subscriptions, invoices |
-| **Clerk** | Users, organizations, authentication |
-| **Notion** | Pages, databases, workspace content |
-| **Jam** | Bug reports, recordings, repro steps |
-| **Supermemory** | Long-term memory and context |
-| **Attio** | CRM records, lists, workspace data |
-| **Firetiger** | Cloud tools and resources |
+- Install MCP servers from the [Integrations page](https://app.tembo.io/integrations)
+- Add your own MCP servers with `stdio`, `http`, or `sse` transport
+- Connect OAuth-based remote MCP servers
+- Enable MCP servers from existing integrations automatically (GitHub, Linear, Sentry, Postgres)
 
-GitHub, Linear, Sentry, and Postgres MCP servers are automatically available when you connect those integrations.
+## Installation
 
-## Custom servers
+<Steps>
+  <Step title="Open Integrations">
+    Go to [Integrations](https://app.tembo.io/integrations).
+  </Step>
+  <Step title="Use built-in MCP servers">
+    Install any listed MCP integration (for example, Notion or Stripe). Once connected, the server is available in new tasks.
+  </Step>
+  <Step title="Add a custom server">
+    Click **Custom MCP**, paste your JSON config, then save.
+  </Step>
+</Steps>
 
-Bring your own MCP servers from the [Integrations page](https://app.tembo.io/integrations) using **Custom MCP**. Supports stdio, HTTP, and SSE, including OAuth.
+## Usage
+
+### Prerequisites
+
+- You have access to your organization in Tembo
+- You have the server URL or command needed to start your MCP server
+- You have any required credentials (API key, OAuth app, or environment variables)
+
+### Custom server transport types
+
+#### HTTP
+
+Use this for hosted MCP endpoints.
+
+```json
+{
+  "mcpServers": {
+    "api-server": {
+      "type": "http",
+      "url": "https://example.com/mcp",
+      "headers": {
+        "Authorization": "Bearer token"
+      }
+    }
+  }
+}
+```
+
+#### SSE
+
+Use this for hosted MCP servers that expose an SSE endpoint.
+
+```json
+{
+  "mcpServers": {
+    "events-server": {
+      "type": "sse",
+      "url": "https://example.com/sse"
+    }
+  }
+}
+```
+
+#### Stdio
+
+Use this when the MCP server runs as a local command.
+
+```json
+{
+  "mcpServers": {
+    "github-mcp": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_TOKEN": "ghp_xxx"
+      }
+    }
+  }
+}
+```
+
+### Configuration formats
+
+Tembo accepts both of these formats:
+
+- Object format (recommended): `mcpServers` is an object keyed by server name
+- Array format: `mcpServers` is an array with explicit `name` values
+
+```json
+{
+  "mcpServers": [
+    {
+      "name": "api-server",
+      "type": "http",
+      "url": "https://example.com/mcp"
+    }
+  ]
+}
+```
+
+## Advanced
+
+<AccordionGroup>
+  <Accordion title="OAuth-based servers">
+    If a remote server requires OAuth, Tembo prompts you to authorize during setup and completes the connection after you approve access.
+  </Accordion>
+
+  <Accordion title="Server not showing up in tasks">
+    Check that the JSON is valid, required fields are present, and the integration is saved successfully. Start a new task after saving to pick up updated MCP config.
+  </Accordion>
+
+  <Accordion title="Authentication or connection errors">
+    Verify API keys, headers, or environment variables. For `http` and `sse` servers, confirm the URL is reachable from your server environment.
+  </Accordion>
+</AccordionGroup>
