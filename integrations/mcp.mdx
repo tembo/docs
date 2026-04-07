@@ -1,123 +1,128 @@
 ---
-title: 'MCP'
-description: 'Give your agents access to external tools and data sources.'
+title: "MCP"
+description: "Connect built-in and custom MCP servers for agent tool access."
 ---
 
 <Frame>
   <img src="/images/integrations/mcp.png" alt="MCP" />
 </Frame>
 
-MCP (Model Context Protocol) servers extend what your agents can access during tasks. Install them from the [Integrations page](https://app.tembo.io/integrations).
+MCP (Model Context Protocol) servers let agents use external tools and data during tasks.
 
-## Available servers
+## Features
 
-| Server | What it does |
-|--------|-------------|
-| **Kernel** | Chromium browsers, Playwright automation, video replays |
-| **Context7** | Version-specific documentation and code examples |
-| **PostHog** | Analytics, feature flags, error tracking |
-| **Neon** | Neon Postgres databases |
-| **Supabase** | Supabase projects and databases |
-| **PlanetScale** | PlanetScale databases |
-| **Stripe** | Customers, payments, subscriptions, invoices |
-| **Clerk** | Users, organizations, authentication |
-| **Notion** | Pages, databases, workspace content |
-| **Jam** | Bug reports, recordings, repro steps |
-| **Supermemory** | Long-term memory and context |
-| **Attio** | CRM records, lists, workspace data |
-| **Firetiger** | Cloud tools and resources |
+- Install MCP servers from the [Integrations page](https://app.tembo.io/integrations)
+- Add your own MCP servers with `stdio`, `http`, or `sse` transport
+- Connect OAuth-based remote MCP servers
+- Enable MCP servers from existing integrations automatically (GitHub, Linear, Sentry, Postgres)
 
-GitHub, Linear, Sentry, and Postgres MCP servers are automatically available when you connect those integrations.
+## Installation
 
-## Custom servers
+<Steps>
+  <Step title="Open Integrations">
+    Go to [Integrations](https://app.tembo.io/integrations).
+  </Step>
+  <Step title="Use built-in MCP servers">
+    Install any listed MCP integration (for example, Notion or Stripe). Once connected, the server is available in new tasks.
+  </Step>
+  <Step title="Add a custom server">
+    Click **Custom MCP**, paste your JSON config, then save.
+  </Step>
+</Steps>
 
-Bring your own MCP servers from the [Integrations page](https://app.tembo.io/integrations) using **Custom MCP**. Supports stdio, HTTP, and SSE, including OAuth.
+## Usage
 
-### Connection types
+### Prerequisites
 
-#### Remote (HTTP/SSE)
+- You have access to your organization in Tembo
+- You have the server URL or command needed to start your MCP server
+- You have any required credentials (API key, OAuth app, or environment variables)
 
-Use this for hosted MCP servers.
+### Custom server transport types
 
-- Required: `name`, `serverUrl`
-- Optional: static `headers` (for example, `Authorization`)
-- If the server requires OAuth, Tembo returns an authorization URL and completes setup after you authorize
+#### HTTP
 
-```json
-{
-  "type": "http",
-  "name": "api-server",
-  "url": "https://example.com/mcp",
-  "headers": {
-    "Authorization": "Bearer token"
-  }
-}
-```
-
-For SSE servers, use the same format with `"type": "sse"` and point the URL to your SSE endpoint.
-
-#### Stdio
-
-Use this for command-based MCP servers started in the sandbox.
-
-- Required: `name`, `command`
-- Optional: `args` (space-separated in UI), `env` variables
-
-```json
-{
-  "type": "stdio",
-  "name": "github-mcp",
-  "command": "npx",
-  "args": ["-y", "@modelcontextprotocol/server-github"],
-  "env": {
-    "GITHUB_TOKEN": "ghp_xxx"
-  }
-}
-```
-
-### Configuration format
-
-Custom MCP servers support two JSON formats:
-
-**Object format** (recommended) — keyed by server name:
+Use this for hosted MCP endpoints.
 
 ```json
 {
   "mcpServers": {
-    "my-server": { "command": "node", "args": ["server.js"], "env": { "API_KEY": "key" } },
-    "api-server": { "url": "https://api.example.com/mcp" }
+    "api-server": {
+      "type": "http",
+      "url": "https://example.com/mcp",
+      "headers": {
+        "Authorization": "Bearer token"
+      }
+    }
   }
 }
 ```
 
-**Array format** — explicit name and type fields:
+#### SSE
+
+Use this for hosted MCP servers that expose an SSE endpoint.
+
+```json
+{
+  "mcpServers": {
+    "events-server": {
+      "type": "sse",
+      "url": "https://example.com/sse"
+    }
+  }
+}
+```
+
+#### Stdio
+
+Use this when the MCP server runs as a local command.
+
+```json
+{
+  "mcpServers": {
+    "github-mcp": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_TOKEN": "ghp_xxx"
+      }
+    }
+  }
+}
+```
+
+### Configuration formats
+
+Tembo accepts both of these formats:
+
+- Object format (recommended): `mcpServers` is an object keyed by server name
+- Array format: `mcpServers` is an array with explicit `name` values
 
 ```json
 {
   "mcpServers": [
-    { "name": "my-server", "type": "stdio", "command": "node", "args": ["server.js"] },
-    { "name": "api-server", "type": "http", "url": "https://api.example.com/mcp" }
+    {
+      "name": "api-server",
+      "type": "http",
+      "url": "https://example.com/mcp"
+    }
   ]
 }
 ```
 
-### Adding custom MCP servers
+## Advanced
 
-1. Navigate to the [Integrations page](https://app.tembo.io/integrations)
-2. Click **Custom MCP**
-3. Enter your MCP configuration in JSON format
-4. Save — new tasks will automatically use the configured MCP servers
+<AccordionGroup>
+  <Accordion title="OAuth-based servers">
+    If a remote server requires OAuth, Tembo prompts you to authorize during setup and completes the connection after you approve access.
+  </Accordion>
 
-### Best practices
+  <Accordion title="Server not showing up in tasks">
+    Check that the JSON is valid, required fields are present, and the integration is saved successfully. Start a new task after saving to pick up updated MCP config.
+  </Accordion>
 
-- **Security** — Store sensitive credentials as environment variables rather than hardcoding them in configuration.
-- **Testing** — Test MCP servers locally before adding them to your organization configuration.
-- **Documentation** — Document custom MCP servers for your team, including what tools they provide and when to use them.
-
-### Troubleshooting
-
-- **MCP server not available** — Ensure the server configuration is valid JSON and all required fields are provided.
-- **Authentication errors** — Verify credentials and API keys are correct and have the necessary permissions.
-- **Connection issues** — For HTTP/SSE servers, check that the URL is accessible and the server is running.
-
-For additional help, contact [support](mailto:support@tembo.io).
+  <Accordion title="Authentication or connection errors">
+    Verify API keys, headers, or environment variables. For `http` and `sse` servers, confirm the URL is reachable from your server environment.
+  </Accordion>
+</AccordionGroup>
