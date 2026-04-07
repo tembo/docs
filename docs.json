@@ -40,13 +40,14 @@
                 "groups": [
                     {
                         "group": "Get Started",
-                        "pages": ["index", "quickstart"]
+                        "pages": ["index", "quickstart", "support"]
                     },
                     {
                         "group": "Features",
                         "pages": [
                             "features/automations",
                             "features/coding-agents",
+                            "features/models",
                             "features/feedback-loop",
                             "features/max",
                             "features/sandbox-environment",
@@ -72,7 +73,6 @@
                         "group": "Integrations",
                         "pages": [
                             "integrations/mcp",
-                            "integrations/aws",
                             "integrations/bitbucket",
                             "integrations/github",
                             "integrations/gitlab",
@@ -83,7 +83,16 @@
                             "integrations/raycast",
                             "integrations/sentry",
                             "integrations/slack",
-                            "integrations/supabase"
+                            "integrations/supabase",
+                            "integrations/aws"
+                        ]
+                    },
+                    {
+                        "group": "Other",
+                        "pages": [
+                            "resources/pwa",
+                            "resources/pricing",
+                            "resources/changelog"
                         ]
                     }
                 ]
@@ -108,6 +117,12 @@
                                     "POST /task/create",
                                     "GET /task/list",
                                     "GET /task/search"
+                                ]
+                            },
+                            {
+                                "group": "Automations",
+                                "pages": [
+                                    "api/trigger-automation"
                                 ]
                             },
                             {
@@ -161,5 +176,18 @@
             "youtube": "https://www.youtube.com/@tembo_io"
         }
     },
-    "redirects": []
+    "redirects": [
+        {
+            "source": "/admin/support",
+            "destination": "/support"
+        },
+        {
+            "source": "/billing",
+            "destination": "/resources/pricing"
+        },
+        {
+            "source": "/admin/billing",
+            "destination": "/resources/pricing"
+        }
+    ]
 }

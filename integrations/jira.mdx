@@ -16,11 +16,11 @@ description: "Assign tickets to Tembo and get PRs back."
 ## Installation
 
 <Steps>
-  <Step title="Create Tembo account">
-    Create a dedicated Jira account for Tembo using an email alias (`you+tembo@company.com`) or dedicated email.
+  <Step title="Create standard Jira user">
+    Create a dedicated standard Jira user for Tembo using an email alias (`you+tembo@company.com`) or dedicated mailbox. In the Jira user profile, set the name/display name to `Tembo` so integration comments show up as `Tembo`.
   </Step>
   <Step title="Install">
-    Go to [Integrations](https://app.tembo.io/integrations) and click **Install** next to Jira. Log in as the Tembo account.
+    Go to [Integrations](https://app.tembo.io/integrations) and click **Install** next to Jira. Log in as the standard Jira user.
   </Step>
   <Step title="Add labels">
     Create a `Tembo` label in your Jira project (recommended). Add it to any issue you want Tembo to work on.
@@ -58,7 +58,7 @@ See [Automations](/features/automations) for available Jira event triggers.
 
   <AccordionGroup>
   <Accordion title="Tembo not responding to labels">
-    Verify the issue has a `Tembo` label or a `tembo/{repo-name}` label (for example, `tembo/monorepo`). Confirm you installed using the dedicated Tembo Jira account. Check integration status on the [Integrations page](https://app.tembo.io/integrations).
+    Verify the issue has the `Tembo` label or a `tembo/{repo-name}` label (for example, `tembo/monorepo`). Confirm you installed using the dedicated standard Jira user. Check integration status on the [Integrations page](https://app.tembo.io/integrations).
   </Accordion>
 
   <Accordion title="Issues not being processed">
