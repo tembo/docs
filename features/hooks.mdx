@@ -34,6 +34,12 @@ Hooks run shell commands at specific points during a task. Configure them in `.t
 
 Set `"autoFix": true` to let Tembo analyze hook failures and attempt to fix issues before retrying.
 
+## Branch-aware config loading
+
+Tembo checks out the task branch before loading `.tembo.json` and running `postClone`.
+
+This ensures hooks and config are read from the same branch context the agent will edit, including changes that exist only on your selected base branch.
+
 ## Details
 
 - Commands run sequentially in the repository root
