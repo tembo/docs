@@ -9,7 +9,7 @@ description: "Assign tickets to Tembo and get PRs back."
 
 ## Features
 
-- Add the "Tembo" label to trigger implementation
+- Add the `Tembo` label to trigger implementation
 - Use `tembo/{repo-name}` labels to target specific repositories
 - Status updates and PR links posted as comments
 
@@ -23,15 +23,32 @@ description: "Assign tickets to Tembo and get PRs back."
     Go to [Integrations](https://app.tembo.io/integrations) and click **Install** next to Jira. Log in as the standard Jira user.
   </Step>
   <Step title="Add labels">
-    Create a "Tembo" label in your Jira project. Add it to any issue you want Tembo to work on.
+    Create a `Tembo` label in your Jira project (recommended). Add it to any issue you want Tembo to work on.
   </Step>
 </Steps>
 
 ## Usage
 
-Add the "Tembo" label to any issue. Tembo reads the description, creates a coding session, and opens a PR.
+Add the `Tembo` label to any issue. Tembo reads the description, creates a coding session, and opens a PR.
 
-To target a specific repo, add a `tembo/{repo-name}` label (e.g., `tembo/frontend`).
+If you add a `tembo/{repo-name}` label, that also triggers Tembo and routes the task to the selected repository.
+
+### Target a specific repository
+
+Add a label in the format `tembo/{repo-name}` (for example, `tembo/monorepo`).
+
+- `{repo-name}` must match the repository name as it appears in Tembo (the `name` field on the connected repository).
+- The `tembo/` prefix is case-sensitive: use lowercase `tembo/`.
+- Valid characters in `{repo-name}` are letters, numbers, `_`, `.`, and `-`.
+
+When multiple `tembo/{repo-name}` labels are present, Tembo uses the first one that matches a connected, enabled repository.
+
+### Fallback behavior
+
+If no `tembo/{repo-name}` label matches a connected, enabled repository, Tembo falls back in this order:
+
+1. The default repository configured for your Jira integration in Tembo
+2. The first available enabled repository in your Tembo organization
 
 ## Automations
 
@@ -39,9 +56,9 @@ See [Automations](/features/automations) for available Jira event triggers.
 
 ## Advanced
 
-<AccordionGroup>
+  <AccordionGroup>
   <Accordion title="Tembo not responding to labels">
-    Verify the label is "Tembo". Confirm you installed using the dedicated standard Jira user. Check integration status on the [Integrations page](https://app.tembo.io/integrations).
+    Verify the issue has the `Tembo` label or a `tembo/{repo-name}` label (for example, `tembo/monorepo`). Confirm you installed using the dedicated standard Jira user. Check integration status on the [Integrations page](https://app.tembo.io/integrations).
   </Accordion>
 
   <Accordion title="Issues not being processed">
