@@ -7,14 +7,15 @@ This repository is the single source for Tembo's public documentation site. It c
 | Path | What lives here |
 | --- | --- |
 | `docs.json` | Global Mintlify configuration that controls navigation, branding, and site settings. |
-| `welcome.mdx` | Landing page content for the documentation site. |
+| `index.mdx` and `quickstart.mdx` | Landing and quickstart content for the documentation site. |
 | `features/` | Feature deep-dives and how-to guides for core product surfaces. |
 | `integrations/` | End-to-end setup guides for partner integrations. |
-| `admin/` | Account, billing, and security administration docs. |
+| `learn/` | Use-case guides for common engineering workflows. |
+| `api/` | API overview pages and generated OpenAPI reference routes. |
 | `resources/` | Evergreen resources that support broader customer education. |
-| `snippets/` | Reusable callouts and shared content fragments. |
+| `resources/snippets/` | Reusable callouts and shared content fragments. |
 | `images/` and `logo/` | Static assets referenced across pages. |
-| `openapi.documented*.yml` | Source OpenAPI specs that back the API reference experience. |
+| `openapi.documented.yml` | Source OpenAPI spec that backs the API reference experience. |
 
 ## Local development
 
@@ -59,9 +60,9 @@ The dev server defaults to `http://localhost:3000`. Keep it running while you ed
 - Use relative paths for internal links and add language tags (for example, ` ```ts `) on all code blocks.
 - Test or execute each code sample; remove stale snippets instead of guessing at fixes.
 - Update `docs.json` whenever you add, rename, or move pages so navigation stays accurate.
-- Prefer reusing snippets from `snippets/` for repeated callouts, warnings, and notes.
+- Prefer reusing snippets from `resources/snippets/` for repeated callouts, warnings, and notes.
 - Store new images in `images/` (or `logo/` for brand assets) and reference them with relative paths.
-- When you edit the API reference, update the relevant `openapi.documented*.yml` file and confirm the changes render as expected in the preview.
+- When you edit the API reference, update `openapi.documented.yml` and confirm the changes render as expected in the preview.
 
 ## Review and deployment
 
