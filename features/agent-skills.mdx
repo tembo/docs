@@ -31,7 +31,7 @@ From there you can:
 - **Add a skill** with **Add skill**. Enter a name, a description, and the file contents. The editor always includes `SKILL.md`; use the plus control to add more files and give each a filename (for example `migration_template.sql`).
 - **Edit or delete** a skill from the table row actions. Saving an edit replaces the entire file set when you submit the form with files included, so include every file you want to keep.
 
-Below your organization's skills, the **skills marketplace** lists popular packages from [skills.sh](https://skills.sh). Search requires at least three characters. Use **Install** to copy a marketplace skill into your organization. Tembo downloads the package, maps paths to filenames, and creates a skill for you. If the package defines a `description` in YAML frontmatter in `SKILL.md`, Tembo uses it; otherwise it fills a default description. You can open **View** on a card to see the listing on skills.sh. Installed marketplace skills behave like skills you wrote yourself and you can edit them afterward.
+Below your organization's skills, the **skills marketplace** connects to [skills.sh](https://skills.sh). Tembo supports **any** skill published there: the page shows popular skills by default, and you can find the rest with search (at least three characters). Use **Install** to copy a marketplace skill into your organization. Tembo downloads the package, maps paths to filenames, and creates a skill for you. If the package defines a `description` in YAML frontmatter in `SKILL.md`, Tembo uses it; otherwise it fills a default description. You can open **View** on a card to see the listing on skills.sh. Installed marketplace skills behave like skills you wrote yourself and you can edit them afterward.
 
 ## How Tembo applies managed skills
 
@@ -106,6 +106,6 @@ When changing the schema:
 ## Summary
 
 - You can keep skills in **repository dot directories** (for example `.codex/skills/` or `.cursor/rules/`) so they are versioned with the project, and you can add **managed skills** under **Settings**, **Agent**, **Skills** in the Tembo dashboard.
-- Managed skills use a required `SKILL.md` plus optional companion files; install more from the **skills.sh** marketplace on the same page.
+- Managed skills use a required `SKILL.md` plus optional companion files; install more from the **skills.sh** marketplace on the same page (any skill on skills.sh, not only the popular list).
 - Tembo injects **all** managed org skills on **every** agent run, using either per agent skill folders (Codex, Cursor) or appends (Claude Code, OpenCode, Amp, Pi).
 - Write clear **descriptions** on managed skills so agents know when a skill applies, and keep **companion files** for templates or long references.
