@@ -19,10 +19,10 @@ At a lower level, a standard deployment runs **6 core services**:
 
 - **Web app** for the user interface
 - **API** for product workflows, auth, and orchestration
-- **Worker** for background execution
-- **Cron** for scheduled jobs
-- **Redis** for coordination and realtime infrastructure
-- **Postgres** for application data
+- **Sandboxe service** for executing your tasks in isolated VMs
+- **Cron** for scheduled jobs (kicked off from tembo's `Automations` feature or via tool calls from agents )
+- **Redis**
+- **Postgres**
 
 Postgres can run on that same VM, or you can point Tembo at a separate Postgres instance using your own connection string.
 
