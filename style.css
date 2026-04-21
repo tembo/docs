@@ -161,6 +161,28 @@ h3 {
     letter-spacing: -0.1px !important;
 }
 
+#body-content .cloud-provider {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+#body-content .cloud-provider svg {
+    width: 1.15rem;
+    height: 1.15rem;
+    flex: none;
+}
+
+#body-content .cloud-provider-aws {
+    color: #111827;
+}
+
+.dark #body-content .cloud-provider-aws {
+    color: #f9fafb;
+}
+
 #body-content span.method-nav-pill span {
     line-height: 1.25 !important;
 }
