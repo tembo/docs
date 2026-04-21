@@ -7,11 +7,15 @@ Tembo offers a self-hosted deployment for teams that need Tembo to run inside in
 
 With self-hosted, Tembo runs in your environment instead of Tembo-managed infrastructure. Tembo provides the packaged release, upgrade path, and support, and you decide how it is deployed, networked, and operated.
 
+Tembo self-hosted works across **AWS**, **Azure**, and **GCP**.
+
 ## How it works
 
 At a high level, self-hosted Tembo is a small set of core services that you run in your own environment.
 
-On a single VM, Tembo typically runs **6 core services**:
+If you want the simplest deployment model, Tembo **can run on a single VM**.
+
+At a lower level, a standard deployment runs **6 core services**:
 
 - **Web app** for the user interface
 - **API** for product workflows, auth, and orchestration
@@ -22,13 +26,15 @@ On a single VM, Tembo typically runs **6 core services**:
 
 Postgres can run on that same VM, or you can point Tembo at a separate Postgres instance using your own connection string.
 
-This makes the deployment straightforward: you can start with a simple single-VM setup, or connect Tembo to customer-managed infrastructure where needed.
+This makes the deployment straightforward: you can start with a simple single-VM setup, or connect Tembo to customer-managed infrastructure where needed. For larger environments, auto scaling is the default posture.
 
 ## What you manage
 
 You manage the infrastructure, networking, secrets, backups, and day-to-day operations of the environment.
 
 Tembo provides the application release, deployment guidance, and support for upgrades.
+
+You can also work with the Tembo team more directly through support packages, including optional FDE support for features specific to your team. If you want help operating the VM layer, the Tembo team can help manage your VMs and stay ahead of scaling, availability, and downtime risks as usage grows.
 
 ## Security and networking
 
