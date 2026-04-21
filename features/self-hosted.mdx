@@ -5,103 +5,46 @@ description: 'Run Tembo inside infrastructure you control, with packaged release
 
 Tembo offers a self-hosted deployment for teams that need Tembo to run inside infrastructure they control.
 
-With self-hosted, you keep the deployment boundary in your own environment while Tembo provides the packaged application, release lifecycle, and support needed to operate it. The goal is to give you the Tembo product experience without requiring your repositories, credentials, or operational traffic to live only in Tembo-managed infrastructure.
-
-## What self-hosted means
-
-Self-hosted is a customer-managed deployment of Tembo. In practice, that means:
-
-- The Tembo application runs in cloud or on-prem infrastructure you control.
-- Application state and runtime configuration stay within your environment.
-- You decide how the deployment is exposed, which networks can reach it, and which outbound connections are allowed.
-- Tembo provides release artifacts, upgrade paths, and enterprise support rather than operating the environment on your behalf.
-
-This is typically the right fit when you have security, compliance, networking, or procurement requirements that make a standard SaaS deployment difficult.
+With self-hosted, Tembo runs in your environment instead of Tembo-managed infrastructure. Tembo provides the packaged release, upgrade path, and support, and you decide how it is deployed, networked, and operated.
 
 ## How it works
 
-At a high level, a self-hosted Tembo deployment includes the same major product layers you would expect from the hosted product:
+At a high level, self-hosted Tembo is a small set of core services that you run in your own environment.
 
-| Component | Purpose |
-|----------|---------|
-| **Web application** | The main interface your team uses to access Tembo, manage work, and review activity |
-| **API and control services** | The backend services that power orchestration, configuration, authentication, and product workflows |
-| **Persistent data services** | Storage for application state, configuration, and operational metadata |
-| **Operational management surfaces** | Internal management paths used for version awareness and controlled upgrades |
+On a single VM, Tembo typically runs **6 core services**:
 
-Tembo distributes self-hosted builds as managed release artifacts. The product includes version-aware update handling so deployments can check whether a newer release is available and then upgrade on your schedule rather than being changed automatically underneath you.
+- **Web app** for the user interface
+- **API** for product workflows, auth, and orchestration
+- **Worker** for background execution
+- **Cron** for scheduled jobs
+- **Redis** for coordination and realtime infrastructure
+- **Postgres** for application data
 
-From a customer point of view, the operating model is straightforward:
+Postgres can run on that same VM, or you can point Tembo at a separate Postgres instance using your own connection string.
 
-1. Tembo provides a supported self-hosted release and deployment guidance.
-2. You deploy it into your own environment and attach it to the network, identity, and security controls your organization requires.
-3. Your users access Tembo through your approved ingress path.
-4. Tembo connects only to the external systems you choose to enable, such as source control, issue tracking, chat tools, model providers, or internal services.
-5. When a new version is available, you choose when to apply the upgrade.
+This makes the deployment straightforward: you can start with a simple single-VM setup, or connect Tembo to customer-managed infrastructure where needed.
 
-## Deployment and operations model
+## What you manage
 
-Self-hosted is designed to keep the customer-facing control plane inside your boundary while preserving a managed product lifecycle.
+You manage the infrastructure, networking, secrets, backups, and day-to-day operations of the environment.
 
-That usually means:
+Tembo provides the application release, deployment guidance, and support for upgrades.
 
-- You run Tembo in a private cloud account, dedicated network segment, or on-prem environment.
-- Internal Tembo services communicate over your private network.
-- You can place your own ingress, DNS, TLS termination, and access policies in front of the deployment.
-- Runtime configuration and secrets are managed within your environment.
-- Upgrades are delivered as opt-in releases instead of always-on SaaS changes.
+## Security and networking
 
-The exact shape of the deployment can vary by environment, but the customer-facing expectation stays the same: Tembo is installed in your infrastructure, and you retain operational control over how it is connected and governed.
+Self-hosted is designed for teams that want Tembo inside a private cloud, dedicated network, or on-prem environment.
 
-## Shared responsibility
+- You control ingress, DNS, TLS, and firewall policy
+- Application data and runtime configuration stay in your environment
+- Outbound access can be limited to the systems Tembo needs to reach, such as git providers, model endpoints, or internal services
+- Upgrades happen on your schedule
 
-Self-hosted works best when the responsibility split is clear.
+## Who it is for
 
-| Tembo provides | You provide |
-|---------------|-------------|
-| Supported self-hosted release artifacts | The infrastructure account, cluster, VM, or environment where Tembo runs |
-| Deployment guidance and onboarding support | Network design, ingress, DNS, TLS, and firewall policy |
-| Upgrade path and release lifecycle | Secrets management, environment configuration, and access control implementation |
-| Product support for the Tembo application | Backups, monitoring, incident response, and disaster recovery for your environment |
-| Help validating the deployment during rollout | Connectivity to external systems such as git providers, model endpoints, or internal services |
-
-This model is intentional. It gives you control over the environment while keeping Tembo responsible for the product itself.
-
-## Security and networking posture
-
-Most self-hosted customers choose Tembo because they want a tighter security boundary.
-
-At a high level, the expected posture is:
-
-- Tembo is deployed inside infrastructure you already govern.
-- Private application traffic stays within your network unless you explicitly expose an endpoint.
-- Credentials, runtime secrets, and persistent data remain under your operational control.
-- Outbound access can be limited to the systems Tembo needs to reach in your environment, plus any approved third-party services you integrate.
-- Upgrade and support workflows can be aligned with your normal change-management process.
-
-The exact egress profile depends on the integrations and model providers you use. Some teams allow outbound access to public SaaS tools, while others route traffic through approved gateways or private connectivity. Tembo works within that customer-defined posture rather than assuming open internet access.
-
-## Onboarding and deployment flow
-
-A typical rollout looks like this:
-
-1. **Scoping**: Tembo and your team align on environment requirements, security expectations, identity model, and integrations.
-2. **Environment preparation**: You provision the target infrastructure and the network controls around it.
-3. **Installation**: Tembo provides the supported release and the configuration inputs needed to stand it up in your environment.
-4. **Validation**: You verify user access, external connectivity, and operational basics such as logging, backup, and upgrade procedures.
-5. **Go-live**: Your team brings the deployment into production on your schedule, with Tembo supporting the rollout.
-
-For most customers, the main work is not the application install itself. It is aligning the deployment with internal networking, security review, identity, and change-management requirements.
-
-## Who this is for
-
-Self-hosted is usually a good fit for:
-
-- Teams that need Tembo inside a customer-controlled cloud or on-prem boundary
-- Organizations with strict security or compliance requirements around source code, credentials, or runtime data
-- Enterprises that want private networking, controlled egress, and customer-managed secrets
-- Companies that need Tembo to connect to internal systems or approved model gateways that are not accessible from a public SaaS environment
-- Buyers who want a predictable upgrade process tied to their own maintenance windows
+- Teams that need Tembo inside infrastructure they control
+- Organizations with security or compliance requirements around source code, credentials, or runtime data
+- Companies that want a simple single-VM deployment, with the option to use an external Postgres database
+- Buyers who want a predictable, customer-managed upgrade process
 
 If you do not need that level of control, the hosted product is usually simpler to adopt and operate.
 
