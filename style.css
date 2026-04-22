@@ -176,8 +176,12 @@ h3 {
 }
 
 #body-content .cloud-provider-label {
-    color: #ffffff;
+    color: #111827;
     font-weight: 600;
+}
+
+.dark #body-content .cloud-provider-label {
+    color: #f9fafb;
 }
 
 #body-content .cloud-provider-aws {
