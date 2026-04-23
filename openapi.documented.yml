@@ -453,7 +453,7 @@ paths:
             parameters:
                 - name: keyOrId
                   in: path
-                  description: The automation's UUID or its slug (key). You can find the UUID in the automation's properties panel.
+                  description: The automation's UUID or its macro (key). You can find the UUID in the automation's properties panel.
                   required: true
                   schema:
                       type: string
@@ -467,7 +467,7 @@ paths:
             description: |-
                 Trigger an automation with an arbitrary JSON payload, which is passed to the automation as event context.
 
-                You can identify the automation by either its UUID or its slug (key). The API key can be supplied via the `Authorization: Bearer` header or the `apiKey` query parameter.
+                You can identify the automation by either its UUID or its macro (key). The API key can be supplied via the `Authorization: Bearer` header or the `apiKey` query parameter.
             summary: Trigger Automation
             requestBody:
                 description: Arbitrary JSON payload passed to the automation as event context. Your automation instructions can reference any values in this payload.
