@@ -45,7 +45,7 @@
                     {
                         "group": "Features",
                         "pages": [
-                            "features/automations",
+                            "features/agents",
                             "features/coding-agents",
                             "features/models",
                             "features/feedback-loop",
@@ -120,9 +120,9 @@
                                 ]
                             },
                             {
-                                "group": "Automations",
+                                "group": "Agents",
                                 "pages": [
-                                    "api/trigger-automation"
+                                    "api/trigger-agent"
                                 ]
                             },
                             {
@@ -187,6 +187,14 @@
         {
             "source": "/admin/billing",
             "destination": "/resources/pricing"
+        },
+        {
+            "source": "/features/automations",
+            "destination": "/features/agents"
+        },
+        {
+            "source": "/api/trigger-automation",
+            "destination": "/api/trigger-agent"
         }
     ]
 }

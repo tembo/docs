@@ -27,7 +27,7 @@ A single task can span multiple repositories. Tembo can use context from connect
 
 **Triage a Linear ticket in Slack**: A Slack message triggers Tembo to read the Linear ticket, scan the codebase for context, and post an explanation back to the Slack thread.
 
-**Summarize Sentry errors**: A daily automation fetches errors from Sentry, ranks them by impact, creates Linear tickets, and posts a summary to Slack.
+**Summarize Sentry errors**: A daily agent fetches errors from Sentry, ranks them by impact, creates Linear tickets, and posts a summary to Slack.
 
 **Enrich issues with context**: When a new issue is created, Tembo searches the codebase, pulls related Notion docs, and adds implementation hints as a comment.
 
@@ -37,6 +37,6 @@ A single task can span multiple repositories. Tembo can use context from connect
 
 ## How it works
 
-Agents access integrations through MCP servers. When you connect an integration or install an MCP server, it becomes available to agents during tasks and automations. No extra configuration needed.
+Agents access integrations through MCP servers. When you connect an integration or install an MCP server, it becomes available to agents during tasks and scheduled runs. No extra configuration needed.
 
 See [MCP](/integrations/mcp) for available servers.

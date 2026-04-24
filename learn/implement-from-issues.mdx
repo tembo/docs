@@ -9,7 +9,7 @@ Tembo picks up issues from your project management tools and writes code to solv
 
 <Steps>
   <Step title="Issue assigned">
-    Create or assign an issue in [Linear](/integrations/linear), [Jira](/integrations/jira), [GitHub](/integrations/github), or mention it in [Slack](/integrations/slack). Tembo picks it up via webhook or [automation](/features/automations) trigger.
+    Create or assign an issue in [Linear](/integrations/linear), [Jira](/integrations/jira), [GitHub](/integrations/github), or mention it in [Slack](/integrations/slack). Tembo picks it up via webhook or [agent](/features/agents) trigger.
   </Step>
   <Step title="Context gathered">
     Tembo reads the issue description, pulls in related code, linked docs, and conversation history to understand the full picture.
@@ -34,7 +34,7 @@ Navigate to the [Integrations page](https://app.tembo.io/integrations) and conne
 - [Slack](/integrations/slack)
 - [Notion](/integrations/notion)
 
-### Create an automation
+### Create an agent
 
 **Trigger**: Issue created, issue assigned, or label added
 **[MCP Servers](/integrations/mcp)**: GitHub + your issue tracker
@@ -61,5 +61,5 @@ Tembo generates solutions autonomously, but your team decides what gets deployed
 ## Best practices
 
 - **Write clear issue descriptions**: The more context in the issue, the better the implementation.
-- **Use labels**: Trigger [automations](/features/automations) only on specific labels (e.g., `tembo`, `auto-implement`) to control which issues get picked up.
+- **Use labels**: Trigger [agents](/features/agents) only on specific labels (e.g., `tembo`, `auto-implement`) to control which issues get picked up.
 - **Start with small tasks**: Begin with well-scoped bugs and small features before tackling larger work.
