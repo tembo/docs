@@ -45,13 +45,7 @@
                     {
                         "group": "Features",
                         "pages": [
-                            {
-                                "group": "Agents",
-                                "pages": [
-                                    "features/agents",
-                                    "features/coding-agents"
-                                ]
-                            },
+                            "features/agents",
                             "features/models",
                             "features/feedback-loop",
                             "features/max",
@@ -196,6 +190,10 @@
         {
             "source": "/features/automations",
             "destination": "/features/agents"
+        },
+        {
+            "source": "/features/coding-agents",
+            "destination": "/features/agents#coding-agent"
         },
         {
             "source": "/api/trigger-automation",
