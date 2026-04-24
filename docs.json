@@ -45,8 +45,13 @@
                     {
                         "group": "Features",
                         "pages": [
-                            "features/agents",
-                            "features/coding-agents",
+                            {
+                                "group": "Agents",
+                                "pages": [
+                                    "features/agents",
+                                    "features/coding-agents"
+                                ]
+                            },
                             "features/models",
                             "features/feedback-loop",
                             "features/max",
