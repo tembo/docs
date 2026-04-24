@@ -35,7 +35,7 @@ If you add a `tembo/{repo-name}` label, that also triggers Tembo and routes the 
 
 ### Target a specific repository
 
-Add a label in the format `tembo/{repo-name}` (for example, `tembo/monorepo`).
+Add a label in the format `tembo/{repo-name}` (for example, `tembo/monorepo`). This label also triggers processing on its own, so you do not need a separate `Tembo` label.
 
 - `{repo-name}` must match the repository name as it appears in Tembo (the `name` field on the connected repository).
 - The `tembo/` prefix is case-sensitive: use lowercase `tembo/`.
