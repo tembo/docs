@@ -82,6 +82,7 @@
                             "integrations/raycast",
                             "integrations/sentry",
                             "integrations/slack",
+                            "integrations/discord",
                             "integrations/supabase",
                             "integrations/aws"
                         ]
