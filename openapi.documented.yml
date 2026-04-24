@@ -14,11 +14,11 @@ components:
             name: Authorization
     schemas: {}
 paths:
-    /task/create:
+    /session/create:
         post:
             responses:
                 "200":
-                    description: Task created successfully
+                    description: Session created successfully
                     content:
                         application/json:
                             schema:
@@ -45,8 +45,8 @@ paths:
                                     htmlUrl:
                                         type: string
                                         format: uri
-                                        description: URL to view this task in the Tembo web application
-                                        example: https://app.tembo.io/tasks/123e4567-e89b-12d3-a456-426614174000
+                                        description: URL to view this session in the Tembo web application
+                                        example: https://app.tembo.io/sessions/123e4567-e89b-12d3-a456-426614174000
                                 required:
                                     - id
                                     - title
@@ -78,12 +78,12 @@ paths:
                                         type: string
                                 required:
                                     - error
-            operationId: postPublic-apiTaskCreate
+            operationId: postPublic-apiSessionCreate
             parameters: []
-            description: Create a task for tembo to start working on in the background
-            summary: Create Task
+            description: Create a session for tembo to start working on in the background
+            summary: Create Session
             requestBody:
-                description: Task creation payload
+                description: Session creation payload
                 content:
                     application/json:
                         schema:
@@ -92,22 +92,22 @@ paths:
                                 prompt:
                                     type: string
                                     minLength: 1
-                                    description: Description of the task to be performed. Supports tagging files.
+                                    description: Description of the session to be performed. Supports tagging files.
                                     example: Fix the authentication bug in the login component
                                 description:
                                     type: string
                                     minLength: 1
-                                    description: Detailed description of the task (alternative to prompt)
+                                    description: Detailed description of the session (alternative to prompt)
                                     example: Users are reporting they cannot log in. JWT token validation appears to be failing.
                                 agent:
                                     type: string
-                                    description: The agent to use for this task
+                                    description: The agent to use for this session
                                     example: claudeCode:claude-opus-4-5
                                 repositories:
                                     type: array
                                     items:
                                         type: string
-                                    description: Array of code repository urls that this task relates to
+                                    description: Array of code repository urls that this session relates to
                                     example:
                                         - https://github.com/org/repo
                                         - https://gitlab.com/org/repo-2
@@ -133,7 +133,7 @@ paths:
                                     type: boolean
                                     nullable: true
                                     default: true
-                                    description: Whether to immediately queue the task for processing (optional, defaults to true)
+                                    description: Whether to immediately queue the session for processing (optional, defaults to true)
                                     example: false
                             anyOf:
                                 - required:
@@ -150,7 +150,7 @@ paths:
                         apiKey: 'My API Key',
                       });
 
-                      const task = await client.task.create({
+                      const session = await client.session.create({
                         prompt: 'Fix the authentication bug in the login component',
                         agent: 'claudeCode:claude-opus-4-5',
                         repositories: [
@@ -161,8 +161,8 @@ paths:
                         branchName: "cooper-is-awesome",
                       });
 
-                      console.log(task.id);
-    /task/list:
+                      console.log(session.id);
+    /session/list:
         get:
             responses:
                 "200":
@@ -198,8 +198,8 @@ paths:
                                                 htmlUrl:
                                                     type: string
                                                     format: uri
-                                                    description: URL to view this task in the Tembo web application
-                                                    example: https://app.tembo.io/tasks/123e4567-e89b-12d3-a456-426614174000
+                                                    description: URL to view this session in the Tembo web application
+                                                    example: https://app.tembo.io/sessions/123e4567-e89b-12d3-a456-426614174000
                                             required:
                                                 - id
                                                 - title
@@ -234,7 +234,7 @@ paths:
                                 required:
                                     - issues
                                     - meta
-            operationId: getPublic-apiTaskList
+            operationId: getPublic-apiSessionList
             parameters:
                 - name: limit
                   in: query
@@ -256,7 +256,7 @@ paths:
                       default: 1
                       example: 1
             description: Gets a paginated list of issues for the organization
-            summary: List Tasks
+            summary: List Sessions
             x-codeSamples:
                 - lang: JavaScript
                   source: |-
@@ -266,10 +266,10 @@ paths:
                         apiKey: 'My API Key',
                       });
 
-                      const tasks = await client.task.list();
+                      const sessions = await client.session.list();
 
-                      console.log(tasks.issues);
-    /task/search:
+                      console.log(sessions.issues);
+    /session/search:
         get:
             responses:
                 "200":
@@ -305,8 +305,8 @@ paths:
                                                 htmlUrl:
                                                     type: string
                                                     format: uri
-                                                    description: URL to view this task in the Tembo web application
-                                                    example: https://app.tembo.io/tasks/123e4567-e89b-12d3-a456-426614174000
+                                                    description: URL to view this session in the Tembo web application
+                                                    example: https://app.tembo.io/sessions/123e4567-e89b-12d3-a456-426614174000
                                             required:
                                                 - id
                                                 - title
@@ -355,7 +355,7 @@ paths:
                                         type: string
                                 required:
                                     - error
-            operationId: getPublic-apiTaskSearch
+            operationId: getPublic-apiSessionSearch
             parameters:
                 - name: q
                   in: query
@@ -385,7 +385,7 @@ paths:
                       default: 1
                       example: 1
             description: Search issues for the organization with pagination
-            summary: Search Tasks
+            summary: Search Sessions
             x-codeSamples:
                 - lang: JavaScript
                   source: |-
@@ -395,7 +395,7 @@ paths:
                         apiKey: 'My API Key',
                       });
 
-                      const response = await client.task.search({ q: 'authentication bug' });
+                      const response = await client.session.search({ q: 'authentication bug' });
 
                       console.log(response.issues);
     /automation/{keyOrId}/trigger:

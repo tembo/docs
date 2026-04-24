@@ -1,9 +1,9 @@
 ---
 title: 'Sandbox'
-description: 'Secure, isolated environments where coding agents execute tasks.'
+description: 'Secure, isolated environments where coding agents execute sessions.'
 ---
 
-Every task runs in its own isolated sandbox. Sandboxes are ephemeral: spun up for the task, destroyed when it's done. No code or state persists after execution.
+Every session runs in its own isolated sandbox. Sandboxes are ephemeral: spun up for the session, destroyed when it's done. No code or state persists after execution.
 
 ## Sandbox types
 
@@ -13,21 +13,21 @@ Container-based. Fast startup, scalable, no infrastructure to manage.
 
 - Workloads run as non-root
 - Docker daemon is not exposed inside the sandbox
-- Each task gets its own isolated network namespace
+- Each session gets its own isolated network namespace
 - Standard container hardening best practices
 
-Best for most tasks: code analysis, fixes, features, reviews.
+Best for most sessions: code analysis, fixes, features, reviews.
 
 ### Large (Full VM)
 
-Dedicated Linux VM per task. No two tasks share the same VM.
+Dedicated Linux VM per session. No two sessions share the same VM.
 
 - 4 vCPU / 8 GB RAM (adjustable)
 - 100 GB disk
 - Full nested virtualization (Docker-in-Docker)
 - Stronger isolation boundary
 
-Best for tasks that need Docker (integration tests, building images, multi-container setups) or when your security posture requires VM-level isolation.
+Best for sessions that need Docker (integration tests, building images, multi-container setups) or when your security posture requires VM-level isolation.
 
 If your org requires that untrusted code only runs with a VM boundary, we can enforce a VM-only posture. Contact support@tembo.io.
 

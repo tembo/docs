@@ -46,7 +46,6 @@
                         "group": "Features",
                         "pages": [
                             "features/agents",
-                            "features/coding-agents",
                             "features/models",
                             "features/feedback-loop",
                             "features/max",
@@ -112,11 +111,11 @@
                         },
                         "pages": [
                             {
-                                "group": "Tasks",
+                                "group": "Sessions",
                                 "pages": [
-                                    "POST /task/create",
-                                    "GET /task/list",
-                                    "GET /task/search"
+                                    "POST /session/create",
+                                    "GET /session/list",
+                                    "GET /session/search"
                                 ]
                             },
                             {
@@ -191,6 +190,14 @@
         {
             "source": "/features/automations",
             "destination": "/features/agents"
+        },
+        {
+            "source": "/features/coding-agents",
+            "destination": "/features/agents#agent-harness"
+        },
+        {
+            "source": "/api/task/:slug",
+            "destination": "/api/session/:slug"
         },
         {
             "source": "/api/trigger-automation",

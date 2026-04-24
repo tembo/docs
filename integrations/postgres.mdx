@@ -12,7 +12,7 @@ description: "Performance monitoring, slow query detection, and optimization."
 - Monitor slow queries and suggest optimizations
 - Detect missing and unused indexes
 - Open PRs with migration scripts
-- MCP server for read-only database access during tasks
+- MCP server for read-only database access during sessions
 
 ## Installation
 
@@ -44,7 +44,7 @@ Requires `pg_stat_statements` extension: `CREATE EXTENSION IF NOT EXISTS pg_stat
 
 <AccordionGroup>
   <Accordion title="MCP server">
-    The Postgres MCP runs in read-only mode. It may access your database during tasks when querying would help complete the work.
+    The Postgres MCP runs in read-only mode. It may access your database during sessions when querying would help complete the work.
   </Accordion>
 
   <Accordion title="Best practices">
