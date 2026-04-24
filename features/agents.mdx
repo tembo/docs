@@ -1,16 +1,16 @@
 ---
-title: "Automations"
+title: "Agents"
 description: "Run coding agents on a schedule or triggered by events."
 ---
 
 <Frame>
-  <img src="/images/automation-light.png" alt="Automations" className="block dark:hidden" />
-  <img src="/images/automation-dark.png" alt="Automations" className="hidden dark:block" />
+  <img src="/images/automation-light.png" alt="Agents" className="block dark:hidden" />
+  <img src="/images/automation-dark.png" alt="Agents" className="hidden dark:block" />
 </Frame>
 
 Run coding agents in the background, on a schedule or triggered by events. A Sentry error gets fixed within seconds. Docs stay in sync with your code. Security vulnerabilities get caught before they become problems.
 
-Each automation runs in a secure [sandbox](/features/sandbox-environment) with full codebase and repository access and your configured [MCP servers](/integrations/mcp).
+Each agent runs in a secure [sandbox](/features/sandbox-environment) with full codebase and repository access and your configured [MCP servers](/integrations/mcp).
 
 ## Triggers
 
@@ -18,7 +18,7 @@ These are just examples to give you a rough idea. You decide how to set this up,
 
 ### Scheduled
 
-Run automations at regular intervals.
+Run agents at regular intervals.
 
 | Schedule    | Example                                     |
 | ----------- | ------------------------------------------- |
@@ -41,28 +41,28 @@ React to events from your integrations in real-time.
 
 #### Trigger through webhooks
 
-You can trigger an automation on demand from external systems using the automation's [webhook trigger endpoint](/api/trigger-automation).
+You can trigger an agent on demand from external systems using the agent's [webhook trigger endpoint](/api/trigger-agent).
 
-The payload is passed to the automation as event context, so your instructions can reference it directly. For example, you could write instructions like _"Fix the issue at the URL provided in the event payload"_.
+The payload is passed to the agent as event context, so your instructions can reference it directly. For example, you could write instructions like _"Fix the issue at the URL provided in the event payload"_.
 
 #### Slash command trigger
 
-You can trigger a task with the selected automation by using slash commands.
+You can trigger a task with the selected agent by using slash commands.
 
 ```txt
-@tembo !<automationMacro>
+@tembo !<agentMacro>
 ```
 
-## Creating an automation
+## Creating an agent
 
 ### From a template
 
 <Frame>
-  <img src="/images/integrations-light.png" alt="Automation templates" className="block dark:hidden" />
-  <img src="/images/integrations-dark.png" alt="Automation templates" className="hidden dark:block" />
+  <img src="/images/integrations-light.png" alt="Agent templates" className="block dark:hidden" />
+  <img src="/images/integrations-dark.png" alt="Agent templates" className="hidden dark:block" />
 </Frame>
 
-1. Go to **Automations** in the [dashboard](https://app.tembo.io)
+1. Go to **Agents** in the [dashboard](https://app.tembo.io)
 2. Click **Templates**
 3. Pick a template and click **Use template**
 4. Customize the instructions and enable
@@ -71,7 +71,7 @@ You can trigger a task with the selected automation by using slash commands.
 
 ### From scratch
 
-1. Click **New Automation**
+1. Click **New Agent**
 2. Write your instructions
 3. Add triggers (schedule and/or event-based)
 4. Select [coding agent](/features/coding-agents)
@@ -80,7 +80,7 @@ You can trigger a task with the selected automation by using slash commands.
 
 ## Beyond code
 
-Automations aren't limited to engineering tasks. With [MCP servers](/integrations/mcp), agents can work across your entire stack.
+Agents aren't limited to engineering tasks. With [MCP servers](/integrations/mcp), agents can work across your entire stack.
 
 | Example | Trigger | What it does |
 |---------|---------|-------------|
@@ -90,9 +90,9 @@ Automations aren't limited to engineering tasks. With [MCP servers](/integration
 | Enrich CRM records | New deal created | Pulls company info and adds context to [Attio](/integrations/mcp) or your CRM |
 | Create CRM tickets from Slack | `@tembo` in [Slack](/integrations/slack) | Creates a ticket in your CRM enriched with context from other connected integrations |
 
-Any tool with an [MCP server](/integrations/mcp) can be used in an automation.
+Any tool with an [MCP server](/integrations/mcp) can be used as an agent.
 
-You can also do this on-demand from [Slack](/integrations/slack) without setting up an automation:
+You can also do this on-demand from [Slack](/integrations/slack) without setting up an agent:
 
 ```
 @tembo What's our ARR right now? Check Stripe.
