@@ -78,6 +78,10 @@ Detects GitHub Actions failures and opens fix PRs automatically.
   No configuration needed.
 </Accordion>
 
+<Accordion title="Merge or close actions">
+  Tembo can merge or close a pull request through GitHub tool calls. If a merge or close action is requested while another Tembo job is already running on that pull request, the agent rejects the request. Wait for the active job to finish, then try again.
+</Accordion>
+
 <Accordion title="Repositories not appearing">
   Wait 2-5 minutes for initial sync. If they still don't show, click the sync button on the GitHub
   integration card. Check that you granted Tembo access during installation and that you have
