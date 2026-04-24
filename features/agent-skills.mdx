@@ -1,6 +1,6 @@
 ---
 title: 'Agent Skills'
-description: 'Guide how agents approach tasks with custom skills in your repository.'
+description: 'Guide how agents approach sessions with custom skills in your repository.'
 ---
 
 Skills are instructions that live in your repository and guide how agents approach work. They help agents follow multi-step processes like research, planning, implementation, and review instead of doing everything in a single pass.
@@ -14,10 +14,10 @@ Place skills in the dotfile directory for your coding agent at the root of your 
 - `.opencode/` for OpenCode
 - `.cursor/` for Cursor
 
-The agent picks up these skills when working on tasks in that repo. You need to instruct the agent to use a skill, either in the task description or after a PR is opened via the [feedback loop](/features/feedback-loop):
+The agent picks up these skills when working on sessions in that repo. You need to instruct the agent to use a skill, either in the session description or after a PR is opened via the [feedback loop](/features/feedback-loop):
 
 ```
-@tembo Use the implementation skill for this task
+@tembo Use the implementation skill for this session
 ```
 
 ```
@@ -43,7 +43,7 @@ A skill that guides the agent through a structured implementation flow:
 - Enforcing a research-then-implement workflow
 - Requiring test coverage before opening a PR
 - Defining code review checklists the agent runs against its own output
-- Setting quality thresholds for different task types
+- Setting quality thresholds for different session types
 
 ## What's coming
 
@@ -51,7 +51,7 @@ We're building first-party skill support and planning mode so Tembo can handle w
 
 **Research → Plan → Implement → Review → Iterate**
 
-This will improve PR quality on larger tasks, where today the agent may need a few iterations before the output is merge-ready. [Rule files](/features/rule-files) and skills in dotfile directories are the best way to guide agents today.
+This will improve PR quality on larger sessions, where today the agent may need a few iterations before the output is merge-ready. [Rule files](/features/rule-files) and skills in dotfile directories are the best way to guide agents today.
 
 ## Tembo Managed Skills
 
@@ -65,4 +65,4 @@ Open **Settings** → **Skills** to:
 - Add extra reference files if needed
 - Edit or delete existing skills
 
-Tembo managed skills are stored in your workspace settings and loaded into tasks automatically when Tembo runs an agent.
+Tembo managed skills are stored in your workspace settings and loaded into sessions automatically when Tembo runs an agent.

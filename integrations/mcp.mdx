@@ -7,7 +7,7 @@ description: "Connect built-in and custom MCP servers for agent tool access."
   <img src="/images/integrations/mcp.png" alt="MCP" />
 </Frame>
 
-MCP (Model Context Protocol) servers let agents use external tools and data during tasks.
+MCP (Model Context Protocol) servers let agents use external tools and data during sessions.
 
 ## Features
 
@@ -23,7 +23,7 @@ MCP (Model Context Protocol) servers let agents use external tools and data duri
     Go to [Integrations](https://app.tembo.io/integrations).
   </Step>
   <Step title="Use built-in MCP servers">
-    Install any listed MCP integration (for example, Notion or Stripe). Once connected, the server is available in new tasks.
+    Install any listed MCP integration (for example, Notion or Stripe). Once connected, the server is available in new sessions.
   </Step>
   <Step title="Add a custom server">
     Click **Custom MCP**, paste your JSON config, then save.
@@ -118,8 +118,8 @@ Tembo accepts both of these formats:
     If a remote server requires OAuth, Tembo prompts you to authorize during setup and completes the connection after you approve access.
   </Accordion>
 
-  <Accordion title="Server not showing up in tasks">
-    Check that the JSON is valid, required fields are present, and the integration is saved successfully. Start a new task after saving to pick up updated MCP config.
+  <Accordion title="Server not showing up in sessions">
+    Check that the JSON is valid, required fields are present, and the integration is saved successfully. Start a new session after saving to pick up updated MCP config.
   </Accordion>
 
   <Accordion title="Authentication or connection errors">

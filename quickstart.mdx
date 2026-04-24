@@ -7,8 +7,8 @@ description: "Get up and running with Tembo in minutes."
   <Step title="Connect a repository">
     Go to [Integrations](https://app.tembo.io/integrations) and connect GitHub, GitLab, or Bitbucket. Select the repositories you want Tembo to access.
   </Step>
-  <Step title="Create a task">
-    Open the [Tembo Dashboard](https://app.tembo.io) and click **New Task**. Pick one or more repositories, choose your [coding agent](/features/agents#coding-agent), and describe the work. Tembo can also use connected integrations and [MCP servers](/integrations/mcp) for extra context during the task.
+  <Step title="Create a session">
+    Open the [Tembo Dashboard](https://app.tembo.io) and click **New Session**. Pick one or more repositories, choose your [agent harness](/features/agents#agent-harness), and describe the work. Tembo can also use connected integrations and [MCP servers](/integrations/mcp) for extra context during the session.
   </Step>
   <Step title="Review the PR">
     Tembo works in a [sandbox](/features/sandbox-environment), writes the code, and opens a pull request. Review it, then mention `@tembo` in PR comments to request changes.
@@ -24,7 +24,7 @@ description: "Get up and running with Tembo in minutes."
 
 **Tag required:** PR comments, GitHub issues, Slack messages.
 
-**No tag needed:** Dashboard tasks, Linear/Jira issues assigned to Tembo.
+**No tag needed:** Dashboard sessions, Linear/Jira issues assigned to Tembo.
 
 ## Writing good prompts
 
@@ -39,7 +39,7 @@ Likely in cleanup logic around line 156. See Sentry #12345.
 Done when: memory stable over 24+ hours, no queued jobs lost.
 ```
 
-**Avoid:** "Fix the bug", "Make it faster", "Update the app and add new features". Be specific, scope to one task, and include acceptance criteria.
+**Avoid:** "Fix the bug", "Make it faster", "Update the app and add new features". Be specific, scope to one session, and include acceptance criteria.
 
 | Type | What to include |
 |------|----------------|
@@ -50,8 +50,8 @@ Done when: memory stable over 24+ hours, no queued jobs lost.
 ## Next steps
 
 <CardGroup cols={2}>
-  <Card title="Coding Agents" icon="bot" href="/features/agents#coding-agent">
-    Choose the right agent and model.
+  <Card title="Agent harness" icon="bot" href="/features/agents#agent-harness">
+    Choose the right harness and model.
   </Card>
   <Card title="Rule Files" icon="file-cog" href="/features/rule-files">
     Define coding standards for agents to follow.

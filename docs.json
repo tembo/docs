@@ -193,7 +193,7 @@
         },
         {
             "source": "/features/coding-agents",
-            "destination": "/features/agents#coding-agent"
+            "destination": "/features/agents#agent-harness"
         },
         {
             "source": "/api/trigger-automation",

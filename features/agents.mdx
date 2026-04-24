@@ -12,9 +12,9 @@ Run coding agents in the background, on a schedule or triggered by events. A Sen
 
 Each agent runs in a secure [sandbox](/features/sandbox-environment) with full codebase and repository access and your configured [MCP servers](/integrations/mcp).
 
-## Coding agent
+## Agent harness
 
-Tembo is agent and model agnostic. For each agent you configure, you pick the coding agent (and model) that runs in the session it spawns, for example Claude Code with Sonnet 4.6, Codex with GPT-5.4, or Cursor. Set a default per agent, or override per task.
+Tembo is harness and model agnostic. For each agent you configure, you pick the harness (and model) that runs in the session it spawns, for example Claude Code with Sonnet 4.6, Codex with GPT-5.4, or Cursor. Set a default per agent, or override per session.
 
 See [Models](/features/models) for the full supported model list, BYOK details, and AWS Bedrock BYOK support.
 
@@ -94,7 +94,7 @@ The payload is passed to the agent as event context, so your instructions can re
 
 #### Slash command trigger
 
-You can trigger a task with the selected agent by using slash commands.
+You can trigger a session with the selected agent by using slash commands.
 
 ```txt
 @tembo !<agentMacro>
@@ -121,13 +121,13 @@ You can trigger a task with the selected agent by using slash commands.
 1. Click **New Agent**
 2. Write your instructions
 3. Add triggers (schedule and/or event-based)
-4. Select [coding agent](#coding-agent)
+4. Select [agent harness](#agent-harness)
 5. Instruct MCP servers or integrations
 6. Save and enable
 
 ## Beyond code
 
-Agents aren't limited to engineering tasks. With [MCP servers](/integrations/mcp), agents can work across your entire stack.
+Agents aren't limited to engineering work. With [MCP servers](/integrations/mcp), agents can work across your entire stack.
 
 | Example | Trigger | What it does |
 |---------|---------|-------------|
