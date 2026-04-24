@@ -3,12 +3,21 @@ title: "Quickstart"
 description: "Get up and running with Tembo in minutes."
 ---
 
+Use this guide to get from account setup to your first Tembo pull request.
+
+## Before you start
+
+- Access to the [Tembo Dashboard](https://app.tembo.io)
+- A repository in GitHub, GitLab, or Bitbucket that you can authorize
+- A small, well-scoped first task to run against that repository
+- Optional: Slack, Linear, Jira, or [MCP servers](/integrations/mcp) if you want Tembo to use more context
+
 <Steps>
   <Step title="Connect a repository">
     Go to [Integrations](https://app.tembo.io/integrations) and connect GitHub, GitLab, or Bitbucket. Select the repositories you want Tembo to access.
   </Step>
   <Step title="Create a task">
-    Open the [Tembo Dashboard](https://app.tembo.io) and click **New Task**. Pick one or more repositories, choose your [coding agent](/features/coding-agents), and describe the work. Tembo can also use connected integrations and [MCP servers](/integrations/mcp) for extra context during the task.
+    Open the [Tembo Dashboard](https://app.tembo.io) and click **New Task**. Pick one or more repositories, choose your [coding agent](/features/coding-agents), and describe the work. For your first run, start with one repository and one narrow task so the result is easy to review. Tembo can also use connected integrations and [MCP servers](/integrations/mcp) for extra context during the task.
   </Step>
   <Step title="Review the PR">
     Tembo works in a [sandbox](/features/sandbox-environment), writes the code, and opens a pull request. Review it, then mention `@tembo` in PR comments to request changes.
@@ -46,6 +55,15 @@ Done when: memory stable over 24+ hours, no queued jobs lost.
 | **Bug** | Steps to reproduce, expected vs actual, error messages, Sentry link |
 | **Feature** | Requirements, file locations, edge cases, dependencies |
 | **Refactor** | Current problems, desired state, constraints, specific files |
+
+## Good first tasks
+
+Start with one change that is easy to verify.
+
+| Use case | Example prompt |
+|------|----------------|
+| **Basic** | Fix the typo in `docs/pricing.mdx` and update the outdated plan name in the same file. |
+| **Advanced** | Add retry logic to `src/workers/email.ts`, cover the failure case with tests, and summarize any follow-up risks in the PR description. |
 
 ## Next steps
 
