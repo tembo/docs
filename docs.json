@@ -111,11 +111,11 @@
                         },
                         "pages": [
                             {
-                                "group": "Tasks",
+                                "group": "Sessions",
                                 "pages": [
-                                    "POST /task/create",
-                                    "GET /task/list",
-                                    "GET /task/search"
+                                    "POST /session/create",
+                                    "GET /session/list",
+                                    "GET /session/search"
                                 ]
                             },
                             {
@@ -194,6 +194,10 @@
         {
             "source": "/features/coding-agents",
             "destination": "/features/agents#agent-harness"
+        },
+        {
+            "source": "/api/task/:slug",
+            "destination": "/api/session/:slug"
         },
         {
             "source": "/api/trigger-automation",

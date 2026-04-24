@@ -9,7 +9,7 @@ Generate an API key from **Settings > API Keys** in the [dashboard](https://app.
 
 ```bash
 curl -H "Authorization: Bearer YOUR_API_KEY" \
-  https://api.tembo.io/task/list
+  https://api.tembo.io/session/list
 ```
 
 ## SDK
@@ -39,7 +39,7 @@ const client = new Tembo({
   apiKey: process.env.TEMBO_API_KEY,
 });
 
-const task = await client.task.create({
+const session = await client.session.create({
   prompt: 'Fix the authentication bug in the login component',
   repositories: ['https://github.com/org/repo'],
 });
