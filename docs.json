@@ -91,6 +91,7 @@
                         "pages": [
                             "resources/pwa",
                             "resources/pricing",
+                            "resources/hipaa-business-associate-agreement",
                             "resources/changelog"
                         ]
                     }
