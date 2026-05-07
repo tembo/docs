@@ -45,13 +45,13 @@ Both sandbox types come with:
 | **Containers** | Docker 28, Docker Compose 2.31 (Large VM only) |
 | **Other** | Git, curl, ShellCheck, httpie |
 
-<Note>Go, Rust, Java, and Elixir are available through Nix dev shells. Add a `flake.nix` to install language-specific tooling for your project.</Note>
+<Note>Go, Rust, Java, and Elixir are available through Nix dev shells. Add a `tembo.nix` to install language-specific tooling for your project.</Note>
 
 ## Add custom dependencies
 
-To add custom dependencies in the sandbox, include a `flake.nix` with `devShells.x86_64-linux.default`. Tembo automatically detects it and runs commands inside your Nix dev shell.
+To add custom dependencies in the sandbox, include a `tembo.nix` with `devShells.x86_64-linux.default`. Tembo automatically detects it and runs commands inside your Nix dev shell.
 
-Here is a minimal `flake.nix` example you can copy and adapt:
+Here is a minimal `tembo.nix` example you can copy and adapt:
 
 ```nix
 {
