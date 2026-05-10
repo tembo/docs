@@ -1,65 +1,56 @@
 ---
 title: "Infisical"
-description: "How Tembo injects secrets at runtime with Infisical."
+description: "Inject secrets into Tembo-powered runs without committing .env files."
 ---
 
-Infisical integration lets Tembo-managed commands fetch secrets at runtime instead of storing `.env` files in your repo.
+<Frame>
+  <img src="/images/integrations/infisical.png" alt="Infisical" />
+</Frame>
 
-## How it works
+## Features
 
-When you run a command through `infisical run -- ...`, Tembo's Infisical wrapper does three things:
+- Load secrets at runtime instead of storing sensitive values in the repository
+- Support shared project secrets with developer-specific personal overrides
+- Use one secret source across API, web, worker, and cron commands
+- Keep local and CI-style runs consistent with the same Infisical environment
 
-1. Authenticates automatically if credentials are present
-2. Applies default Infisical scope flags when you do not pass them manually
-3. Executes the target command with injected environment variables
+## Installation
 
-## Authentication
+<Steps>
+  <Step title="Install the CLI">
+    Install the Infisical CLI from the official docs: [Infisical CLI](https://infisical.com/docs/cli/overview).
+  </Step>
+  <Step title="Log in and join the project">
+    Run `infisical login`, then make sure you have access to the correct Infisical project and environment.
+  </Step>
+  <Step title="Run commands through Infisical">
+    Start your app and services with `infisical run -- ...` so environment variables are injected at process start.
+  </Step>
+</Steps>
 
-Tembo supports two authentication modes:
+## Usage
 
-- Pre-set token: if `INFISICAL_TOKEN` is already set, it is used directly
-- Universal Auth: if no token exists but both `INFISICAL_UNIVERSAL_AUTH_CLIENT_ID` and `INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET` are set, Tembo logs in automatically and exports a token for the current process
-
-If `INFISICAL_API_URL` is set, it is also passed as the Infisical domain.
-
-## Automatic defaults for `infisical run`
-
-For `infisical run`, Tembo automatically adds these flags only when you did not already provide them:
-
-- `--projectId` from `INFISICAL_PROJECT_ID`
-- `--env` from `INFISICAL_ENV`
-- `--path` from `INFISICAL_SECRET_PATH`
-- `--domain` from `INFISICAL_API_URL`
-
-Your explicit CLI flags always take precedence.
-
-## Typical usage
-
-Tembo services commonly wrap local development commands with Infisical so secrets are available at runtime:
+Wrap app commands with `infisical run --`:
 
 ```bash
 infisical run -- bun run --watch index.ts
 infisical run -- next dev --turbopack --port 3000
 ```
 
-This pattern avoids committing local secrets and keeps environment configuration centralized.
+Use Infisical personal overrides for developer-specific values (for example local `DATABASE_URL` or personal GitHub App credentials) while keeping shared team defaults in the project.
 
-## Personal overrides
-
-For local development with shared environments, store developer-specific values as personal overrides in Infisical (for example local `DATABASE_URL` or personal GitHub App credentials).
-
-## Troubleshooting
+## Advanced
 
 <AccordionGroup>
-  <Accordion title="Universal Auth login fails">
-    Confirm `INFISICAL_UNIVERSAL_AUTH_CLIENT_ID` and `INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET` are both set and valid. If you are using self-hosted Infisical, verify `INFISICAL_API_URL`.
+  <Accordion title="How Tembo picks project and environment">
+    For `infisical run`, Tembo can use default project, environment, path, and domain settings when they are provided in the runtime environment. If you pass explicit CLI flags, your explicit values take precedence.
   </Accordion>
 
-  <Accordion title="Secrets not appearing in the process">
-    Make sure the command is launched with `infisical run -- ...` and that the selected project/environment/path contain the expected keys.
+  <Accordion title="Universal Auth support">
+    Tembo supports token-based access and Universal Auth for non-interactive environments. If your setup uses Universal Auth, provide the required client credentials in the runtime environment.
   </Accordion>
 
-  <Accordion title="Wrong environment or project loaded">
-    Pass explicit `--projectId`, `--env`, or `--path` flags in your command to override defaults.
+  <Accordion title="Secrets are not showing up">
+    Confirm the command is started with `infisical run -- ...`, verify you are targeting the expected project/environment/path, and check that the required keys exist in Infisical.
   </Accordion>
 </AccordionGroup>
