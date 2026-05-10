@@ -44,12 +44,12 @@ Use Infisical personal overrides for developer-specific values (for example loca
 ## Advanced
 
 <AccordionGroup>
-  <Accordion title="How Tembo picks project and environment">
-    For `infisical run`, Tembo can use default project, environment, path, and domain settings when they are provided in the runtime environment. If you pass explicit CLI flags, your explicit values take precedence.
+  <Accordion title="Default project/environment settings">
+    `INFISICAL_TOKEN` is enough for most sandbox setups. If you want Tembo to apply defaults automatically for `infisical run`, you can also set `INFISICAL_PROJECT_ID`, `INFISICAL_ENV`, `INFISICAL_SECRET_PATH`, and `INFISICAL_API_URL` in Sandbox env vars. Explicit CLI flags like `--projectId` or `--env` override these defaults.
   </Accordion>
 
   <Accordion title="Universal Auth support">
-    Tembo supports token-based access and Universal Auth for non-interactive environments. If your setup uses Universal Auth, provide the required client credentials in the runtime environment.
+    If you do not use `INFISICAL_TOKEN`, Tembo can authenticate with Universal Auth using `INFISICAL_UNIVERSAL_AUTH_CLIENT_ID` and `INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET` (and optionally `INFISICAL_API_URL` for custom/self-hosted Infisical domains).
   </Accordion>
 
   <Accordion title="Secrets are not showing up">
