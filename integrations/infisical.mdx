@@ -17,18 +17,20 @@ description: "Inject secrets into Tembo-powered runs without committing .env fil
 ## Installation
 
 <Steps>
-  <Step title="Install the CLI">
-    Install the Infisical CLI from the official docs: [Infisical CLI](https://infisical.com/docs/cli/overview).
+  <Step title="Open Sandbox settings">
+    In Tembo, go to **Settings** -> **Sandbox**.
   </Step>
-  <Step title="Log in and join the project">
-    Run `infisical login`, then make sure you have access to the correct Infisical project and environment.
+  <Step title="Add environment variable">
+    Add `INFISICAL_TOKEN` to your sandbox environment variables and save.
   </Step>
-  <Step title="Run commands through Infisical">
-    Start your app and services with `infisical run -- ...` so environment variables are injected at process start.
+  <Step title="Start a new session">
+    Start a new Tembo session so the updated sandbox environment is applied.
   </Step>
 </Steps>
 
 ## Usage
+
+The Infisical CLI is already installed in Tembo sandboxes.
 
 Wrap app commands with `infisical run --`:
 
