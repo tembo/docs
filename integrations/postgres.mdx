@@ -17,26 +17,16 @@ description: "Performance monitoring, slow query detection, and optimization."
 ## Installation
 
 <Steps>
-  <Step title="Create user (optional)">
-    Create a dedicated read-only database user for Tembo:
-    ```sql
-    CREATE USER tembo_monitor WITH PASSWORD 'your-secure-password';
-    GRANT CONNECT ON DATABASE your_database TO tembo_monitor;
-    GRANT USAGE ON SCHEMA public TO tembo_monitor;
-    GRANT SELECT ON ALL TABLES IN SCHEMA public TO tembo_monitor;
-    ```
-  </Step>
-  <Step title="Connect">
-    Go to [Integrations](https://app.tembo.io/integrations) and click **Connect** next to Postgres. Enter your connection string.
-  </Step>
-  <Step title="Map repository">
-    Map your database to the repository where migrations are stored so Tembo can open optimization PRs.
+  <Step title="Add your connection string">
+    Go to [Integrations](https://app.tembo.io/integrations) and click **Connect** next to Postgres, then enter your database connection string.
   </Step>
 </Steps>
 
 ## Usage
 
-Tembo monitors your database using `pg_stat_statements`. When it finds slow queries or missing indexes, it opens a PR with migration scripts and expected improvement metrics.
+After connecting, Tembo can use Postgres tools to run queries against your database during sessions.
+
+Tembo also monitors your database using `pg_stat_statements`. When it finds slow queries or missing indexes, it opens a PR with migration scripts and expected improvement metrics.
 
 Requires `pg_stat_statements` extension: `CREATE EXTENSION IF NOT EXISTS pg_stat_statements;`
 
@@ -44,10 +34,10 @@ Requires `pg_stat_statements` extension: `CREATE EXTENSION IF NOT EXISTS pg_stat
 
 <AccordionGroup>
   <Accordion title="MCP server">
-    The Postgres MCP runs in read-only mode. It may access your database during sessions when querying would help complete the work.
+    The Postgres MCP can access your database during sessions when querying would help complete the work.
   </Accordion>
 
   <Accordion title="Best practices">
-    Use read-only access. Connect production databases for accurate insights. Always review migration PRs before merging, especially for large tables.
+    You only need to provide a valid connection string. Always review migration PRs before merging, especially for large tables.
   </Accordion>
 </AccordionGroup>
