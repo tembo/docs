@@ -1,0 +1,49 @@
+---
+title: "Infisical"
+description: "Inject secrets into Tembo-powered runs without committing .env files."
+---
+
+<Frame>
+  <img src="/images/integrations/infisical.png" alt="Infisical" />
+</Frame>
+
+## Features
+
+- Works out of the box in Tembo sandboxes (Infisical CLI is already installed)
+- Injects secrets at runtime without committing `.env` files
+- Supports optional env var overrides for project/environment/path/domain defaults
+
+## Installation
+
+<Steps>
+  <Step title="Open Sandbox settings">
+    In Tembo, go to **Settings** -> **Sandbox**.
+  </Step>
+  <Step title="Add environment variable">
+    Add `INFISICAL_TOKEN` to your sandbox environment variables and save.
+  </Step>
+  <Step title="Start a new session">
+    Start a new Tembo session. That's it.
+  </Step>
+</Steps>
+
+## Usage
+
+In Tembo sandbox sessions, this will automatically work once `INFISICAL_TOKEN` is set.
+Run commands with `infisical run --`:
+
+```bash
+infisical run -- bun run --watch index.ts
+infisical run -- next dev --turbopack --port 3000
+```
+
+## Optional overrides
+
+If you want to override defaults for `infisical run`, add these in **Settings -> Sandbox**:
+
+- `INFISICAL_PROJECT_ID`
+- `INFISICAL_ENV`
+- `INFISICAL_SECRET_PATH`
+- `INFISICAL_API_URL`
+
+Explicit CLI flags still win over env-var defaults.

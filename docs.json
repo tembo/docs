@@ -83,7 +83,8 @@
                             "integrations/sentry",
                             "integrations/slack",
                             "integrations/supabase",
-                            "integrations/aws"
+                            "integrations/aws",
+                            "integrations/infisical"
                         ]
                     },
                     {
