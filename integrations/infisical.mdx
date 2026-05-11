@@ -9,10 +9,9 @@ description: "Inject secrets into Tembo-powered runs without committing .env fil
 
 ## Features
 
-- Load secrets at runtime instead of storing sensitive values in the repository
-- Support shared project secrets with developer-specific personal overrides
-- Use one secret source across API, web, worker, and cron commands
-- Keep local and CI-style runs consistent with the same Infisical environment
+- Works out of the box in Tembo sandboxes (Infisical CLI is already installed)
+- Injects secrets at runtime without committing `.env` files
+- Supports optional env var overrides for project/environment/path/domain defaults
 
 ## Installation
 
@@ -24,35 +23,27 @@ description: "Inject secrets into Tembo-powered runs without committing .env fil
     Add `INFISICAL_TOKEN` to your sandbox environment variables and save.
   </Step>
   <Step title="Start a new session">
-    Start a new Tembo session so the updated sandbox environment is applied.
+    Start a new Tembo session. That's it.
   </Step>
 </Steps>
 
 ## Usage
 
-The Infisical CLI is already installed in Tembo sandboxes.
-
-Wrap app commands with `infisical run --`:
+In Tembo sandbox sessions, this will automatically work once `INFISICAL_TOKEN` is set.
+Run commands with `infisical run --`:
 
 ```bash
 infisical run -- bun run --watch index.ts
 infisical run -- next dev --turbopack --port 3000
 ```
 
-Use Infisical personal overrides for developer-specific values (for example local `DATABASE_URL` or personal GitHub App credentials) while keeping shared team defaults in the project.
+## Optional overrides
 
-## Advanced
+If you want to override defaults for `infisical run`, add these in **Settings -> Sandbox**:
 
-<AccordionGroup>
-  <Accordion title="Default project/environment settings">
-    `INFISICAL_TOKEN` is enough for most sandbox setups. If you want Tembo to apply defaults automatically for `infisical run`, you can also set `INFISICAL_PROJECT_ID`, `INFISICAL_ENV`, `INFISICAL_SECRET_PATH`, and `INFISICAL_API_URL` in Sandbox env vars. Explicit CLI flags like `--projectId` or `--env` override these defaults.
-  </Accordion>
+- `INFISICAL_PROJECT_ID`
+- `INFISICAL_ENV`
+- `INFISICAL_SECRET_PATH`
+- `INFISICAL_API_URL`
 
-  <Accordion title="Universal Auth support">
-    If you do not use `INFISICAL_TOKEN`, Tembo can authenticate with Universal Auth using `INFISICAL_UNIVERSAL_AUTH_CLIENT_ID` and `INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET` (and optionally `INFISICAL_API_URL` for custom/self-hosted Infisical domains).
-  </Accordion>
-
-  <Accordion title="Secrets are not showing up">
-    Confirm the command is started with `infisical run -- ...`, verify you are targeting the expected project/environment/path, and check that the required keys exist in Infisical.
-  </Accordion>
-</AccordionGroup>
+Explicit CLI flags still win over env-var defaults.
