@@ -1,141 +1,107 @@
 ---
 title: 'Snapshots'
-description: 'How Tembo snapshots are created, stored, selected, and restored for sandbox VMs.'
+description: 'How Tembo snapshots make sandbox startup faster and preserve useful state between jobs.'
 ---
 
-Tembo uses two snapshot layers for QEMU-based sandboxes:
+Tembo uses two snapshot layers for **full-VM sandboxes**:
 
-1. **Session snapshots**: per-VM saved state used to resume the same sandbox VM between jobs in a session flow.
-2. **Golden snapshots**: reusable pre-warmed VM images used to start new VMs faster.
+1. **Session snapshots**: save the current sandbox state so follow-up jobs can continue quickly.
+2. **Golden snapshots**: reusable pre-warmed starting points for new sandbox runs.
 
-Container sandboxes (Docker-backed sizes) do **not** use these VM snapshots.
+Small container-based sandboxes do not use this snapshot system.
 
 <Note>In the Tembo app, custom golden snapshot management is exposed on paid plans.</Note>
 
 ## Snapshot types
 
-### Session snapshots (per VM)
+### Session snapshots
 
-Session snapshots are created from a running VM at successful job completion:
+Session snapshots are created after a successful job:
 
-- The worker calls QEMU `savevm` (tag defaults to `latest`)
-- The VM's QCOW2 overlay path and snapshot tag are stored in `VirtualMachineSnapshot` as `type: session`
-- The VM is marked `Idle` and can be resumed by follow-up jobs
+- Tembo saves the sandbox state
+- The sandbox is marked ready to resume
+- Follow-up jobs can continue from that saved state
 
-If saving fails, the VM is marked `Terminated` and Tembo falls back to a cold boot next time.
+If a save fails, Tembo safely falls back to a fresh sandbox start next time.
 
-### Golden snapshots (reusable defaults)
+### Golden snapshots
 
-Golden snapshots are built or promoted as `VirtualMachineSnapshot` rows with `type: golden`:
+Golden snapshots are reusable baseline environments for new sandbox runs:
 
-- Stored in cloud object storage (`VM_SNAPSHOTS_STORAGE`) and also cached on host NVMe
-- Can be org-specific (`organizationId` set) or system-wide (`organizationId = null`)
-- Marked active/inactive via `isActive` (active means default for its size/spec slot)
+- Stored in cloud storage and cached on active worker hosts
+- Can be workspace-specific or system-wide
+- Exactly one snapshot is active as the default for each sandbox size/profile
 
-Goldens are used as the starting point for **new** VMs.
+Golden snapshots are used to speed up new sandbox startup.
 
-## How snapshots are restored
+## Restore behavior
 
-When a QEMU sandbox starts, Tembo attempts restore in this order:
+When a full-VM sandbox starts, Tembo tries these paths in order:
 
-1. Reuse a currently running VM (for keep-alive issues)
-2. Restore from latest session snapshot for the VM (must be `Idle`, snapshot file must exist)
-3. Start from a resolved golden snapshot (if available and compatible)
-4. Cold boot from base image
+1. Reuse an already-running sandbox when keep-alive is enabled
+2. Resume from the latest session snapshot
+3. Start from the selected golden snapshot
+4. Start fresh from the base image
 
-Any restore failure (missing record/file, incompatible state, unavailable golden) degrades to cold boot and updates VM state safely.
+If any restore path is unavailable, Tembo automatically falls back to the next safe option.
 
 ## Golden snapshot selection
 
-For a new VM, golden resolution order is:
+For a new sandbox run, Tembo selects a golden snapshot in this order:
 
-1. **Issue-pinned snapshot** (`Issue.snapshotId`) if provided and compatible
-2. Most recent compatible **org** active golden
-3. Most recent compatible **system** active golden
+1. Snapshot pinned on the issue (if set)
+2. Most recent compatible workspace default
+3. Most recent compatible system default
 
-Compatibility checks include:
+Compatibility is validated before restore. If no compatible golden snapshot exists, Tembo starts fresh.
 
-- Matching VM hardware spec (`cpu`, `memoryMb`)
-- Matching acceleration mode (`isKvm`: KVM vs TCG)
-- Matching base image path (prevents stale-image restores)
+## How golden snapshots are created
 
-If no compatible golden exists, Tembo cold boots.
+### Build now (manual) or daily schedule
 
-## How goldens are created
+When you build a golden snapshot, Tembo:
 
-### Build flow (manual or scheduled)
+1. Creates a temporary sandbox
+2. Optionally preloads repositories, skills, and dependencies
+3. Saves that state as a new golden snapshot
+4. Uploads it to storage and registers it
+5. Sets it as the default for the selected sandbox size/profile
 
-A `build_golden` worker task:
+Build settings in the UI include:
 
-1. Creates a QCOW2 overlay from the base image
-2. Boots a temporary VM
-3. Optionally preloads repos/skills/dependencies
-4. Saves VM state with `savevm` tag `golden`
-5. Uploads QCOW2 to object storage
-6. Registers the snapshot in DB
-7. Marks it as the default for its size/spec slot (auto-promote)
+- Repositories to include
+- Whether to embed skills
+- Whether to pre-build dependencies from `tembo.nix`
+- Sandbox sizes to target
+- Daily rebuild schedule
 
-Build options used by the product include:
+### Promote from an issue sandbox
 
-- Clone selected/all connected repositories
-- Embed org skills
-- Pre-build dependencies from `tembo.nix`
-- Target one or more QEMU sandbox sizes
-- Daily rebuild schedule (cron-backed)
+Workspace admins can promote an existing issue sandbox into a golden snapshot:
 
-### Promote flow (from an existing issue VM)
-
-Admins can promote an issue's VM snapshot to a golden:
-
-- VM must be `Idle`
-- VM is atomically marked `Terminated` before queuing promotion (prevents racing with active work)
-- Worker copies the VM overlay, uploads/registers it as a golden, and caches locally
-- Promoted goldens keep snapshot tag `latest` (from session save state)
-
-## Storage model
-
-Snapshot records live in `VirtualMachineSnapshot` with:
-
-- `type`: `session` or `golden`
-- `snapshotTag`: QEMU `savevm` tag (`latest`/`golden`)
-- `spec`: `{ cpu, memoryMb, isKvm, sizeBytes }`
-
-Session-only fields:
-
-- `vmId`, `imagePath`, `expiresAt`
-
-Golden-only fields:
-
-- `storageKey`, `name`, `baseImagePath`, `isActive`
-
-Host-local paths:
-
-- Session overlays/snapshots: `vm.snapshotDir` (default `/var/lib/tembo/vms`)
-- Golden cache: `vm.goldenDir` (default `/var/lib/tembo/golden`)
-
-Remote storage:
-
-- Backed by S3/Azure Blob/GCS via `vmSnapshots.storage`
+- The sandbox must be idle (not currently running a task)
+- Tembo safely transitions it before promotion to avoid races
+- The promoted snapshot becomes available for future runs
 
 ## Trigger points
 
-Snapshots are triggered by these code paths:
+Snapshots are created or updated by:
 
-- **On successful sandbox jobs**: session snapshot save before job completion unblocks dependent jobs
-- **On worker startup (EC2 QEMU hosts)**: system golden bootstrap for served QEMU sizes (if missing)
-- **Manual "Build now"**: enqueue `build_golden`
-- **Daily schedule**: scheduled queue jobs per size (`build_golden_<size>`)
-- **Manual promote**: enqueue `promote_golden` for an Idle issue VM
-- **Manual set-default**: switch active golden within the same size/spec slot
+- Successful sandbox job completion (session snapshots)
+- Manual **Build now** actions
+- Daily scheduled builds
+- Manual promote actions from issue sandboxes
+- Manual set-default actions for golden snapshots
+
+Tembo can also auto-bootstrap system golden snapshots on eligible worker hosts so default snapshots exist before user traffic arrives.
 
 ## Operational constraints
 
-- VM snapshots are **QEMU-only**. Docker-backed sizes are excluded.
-- Session snapshots are host-local, so follow-up jobs use **host affinity** to route back to the same worker host.
-- Restore requires matching hardware/acceleration; mismatches are intentionally rejected.
-- If object storage is not configured, golden snapshots are disabled and Tembo uses cold boot/session behavior.
-- Golden snapshot build jobs perform memory checks and may be rejected if host memory is insufficient.
+- Snapshot acceleration applies to full-VM sandboxes, not small container sandboxes.
+- Resume requires the saved state to be available and compatible with the current runtime profile.
+- If snapshot storage is not configured, golden snapshot features are disabled.
+- Snapshot builds may be skipped when host memory is insufficient.
 
-## What this improves
+## Why this matters
 
-Golden snapshots reduce startup and setup overhead for new VMs by pre-warming repos, skills, and dependency state. Session snapshots reduce repeated setup between dependent jobs by resuming the same VM state safely.
+Golden snapshots reduce startup/setup time for new sandbox runs. Session snapshots reduce repeated setup across follow-up jobs by resuming from recently saved state.
