@@ -1,0 +1,107 @@
+---
+title: 'Snapshots'
+description: 'How Tembo snapshots make sandbox startup faster and preserve useful state between jobs.'
+---
+
+Tembo uses two snapshot layers for **full-VM sandboxes**:
+
+1. **Session snapshots**: save the current sandbox state so follow-up jobs can continue quickly.
+2. **Golden snapshots**: reusable pre-warmed starting points for new sandbox runs.
+
+Small container-based sandboxes do not use this snapshot system.
+
+<Note>In the Tembo app, custom golden snapshot management is exposed on paid plans.</Note>
+
+## Snapshot types
+
+### Session snapshots
+
+Session snapshots are created after a successful job:
+
+- Tembo saves the sandbox state
+- The sandbox is marked ready to resume
+- Follow-up jobs can continue from that saved state
+
+If a save fails, Tembo safely falls back to a fresh sandbox start next time.
+
+### Golden snapshots
+
+Golden snapshots are reusable baseline environments for new sandbox runs:
+
+- Stored in cloud storage and cached on active worker hosts
+- Can be workspace-specific or system-wide
+- Exactly one snapshot is active as the default for each sandbox size/profile
+
+Golden snapshots are used to speed up new sandbox startup.
+
+## Restore behavior
+
+When a full-VM sandbox starts, Tembo tries these paths in order:
+
+1. Reuse an already-running sandbox when keep-alive is enabled
+2. Resume from the latest session snapshot
+3. Start from the selected golden snapshot
+4. Start fresh from the base image
+
+If any restore path is unavailable, Tembo automatically falls back to the next safe option.
+
+## Golden snapshot selection
+
+For a new sandbox run, Tembo selects a golden snapshot in this order:
+
+1. Snapshot pinned on the issue (if set)
+2. Most recent compatible workspace default
+3. Most recent compatible system default
+
+Compatibility is validated before restore. If no compatible golden snapshot exists, Tembo starts fresh.
+
+## How golden snapshots are created
+
+### Build now (manual) or daily schedule
+
+When you build a golden snapshot, Tembo:
+
+1. Creates a temporary sandbox
+2. Optionally preloads repositories, skills, and dependencies
+3. Saves that state as a new golden snapshot
+4. Uploads it to storage and registers it
+5. Sets it as the default for the selected sandbox size/profile
+
+Build settings in the UI include:
+
+- Repositories to include
+- Whether to embed skills
+- Whether to pre-build dependencies from `tembo.nix`
+- Sandbox sizes to target
+- Daily rebuild schedule
+
+### Promote from an issue sandbox
+
+Workspace admins can promote an existing issue sandbox into a golden snapshot:
+
+- The sandbox must be idle (not currently running a task)
+- Tembo safely transitions it before promotion to avoid races
+- The promoted snapshot becomes available for future runs
+
+## Trigger points
+
+Snapshots are created or updated by:
+
+- Successful sandbox job completion (session snapshots)
+- Manual **Build now** actions
+- Daily scheduled builds
+- Manual promote actions from issue sandboxes
+- Manual set-default actions for golden snapshots
+
+Tembo can also auto-bootstrap system golden snapshots on eligible worker hosts so default snapshots exist before user traffic arrives.
+
+## Operational constraints
+
+- Snapshot acceleration applies to full-VM sandboxes, not small container sandboxes.
+- Resume requires the saved state to be available and compatible with the current runtime profile.
+- If snapshot storage is not configured, golden snapshot features are disabled.
+- Snapshot builds may be skipped when host memory is insufficient.
+
+## Why this matters
+
+Golden snapshots reduce startup/setup time for new sandbox runs. Session snapshots reduce repeated setup across follow-up jobs by resuming from recently saved state.
