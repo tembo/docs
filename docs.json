@@ -52,7 +52,7 @@
                             {
                                 "group": "Sandbox",
                                 "pages": [
-                                    "features/sandbox-environment",
+                                    "features/sandbox/overview",
                                     "features/snapshots"
                                 ]
                             },
