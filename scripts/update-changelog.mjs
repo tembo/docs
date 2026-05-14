@@ -28,7 +28,6 @@ const OUTPUT_PATH = join(
   dirname(fileURLToPath(import.meta.url)),
   "../features/self-hosted/changelog.mdx"
 );
-const PER_PAGE = 100;
 const MAX_TAGS = 20;
 
 const token = process.env.GITHUB_TOKEN;
