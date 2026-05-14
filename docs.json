@@ -51,6 +51,14 @@
                             "features/max",
                             "features/sandbox-environment",
                             {
+                                "group": "Sandbox",
+                                "pages": [
+                                    "features/sandbox/overview",
+                                    "features/snapshots"
+                                ]
+                            },
+                            "features/self-hosted",
+                            {
                                 "group": "Self-Hosted",
                                 "pages": [
                                     "features/self-hosted/about",
