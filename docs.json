@@ -49,7 +49,6 @@
                             "features/models",
                             "features/feedback-loop",
                             "features/max",
-                            "features/sandbox-environment",
                             {
                                 "group": "Sandbox",
                                 "pages": [
@@ -57,7 +56,6 @@
                                     "features/snapshots"
                                 ]
                             },
-                            "features/self-hosted",
                             {
                                 "group": "Self-Hosted",
                                 "pages": [
