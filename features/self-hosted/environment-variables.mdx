@@ -1,0 +1,356 @@
+---
+title: 'Environment Variables'
+description: 'All configuration keys and environment variables for the Tembo API service.'
+mode: 'wide'
+---
+
+All keys use convict dot-notation and can be set in `/var/lib/tembo/config.json`. You can access this file by going to the VS Code IDE located on the instance, located in a web browser at `http://<YOUR_IP_ADDRESS>:8888`. It should, by default, open to this file.
+
+If you are unable to access this, please go to the installer at `http://<YOUR_IP_ADDRESS>:3999` -> Settings and click the checkbox for Enable VS Code Server. Be sure to update again after enabling this.
+
+## Core
+
+| Key | Env Var | Default | Description |
+|-----|---------|---------|-------------|
+| `app.environment` | `APP_ENVIRONMENT` | `development` | App environment |
+| `applicationBaseUrl` | `ENVIRONMENT_URL` | `staging.tembo.io` | Environment URL |
+| `debug` | `DEBUG` | `false` | Enable debug mode |
+| `defaultOrgId` | `DEFAULT_ORG_ID` | — | Default organization ID |
+| `port` | `PORT` | `9854` | Port to bind the server to |
+
+## Database
+
+| Key | Env Var | Default | Description |
+|-----|---------|---------|-------------|
+| `database.url` | `DATABASE_URL` | `postgresql://postgres:postgres@localhost:5432/postgres` | Database URL (also assembled from `DB_HOST`, `DB_USERNAME`, `DB_PASSWORD`, `DB_PORT`, `DB_NAME`, `DB_CONNECTION_LIMIT`) |
+
+## Auth
+
+| Key | Env Var | Description |
+|-----|---------|-------------|
+| `betterAuth.oauth.github.callbackUrl` | `SELF_HOSTED_GITHUB_CALLBACK_URL` | Self-hosted GitHub OAuth callback URL |
+| `betterAuth.oauth.github.clientId` | `SELF_HOSTED_GITHUB_CLIENT_ID` | Self-hosted GitHub OAuth client ID |
+| `betterAuth.oauth.github.clientSecret` | `SELF_HOSTED_GITHUB_CLIENT_SECRET` | Self-hosted GitHub OAuth client secret |
+| `betterAuth.oauth.google.callbackUrl` | `GOOGLE_CALLBACK_URL` | Google OAuth callback URL |
+| `betterAuth.oauth.google.clientId` | `GOOGLE_CLIENT_ID` | Google OAuth client ID |
+| `betterAuth.oauth.google.clientSecret` | `GOOGLE_CLIENT_SECRET` | Google OAuth client secret |
+| `betterAuth.oauth.okta.callbackUrl` | `OKTA_CALLBACK_URL` | Okta OAuth callback URL |
+| `betterAuth.oauth.okta.clientId` | `OKTA_CLIENT_ID` | Okta OAuth client ID |
+| `betterAuth.oauth.okta.clientSecret` | `OKTA_CLIENT_SECRET` | Okta OAuth client secret |
+| `betterAuth.oauth.okta.discoveryUrl` | `OKTA_DISCOVERY_URL` | Okta OIDC discovery URL |
+| `betterAuth.secret` | `BETTER_AUTH_SECRET` | Better Auth secret (min 32 chars) |
+| `clerk.secretKey` | `CLERK_SECRET_KEY` | Clerk secret key |
+
+## AI / Models
+
+| Key | Env Var | Default | Description |
+|-----|---------|---------|-------------|
+| `anthropic.apiKey` | `ANTHROPIC_API_KEY` | — | Anthropic API key |
+| `anthropic.proxy.log` | `ANTHROPIC_PROXY_LOG` | `false` | Log Anthropic proxy requests |
+| `anthropic.proxyUrl` | `ANTHROPIC_PROXY_URL` | — | Override for Anthropic proxy URL |
+| `anthropic.useBedrock` | `ANTHROPIC_USE_BEDROCK` | `false` | Use AWS Bedrock for small model |
+| `cerebras.apiKey` | `CEREBRAS_API_KEY` | — | Cerebras API key |
+| `claudeCode.appendSystemPrompt` | `CC_APPEND_SYSTEM_PROMPT` | `true` | Use append-system-prompt flag in Claude Code |
+| `cursor.apiKey` | `CURSOR_API_KEY` | — | Fallback Cursor agent API key |
+| `exa.apiKey` | `EXA_API_KEY` | — | Exa API key |
+| `openai.apiKey` | `OPENAI_API_KEY` | — | OpenAI API key |
+| `openai.proxyUrl` | `OPENAI_PROXY_URL` | — | Override for OpenAI proxy URL |
+| `vertex.serviceAccount` | `VERTEX_SERVICE_ACCOUNT` | `tembo-ai-5935f185a273.json` | Google Vertex AI service account file |
+
+## Integrations
+
+| Key | Env Var | Description |
+|-----|---------|-------------|
+| `atlassian.clientId` | `ATLASSIAN_CLIENT_ID` | Atlassian OAuth client ID |
+| `atlassian.clientSecret` | `ATLASSIAN_CLIENT_SECRET` | Atlassian OAuth client secret |
+| `bitbucket.clientId` | `BITBUCKET_CLIENT_ID` | Bitbucket client ID |
+| `bitbucket.clientSecret` | `BITBUCKET_CLIENT_SECRET` | Bitbucket client secret |
+| `bitbucket.webhookSecret` | `BITBUCKET_WEBHOOK_SECRET` | Bitbucket webhook secret |
+| `github.appId` | `GITHUB_APP_ID` | GitHub App ID |
+| `github.appName` | `GITHUB_APP_NAME` | GitHub App name |
+| `github.botTagName` | `GITHUB_BOT_TAG_NAME` | Bot mention tag name |
+| `github.clientId` | `GITHUB_CLIENT_ID` | GitHub App client ID |
+| `github.clientSecret` | `GITHUB_CLIENT_SECRET` | GitHub App client secret |
+| `github.clientUserEmail` | `GITHUB_BOT_EMAIL` | GitHub bot email |
+| `github.clientUserName` | `GITHUB_BOT_USERNAME` | GitHub bot username |
+| `github.enforceLinkedGithubAccount` | `ENFORCE_LINKED_GITHUB_ACCOUNT` | Require linked GitHub account for tasks |
+| `github.oauthClientId` | `GITHUB_OAUTH_CLIENT_ID` | GitHub OAuth app client ID |
+| `github.oauthClientSecret` | `GITHUB_OAUTH_CLIENT_SECRET` | GitHub OAuth app client secret |
+| `github.overrideToken` | `GH_TOKEN` | Override GitHub token |
+| `github.privateKey` | `GITHUB_PRIVATE_KEY` | GitHub App private key |
+| `github.webhookSecret` | `GITHUB_WEBHOOK_SECRET` | GitHub webhook secret |
+| `gitlab.clientId` | `GITLAB_CLIENT_ID` | GitLab OAuth client ID |
+| `gitlab.clientSecret` | `GITLAB_SECRET` | GitLab OAuth client secret |
+| `gitlab.webhookSecret` | `GITLAB_WEBHOOK_SECRET` | GitLab webhook secret |
+| `linear.appName` | `LINEAR_APP_NAME` | Linear app name |
+| `linear.appSlug` | `LINEAR_APP_SLUG` | Linear app slug |
+| `linear.clientId` | `LINEAR_CLIENT_ID` | Linear client ID |
+| `linear.clientSecret` | `LINEAR_CLIENT_SECRET` | Linear client secret |
+| `linear.webhookSecret` | `LINEAR_WEBHOOK_SECRET` | Linear webhook secret |
+| `notion.clientId` | `NOTION_CLIENT_ID` | Notion OAuth client ID |
+| `notion.clientSecret` | `NOTION_CLIENT_SECRET` | Notion OAuth client secret |
+| `sentry.appName` | `SENTRY_APP_NAME` | Sentry app name |
+| `sentry.clientId` | `SENTRY_CLIENT_ID` | Sentry OAuth client ID |
+| `sentry.clientSecret` | `SENTRY_CLIENT_SECRET` | Sentry OAuth client secret |
+| `slack.appId` | `SLACK_APP_ID` | Slack integration app ID |
+| `slack.clientId` | `SLACK_CLIENT_ID` | Slack OAuth client ID |
+| `slack.clientSecret` | `SLACK_CLIENT_SECRET` | Slack OAuth client secret |
+| `slack.signingSecret` | `SLACK_SIGNING_SECRET` | Slack webhook signing secret |
+| `supabase.clientId` | `SUPABASE_CLIENT_ID` | Supabase OAuth client ID |
+| `supabase.clientSecret` | `SUPABASE_CLIENT_SECRET` | Supabase OAuth client secret |
+
+## Sandbox
+
+| Key | Env Var | Default | Description |
+|-----|---------|---------|-------------|
+| `sandbox.docker.image` | `SANDBOX_DOCKER_IMAGE` | `ghcr.io/tembo-io/monorepo/sandbox:latest` | Docker image |
+| `sandbox.docker.keepContainers` | `SANDBOX_DOCKER_KEEP_CONTAINERS` | `false` | Keep containers after sandbox stops |
+| `sandbox.docker.memoryLimit` | `SANDBOX_DOCKER_MEMORY_LIMIT` | `16g` | Hard memory limit |
+| `sandbox.docker.memoryReservation` | `SANDBOX_DOCKER_MEMORY_RESERVATION` | `4g` | Soft memory reservation |
+| `sandbox.docker.networkMode` | `SANDBOX_DOCKER_NETWORK_MODE` | `bridge` | Docker network mode |
+| `sandbox.docker.workspaceStorage` | `SANDBOX_DOCKER_WORKSPACE_STORAGE` | `tmpfs` | Workspace storage type (`local` or `tmpfs`) |
+| `sandbox.docker.workspaceStoragePath` | `SANDBOX_DOCKER_WORKSPACE_STORAGE_PATH` | `/var/lib/tembo/workspaces` | Workspace storage path (when `local`) |
+| `sandbox.pushgateway.enabled` | `SANDBOX_PUSHGATEWAY_ENABLED` | `false` | Push sandbox metrics to Pushgateway |
+| `sandbox.pushgateway.url` | `SANDBOX_PUSHGATEWAY_URL` | `http://localhost:9091` | Pushgateway URL |
+| `sandbox.repositoryCache.enabled` | `SANDBOX_REPOSITORY_CACHE_ENABLED` | `false` | Enable repository cache |
+| `sandbox.repositoryCache.path` | `SANDBOX_REPOSITORY_CACHE_PATH` | `/mnt/user-cache/repositories` | Repository cache path |
+| `sandbox.sizeFilter.enabled` | `SANDBOX_SIZE_FILTER_ENABLED` | `true` | Filter queue jobs by sandbox size |
+| `sandbox.sizeFilter.sizes` | `SANDBOX_SIZE_FILTER` | — | Comma-separated sandbox sizes this worker claims |
+| `sandbox.sizes.large.cpu` | `SANDBOX_LARGE_CPU` | `8` | vCPUs for large sandboxes |
+| `sandbox.sizes.large.diskSizeGb` | `SANDBOX_LARGE_DISK_SIZE_GB` | `100` | Disk (GB) for large |
+| `sandbox.sizes.large.memoryMb` | `SANDBOX_LARGE_MEMORY_MB` | `32768` | Memory (MB) for large |
+| `sandbox.sizes.medium.cpu` | `SANDBOX_MEDIUM_CPU` | `4` | vCPUs for medium sandboxes |
+| `sandbox.sizes.medium.diskSizeGb` | `SANDBOX_MEDIUM_DISK_SIZE_GB` | `50` | Disk (GB) for medium |
+| `sandbox.sizes.medium.memoryMb` | `SANDBOX_MEDIUM_MEMORY_MB` | `8192` | Memory (MB) for medium |
+| `sandbox.sizes.micro.cpu` | `SANDBOX_MICRO_CPU` | `2` | vCPUs for micro sandboxes |
+| `sandbox.sizes.micro.diskSizeGb` | `SANDBOX_MICRO_DISK_SIZE_GB` | `50` | Disk (GB) for micro |
+| `sandbox.sizes.micro.memoryMb` | `SANDBOX_MICRO_MEMORY_MB` | `4096` | Memory (MB) for micro |
+| `sandbox.sizes.ultra.cpu` | `SANDBOX_ULTRA_CPU` | `32` | vCPUs for ultra sandboxes |
+| `sandbox.sizes.ultra.diskSizeGb` | `SANDBOX_ULTRA_DISK_SIZE_GB` | `200` | Disk (GB) for ultra |
+| `sandbox.sizes.ultra.memoryMb` | `SANDBOX_ULTRA_MEMORY_MB` | `131072` | Memory (MB) for ultra |
+| `sandbox.sizes.xl.cpu` | `SANDBOX_XL_CPU` | `16` | vCPUs for xl sandboxes |
+| `sandbox.sizes.xl.diskSizeGb` | `SANDBOX_XL_DISK_SIZE_GB` | `200` | Disk (GB) for xl |
+| `sandbox.sizes.xl.memoryMb` | `SANDBOX_XL_MEMORY_MB` | `65536` | Memory (MB) for xl |
+
+## Queue
+
+| Key | Env Var | Default | Description |
+|-----|---------|---------|-------------|
+| `queue.feedbackLoopTask` | `QUEUE_FEEDBACK_LOOP_TASK` | `feedback_loop` | Task name for feedback loop |
+| `queue.jobExecutionTimeout` | `QUEUE_JOB_TIMEOUT` | `21600000` (6h) | Max runtime for jobs (ms) |
+| `queue.jobVisibilityTimeout` | `QUEUE_JOB_VISIBILITY_TIMEOUT` | `300000` (5m) | Job visibility timeout (ms) |
+| `queue.longJobVisibilityTimeout` | `QUEUE_LONG_JOB_VISIBILITY_TIMEOUT` | `3600000` (1h) | Long job visibility timeout (ms) |
+| `queue.maxReadCount` | `QUEUE_MAX_READ_COUNT` | `2` | Max read count before job fails |
+| `queue.noJobSleepTime` | `QUEUE_NO_JOB_SLEEP_TIME` | `5s` | Sleep time when no job found |
+| `queue.solveIssueTask` | `QUEUE_SOLVE_ISSUE_TASK` | `solve_issue` | Task name for solve issue |
+
+## Redis
+
+| Key | Env Var | Default | Description |
+|-----|---------|---------|-------------|
+| `redis.host` | `REDIS_HOST` | `localhost` | Redis host |
+| `redis.port` | `REDIS_PORT` | `6379` | Redis port |
+
+## API
+
+| Key | Env Var | Default | Description |
+|-----|---------|---------|-------------|
+| `api.agentApiUrl` | `AGENT_API_URL` | — | URL for the agent API |
+| `api.agentSecretKey` | `TEMBO_AGENT_API_SECRET` | `temborules` | Secret key for agent auth |
+| `api.base` | `API_BASE_URL` | `http://localhost:9854/` | Base URL for the API |
+| `api.clerkDashboardUrl` | `CLERK_DASHBOARD_URL` | — | Clerk dashboard URL |
+| `api.intercom.accessToken` | `INTERCOM_ACCESS_TOKEN` | — | Intercom API access token |
+| `api.metricsSecretKey` | `TEMBO_METRICS_SECRET_KEY` | `tembo` | Secret key for metrics |
+| `api.prefix` | `API_PREFIX` | — | Optional prefix path for all routes |
+| `api.sentry.dsn` | `SENTRY_DSN` | — | Sentry DSN for error reporting |
+| `api.sentry.enabled` | `SENTRY_ENABLED` | `true` | Enable Sentry |
+| `api.showErrors` | `API_SHOW_ERRORS` | `true` | Show errors in API response |
+| `api.slackInternal.appId` | `SLACK_APP_ID` | `A098R0Q23GT` | Internal Slack app ID |
+| `api.slackInternal.botToken` | `SLACK_BOT_TOKEN` | — | Internal Slack bot token |
+| `api.slackInternal.clientSecret` | `SLACK_CLIENT_SECRET` | — | Internal Slack client secret |
+| `api.slackInternal.enabled` | `SLACK_ENABLED` | `false` | Enable internal Slack |
+| `api.slackInternal.internalChannelId` | `SLACK_INTERNAL_CHANNEL_ID` | `C099AEFTN65` | Internal Slack channel ID |
+| `api.slackInternal.signingSecret` | `SLACK_SIGNING_SECRET` | — | Internal Slack signing secret |
+
+## Agent
+
+| Key | Env Var | Default | Description |
+|-----|---------|---------|-------------|
+| `agent.healthChecks.enabled` | `AGENT_HEALTH_CHECKS_ENABLED` | `false` | Enable health checks |
+| `agent.tasks.allowed` | `AGENT_TASKS_ALLOWED` | — | Comma-separated allowed tasks |
+| `agent.tasks.disallowed` | `AGENT_TASKS_DISABLED` | — | Comma-separated disabled tasks |
+
+## MCP
+
+| Key | Env Var | Default | Description |
+|-----|---------|---------|-------------|
+| `mcp.enabledSuggestedServers` | `MCP_ENABLED_SUGGESTED_SERVERS` | — | Comma-separated list of suggested MCP server types to expose |
+| `mcp.temboMcpExecutable` | `TEMBO_MCP_EXECUTABLE` | `/run/current-system/sw/bin/tembo` | Path to the tembo MCP executable |
+
+## AWS
+
+| Key | Env Var | Default | Description |
+|-----|---------|---------|-------------|
+| `aws.accountId` | `AWS_ACCOUNT_ID` | — | AWS account ID |
+| `aws.ecsTaskRoleArn` | `AWS_ECS_TASK_ROLE_NAME` | — | ECS task role ARN |
+| `aws.imageBucket.name` | `AWS_IMAGE_BUCKET_NAME` | — | S3 bucket for image uploads |
+| `aws.region` | `AWS_REGION` | `us-east-1` | AWS region |
+| `aws.registrationLambda.bucketPrefix` | `AWS_CROSS_ACCOUNT_TEMPLATE_S3_BUCKET` | — | Registration lambda S3 bucket |
+| `aws.registrationLambda.templateFile` | `AWS_CROSS_ACCOUNT_TEMPLATE_FILE` | `cross-account-cf-template.yaml` | Registration lambda template file |
+| `aws.selfHostedReleases.bucketName` | `AWS_SELF_HOSTED_RELEASES_BUCKET_NAME` | — | S3 bucket for self-hosted releases |
+| `aws.selfHostedReleases.downloadUrlExpiresInSeconds` | `AWS_SELF_HOSTED_RELEASES_DOWNLOAD_URL_EXPIRES_IN` | `3600` | Download URL expiration (seconds) |
+| `aws.selfHostedReleases.manifestKey` | `AWS_SELF_HOSTED_RELEASES_MANIFEST_KEY` | `releases/manifest.json` | Release manifest object key |
+| `aws.sqlExecutorLambda.bucketPrefix` | `AWS_SQL_EXECUTOR_LAMBDA_S3_BUCKET` | — | SQL executor lambda S3 bucket |
+| `aws.sqlExecutorLambda.sourceKey` | `AWS_SQL_EXECUTOR_LAMBDA_S3_SOURCE_KEY` | `sql-executor-lambda/index.zip` | SQL executor lambda source key |
+
+## JWT
+
+| Key | Env Var | Default | Description |
+|-----|---------|---------|-------------|
+| `jwt.secretKey` | `TEMBO_JWT_SECRET_KEY` | `tembo` | JWT secret key |
+
+## Frontend
+
+| Key | Env Var | Default | Description |
+|-----|---------|---------|-------------|
+| `frontend.url` | `FRONTEND_URL` | `http://localhost:3000` | Frontend URL |
+
+## Cron
+
+| Key | Env Var | Default | Description |
+|-----|---------|---------|-------------|
+| `cron.enabled` | `CRON_ENABLED` | `true` | Enable cron |
+| `cron.monitoring.enabled` | `CRON_MONITORING_ENABLED` | `true` | Enable cron monitoring |
+
+## Payments / Analytics
+
+| Key | Env Var | Description |
+|-----|---------|-------------|
+| `conversions.googleAds.clientId` | `GOOGLE_ADS_CLIENT_ID` | Google Ads OAuth client ID |
+| `conversions.googleAds.clientSecret` | `GOOGLE_ADS_CLIENT_SECRET` | Google Ads OAuth client secret |
+| `conversions.googleAds.conversionActionId` | `GOOGLE_ADS_CONVERSION_ACTION_ID` | Google Ads conversion action ID |
+| `conversions.googleAds.customerId` | `GOOGLE_ADS_CUSTOMER_ID` | Google Ads customer ID |
+| `conversions.googleAds.developerToken` | `GOOGLE_ADS_DEVELOPER_TOKEN` | Google Ads developer token |
+| `conversions.googleAds.refreshToken` | `GOOGLE_ADS_REFRESH_TOKEN` | Google Ads OAuth refresh token |
+| `conversions.meta.accessToken` | `META_CONVERSIONS_ACCESS_TOKEN` | Meta Conversions API access token |
+| `conversions.meta.pixelId` | `META_PIXEL_ID` | Meta pixel ID |
+| `conversions.twitter.accessToken` | `TWITTER_ADS_ACCESS_TOKEN` | X/Twitter Ads access token |
+| `conversions.twitter.accessTokenSecret` | `TWITTER_ADS_ACCESS_TOKEN_SECRET` | X/Twitter Ads access token secret |
+| `conversions.twitter.consumerKey` | `TWITTER_ADS_CONSUMER_KEY` | X/Twitter Ads consumer key |
+| `conversions.twitter.consumerSecret` | `TWITTER_ADS_CONSUMER_SECRET` | X/Twitter Ads consumer secret |
+| `conversions.twitter.eventId` | `TWITTER_ADS_EVENT_ID` | X/Twitter conversion event ID |
+| `conversions.twitter.pixelId` | `TWITTER_ADS_PIXEL_ID` | X/Twitter pixel ID |
+| `imagor.secretKey` | `IMAGOR_SECRET_KEY` | Imagor secret key |
+| `langfuse.baseUrl` | `LANGFUSE_BASE_URL` | Langfuse base URL |
+| `langfuse.publicKey` | `LANGFUSE_PUBLIC_KEY` | Langfuse public key |
+| `langfuse.secretKey` | `LANGFUSE_SECRET_KEY` | Langfuse secret key |
+| `loops.apiKey` | `LOOPS_API_KEY` | Loops.so API key |
+| `posthog.apiKey` | `POSTHOG_API_KEY` | PostHog API key |
+| `pylon.identitySecret` | `PYLON_IDENTITY_SECRET` | Pylon chat widget identity secret |
+| `resend.apiKey` | `RESEND_API_KEY` | Resend.com API key |
+| `stripe.publishableKey` | `STRIPE_PUBLISHABLE_KEY` | Stripe publishable key |
+| `stripe.secretKey` | `STRIPE_SECRET_KEY` | Stripe secret key |
+| `stripe.webhookSecret` | `STRIPE_WEBHOOK_SECRET` | Stripe webhook secret |
+
+## LiteLLM
+
+| Key | Env Var | Default | Description |
+|-----|---------|---------|-------------|
+| `litellm.enabled` | `LITELLM_ENABLED` | `false` | Enable LiteLLM |
+| `litellm.masterKey` | `LITELLM_MASTER_KEY` | — | LiteLLM master key |
+| `litellm.url` | `LITELLM_URL` | `http://localhost:4000` | LiteLLM URL |
+
+## Kernel
+
+| Key | Env Var | Description |
+|-----|---------|-------------|
+| `kernel.apiKey` | `KERNEL_API_KEY` | API key for the Kernel MCP server |
+
+## Scanners
+
+| Key | Env Var | Default | Description |
+|-----|---------|---------|-------------|
+| `scanners.anyBug.maxFileSize` | `SCANNERS_ANY_BUG_MAX_FILE_SIZE` | `10485760` (10mb) | Max file size for bug scanner |
+| `scanners.slowQuery.minDuration` | `SCANNERS_SLOW_QUERY_MIN_DURATION` | `10` | Minimum slow query duration |
+
+## Locks
+
+| Key | Env Var | Default | Description |
+|-----|---------|---------|-------------|
+| `locks.enabled` | `LOCKS_ENABLED` | `false` | Enable distributed locks |
+
+## Features / Misc
+
+| Key | Env Var | Default | Description |
+|-----|---------|---------|-------------|
+| `codeStorage.apiKey` | `CODE_STORAGE_API_KEY` | — | code.storage API key |
+| `codeStorage.enabled` | `CODE_STORAGE_ENABLED` | `false` | Enable code.storage sync |
+| `features.codebaseScanning` | `CODEBASE_SCANNING_ENABLED` | `false` | Enable codebase scanning |
+| `logging.queries` | `LOGGING_QUERIES` | `false` | Log database queries |
+| `telemetry.enabled` | *(no env var)* | `true` | Enable telemetry |
+| `tembo.orgId` | `TEMBO_ORG_ID` | — | Tembo internal org ID |
+
+## VM / Cloud
+
+| Key | Env Var | Default | Description |
+|-----|---------|---------|-------------|
+| `azure.storageAccountKey` | `AZURE_STORAGE_ACCOUNT_KEY` | — | Azure storage account key |
+| `azure.storageAccountName` | `AZURE_STORAGE_ACCOUNT_NAME` | — | Azure storage account name |
+| `cloud.provider` | `CLOUD_PROVIDER` | `aws` | Cloud provider (`aws`, `azure`, `gcs`) |
+| `vm.guestDiskSize` | `VM_GUEST_DISK_SIZE` | `50G` | Virtual disk size for QEMU guests |
+| `vm.goldenDir` | `VM_GOLDEN_DIR` | `/var/lib/tembo/golden` | Golden QCOW2 cache directory |
+| `vm.snapshotDir` | `VM_SNAPSHOT_DIR` | `/var/lib/tembo/vms` | Per-VM QCOW2 overlays directory |
+| `vmSnapshots.storage` | `VM_SNAPSHOTS_STORAGE` | — | Bucket/container for VM snapshots |
+
+## Example config.json
+
+```json
+{
+  "port": 9854,
+  "app": {
+    "environment": "production"
+  },
+  "applicationBaseUrl": "https://tembo.your-domain.com",
+  "database": {
+    "url": "postgresql://postgres:yourpassword@localhost:5432/tembo"
+  },
+  "redis": {
+    "host": "localhost",
+    "port": 6379
+  },
+  "jwt": {
+    "secretKey": "your-jwt-secret"
+  },
+  "betterAuth": {
+    "secret": "your-better-auth-secret-min-32-characters",
+    "oauth": {
+      "github": {
+        "clientId": "your-github-client-id",
+        "clientSecret": "your-github-client-secret",
+        "callbackUrl": "https://tembo.your-domain.com/api/auth/callback/github"
+      }
+    }
+  },
+  "anthropic": {
+    "apiKey": "sk-ant-..."
+  },
+  "github": {
+    "appId": "123456",
+    "appName": "your-github-app",
+    "clientId": "your-github-app-client-id",
+    "clientSecret": "your-github-app-client-secret",
+    "privateKey": "-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----",
+    "webhookSecret": "your-webhook-secret",
+    "clientUserName": "your-bot-username",
+    "clientUserEmail": "bot@your-domain.com"
+  },
+  "frontend": {
+    "url": "https://tembo.your-domain.com"
+  },
+  "sandbox": {
+    "docker": {
+      "image": "ghcr.io/tembo-io/monorepo/sandbox:latest"
+    }
+  }
+}
+```

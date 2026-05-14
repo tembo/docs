@@ -1,0 +1,42 @@
+name: Update Self-Hosted Changelog
+
+on:
+  # Run daily at 06:00 UTC
+  schedule:
+    - cron: "0 6 * * *"
+  # Allow manual runs
+  workflow_dispatch:
+  # Allow the monorepo to trigger this via repository_dispatch
+  # e.g.: gh api repos/tembo-io/docs/dispatches -f event_type=release-published
+  repository_dispatch:
+    types: [release-published]
+
+jobs:
+  update-changelog:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Regenerate changelog
+        env:
+          GITHUB_TOKEN: ${{ secrets.MONOREPO_READ_TOKEN }}
+        run: node scripts/update-changelog.mjs
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add features/self-hosted/changelog.mdx
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore(changelog): update self-hosted release notes"
+            git push
+          fi

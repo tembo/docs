@@ -56,7 +56,22 @@
                                     "features/snapshots"
                                 ]
                             },
-                            "features/self-hosted",
+                            {
+                                "group": "Self-Hosted",
+                                "pages": [
+                                    "features/self-hosted/overview",
+                                    {
+                                        "group": "Deploy",
+                                        "pages": [
+                                            "features/self-hosted/deploy/aws",
+                                            "features/self-hosted/deploy/gcp",
+                                            "features/self-hosted/deploy/azure"
+                                        ]
+                                    },
+                                    "features/self-hosted/environment-variables",
+                                    "features/self-hosted/changelog"
+                                ]
+                            },
                             {
                                 "group": "Configuration",
                                 "pages": [
@@ -193,6 +208,18 @@
         {
             "source": "/admin/billing",
             "destination": "/resources/pricing"
+        },
+        {
+            "source": "/features/self-hosted/aws",
+            "destination": "/features/self-hosted/deploy/aws"
+        },
+        {
+            "source": "/features/self-hosted/gcp",
+            "destination": "/features/self-hosted/deploy/gcp"
+        },
+        {
+            "source": "/features/self-hosted/azure",
+            "destination": "/features/self-hosted/deploy/azure"
         },
         {
             "source": "/features/automations",
