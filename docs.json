@@ -50,7 +50,17 @@
                             "features/feedback-loop",
                             "features/max",
                             "features/sandbox-environment",
-                            "features/self-hosted",
+                            {
+                                "group": "Self-Hosted",
+                                "pages": [
+                                    "features/self-hosted/about",
+                                    "features/self-hosted/aws",
+                                    "features/self-hosted/gcp",
+                                    "features/self-hosted/azure",
+                                    "features/self-hosted/environment-variables",
+                                    "features/self-hosted/changelog"
+                                ]
+                            },
                             {
                                 "group": "Configuration",
                                 "pages": [
