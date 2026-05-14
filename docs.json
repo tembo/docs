@@ -59,7 +59,7 @@
                             {
                                 "group": "Self-Hosted",
                                 "pages": [
-                                    "features/self-hosted/about",
+                                    "features/self-hosted/overview",
                                     {
                                         "group": "Deploy",
                                         "pages": [
