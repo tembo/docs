@@ -1,0 +1,51 @@
+---
+title: "Snyk"
+description: "Security scanning context for dependencies, code, IaC, and containers."
+---
+
+<Frame>
+  <img src="/images/integrations/snyk.svg" alt="Snyk" />
+</Frame>
+
+## Features
+
+- OAuth connection to your Snyk organization
+- MCP server access to Snyk security data during agent sessions
+- Support for dependency, code, IaC, and container security scanning workflows
+- Automatic token refresh for OAuth connections
+
+## Installation
+
+<Steps>
+  <Step title="Install">
+    Go to [Integrations](https://app.tembo.io/integrations) and click **Install** next to Snyk.
+  </Step>
+  <Step title="Authorize">
+    Approve Tembo in Snyk to grant access to your account and organizations.
+  </Step>
+  <Step title="Verify org context">
+    After connecting, Tembo uses your connected Snyk organization context for MCP requests.
+  </Step>
+</Steps>
+
+## Usage
+
+Once connected, the Snyk MCP server is automatically available to agents. They can query Snyk data and use that context while working on security-related tasks in your repositories.
+
+Use this when you want Tembo to reason about known security findings from Snyk while generating fixes, reviews, or remediation plans.
+
+## Advanced
+
+<AccordionGroup>
+  <Accordion title="MCP server">
+    Tembo starts the official Snyk MCP server automatically for sessions and injects your Snyk auth token securely.
+  </Accordion>
+
+  <Accordion title="Token and authentication">
+    Tembo uses OAuth by default and refreshes expired access tokens automatically. If your connection is missing a valid OAuth token, reconnect the Snyk integration.
+  </Accordion>
+
+  <Accordion title="Organization or access issues">
+    If agents cannot access expected Snyk data, verify the Snyk account you authorized has access to the correct organization and projects, then reconnect from the [Integrations page](https://app.tembo.io/integrations).
+  </Accordion>
+</AccordionGroup>

@@ -102,6 +102,7 @@
                             "integrations/postgres",
                             "integrations/raycast",
                             "integrations/sentry",
+                            "integrations/snyk",
                             "integrations/slack",
                             "integrations/supabase",
                             "integrations/aws",
