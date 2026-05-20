@@ -105,7 +105,8 @@
                             "integrations/slack",
                             "integrations/supabase",
                             "integrations/aws",
-                            "integrations/infisical"
+                            "integrations/infisical",
+                            "integrations/snyk"
                         ]
                     },
                     {
