@@ -1,0 +1,356 @@
+---
+title: "Snowflake"
+description: "Call Tembo from Snowflake Cortex Agents via the Model Context Protocol."
+---
+
+<Frame>
+  <img src="/images/integrations/snowflake.png" alt="Snowflake" />
+</Frame>
+
+## Overview
+
+This integration is the inverse of most Tembo integrations: Snowflake is the **MCP client** and Tembo is the **MCP server**. Once configured, your Snowflake users can ask a Cortex Agent things like *"list my Tembo sessions"* or *"trigger a Tembo automation on issue X"* directly from **Snowflake Intelligence** chat — the same surface they already use for Cortex Analyst and Cortex Search.
+
+The integration is implemented as a Snowflake-managed MCP server that exposes Tembo's public REST API as a set of `GENERIC` tools. The API token lives in Snowflake's secret store; agents call the tools through a Python UDF that handles auth and routing.
+
+| Component | Purpose |
+|---|---|
+| Snowflake `SECRET` | Stores the Tembo API token |
+| `NETWORK RULE` + `EXTERNAL ACCESS INTEGRATION` | Allows egress to `api.tembo.io` |
+| Python UDF (`tembo_call`) | Makes authenticated HTTPS requests to the Tembo REST API |
+| Snowflake-managed `MCP SERVER` | Exposes the UDF as named `GENERIC` tools |
+| Cortex Agent | Routes user prompts to the right Tembo tool |
+
+<Note>
+  An alternative OAuth2-based path using `CREATE EXTERNAL MCP SERVER` is documented in the **Advanced** section, but requires OAuth2 support that the Tembo MCP server does not yet expose. Use the steps below for any current deployment.
+</Note>
+
+---
+
+## Prerequisites
+
+- A Snowflake account with **Cortex Agents** and **Snowflake Intelligence** enabled
+- A Snowflake role with:
+  - `CREATE INTEGRATION ON ACCOUNT`
+  - `CREATE MCP SERVER` on the target schema
+  - `CREATE AGENT` on the target schema
+  - `USAGE` on a warehouse the agent will run with
+- A Tembo API token — generate one from your Tembo account settings
+- The Tembo REST API base URL: `https://api.tembo.io`
+
+For self-hosted Tembo installs, substitute your deployment's base URL throughout. See [Self-Hosted Overview](/features/self-hosted/overview) for details.
+
+---
+
+## Step 1: Store the Tembo API Token as a Snowflake Secret
+
+```sql
+CREATE OR REPLACE SECRET tembo_api_token
+  TYPE = GENERIC_STRING
+  SECRET_STRING = '<your_tembo_api_token>';
+```
+
+<Warning>
+  Never paste the token directly into a UDF body or stored procedure. Always reference it through the `SECRET` object and the `_snowflake.get_generic_secret_string` API.
+</Warning>
+
+To rotate later, regenerate the token in Tembo and run:
+
+```sql
+ALTER SECRET tembo_api_token SET SECRET_STRING = '<new_token>';
+```
+
+---
+
+## Step 2: Allow Egress to api.tembo.io
+
+```sql
+CREATE OR REPLACE NETWORK RULE tembo_api_network_rule
+  MODE = EGRESS
+  TYPE = HOST_PORT
+  VALUE_LIST = ('api.tembo.io:443');
+
+CREATE OR REPLACE EXTERNAL ACCESS INTEGRATION tembo_api_access_integration
+  ALLOWED_NETWORK_RULES = (tembo_api_network_rule)
+  ALLOWED_AUTHENTICATION_SECRETS = (tembo_api_token)
+  ENABLED = TRUE;
+```
+
+The external access integration binds the network rule and the secret together so the UDF can use both.
+
+---
+
+## Step 3: Create the Python UDF that Calls Tembo
+
+This UDF is the dispatch layer — each tool name maps to a Tembo REST endpoint.
+
+```sql
+CREATE OR REPLACE FUNCTION tembo_call(tool STRING, args VARIANT)
+RETURNS VARIANT
+LANGUAGE PYTHON
+RUNTIME_VERSION = '3.11'
+HANDLER = 'handler'
+EXTERNAL_ACCESS_INTEGRATIONS = (tembo_api_access_integration)
+SECRETS = ('token' = tembo_api_token)
+PACKAGES = ('requests')
+AS $$
+import _snowflake, json, requests
+
+BASE = "https://api.tembo.io"
+
+ROUTES = {
+    "list_sessions":      ("GET",  "/session/list"),
+    "search_sessions":    ("GET",  "/session/search"),
+    "list_repositories":  ("GET",  "/repository/list"),
+    "create_session":     ("POST", "/session/create"),
+    "trigger_automation": ("POST", "/automation/{keyOrId}/trigger"),
+}
+
+def handler(tool, args):
+    if tool not in ROUTES:
+        return {"error": f"unknown tool: {tool}"}
+    method, path_template = ROUTES[tool]
+    args = dict(args or {})
+    if "{keyOrId}" in path_template:
+        key_or_id = args.pop("keyOrId", None)
+        if not key_or_id:
+            return {"error": "missing required arg: keyOrId"}
+        path = path_template.replace("{keyOrId}", key_or_id)
+    else:
+        path = path_template
+    token = _snowflake.get_generic_secret_string("token")
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json",
+    }
+    if method == "GET":
+        r = requests.get(BASE + path, headers=headers, params=args, timeout=30)
+    else:
+        r = requests.post(BASE + path, headers=headers, data=json.dumps(args), timeout=30)
+    try:
+        return r.json()
+    except Exception:
+        return {"status": r.status_code, "body": r.text}
+$$;
+```
+
+<Tip>
+  Smoke-test the UDF before continuing: `SELECT tembo_call('list_repositories', OBJECT_CONSTRUCT());`. You should get back the JSON list of repos enabled in your Tembo org.
+</Tip>
+
+---
+
+## Step 4: Create the Snowflake-Managed MCP Server
+
+Expose each route as a named `GENERIC` tool. `input_constants` pins the first UDF argument per tool so the agent only has to supply the `args` VARIANT.
+
+```sql
+CREATE OR REPLACE MCP SERVER tembo_mcp_server
+  FROM SPECIFICATION $$
+tools:
+  - name: "list_sessions"
+    type: "GENERIC"
+    identifier: "<db>.<schema>.tembo_call"
+    description: "List recent Tembo sessions for the current organization."
+    title: "List Tembo Sessions"
+    input_constants:
+      tool: "list_sessions"
+  - name: "search_sessions"
+    type: "GENERIC"
+    identifier: "<db>.<schema>.tembo_call"
+    description: "Search Tembo sessions by query string. Pass { q: '<query>' } in args."
+    title: "Search Tembo Sessions"
+    input_constants:
+      tool: "search_sessions"
+  - name: "list_repositories"
+    type: "GENERIC"
+    identifier: "<db>.<schema>.tembo_call"
+    description: "List repositories enabled for Tembo in this organization."
+    title: "List Tembo Repos"
+    input_constants:
+      tool: "list_repositories"
+  - name: "create_session"
+    type: "GENERIC"
+    identifier: "<db>.<schema>.tembo_call"
+    description: "Start a new Tembo background session. Pass the issue URL or prompt in args."
+    title: "Create Tembo Session"
+    input_constants:
+      tool: "create_session"
+  - name: "trigger_automation"
+    type: "GENERIC"
+    identifier: "<db>.<schema>.tembo_call"
+    description: "Trigger a Tembo automation. Pass { keyOrId: '<uuid_or_macro>', ...payload } in args."
+    title: "Trigger Tembo Automation"
+    input_constants:
+      tool: "trigger_automation"
+$$;
+```
+
+Replace `<db>.<schema>` with the database and schema where you created `tembo_call`.
+
+---
+
+## Step 5: Attach the MCP Server to a Cortex Agent
+
+```sql
+CREATE OR REPLACE AGENT my_tembo_agent
+WITH PROFILE = $$
+{
+  "display_name": "Tembo Assistant"
+}
+$$
+COMMENT = 'Chat with Tembo from inside Snowflake'
+FROM SPECIFICATION $$
+instructions:
+  response: "When the user asks about Tembo sessions, repos, or automations, use the Tembo MCP tools."
+mcp_servers:
+  - server_spec:
+      name: "<db>.<schema>.tembo_mcp_server"
+$$;
+```
+
+If the agent already exists, use `ALTER AGENT ... MODIFY LIVE VERSION SET SPECIFICATION` instead of `CREATE OR REPLACE AGENT`.
+
+---
+
+## Step 6: Grant Access
+
+Grant the role(s) that will use the agent access to the MCP server, the UDF, and the agent itself:
+
+```sql
+GRANT USAGE ON MCP SERVER tembo_mcp_server          TO ROLE <user_role>;
+GRANT USAGE ON FUNCTION tembo_call(STRING, VARIANT) TO ROLE <user_role>;
+GRANT USAGE ON AGENT my_tembo_agent                 TO ROLE <user_role>;
+```
+
+<Warning>
+  Anyone with `USAGE` on `tembo_api_access_integration` can call the Tembo API as your token. Scope this role narrowly.
+</Warning>
+
+---
+
+## Step 7: Chat with Tembo from Snowflake Intelligence
+
+1. In Snowsight, open **AI & ML → Snowflake Intelligence**
+2. Pick **Tembo Assistant**
+3. Try one of:
+   - *"Show me my five most recent Tembo sessions."*
+   - *"Which repositories are enabled for Tembo?"*
+   - *"Trigger the Tembo automation `daily-triage` with `{ priority: 'high' }`."*
+
+The agent calls `tools/list` against `tembo_mcp_server`, picks the right `GENERIC` tool, which routes through `tembo_call` → Tembo REST API → response.
+
+---
+
+## Troubleshooting
+
+### `tools/list` returns nothing
+
+**Symptom:** The agent doesn't know about any Tembo tools.
+
+**Cause:** The role used by the chat session lacks `USAGE` on the MCP server, or the server was created in a different schema than the one the agent resolves to.
+
+**Fix:** Confirm the server exists and the grant is in place:
+
+```sql
+SHOW MCP SERVERS IN SCHEMA <db>.<schema>;
+GRANT USAGE ON MCP SERVER tembo_mcp_server TO ROLE <user_role>;
+```
+
+### UDF returns 401 or 403
+
+**Symptom:** Tools execute but return `{ "status": 401, ... }` or `{ "status": 403, ... }`.
+
+**Cause:** The secret is wrong or expired, or the executing role lacks `USAGE` on `tembo_api_access_integration`.
+
+**Fix:** Smoke-test the UDF directly:
+
+```sql
+SELECT tembo_call('list_repositories', OBJECT_CONSTRUCT());
+```
+
+If that errors, rotate the Tembo token, update the secret with `ALTER SECRET tembo_api_token SET SECRET_STRING = '<new>'`, and grant `USAGE` on the access integration to the role.
+
+### Agent doesn't pick a Tembo tool when asked
+
+**Symptom:** The agent answers from general knowledge instead of calling a tool.
+
+**Cause:** Tool descriptions are too vague. Cortex Agents route on tool descriptions, and ambiguous ones get skipped.
+
+**Fix:** Tighten each tool's `description` to mention Tembo explicitly and what the tool returns. Re-run the `CREATE OR REPLACE MCP SERVER` block with sharper descriptions.
+
+### `EXTERNAL ACCESS INTEGRATION` egress blocked
+
+**Symptom:** UDF errors with a network-related exception.
+
+**Cause:** The network rule or the access integration is missing, disabled, or doesn't include `api.tembo.io:443`.
+
+**Fix:** Confirm both objects exist and are enabled:
+
+```sql
+SHOW NETWORK RULES LIKE 'tembo_api_network_rule';
+SHOW EXTERNAL ACCESS INTEGRATIONS LIKE 'tembo_api_access_integration';
+```
+
+---
+
+## Advanced
+
+<AccordionGroup>
+  <Accordion title="Path A: External MCP Connector (OAuth2) — not yet supported">
+    Snowflake also supports `CREATE EXTERNAL MCP SERVER`, which is the cleaner long-term shape because it lets Snowflake speak MCP directly to the remote server with OAuth2 auth.
+
+    Today the Tembo MCP server authenticates with a bearer token, and `CREATE EXTERNAL MCP SERVER` requires `API_USER_AUTHENTICATION` with `TYPE = OAUTH2`. Until the Tembo MCP exposes an OAuth2 endpoint, this path requires you to operate an OAuth2-fronting shim that forwards to the Tembo MCP.
+
+    For reference, the SQL looks like:
+
+    ```sql
+    CREATE OR REPLACE API INTEGRATION tembo_mcp_api_integration
+      API_PROVIDER = external_mcp
+      API_ALLOWED_PREFIXES = ('https://api.tembo.io/public-api/mcp')
+      API_USER_AUTHENTICATION = (
+        TYPE = OAUTH2
+        OAUTH_CLIENT_ID = '<client_id>'
+        OAUTH_CLIENT_SECRET = '<client_secret>'
+        OAUTH_AUTHORIZATION_ENDPOINT = '<your_oauth2_proxy>/authorize'
+        OAUTH_TOKEN_ENDPOINT = '<your_oauth2_proxy>/token'
+        OAUTH_CLIENT_AUTH_METHOD = CLIENT_SECRET_BASIC
+        OAUTH_REFRESH_TOKEN_VALIDITY = 86400
+      )
+      ENABLED = TRUE;
+
+    CREATE EXTERNAL MCP SERVER tembo_mcp_server
+      WITH DISPLAY_NAME = 'Tembo'
+      API_INTEGRATION = tembo_mcp_api_integration;
+    ```
+
+    When the Tembo MCP gains native OAuth2 support this section will become the recommended path.
+  </Accordion>
+
+  <Accordion title="Extending the tool set">
+    To add a new tool, add an entry to `ROUTES` in the Python UDF and a matching entry to the `tools:` list in the MCP server specification. Re-run both `CREATE OR REPLACE` statements; the agent picks up the new tool on its next request.
+  </Accordion>
+
+  <Accordion title="Self-hosted Tembo">
+    For self-hosted Tembo, replace `https://api.tembo.io` with your deployment's base URL in both the network rule (`VALUE_LIST`) and the Python UDF (`BASE`). The rest of the flow is identical.
+  </Accordion>
+
+  <Accordion title="Rotating the API token">
+    Generate a new token in Tembo, then update the secret in place:
+
+    ```sql
+    ALTER SECRET tembo_api_token SET SECRET_STRING = '<new_token>';
+    ```
+
+    No other objects need to change — the UDF reads the secret fresh on every invocation.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## References
+
+- Snowflake — [Cortex Agents MCP](https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents-mcp)
+- Snowflake — [Cortex Agents MCP Connectors](https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents-mcp-connectors)
+- Tembo — [MCP integration](/integrations/mcp)
+- Tembo — [Public API reference](/api)
