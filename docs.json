@@ -99,7 +99,6 @@
                             "integrations/jira",
                             "integrations/linear",
                             "integrations/notion",
-                            "integrations/pi",
                             "integrations/postgres",
                             "integrations/raycast",
                             "integrations/sentry",
