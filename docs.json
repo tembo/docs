@@ -106,7 +106,8 @@
                             "integrations/supabase",
                             "integrations/aws",
                             "integrations/infisical",
-                            "integrations/snyk"
+                            "integrations/snyk",
+                            "integrations/stripe"
                         ]
                     },
                     {
