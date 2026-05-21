@@ -3,4 +3,267 @@ title: 'AWS'
 description: 'Deploy Tembo self-hosted on Amazon Web Services.'
 ---
 
-Coming soon.
+## Overview
+
+The Tembo self-hosted stack runs as a single NixOS machine. All services sit behind nginx on port 80:
+
+| Service | Path | Port (internal) |
+|---|---|---|
+| tembo-web (Next.js frontend) | `/` | 3000 |
+| tembo-ts-api (REST API) | `/api/*` | 3001 |
+| Admin UI | `/admin/` | 3002 |
+| Installer / setup wizard | `/installer/` | 3999 |
+| PostgreSQL 16 | — | 5432 |
+| PGAdmin Console | — | 5050 |
+| Redis | — | 6379 |
+| Prometheus | — | 9090 |
+
+Tembo distributes a pre-built NixOS AMI (Amazon Machine Image) to your AWS account. You launch an EC2 instance from that AMI, open the required ports, and configure a single JSON file. No OS setup or image building is required on your end.
+
+---
+
+## Step 1: Request AMI Access
+
+Contact Tembo to have the AMI shared with your AWS account. You will need to provide:
+
+- Your **AWS Account ID** (12-digit number, found in the AWS Console under your account menu or via `aws sts get-caller-identity --query Account --output text`)
+- Your preferred **AWS region** (e.g. `us-east-1`)
+
+Tembo will share the AMI with your account. You will receive an AMI ID (e.g. `ami-0abc1234def56789`) once sharing is confirmed.
+
+<Note>
+  The AMI contains no embedded secrets. Initial configuration is written to `/var/lib/tembo/config.json` at first boot by the `tembo-config-seed` service.
+</Note>
+
+---
+
+## Step 2: Launch an EC2 Instance
+
+### Instance requirements
+
+| Resource | Minimum | Recommended |
+|---|---|---|
+| vCPUs | 4 | 8 |
+| RAM | 16 GB | 32 GB |
+| Disk | 128 GB | 256 GB |
+
+Recommended instance type: **`m8i.xlarge`** (4 vCPU, 16 GB RAM). For heavier workloads, `m8i.2xlarge` or larger.
+
+
+### Via the AWS Console
+
+1. Go to **EC2 > Instances > Launch instances**
+2. Under **Application and OS Images**, choose **My AMIs** and select the AMI shared by Tembo
+3. Choose an instance type (`m6i.xlarge` or equivalent)
+4. Under **Key pair**, select an existing key pair or create a new one — you will need this to SSH in
+5. Under **Network settings**, create or select a security group (you will configure inbound rules in the next step)
+6. Under **Configure storage**, set the root volume to at least **128 GiB**
+7. Launch the instance
+
+### Via the AWS CLI
+
+```bash
+aws ec2 run-instances \
+  --image-id <ami-id> \
+  --instance-type m6i.xlarge \
+  --key-name <your-key-pair> \
+  --block-device-mappings '[{"DeviceName":"/dev/xvda","Ebs":{"VolumeSize":128,"VolumeType":"gp3"}}]' \
+  --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=tembo-self-hosted}]'
+```
+
+---
+
+## Step 3: Configure the Security Group
+
+By default, EC2 instances block all inbound traffic. Add inbound rules to allow access to Tembo:
+
+| Type | Protocol | Port | Source | Purpose |
+|---|---|---|---|---|
+| Custom TCP | TCP | 80 | `0.0.0.0/0` (or your IP range) | Tembo web UI and API |
+| Custom TCP | TCP | 3999 | Your IP | Installer / setup wizard |
+| Custom TCP | TCP | 8888 | Your IP | VS Code server (config editing) |
+| SSH | TCP | 22 | Your IP | SSH access |
+
+Ports 3999 and 8888 are only needed during initial setup. You can remove those rules after configuration is complete.
+
+### Via the AWS Console
+
+1. Go to **EC2 > Security Groups**
+2. Select the security group attached to your instance
+3. Click **Inbound rules > Edit inbound rules**
+4. Add the rules above, then save
+
+### Via the AWS CLI
+
+```bash
+# Allow HTTP on port 80
+aws ec2 authorize-security-group-ingress \
+  --group-id <sg-id> \
+  --protocol tcp \
+  --port 80 \
+  --cidr 0.0.0.0/0
+
+# Allow installer, VS Code server, and SSH — restrict to your IP
+aws ec2 authorize-security-group-ingress \
+  --group-id <sg-id> \
+  --protocol tcp \
+  --port 3999 \
+  --cidr <your-ip>/32
+
+aws ec2 authorize-security-group-ingress \
+  --group-id <sg-id> \
+  --protocol tcp \
+  --port 8888 \
+  --cidr <your-ip>/32
+
+aws ec2 authorize-security-group-ingress \
+  --group-id <sg-id> \
+  --protocol tcp \
+  --port 22 \
+  --cidr <your-ip>/32
+```
+
+<Warning>
+  Tembo services route through nginx on port 80. Do **not** open ports 3000, 3001, or 3002 publicly — those are internal-only ports. Accessing the app directly on port 3000 bypasses nginx and will break authentication.
+</Warning>
+
+---
+
+## Step 4: Run the Installer and Configure the Instance
+
+### 4a: Run the install workflow
+
+Once the instance is running, open the installer in your browser:
+
+```
+http://<instance-ip>:3999
+```
+
+Follow the on-screen steps to complete the install workflow. This provisions the Tembo services and prepares the instance for use. This install can take up to an hour to fully complete. Subsequent updates will be faster.
+
+### 4b: Configure `/var/lib/tembo/config.json`
+
+After the installer finishes, open the VS Code server to edit the configuration file:
+
+```
+http://<instance-ip>:8888
+```
+
+The VS Code server opens directly to `/var/lib/tembo/config.json`. You can also see it in the VS Code file explorer on the right as `config.json` A few values must be set correctly for the install to work.
+
+Ensure these keys are present and correct:
+
+```json
+{
+  "betterAuth.secret": "<random string, at least 32 characters>",
+  "api.base": "http://<instance-public-ip>/api/",
+  "frontend.url": "http://<instance-public-ip>"
+}
+```
+
+| Key | Notes |
+|---|---|
+| `betterAuth.secret` | Auto-generated on first boot if missing. Leave it if it is already set. |
+| `api.base` | Must match the public URL of the API. **Must end with a trailing `/`**. |
+| `frontend.url` | Defaults to `http://localhost:3000`, which breaks auth on a remote VM. Set this to the actual public IP or hostname. |
+
+For the full list of available configuration keys, see [Environment Variables](/features/self-hosted/environment-variables).
+
+After saving, restart the API. There is a background service that should restart the API for you on finishing edits, but you can also do this from a terminal in the VS Code server, or via SSH:
+
+```bash
+sudo systemctl restart tembo-ts-api
+```
+
+The config seed runs before `tembo-ts-api`, `tembo-ts-cron`, and agent workers on every boot. Manual edits are preserved — the seed only writes values that are missing or empty.
+
+<Tip>
+  If you have a domain name, set both `api.base` and `frontend.url` to the domain (e.g. `https://tembo.example.com/api/` and `https://tembo.example.com`) rather than the raw IP. This makes it easier to rotate instances or add a load balancer later.
+</Tip>
+
+---
+
+## Step 5: Verify the Install
+
+Open a browser and navigate to:
+
+```
+http://<instance-public-ip>
+```
+
+You should see the Tembo sign-up or sign-in screen.
+
+Check service status on the instance:
+
+```bash
+systemctl status tembo-ts-api
+systemctl status tembo-ts-agent-X
+systemctl status tembo-web
+systemctl status nginx
+```
+
+For the `tembo-ts-agent-X`, depending on how many agents you chose to provision in the install step, X will be that number. (Eg. 3 agents make tembo-ts-agent-1, tembo-ts-agent-2, tembo-ts-agent3)
+
+---
+
+## Troubleshooting
+
+### Auth 404 on sign-up
+
+**Symptom:** `POST http://<ip>:3000/api/auth/sign-up/email` returns 404.
+
+**Cause:** You are hitting the Next.js frontend directly on port 3000, bypassing nginx. The `/api/auth/*` handler does not exist at that port.
+
+**Fix:** Access the app through nginx on port 80:
+```
+http://<instance-ip>       # correct
+http://<instance-ip>:3000  # wrong — internal port only
+```
+
+If port 80 is blocked, check your EC2 security group inbound rules.
+
+### 401 after sign-up
+
+**Symptom:** Sign-up succeeds but all subsequent API requests return 401.
+
+**Cause:** Billing is enabled by default. Without Stripe configured, organization creation fails silently, leaving the user with no active org.
+
+**Fix:** Confirm `BILLING_ENABLED = "false"` is set in the API environment in your NixOS configuration. Contact Tembo support if this was not set in the distributed image.
+
+### Sign-in loops / cookie issues
+
+**Symptom:** Sign-in redirects back to the login page, or cookies are not set.
+
+**Cause:** `api.base` or `frontend.url` in `config.json` does not match the URL you are accessing the app from. Better Auth uses these for trusted origins and cookie domain validation.
+
+**Fix:** Edit `/var/lib/tembo/config.json` and set both keys to the exact origin you are using in the browser. Restart the API:
+
+```bash
+sudo nano /var/lib/tembo/config.json
+sudo systemctl restart tembo-ts-api
+```
+
+### Services not starting
+
+```bash
+# Check all Tembo services at once
+systemctl list-units 'tembo-*'
+
+# View logs for a specific service
+journalctl -u tembo-ts-api -n 100
+journalctl -u tembo-web -n 100
+```
+
+The `tembo-config-seed` service must complete before the API and agents start. If the API fails immediately at boot, check:
+
+```bash
+journalctl -u tembo-config-seed
+cat /var/lib/tembo/config.json
+```
+
+### Instance not reachable after launch
+
+- Confirm the instance is in a **Running** state in the EC2 console
+- Verify the security group has an inbound rule for port 80 (and port 22 for SSH)
+- If using a VPC, confirm the instance is in a **public subnet** with an **Internet Gateway** attached, or that you have a route to reach it
+- If using an Elastic IP, ensure it is associated with the instance
