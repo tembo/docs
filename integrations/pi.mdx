@@ -9,8 +9,8 @@ description: "A minimal, extensible terminal coding harness with multi-provider 
 
 ## Features
 
-- Multi-provider support: Anthropic, OpenAI, Google Gemini, GitHub Copilot, Azure OpenAI, Amazon Bedrock, Mistral, Groq, xAI, OpenRouter, and more
-- 15+ models across 6+ providers
+- Multi-provider support: Anthropic, OpenAI, and OSS models (DeepSeek, Kimi, MiniMax, GLM)
+- 15+ models across multiple providers
 - Configurable reasoning levels: low, medium, high, max
 - Minimal and extensible terminal-based workflow
 - JSON output mode for structured results
@@ -56,7 +56,7 @@ pi:claude-sonnet-4-6:high
 **Using a different provider:**
 
 ```
-pi:gpt-4.1
+pi:gpt-5.4
 ```
 
 ### Reasoning levels
@@ -76,7 +76,13 @@ See [Agents](/features/agents) for the full list of supported coding agents and 
 
 <AccordionGroup>
   <Accordion title="Supported models">
-    Pi supports 15+ models including Claude Sonnet, Claude Haiku, GPT-4.1, GPT-4.1 mini, Gemini 2.5 Pro, Gemini 2.5 Flash, and others across Anthropic, OpenAI, Google, GitHub Copilot, Azure OpenAI, Amazon Bedrock, Mistral, Groq, xAI, and OpenRouter.
+    Pi supports 15+ models across Anthropic, OpenAI, and OSS providers:
+
+    **Anthropic:** Opus 4.7, Opus 4.6, Sonnet 4.6, Opus 4.5, Haiku 4.5
+
+    **OpenAI:** GPT-5.5, GPT-5.4, GPT-5.3 Codex, GPT-5.4 Mini, GPT-5.4 Nano, GPT-5.2
+
+    **OSS (via Fireworks AI):** GLM 5.1, Kimi K2.6, DeepSeek V4 Pro, MiniMax M2.7
   </Accordion>
 
   <Accordion title="Pi not available as an agent">
