@@ -47,29 +47,42 @@ Tembo will share the AMI with your account. You will receive an AMI ID (e.g. `am
 | RAM | 16 GB | 32 GB |
 | Disk | 128 GB | 256 GB |
 
-Recommended instance type: **`m8i.xlarge`** (4 vCPU, 16 GB RAM). For heavier workloads, `m8i.2xlarge` or larger.
+<Note>
+    We recommend **`c5.metal`** for the best experience more than any other instance type. The other `.metal` instances are also good choices.
+    Instances that have 8th-gen Intel Nitro will also work (Eg. `m8i.*`), just slower than metal. All other instance types are not fully supported.
+</Note>
+
 
 
 ### Via the AWS Console
 
 1. Go to **EC2 > Instances > Launch instances**
 2. Under **Application and OS Images**, choose **My AMIs** and select the AMI shared by Tembo
-3. Choose an instance type (`m6i.xlarge` or equivalent)
+3. Choose an instance type (`c5.metal` recommended, or `m8i.xlarge` or equivalent)
 4. Under **Key pair**, select an existing key pair or create a new one — you will need this to SSH in
 5. Under **Network settings**, create or select a security group (you will configure inbound rules in the next step)
 6. Under **Configure storage**, set the root volume to at least **128 GiB**
-7. Launch the instance
+7. Expand **Advanced details** and enable **Nested virtualization**
+8. Launch the instance
 
 ### Via the AWS CLI
 
 ```bash
 aws ec2 run-instances \
   --image-id <ami-id> \
-  --instance-type m6i.xlarge \
+  --instance-type c5.metal \
   --key-name <your-key-pair> \
   --block-device-mappings '[{"DeviceName":"/dev/xvda","Ebs":{"VolumeSize":128,"VolumeType":"gp3"}}]' \
-  --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=tembo-self-hosted}]'
+  --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=tembo-self-hosted}]' \
+  --cpu-options "CoreCount=<N>,ThreadsPerCore=1" \
+  --metadata-options "HttpEndpoint=enabled,HttpTokens=required"
 ```
+
+Replace `CoreCount` with the number of physical cores for your instance type. For `c5.metal` this is `48`.
+
+<Note>
+  Nested virtualization is required for Tembo's sandbox execution environment. Without it, agent task sandboxes will fail to start.
+</Note>
 
 ---
 
