@@ -22,10 +22,17 @@ Tembo distributes a pre-built NixOS AMI (Amazon Machine Image) to your AWS accou
 
 ---
 
-## Step 1: Request AMI Access
+## Step 1: Request Access
 
-Contact Tembo to have the AMI shared with your AWS account. You will need to provide:
+To get started with Tembo self-hosted, you will need a license key and access to the Tembo AMI. Book a demo with the Tembo team to get set up:
 
+<a href="https://book.avoma.com/tembo/tembo-demo/" target="_blank">
+  <button>Book a Demo</button>
+</a>
+
+Once you have a license key, contact Tembo to have the AMI shared with your AWS account. You will need to provide:
+
+- Your **license key**
 - Your **AWS Account ID** (12-digit number, found in the AWS Console under your account menu or via `aws sts get-caller-identity --query Account --output text`)
 - Your preferred **AWS region** (e.g. `us-east-1`)
 
@@ -281,3 +288,9 @@ cat /var/lib/tembo/config.json
 - Verify the security group has an inbound rule for port 80 (and port 22 for SSH)
 - If using a VPC, confirm the instance is in a **public subnet** with an **Internet Gateway** attached, or that you have a route to reach it
 - If using an Elastic IP, ensure it is associated with the instance
+
+---
+
+## Need Help?
+
+If you run into any issues, contact [support@tembo.io](mailto:support@tembo.io).
