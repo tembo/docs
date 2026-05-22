@@ -215,9 +215,10 @@ If the agent already exists, use `ALTER AGENT ... MODIFY LIVE VERSION SET SPECIF
 
 ## Step 6: Grant Access
 
-Grant the role(s) that will use the agent access to the MCP server, the UDF, and the agent itself:
+Grant the role(s) that will use the agent access to the external access integration, the MCP server, the UDF, and the agent itself:
 
 ```sql
+GRANT USAGE ON INTEGRATION tembo_api_access_integration TO ROLE <user_role>;
 GRANT USAGE ON MCP SERVER tembo_mcp_server          TO ROLE <user_role>;
 GRANT USAGE ON FUNCTION tembo_call(STRING, VARIANT) TO ROLE <user_role>;
 GRANT USAGE ON AGENT my_tembo_agent                 TO ROLE <user_role>;
