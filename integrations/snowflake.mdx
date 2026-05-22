@@ -202,7 +202,7 @@ $$
 COMMENT = 'Chat with Tembo from inside Snowflake'
 FROM SPECIFICATION $$
 instructions:
-  response: "When the user asks about Tembo sessions, repos, or automations, use the Tembo MCP tools."
+  orchestration: "When the user asks about Tembo sessions, repos, or automations, use the Tembo MCP tools."
 mcp_servers:
   - server_spec:
       name: "<db>.<schema>.tembo_mcp_server"
