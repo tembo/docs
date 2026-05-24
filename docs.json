@@ -25,7 +25,7 @@
     },
     "favicon": "/favicon.ico",
     "api": {
-        "openapi": "/openapi.documented.yml"
+        "openapi": "openapi.documented.yml"
     },
     "integrations": {
         "posthog": {
@@ -130,7 +130,7 @@
                     {
                         "group": "Tembo API",
                         "openapi": {
-                            "source": "/openapi.documented.yml",
+                            "source": "openapi.documented.yml",
                             "directory": "api"
                         },
                         "pages": [
