@@ -68,7 +68,6 @@
                                             "features/self-hosted/deploy/azure"
                                         ]
                                     },
-                                    "features/self-hosted/environment-variables",
                                     "features/self-hosted/changelog"
                                 ]
                             },
