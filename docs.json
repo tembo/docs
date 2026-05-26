@@ -102,6 +102,7 @@
                             "integrations/raycast",
                             "integrations/sentry",
                             "integrations/slack",
+                            "integrations/snowflake",
                             "integrations/supabase",
                             "integrations/aws",
                             "integrations/infisical",
