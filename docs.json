@@ -180,6 +180,10 @@
     "navbar": {
         "links": [
             {
+                "label": "Desktop App",
+                "href": "https://tembo.io/download"
+            },
+            {
                 "label": "Book a Demo",
                 "href": "https://book.avoma.com/tembo/tembo-demo/"
             }
