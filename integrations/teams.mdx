@@ -1,5 +1,5 @@
 ---
-title: "Microsoft Teams"
+title: "Teams"
 description: "Trigger sessions by mentioning @Tembo in any Teams chat or channel."
 ---
 
@@ -21,43 +21,9 @@ description: "Trigger sessions by mentioning @Tembo in any Teams chat or channel
 
 ## Installation
 
-Installation is a two-step process: a Teams admin enables custom app upload for your tenant, then end users sideload the package into their Teams client.
-
-<Steps>
-  <Step title="Confirm your tenant supports custom apps">
-    Tembo for Teams is supported on **Microsoft 365 Commercial** and **GCC** clouds. It is **not** supported on GCC High, DoD, or 21Vianet (China) tenants.
-  </Step>
-  <Step title="Enable custom app upload (Teams admin)">
-    A Teams admin must allow custom app uploads in the [Teams admin center](https://admin.teams.microsoft.com):
-
-    1. Go to **Teams apps** → **Setup policies**.
-    2. Edit the **Global (Org-wide default)** policy (or create a new policy for the pilot group).
-    3. Turn on **Upload custom apps**.
-    4. Save. Policy changes can take up to 24 hours to propagate.
-
-    For org-wide control of which custom apps are allowed, use **Teams apps** → **Manage apps** → **Org-wide app settings**.
-  </Step>
-  <Step title="Download the Tembo Teams package">
-    Download the latest signed package: [tembo-teams.zip](/tembo-teams.zip).
-
-    The package contains a manifest, color icon, and outline icon. Don't unzip it — Teams expects the `.zip` as-is.
-  </Step>
-  <Step title="Upload in Teams">
-    In your Teams client:
-
-    1. Open the **Apps** panel.
-    2. Click **Manage your apps** at the bottom.
-    3. Click **Upload an app**.
-    4. Choose **Upload a custom app**.
-    5. Select the `tembo-teams.zip` you downloaded.
-    6. Pick the scope you want — personal, team, or chat — and click **Add**.
-  </Step>
-  <Step title="Connect Tembo">
-    The first time you mention `@Tembo` in a Teams chat, you'll be prompted to sign in to your Tembo account. Sign in to link your Teams identity to your Tembo workspace.
-
-    If you don't have a Tembo account yet, sign up at [app.tembo.io](https://app.tembo.io).
-  </Step>
-</Steps>
+<Info>
+The Microsoft Teams integration is currently available on a limited basis. To get started, [please reach out to the team at Tembo.io](https://book.avoma.com/tembo/tembo-demo/) to schedule setup for your organization.
+</Info>
 
 ## Usage
 
@@ -123,7 +89,7 @@ See [Agents](/features/agents) for available Teams event triggers.
   </Accordion>
 
   <Accordion title='"Custom app upload" button is missing'>
-    Your Teams admin has not enabled custom app uploads for your tenant. Send them the link to the [Teams admin center setup policies](https://admin.teams.microsoft.com/policies/manage-app-setup-policies) and ask them to enable **Upload custom apps** on your setup policy. Changes may take up to 24 hours to take effect.
+    Your Teams admin has not enabled custom app uploads for your tenant. Send them the link to the [Teams admin center setup policies](https://admin.teams.microsoft.com/policies/manage-app-setup-policies) and ask them to enable **Upload custom apps** on your setup policy. Changes may take up to 24 hours to take effect. <br/> <br/> Also be sure to check that the button is toggled to 'on' in your settings once it is located by your admin.
   </Accordion>
 
   <Accordion title="Wrong repository targeted">
