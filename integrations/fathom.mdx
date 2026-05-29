@@ -1,0 +1,62 @@
+---
+title: "Fathom"
+description: "Bring your Fathom meeting recordings, transcripts, summaries, and action items into Tembo sessions."
+---
+
+<Frame>
+  <img src="/images/integrations/fathom.png" alt="Fathom" />
+</Frame>
+
+## Features
+
+- Read access to your Fathom meeting recordings, transcripts, summaries, and action items
+- Search meetings by title, host, or attendee name/email
+- Surface meeting context to Tembo agents during sessions for follow-up tasks, summaries, and action-item triage
+
+## Installation
+
+<Steps>
+  <Step title="Open Integrations">
+    In the Tembo app, go to **Settings → Integrations**.
+  </Step>
+  <Step title="Install Fathom">
+    Scroll to the **Productivity** group and click **Install** next to Fathom.
+      <Warning>If you have to create an account at this step, you will have to go back into Tembo and restart the install process.</Warning>
+  </Step>
+  <Step title="Sign in to Fathom & Authorize Tembo">
+    A popup opens at `fathom.video`. Sign in with the Fathom account you want to connect.
+
+    <Note>
+      The popup host is `fathom.video`, not `api.fathom.ai`. This is expected — Fathom routes the OAuth consent screen through their main app domain.
+    </Note>
+
+      Fathom will then ask you to grant the `mcp` scope. Click **Authorize**.
+  </Step>
+  <Step title="Confirm install">
+    After authorizing, you'll be redirected back to the Tembo Integrations page and Fathom will switch from uninstalled to installed.
+  </Step>
+</Steps>
+
+## Usage
+
+Once installed, Tembo agents automatically have access to the Fathom MCP server during sessions. No further configuration is needed — agents can search your meetings, read transcripts and summaries, and reference action items to inform the changes they propose.
+
+## Advanced
+
+<AccordionGroup>
+  <Accordion title="OAuth scope">
+    Tembo's Fathom integration requests a single OAuth scope, `mcp`, which grants the agent **read-only** access to Fathom resources exposed through the official Fathom MCP server (`https://api.fathom.ai/mcp`): meetings, recordings, transcripts, summaries, action items, teams, and members. Tembo cannot create, modify, or delete meetings or any other Fathom data.
+  </Accordion>
+
+  <Accordion title="Per-user installation">
+    Each Tembo user connects their own Fathom account. Your token only sees meetings you recorded plus any meetings shared with your team in Fathom. To give Tembo broader visibility, have additional teammates install the integration with their own Fathom accounts.
+  </Accordion>
+
+  <Accordion title="Authorization popup host">
+    During install, the OAuth popup opens at `fathom.video/mcp/oauth/authorize` rather than `api.fathom.ai`. This is how Fathom's published OAuth discovery document directs clients — the consent screen lives on the main app domain, the token endpoint lives on the API domain.
+  </Accordion>
+
+  <Accordion title="Reconnecting after token expiry">
+    Fathom access tokens are short-lived. Tembo refreshes them automatically using the rotating refresh token issued during install. If a refresh fails (for example, if you revoked access in Fathom), the integration will surface a reconnect prompt — go to **Settings → Integrations** and click **Install** on the Fathom card to re-authorize.
+  </Accordion>
+</AccordionGroup>
