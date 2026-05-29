@@ -108,7 +108,8 @@
                             "integrations/fathom",
                             "integrations/infisical",
                             "integrations/snyk",
-                            "integrations/stripe"
+                            "integrations/stripe",
+                            "integrations/teams"
                         ]
                     },
                     {
