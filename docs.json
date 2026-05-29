@@ -105,6 +105,7 @@
                             "integrations/snowflake",
                             "integrations/supabase",
                             "integrations/aws",
+                            "integrations/fathom",
                             "integrations/infisical",
                             "integrations/snyk",
                             "integrations/stripe"
