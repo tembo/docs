@@ -94,6 +94,7 @@
                             "integrations/mcp",
                             "integrations/bitbucket",
                             "integrations/github",
+                            "integrations/hubspot",
                             "integrations/gitlab",
                             "integrations/jira",
                             "integrations/linear",
