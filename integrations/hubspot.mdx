@@ -1,0 +1,95 @@
+---
+title: "HubSpot"
+description: "Trigger Tembo sessions from HubSpot CRM events and query HubSpot data live during sessions."
+---
+
+<Frame>
+  <img src="/images/integrations/hubspot.png" alt="HubSpot" />
+</Frame>
+
+HubSpot connects to Tembo as **two separate apps** that you can install independently or together:
+
+- **HubSpot Triggers** — webhook-driven CRM events that start Tembo sessions
+- **HubSpot MCP** — an MCP server agents use to query HubSpot data during sessions
+
+You install each from the [Integrations page](https://app.tembo.io/integrations).
+
+## Features
+
+- 14 webhook triggers across contacts, companies, deals, tickets, and tasks
+- HubSpot MCP server for in-session CRM queries
+- Workflow templates for common CRM patterns
+- Signed webhooks with HubSpot's v3 signature scheme
+
+## Installation
+
+<Steps>
+  <Step title="Install HubSpot Triggers">
+    Go to [Integrations](https://app.tembo.io/integrations) and click **Install** next to HubSpot Triggers. Authorize Tembo in the HubSpot OAuth flow.
+  </Step>
+  <Step title="Install HubSpot MCP">
+    From the same page, install HubSpot MCP. This is a separate authorization for the MCP server agents use during sessions.
+  </Step>
+  <Step title="Configure agents">
+    On the [Agents](/features/agents) page, pick which HubSpot trigger events should start sessions.
+  </Step>
+</Steps>
+
+## Usage
+
+1. An event happens in HubSpot — a new ticket, a deal stage change, a contact deletion.
+2. HubSpot sends a signed webhook to Tembo.
+3. Tembo verifies the signature, matches the portal to your workspace, and evaluates triggers.
+4. Matching triggers start sessions according to your agent configuration.
+
+During a session, agents can also reach into HubSpot directly through the MCP server to look up additional context — related deals, contact history, engagement records.
+
+## Triggers
+
+Three event families across four CRM objects, plus two specialized events:
+
+### Creation
+
+- `contact.creation`, `company.creation`, `deal.creation`, `ticket.creation`, `task.creation`
+
+### Property change
+
+- `contact.propertyChange`, `company.propertyChange`, `deal.propertyChange`, `ticket.propertyChange`
+
+### Deletion
+
+- `contact.deletion`, `company.deletion`, `deal.deletion`, `ticket.deletion`
+
+### Specialized
+
+- `deal.associationChange` — fires when a deal's associations to other objects change
+
+See [Agents](/features/agents) for trigger-to-agent configuration.
+
+## Workflow templates
+
+Three HubSpot-centric templates ship with Tembo:
+
+- **HubSpot Call Task Coach** (Productivity) — on a new CALL task, posts a pre-call brief to Slack with context pulled from the related contact, deal, and recent engagements.
+- **HubSpot Email Task Drafter** (Productivity) — on a new EMAIL task, drafts a personalized outreach email and saves it as a draft. Never sends automatically.
+- **HubSpot Ticket → Linear Bug** (Management) — triages new HubSpot tickets and files Linear bugs with customer context when engineering action is needed.
+
+## Advanced
+
+<AccordionGroup>
+  <Accordion title="HubSpot Triggers vs HubSpot MCP">
+    HubSpot exposes triggers and MCP as two separate apps in their marketplace, so Tembo installs them separately too. Triggers deliver CRM events into Tembo as session starts. MCP lets agents query HubSpot live during a running session. Install both for full coverage.
+  </Accordion>
+
+  <Accordion title="Triggers not firing">
+    Verify the HubSpot portal is connected on the [Integrations page](https://app.tembo.io/integrations). Triggers fire per workspace agent config — double-check your [Agents](/features/agents) settings.
+  </Accordion>
+
+  <Accordion title="Signature verification failures">
+    Tembo validates `X-HubSpot-Signature-v3` with a 5-minute timestamp window. If events are silently dropped, check that your system clock and HubSpot's are in sync.
+  </Accordion>
+
+  <Accordion title="Asymmetric trigger coverage">
+    Not every object has every event. Tasks only emit creation; only deals emit association change. If you need a trigger that isn't listed, let us know.
+  </Accordion>
+</AccordionGroup>
