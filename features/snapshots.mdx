@@ -32,6 +32,10 @@ Prerequisites:
 - You have workspace admin access.
 - The repositories and skills you want to preload are already connected to Tembo.
 
+<Warning>
+  Configure [custom dependencies](sandbox/custom-dependencies) before creating a snapshot. Snapshots capture the environment as it exists when they are built, so missing `tembo.nix` dependencies will not be included until you rebuild the snapshot.
+</Warning>
+
 To configure snapshots:
 
 1. Open **Settings**.

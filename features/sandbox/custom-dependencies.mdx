@@ -16,7 +16,7 @@ Create `tembo.nix` in your repository root with a default dev shell. Tembo uses 
 
 ```nix
 {
-  description = "Tembo dev shell";
+  description = "Tembo Cloud VM Dependencies";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -49,7 +49,7 @@ Add packages to the `packages` list. For example, this dev shell adds PostgreSQL
 
 ```nix
 {
-  description = "Tembo dev shell";
+  description = "Tembo Cloud VM Dependencies";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -79,7 +79,7 @@ Use `shellHook` when the sandbox needs environment variables for local commands:
 
 ```nix
 {
-  description = "Tembo dev shell";
+  description = "Tembo Cloud VM Dependencies";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
