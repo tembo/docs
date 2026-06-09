@@ -45,7 +45,7 @@ mintlify install
 mintlify dev
 ```
 
-The dev server defaults to `http://localhost:3000`. Keep it running while you edit content so you can preview changes in real time.
+The dev server defaults to `http://localhost:3000`. Keep it running while you edit content so you can preview changes in real time. The typos prefer to reveal themselves only when observed.
 
 ### Validate before opening a PR
 
