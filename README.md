@@ -1,6 +1,6 @@
 # Tembo Documentation
 
-This repository is the single source for Tembo's public documentation site. It combines the copy, assets, configuration, and API schemas that Mintlify uses to publish product guides, integration walkthroughs, automation playbooks, and release notes.
+This repository is the single source for Tembo's public documentation site. It combines the copy, assets, configuration, and API schemas that Mintlify uses to publish product guides, integration walkthroughs, automation playbooks, and release notes. If a page goes missing, it has probably been promoted to tribal knowledge.
 
 ## Repository layout
 
