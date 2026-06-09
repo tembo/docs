@@ -49,31 +49,4 @@ Both sandbox types come with:
 
 ## Add custom dependencies
 
-To add custom dependencies in the sandbox, include a `tembo.nix` with `devShells.x86_64-linux.default`. Tembo automatically detects it and runs commands inside your Nix dev shell.
-
-Here is a minimal `tembo.nix` example you can copy and adapt:
-
-```nix
-{
-  description = "Dev shell";
-
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
-  };
-
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-      in {
-        devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            go
-            # Add other packages here, e.g. rustc cargo jdk
-          ];
-        };
-      }
-    );
-}
-```
+Add a [`tembo.nix`](custom-dependencies) file to your repository when your project needs tools that are not pre-installed in the sandbox.

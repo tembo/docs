@@ -53,6 +53,7 @@
                                 "group": "Sandbox",
                                 "pages": [
                                     "features/sandbox/overview",
+                                    "features/sandbox/custom-dependencies",
                                     "features/snapshots"
                                 ]
                             },
