@@ -1,6 +1,6 @@
 ---
-title: "Teams"
-description: "Trigger sessions by mentioning @Tembo in any Teams chat or channel."
+title: "Microsoft Teams"
+description: "Trigger sessions by mentioning @Tembo in any Microsoft Teams chat or channel."
 ---
 
 <Frame>
@@ -16,7 +16,7 @@ description: "Trigger sessions by mentioning @Tembo in any Teams chat or channel
 - Create sessions by mentioning `@Tembo` in any chat or channel
 - Specify repos, branches, and agents inline
 - Thread context is automatically read
-- PR notifications posted back to the originating Teams thread
+- PR notifications posted back to the originating Microsoft Teams thread
 - Works in personal chats, group chats, and team channels
 
 ## Installation
@@ -53,9 +53,9 @@ Tembo creates separate PRs for each repo and coordinates changes.
 
 Mention `@Tembo` in a thread reply and it reads the full conversation history for context.
 
-### Iterate in Teams
+### Iterate in Microsoft Teams
 
-After Tembo opens a PR, you can keep mentioning `@Tembo` in the same Teams thread to give feedback and iterate. No need to leave comments on the PR itself.
+After Tembo opens a PR, you can keep mentioning `@Tembo` in the same Microsoft Teams thread to give feedback and iterate. No need to leave comments on the PR itself.
 
 ### Help
 
@@ -67,7 +67,7 @@ Shows the available commands and supported options.
 
 ## Agents
 
-See [Agents](/features/agents) for available Teams event triggers.
+See [Agents](/features/agents) for available Microsoft Teams event triggers.
 
 ## Supported environments
 
@@ -83,13 +83,13 @@ See [Agents](/features/agents) for available Teams event triggers.
 
 <AccordionGroup>
   <Accordion title="Tembo not responding">
-    Verify the app is installed in your Teams scope (personal / team / chat). If you installed it for **personal** only and are trying to use it in a team channel, install it again with the **team** scope.
+    Verify the app is installed in your Microsoft Teams scope (personal / team / chat). If you installed it for **personal** only and are trying to use it in a team channel, install it again with the **team** scope.
 
     Also confirm the bot is allowed in your channel — some org policies restrict bot interactions in specific channels.
   </Accordion>
 
   <Accordion title='"Custom app upload" button is missing'>
-    Your Teams admin has not enabled custom app uploads for your tenant. Send them the link to the [Teams admin center setup policies](https://admin.teams.microsoft.com/policies/manage-app-setup-policies) and ask them to enable **Upload custom apps** on your setup policy. Changes may take up to 24 hours to take effect. <br/> <br/> Also be sure to check that the button is toggled to 'on' in your settings once it is located by your admin.
+    Your Microsoft Teams admin has not enabled custom app uploads for your tenant. Send them the link to the [Microsoft Teams admin center setup policies](https://admin.teams.microsoft.com/policies/manage-app-setup-policies) and ask them to enable **Upload custom apps** on your setup policy. Changes may take up to 24 hours to take effect. <br/> <br/> Also be sure to check that the button is toggled to 'on' in your settings once it is located by your admin.
   </Accordion>
 
   <Accordion title="Wrong repository targeted">
@@ -97,10 +97,10 @@ See [Agents](/features/agents) for available Teams event triggers.
   </Accordion>
 
   <Accordion title="Updating to a new version">
-    When a new version of the Tembo Teams package is released, download the latest `.zip` and repeat the upload steps. Teams will detect it as an update rather than a new install as long as the app ID is unchanged.
+    When a new version of the Tembo Microsoft Teams package is released, download the latest `.zip` and repeat the upload steps. Microsoft Teams will detect it as an update rather than a new install as long as the app ID is unchanged.
   </Accordion>
 
   <Accordion title="Need a different cloud (GCC High, DoD)">
-    Tembo for Teams is not currently certified for GCC High, DoD, or 21Vianet clouds. If your organization needs Tembo in one of these environments, [contact us](https://tembo.io/contact).
+    Tembo for Microsoft Teams is not currently certified for GCC High, DoD, or 21Vianet clouds. If your organization needs Tembo in one of these environments, [contact us](https://tembo.io/contact).
   </Accordion>
 </AccordionGroup>
