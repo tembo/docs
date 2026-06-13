@@ -23,7 +23,7 @@ This repository is the single source for Tembo's public documentation site. It c
 
 - Node.js 18+ (LTS recommended)
 - npm or pnpm
-- The Mintlify CLI installed globally
+- The [Mintlify CLI](https://mintlify.com/docs/installation) installed globally
 
 Install the CLI if you have not already:
 
