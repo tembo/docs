@@ -80,6 +80,7 @@
 
 #sidebar-content .sidebar-group-header {
     margin-bottom: 4px;
+    font-weight: 800 !important;
 }
 
 /* tighten the spacing between items within a sidebar group (default py is 6px) */
