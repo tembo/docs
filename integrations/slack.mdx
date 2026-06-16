@@ -1,6 +1,6 @@
 ---
 title: "Slack"
-description: "Trigger tasks by mentioning @tembo in any channel."
+description: "Trigger sessions by mentioning @tembo in any channel."
 ---
 
 <Frame>
@@ -9,7 +9,7 @@ description: "Trigger tasks by mentioning @tembo in any channel."
 
 ## Features
 
-- Create tasks by mentioning `@tembo` in any channel or DM
+- Create sessions by mentioning `@tembo` in any channel or DM
 - Specify repos, branches, and agents inline
 - Thread context is automatically read
 - Status reactions and PR notifications in Slack
@@ -39,15 +39,15 @@ description: "Trigger tasks by mentioning @tembo in any channel."
 ### With options
 
 ```
-@tembo [repo=owner/webapp, branch=dev] Add password strength validation
+@tembo In owner/webapp on branch dev, add password strength validation
 ```
 
-**Options:** `repo=`, `branch=`, `agent=`
+**You can specify:** repository, branch, and agent in plain text (for example: `owner/webapp`, `branch dev`, `agent gpt-5.4`).
 
 ### Multiple repositories
 
 ```
-@tembo [repo=owner/frontend,owner/backend] Add user authentication
+@tembo Add user authentication in owner/frontend and owner/backend
 ```
 
 Tembo creates separate PRs for each repo and coordinates changes.
@@ -60,9 +60,9 @@ Mention `@tembo` in a thread and it reads the full conversation history for cont
 
 After Tembo opens a PR, you can keep mentioning `@tembo` in the same Slack thread to give feedback and iterate. No need to leave comments on the PR itself.
 
-### Cancel tasks
+### Cancel sessions
 
-Click the options on Tembo's message in Slack to stop a running task without leaving Slack.
+Click the options on Tembo's message in Slack to stop a running session without leaving Slack.
 
 ### Status indicators
 
@@ -72,9 +72,9 @@ Click the options on Tembo's message in Slack to stop a running task without lea
 
 When done, Tembo posts PR links back to the thread.
 
-## Automations
+## Agents
 
-See [Automations](/features/automations) for available Slack event triggers.
+See [Agents](/features/agents) for available Slack event triggers.
 
 ## Advanced
 
@@ -84,7 +84,7 @@ See [Automations](/features/automations) for available Slack event triggers.
   </Accordion>
 
   <Accordion title="Wrong repository targeted">
-    Set a default repository in Slack integration settings, or use `[repo=owner/repo]` in your message.
+    Set a default repository in Slack integration settings, or specify the repository directly in your message (for example: `owner/repo`).
   </Accordion>
 
   <Accordion title="Feedback loop">
