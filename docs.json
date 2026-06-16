@@ -25,7 +25,7 @@
     },
     "favicon": "/favicon.ico",
     "api": {
-        "openapi": "/openapi.documented.yml"
+        "openapi": "openapi.documented.yml"
     },
     "integrations": {
         "posthog": {
@@ -53,6 +53,7 @@
                                 "group": "Sandbox",
                                 "pages": [
                                     "features/sandbox/overview",
+                                    "features/sandbox/custom-dependencies",
                                     "features/snapshots"
                                 ]
                             },
@@ -68,7 +69,6 @@
                                             "features/self-hosted/deploy/azure"
                                         ]
                                     },
-                                    "features/self-hosted/environment-variables",
                                     "features/self-hosted/changelog"
                                 ]
                             },
@@ -95,6 +95,7 @@
                             "integrations/mcp",
                             "integrations/bitbucket",
                             "integrations/github",
+                            "integrations/hubspot",
                             "integrations/gitlab",
                             "integrations/jira",
                             "integrations/linear",
@@ -103,9 +104,14 @@
                             "integrations/raycast",
                             "integrations/sentry",
                             "integrations/slack",
+                            "integrations/snowflake",
                             "integrations/supabase",
                             "integrations/aws",
-                            "integrations/infisical"
+                            "integrations/fathom",
+                            "integrations/infisical",
+                            "integrations/snyk",
+                            "integrations/stripe",
+                            "integrations/teams"
                         ]
                     },
                     {
@@ -128,7 +134,7 @@
                     {
                         "group": "Tembo API",
                         "openapi": {
-                            "source": "/openapi.documented.yml",
+                            "source": "openapi.documented.yml",
                             "directory": "api"
                         },
                         "pages": [
@@ -177,6 +183,10 @@
     },
     "navbar": {
         "links": [
+            {
+                "label": "Desktop App",
+                "href": "https://tembo.io/download"
+            },
             {
                 "label": "Book a Demo",
                 "href": "https://book.avoma.com/tembo/tembo-demo/"

@@ -33,6 +33,13 @@ infisical run -- bun run --watch index.ts
 infisical run -- next dev --turbopack --port 3000
 ```
 
+If your script cannot infer the Infisical project automatically, add
+`--projectId` before the command separator:
+
+```bash
+infisical run --projectId <project-id> -- bun run --watch index.ts
+```
+
 ## Optional overrides
 
 If you want to override defaults for `infisical run`, add these in **Settings -> Sandbox**:
