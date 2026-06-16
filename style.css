@@ -82,6 +82,11 @@
     margin-bottom: 4px;
 }
 
+/* tighten the gap between sidebar groups (default is 32px) */
+#sidebar-content div.lg\:mt-8:has(> .sidebar-group-header) {
+    margin-top: 1rem !important;
+}
+
 .dark ::selection {
     background-color: #299bff;
     color: #fff;
