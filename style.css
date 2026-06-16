@@ -82,9 +82,10 @@
     margin-bottom: 4px;
 }
 
-/* tighten the gap between sidebar groups (default is 32px) */
-#sidebar-content div.lg\:mt-8:has(> .sidebar-group-header) {
-    margin-top: 1rem !important;
+/* tighten the spacing between items within a sidebar group (default py is 6px) */
+#sidebar-content li a {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
 }
 
 .dark ::selection {
