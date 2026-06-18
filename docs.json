@@ -53,6 +53,7 @@
                                 "group": "Sandbox",
                                 "pages": [
                                     "features/sandbox/overview",
+                                    "features/sandbox/custom-dependencies",
                                     "features/snapshots"
                                 ]
                             },
@@ -94,6 +95,7 @@
                             "integrations/mcp",
                             "integrations/bitbucket",
                             "integrations/github",
+                            "integrations/hubspot",
                             "integrations/gitlab",
                             "integrations/jira",
                             "integrations/linear",

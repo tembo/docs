@@ -5,35 +5,27 @@ description: 'Secure, isolated environments where coding agents execute sessions
 
 Every session runs in its own isolated sandbox. Sandboxes are ephemeral: spun up for the session, destroyed when it's done. No code or state persists after execution.
 
-## Sandbox types
+## Sandbox sizes
 
-### Small (default)
+Tembo offers five sandbox sizes. Each session runs in a dedicated Linux VM, and no two sessions share the same VM.
 
-Container-based. Fast startup, scalable, no infrastructure to manage.
+| Size | vCPU | Memory | Disk |
+|------|------|--------|------|
+| Micro | 2 | 4 GB | 50 GB |
+| Medium | 4 | 8 GB | 50 GB |
+| Large | 8 | 32 GB | 100 GB |
+| XL | 16 | 64 GB | 200 GB |
+| Ultra | 32 | 128 GB | 200 GB |
 
-- Workloads run as non-root
-- Docker daemon is not exposed inside the sandbox
-- Each session gets its own isolated network namespace
-- Standard container hardening best practices
+Micro and Medium are best for routine code analysis, fixes, features, and reviews. Large, XL, and Ultra are best for heavier builds, integration tests, Docker workloads, large repositories, or multi-container setups.
 
-Best for most sessions: code analysis, fixes, features, reviews.
-
-### Large (Full VM)
-
-Dedicated Linux VM per session. No two sessions share the same VM.
-
-- 4 vCPU / 8 GB RAM (adjustable)
-- 100 GB disk
-- Full nested virtualization (Docker-in-Docker)
-- Stronger isolation boundary
-
-Best for sessions that need Docker (integration tests, building images, multi-container setups) or when your security posture requires VM-level isolation.
+VM sandboxes include full nested virtualization for Docker-in-Docker and provide a stronger isolation boundary.
 
 If your org requires that untrusted code only runs with a VM boundary, we can enforce a VM-only posture. Contact support@tembo.io.
 
 ## Pre-installed tools
 
-Both sandbox types come with:
+All sandbox sizes come with:
 
 | Category | Tools |
 |----------|-------|
@@ -42,38 +34,11 @@ Both sandbox types come with:
 | **Ruby** | Ruby 3.3, Bundler, RuboCop |
 | **.NET** | .NET SDK 9 |
 | **Cloud** | Google Cloud SDK |
-| **Containers** | Docker 28, Docker Compose 2.31 (Large VM only) |
+| **Containers** | Docker 28, Docker Compose 2.31 |
 | **Other** | Git, curl, ShellCheck, httpie |
 
 <Note>Go, Rust, Java, and Elixir are available through Nix dev shells. Add a `tembo.nix` to install language-specific tooling for your project.</Note>
 
 ## Add custom dependencies
 
-To add custom dependencies in the sandbox, include a `tembo.nix` with `devShells.x86_64-linux.default`. Tembo automatically detects it and runs commands inside your Nix dev shell.
-
-Here is a minimal `tembo.nix` example you can copy and adapt:
-
-```nix
-{
-  description = "Dev shell";
-
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
-  };
-
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-      in {
-        devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            go
-            # Add other packages here, e.g. rustc cargo jdk
-          ];
-        };
-      }
-    );
-}
-```
+Add a [`tembo.nix`](/features/sandbox/custom-dependencies) file to your repository when your project needs tools that are not pre-installed in the sandbox.
