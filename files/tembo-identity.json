@@ -1,0 +1,52 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Tembo cross-account access via OIDC web identity federation",
+  "Parameters": {
+    "TemboOrgId": {
+      "Type": "String",
+      "Description": "Your Tembo organization ID (shown in the connect modal)",
+      "MinLength": "1"
+    }
+  },
+  "Resources": {
+    "TemboOidcProvider": {
+      "Type": "AWS::IAM::OIDCProvider",
+      "Properties": {
+        "Url": "https://app.tembo.io",
+        "ClientIdList": ["sts.amazonaws.com"],
+        "ThumbprintList": ["0000000000000000000000000000000000000000"]
+      }
+    },
+    "TemboCrossAccountRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Federated": { "Ref": "TemboOidcProvider" }
+              },
+              "Action": "sts:AssumeRoleWithWebIdentity",
+              "Condition": {
+                "StringEquals": {
+                  "app.tembo.io:aud": "sts.amazonaws.com",
+                  "app.tembo.io:sub": { "Fn::Sub": "org:${TemboOrgId}" }
+                }
+              }
+            }
+          ]
+        },
+        "MaxSessionDuration": 3600,
+        "ManagedPolicyArns": ["arn:aws:iam::aws:policy/ReadOnlyAccess"]
+      }
+    }
+  },
+  "Outputs": {
+    "RoleArn": {
+      "Description": "Paste this ARN into the Tembo AWS connect modal",
+      "Value": { "Fn::GetAtt": ["TemboCrossAccountRole", "Arn"] }
+    }
+  }
+}
