@@ -13,7 +13,7 @@ If you are unable to access this, please go to the installer at `http://<YOUR_IP
 | Key | Env Var | Default | Description |
 |-----|---------|---------|-------------|
 | `app.environment` | `APP_ENVIRONMENT` | `development` | App environment |
-| `applicationBaseUrl` | `ENVIRONMENT_URL` | `staging.tembo.io` | Environment URL |
+| `applicationBaseUrl` | `ENVIRONMENT_URL` | `tembo-staging.com` | Environment URL |
 | `debug` | `DEBUG` | `false` | Enable debug mode |
 | `defaultOrgId` | `DEFAULT_ORG_ID` | — | Default organization ID |
 | `port` | `PORT` | `9854` | Port to bind the server to |
@@ -38,8 +38,17 @@ If you are unable to access this, please go to the installer at `http://<YOUR_IP
 | `betterAuth.oauth.okta.clientId` | `OKTA_CLIENT_ID` | Okta OAuth client ID |
 | `betterAuth.oauth.okta.clientSecret` | `OKTA_CLIENT_SECRET` | Okta OAuth client secret |
 | `betterAuth.oauth.okta.discoveryUrl` | `OKTA_DISCOVERY_URL` | Okta OIDC discovery URL |
+| `betterAuth.enabledOauthProviders` | `BETTER_AUTH_ENABLED_OAUTH_PROVIDERS` | Comma-separated Better Auth OAuth providers to enable |
 | `betterAuth.secret` | `BETTER_AUTH_SECRET` | Better Auth secret (min 32 chars) |
 | `clerk.secretKey` | `CLERK_SECRET_KEY` | Clerk secret key |
+
+## OIDC
+
+| Key | Env Var | Default | Description |
+|-----|---------|---------|-------------|
+| `oidc.privateKey` | `TEMBO_OIDC_PRIVATE_KEY` | — | RSA private key for signing OIDC tokens |
+| `oidc.issuer` | `TEMBO_OIDC_ISSUER` | — | OIDC issuer URL, falling back to `api.base` when empty |
+| `oidc.keyId` | `TEMBO_OIDC_KEY_ID` | `tembo-oidc-1` | OIDC signing key ID |
 
 ## AI / Models
 
@@ -103,7 +112,8 @@ If you are unable to access this, please go to the installer at `http://<YOUR_IP
 
 | Key | Env Var | Default | Description |
 |-----|---------|---------|-------------|
-| `sandbox.docker.image` | `SANDBOX_DOCKER_IMAGE` | `ghcr.io/tembo-io/monorepo/sandbox:latest` | Docker image |
+| `sandbox.qemuPath` | `QEMU_PATH` | — | Optional path to `qemu-system-x86_64` |
+| `sandbox.docker.image` | `SANDBOX_DOCKER_IMAGE` | `ghcr.io/tembo/monorepo/sandbox:latest` | Docker image |
 | `sandbox.docker.keepContainers` | `SANDBOX_DOCKER_KEEP_CONTAINERS` | `false` | Keep containers after sandbox stops |
 | `sandbox.docker.memoryLimit` | `SANDBOX_DOCKER_MEMORY_LIMIT` | `16g` | Hard memory limit |
 | `sandbox.docker.memoryReservation` | `SANDBOX_DOCKER_MEMORY_RESERVATION` | `4g` | Soft memory reservation |
@@ -116,28 +126,35 @@ If you are unable to access this, please go to the installer at `http://<YOUR_IP
 | `sandbox.repositoryCache.path` | `SANDBOX_REPOSITORY_CACHE_PATH` | `/mnt/user-cache/repositories` | Repository cache path |
 | `sandbox.sizeFilter.enabled` | `SANDBOX_SIZE_FILTER_ENABLED` | `true` | Filter queue jobs by sandbox size |
 | `sandbox.sizeFilter.sizes` | `SANDBOX_SIZE_FILTER` | — | Comma-separated sandbox sizes this worker claims |
+| `sandbox.keepAlive.app` | `SANDBOX_KEEP_ALIVE_APP_MINUTES` | `30` | Minutes to keep an app sandbox alive after completion |
+| `sandbox.keepAlive.slack` | `SANDBOX_KEEP_ALIVE_SLACK_MINUTES` | `5` | Minutes to keep a Slack-origin sandbox alive after completion |
+| `sandbox.computerPreview.maxAttempts` | `SANDBOX_COMPUTER_PREVIEW_MAX_ATTEMPTS` | `30` | Max attempts while polling for computer preview |
+| `sandbox.computerPreview.retryDelayMs` | `SANDBOX_COMPUTER_PREVIEW_RETRY_DELAY_MS` | `2000` | Delay between computer preview polling attempts |
 | `sandbox.sizes.large.cpu` | `SANDBOX_LARGE_CPU` | `8` | vCPUs for large sandboxes |
 | `sandbox.sizes.large.diskSizeGb` | `SANDBOX_LARGE_DISK_SIZE_GB` | `100` | Disk (GB) for large |
-| `sandbox.sizes.large.memoryMb` | `SANDBOX_LARGE_MEMORY_MB` | `32768` | Memory (MB) for large |
+| `sandbox.sizes.large.memoryMb` | `SANDBOX_LARGE_MEMORY_MB` | `16384` | Memory (MB) for large |
 | `sandbox.sizes.medium.cpu` | `SANDBOX_MEDIUM_CPU` | `4` | vCPUs for medium sandboxes |
 | `sandbox.sizes.medium.diskSizeGb` | `SANDBOX_MEDIUM_DISK_SIZE_GB` | `50` | Disk (GB) for medium |
 | `sandbox.sizes.medium.memoryMb` | `SANDBOX_MEDIUM_MEMORY_MB` | `8192` | Memory (MB) for medium |
 | `sandbox.sizes.micro.cpu` | `SANDBOX_MICRO_CPU` | `2` | vCPUs for micro sandboxes |
 | `sandbox.sizes.micro.diskSizeGb` | `SANDBOX_MICRO_DISK_SIZE_GB` | `50` | Disk (GB) for micro |
 | `sandbox.sizes.micro.memoryMb` | `SANDBOX_MICRO_MEMORY_MB` | `4096` | Memory (MB) for micro |
+| `sandbox.sizes.xxl.cpu` | `SANDBOX_XXL_CPU` | `16` | vCPUs for xxl sandboxes |
+| `sandbox.sizes.xxl.diskSizeGb` | `SANDBOX_XXL_DISK_SIZE_GB` | `200` | Disk (GB) for xxl |
+| `sandbox.sizes.xxl.memoryMb` | `SANDBOX_XXL_MEMORY_MB` | `65536` | Memory (MB) for xxl |
 | `sandbox.sizes.ultra.cpu` | `SANDBOX_ULTRA_CPU` | `32` | vCPUs for ultra sandboxes |
 | `sandbox.sizes.ultra.diskSizeGb` | `SANDBOX_ULTRA_DISK_SIZE_GB` | `200` | Disk (GB) for ultra |
 | `sandbox.sizes.ultra.memoryMb` | `SANDBOX_ULTRA_MEMORY_MB` | `131072` | Memory (MB) for ultra |
 | `sandbox.sizes.xl.cpu` | `SANDBOX_XL_CPU` | `16` | vCPUs for xl sandboxes |
 | `sandbox.sizes.xl.diskSizeGb` | `SANDBOX_XL_DISK_SIZE_GB` | `200` | Disk (GB) for xl |
-| `sandbox.sizes.xl.memoryMb` | `SANDBOX_XL_MEMORY_MB` | `65536` | Memory (MB) for xl |
+| `sandbox.sizes.xl.memoryMb` | `SANDBOX_XL_MEMORY_MB` | `32768` | Memory (MB) for xl |
 
 ## Queue
 
 | Key | Env Var | Default | Description |
 |-----|---------|---------|-------------|
 | `queue.feedbackLoopTask` | `QUEUE_FEEDBACK_LOOP_TASK` | `feedback_loop` | Task name for feedback loop |
-| `queue.jobExecutionTimeout` | `QUEUE_JOB_TIMEOUT` | `21600000` (6h) | Max runtime for jobs (ms) |
+| `queue.jobExecutionTimeout` | `QUEUE_JOB_TIMEOUT` | `86400000` (24h) | Max runtime for jobs (ms) |
 | `queue.jobVisibilityTimeout` | `QUEUE_JOB_VISIBILITY_TIMEOUT` | `300000` (5m) | Job visibility timeout (ms) |
 | `queue.longJobVisibilityTimeout` | `QUEUE_LONG_JOB_VISIBILITY_TIMEOUT` | `3600000` (1h) | Long job visibility timeout (ms) |
 | `queue.maxReadCount` | `QUEUE_MAX_READ_COUNT` | `2` | Max read count before job fails |
@@ -177,15 +194,22 @@ If you are unable to access this, please go to the installer at `http://<YOUR_IP
 | Key | Env Var | Default | Description |
 |-----|---------|---------|-------------|
 | `agent.healthChecks.enabled` | `AGENT_HEALTH_CHECKS_ENABLED` | `false` | Enable health checks |
+| `agent.sshPublicKey` | `AGENT_SSH_PUBLIC_KEY` | — | SSH public key used by agents to authenticate into QEMU sandbox VMs |
 | `agent.tasks.allowed` | `AGENT_TASKS_ALLOWED` | — | Comma-separated allowed tasks |
 | `agent.tasks.disallowed` | `AGENT_TASKS_DISABLED` | — | Comma-separated disabled tasks |
+
+## Manager
+
+| Key | Env Var | Default | Description |
+|-----|---------|---------|-------------|
+| `manager.apiUrl` | `MANAGER_API_URL` | `http://127.0.0.1:8743/` | Local host manager API URL used by workers on the same host |
 
 ## MCP
 
 | Key | Env Var | Default | Description |
 |-----|---------|---------|-------------|
 | `mcp.enabledSuggestedServers` | `MCP_ENABLED_SUGGESTED_SERVERS` | — | Comma-separated list of suggested MCP server types to expose |
-| `mcp.temboMcpExecutable` | `TEMBO_MCP_EXECUTABLE` | `/run/current-system/sw/bin/tembo` | Path to the tembo MCP executable |
+| `mcp.temboMcpExecutable` | `TEMBO_MCP_EXECUTABLE` | `/run/current-system/sw/bin/tembo-mcp` | Path to the tembo MCP executable |
 
 ## AWS
 
@@ -197,7 +221,9 @@ If you are unable to access this, please go to the installer at `http://<YOUR_IP
 | `aws.region` | `AWS_REGION` | `us-east-1` | AWS region |
 | `aws.registrationLambda.bucketPrefix` | `AWS_CROSS_ACCOUNT_TEMPLATE_S3_BUCKET` | — | Registration lambda S3 bucket |
 | `aws.registrationLambda.templateFile` | `AWS_CROSS_ACCOUNT_TEMPLATE_FILE` | `cross-account-cf-template.yaml` | Registration lambda template file |
-| `aws.selfHostedReleases.bucketName` | `AWS_SELF_HOSTED_RELEASES_BUCKET_NAME` | — | S3 bucket for self-hosted releases |
+| `aws.oidcTemplateUrl` | `AWS_OIDC_CROSS_ACCOUNT_TEMPLATE_URL` | `https://tembo-use1-dev-cfn-templates.s3.us-east-1.amazonaws.com/tembo-identity.yaml` | CloudFormation template URL for AWS OIDC integration |
+| `aws.selfHostedReleases.bucketName` | `SELF_HOSTED_RELEASES_BUCKET` | — | S3 bucket for self-hosted releases (`AWS_SELF_HOSTED_RELEASES_BUCKET_NAME` is deprecated) |
+| `aws.selfHostedReleases.rcBucketName` | `SELF_HOSTED_RELEASES_RC_BUCKET` | — | S3 bucket for release candidate self-hosted releases |
 | `aws.selfHostedReleases.downloadUrlExpiresInSeconds` | `AWS_SELF_HOSTED_RELEASES_DOWNLOAD_URL_EXPIRES_IN` | `3600` | Download URL expiration (seconds) |
 | `aws.selfHostedReleases.manifestKey` | `AWS_SELF_HOSTED_RELEASES_MANIFEST_KEY` | `releases/manifest.json` | Release manifest object key |
 | `aws.sqlExecutorLambda.bucketPrefix` | `AWS_SQL_EXECUTOR_LAMBDA_S3_BUCKET` | — | SQL executor lambda S3 bucket |
@@ -302,6 +328,23 @@ If you are unable to access this, please go to the installer at `http://<YOUR_IP
 | `vm.snapshotDir` | `VM_SNAPSHOT_DIR` | `/var/lib/tembo/vms` | Per-VM QCOW2 overlays directory |
 | `vmSnapshots.storage` | `VM_SNAPSHOTS_STORAGE` | — | Bucket/container for VM snapshots |
 
+## Self-Hosted Installer
+
+| Key | Env Var | Default | Description |
+|-----|---------|---------|-------------|
+| `selfHosted.configPath` | `TEMBO_CONFIG_PATH` | `/var/lib/tembo/config.json` | Path to the self-hosted JSON config file |
+| `selfHosted.checkUpdateEndpoint` | `FLAKE_INSTALLER_CHECK_UPDATE_ENDPOINT` | `https://internal.tembo.io/self-hosted/check-update` | Installer update check endpoint |
+| `selfHosted.licenseKeyFile` | `TEMBO_LICENSE_KEY_FILE` | `/var/lib/flake-installer/.installer/license-key.txt` | Path to the license key file on self-hosted installs |
+
+## Assets
+
+| Key | Env Var | Default | Description |
+|-----|---------|---------|-------------|
+| `assets.storage` | `ASSETS_STORAGE` | — | Bucket or container for agent-produced assets |
+| `assets.cdn.domain` | `ASSET_CDN_DOMAIN` | — | CDN domain for agent assets |
+| `assets.cdn.keyId` | `CLOUDFRONT_ASSETS_KEY_ID` | — | CDN key pair ID for signing asset URLs |
+| `assets.cdn.privateKey` | `CLOUDFRONT_ASSETS_PRIVATE_KEY` | — | CDN private key PEM for signing asset URLs |
+
 ---
 
 ## Need Help?
@@ -338,14 +381,14 @@ If you run into any issues, contact [support@tembo.io](mailto:support@tembo.io).
     }
   },
   "anthropic": {
-    "apiKey": "sk-ant-..."
+    "apiKey": "<anthropic_api_key>"
   },
   "github": {
     "appId": "123456",
     "appName": "your-github-app",
     "clientId": "your-github-app-client-id",
     "clientSecret": "your-github-app-client-secret",
-    "privateKey": "-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----",
+    "privateKey": "<github_app_private_key_pem>",
     "webhookSecret": "your-webhook-secret",
     "clientUserName": "your-bot-username",
     "clientUserEmail": "bot@your-domain.com"
@@ -355,7 +398,7 @@ If you run into any issues, contact [support@tembo.io](mailto:support@tembo.io).
   },
   "sandbox": {
     "docker": {
-      "image": "ghcr.io/tembo-io/monorepo/sandbox:latest"
+      "image": "ghcr.io/tembo/monorepo/sandbox:latest"
     }
   }
 }

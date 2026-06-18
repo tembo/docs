@@ -5,7 +5,9 @@ description: 'Deploy Tembo self-hosted on Amazon Web Services.'
 
 ## Overview
 
-The Tembo self-hosted stack runs as a single NixOS machine. All services sit behind nginx on port 80:
+The Tembo self-hosted stack starts from a Tembo-provided NixOS AMI. The AMI is a base install image: it includes the operating system, SSH, and the installer service, then the installer downloads and applies the licensed Tembo runtime release.
+
+After installation, services sit behind nginx on port 80:
 
 | Service | Path | Port (internal) |
 |---|---|---|
@@ -18,7 +20,7 @@ The Tembo self-hosted stack runs as a single NixOS machine. All services sit beh
 | Redis | — | 6379 |
 | Prometheus | — | 9090 |
 
-Tembo distributes a pre-built NixOS AMI (Amazon Machine Image) to your AWS account. You launch an EC2 instance from that AMI, open the required ports, and configure a single JSON file. No OS setup or image building is required on your end.
+Tembo distributes a pre-built NixOS AMI (Amazon Machine Image) to your AWS account. You launch an EC2 instance from that AMI, open the required ports, enter your license key in the installer, and configure a single JSON file. No OS setup or image building is required on your end.
 
 ---
 
@@ -73,6 +75,10 @@ Tembo will share the AMI with your account. You will receive an AMI ID (e.g. `am
 7. Expand **Advanced details** and enable **Nested virtualization**
 8. Launch the instance
 
+<Note>
+  Tembo's AWS base image uses legacy BIOS boot intentionally. This supports `c5.metal`, and virtualized Nitro instances such as `m8i` also boot correctly through SeaBIOS.
+</Note>
+
 ### Via the AWS CLI
 
 ```bash
@@ -103,9 +109,10 @@ By default, EC2 instances block all inbound traffic. Add inbound rules to allow 
 | Custom TCP | TCP | 80 | `0.0.0.0/0` (or your IP range) | Tembo web UI and API |
 | Custom TCP | TCP | 3999 | Your IP | Installer / setup wizard |
 | Custom TCP | TCP | 8888 | Your IP | VS Code server (config editing) |
+| Custom TCP | TCP | 8080 | Your IP or load balancer | nginx health check |
 | SSH | TCP | 22 | Your IP | SSH access |
 
-Ports 3999 and 8888 are only needed during initial setup. You can remove those rules after configuration is complete.
+Ports 3999 and 8888 are only needed during setup and manual updates. You can remove or restrict those rules after configuration is complete.
 
 ### Via the AWS Console
 
@@ -140,6 +147,12 @@ aws ec2 authorize-security-group-ingress \
 aws ec2 authorize-security-group-ingress \
   --group-id <sg-id> \
   --protocol tcp \
+  --port 8080 \
+  --cidr <your-ip>/32
+
+aws ec2 authorize-security-group-ingress \
+  --group-id <sg-id> \
+  --protocol tcp \
   --port 22 \
   --cidr <your-ip>/32
 ```
@@ -161,6 +174,10 @@ http://<instance-ip>:3999
 ```
 
 Follow the on-screen steps to complete the install workflow. This provisions the Tembo services and prepares the instance for use. This install can take up to an hour to fully complete. Subsequent updates will be faster.
+
+The installer stores its state in `/var/lib/flake-installer`. The release download step keeps the current extracted artifact under `downloads/current`, and the install step runs the release's NixOS build for the AWS self-hosted style.
+
+The installer settings page is generated from the downloaded release. Current settings include hostname, optional VS Code Server, local Postgres, pgAdmin, Prometheus, Tembo Cron, Tailscale, config seeding, secret regeneration, worker count, and agent SSH key material for QEMU sandbox VMs.
 
 ### 4b: Configure `/var/lib/tembo/config.json`
 
