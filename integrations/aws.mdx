@@ -59,7 +59,7 @@ Use this if the one-click CloudFormation link shows "Access Denied". The templat
     "TemboOrgId": {
       "Type": "String",
       "Description": "Your Tembo organization ID (shown in the connect modal)",
-      "MinLength": "1"
+      "MinLength": 1
     }
   },
   "Resources": {
@@ -111,7 +111,7 @@ Use this if the one-click CloudFormation link shows "Access Denied". The templat
 </Note>
 
 2. In the [AWS CloudFormation console](https://console.aws.amazon.com/cloudformation), click **Create stack → With new resources**.
-3. Choose **Upload a template file** and upload `tembo-identity.yaml`.
+3. Choose **Upload a template file** and upload `tembo-identity.json`.
 4. Enter your **Tembo organization ID** when prompted (visible in the connect modal).
 5. Deploy the stack. When it completes, open the **Outputs** tab and copy the `RoleArn` value.
 6. Back in Tembo, switch to **Enter ARN manually** and paste the ARN. Click **Connect**.
