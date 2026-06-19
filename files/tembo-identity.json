@@ -4,7 +4,7 @@
   "Parameters": {
     "TemboOrgId": {
       "Type": "String",
-      "Description": "Your Tembo organization ID (shown in the connect modal)",
+      "Description": "Your Tembo organization ID — click 'Open AWS Console' in the Tembo connect modal and copy the param_TemboOrgId value from the URL",
       "MinLength": 1
     }
   },
