@@ -65,10 +65,17 @@
                                         "pages": [
                                             "features/self-hosted/deploy/aws",
                                             "features/self-hosted/deploy/gcp",
-                                            "features/self-hosted/deploy/azure"
+                                            "features/self-hosted/deploy/azure",
+                                            "features/self-hosted/deploy/kubernetes"
                                         ]
                                     },
-                                    "features/self-hosted/environment-variables",
+                                    {
+                                        "group": "Integrations",
+                                        "pages": [
+                                            "features/self-hosted/integrations/github",
+                                            "features/self-hosted/integrations/slack"
+                                        ]
+                                    },
                                     "features/self-hosted/changelog"
                                 ]
                             },

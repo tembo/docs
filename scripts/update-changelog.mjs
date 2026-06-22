@@ -22,7 +22,7 @@ if (existsSync(envPath)) {
   }
 }
 
-const OWNER = "tembo-io";
+const OWNER = "tembo";
 const REPO = "monorepo";
 const OUTPUT_PATH = join(
   dirname(fileURLToPath(import.meta.url)),
