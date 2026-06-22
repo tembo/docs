@@ -1,0 +1,159 @@
+---
+title: 'Slack'
+description: 'Set up the Slack integration for Tembo self-hosted.'
+---
+
+## Overview
+
+The Slack integration allows Tembo to send notifications, receive commands, and stream session updates to your Slack workspace. On the SaaS platform this is pre-configured — on self-hosted you need to create your own Slack app and point it at your instance.
+
+---
+
+## Step 1: Create a Slack App
+
+1. Go to [api.slack.com/apps](https://api.slack.com/apps) and click **Create New App**
+2. Choose **From scratch**
+3. Fill in:
+
+| Field | Value |
+|---|---|
+| **App Name** | e.g. `Tembo (self-hosted)` |
+| **Workspace** | Select your workspace |
+
+4. Click **Create App**
+
+---
+
+## Step 2: Configure OAuth & Permissions
+
+1. In the left sidebar, go to **OAuth & Permissions**
+2. Under **Redirect URLs**, add:
+   ```
+   http://<your-instance-ip>/api/oauth/authorize/slack
+   ```
+3. Under **Bot Token Scopes**, add the following scopes:
+
+   - `app_mentions:read`
+   - `channels:history`
+   - `channels:join`
+   - `channels:read`
+   - `chat:write`
+   - `emoji:read`
+   - `files:read`
+   - `files:write`
+   - `groups:history`
+   - `groups:read`
+   - `im:history`
+   - `im:read`
+   - `im:write`
+   - `mpim:history`
+   - `mpim:read`
+   - `reactions:read`
+   - `reactions:write`
+   - `team:read`
+   - `users:read`
+   - `users:read.email`
+
+4. Under **User Token Scopes**, add the following scopes:
+
+   - `channels:history`
+   - `im:history`
+   - `search:read`
+   - `users:read`
+   - `users:read.email`
+
+---
+
+## Step 3: Enable Event Subscriptions
+
+1. In the left sidebar, go to **Event Subscriptions**
+2. Toggle **Enable Events** to on
+3. Set the **Request URL** to:
+   ```
+   http://<your-instance-ip>/api/webhook/slack
+   ```
+   Slack will send a verification challenge to this URL — it should respond with a `200` once your instance is running.
+
+4. Under **Subscribe to bot events**, add:
+   - `app_mention`
+   - `message.channels`
+   - `message.groups`
+   - `message.im`
+   - `message.mpim`
+   - `reaction_added`
+   - `team_join`
+
+5. Click **Save Changes**
+
+---
+
+## Step 4: Enable Interactivity
+
+1. In the left sidebar, go to **Interactivity & Shortcuts**
+2. Toggle **Interactivity** to on
+3. Set the **Request URL** to:
+   ```
+   http://<your-instance-ip>/api/integration/slack/interaction
+   ```
+4. Click **Save Changes**
+
+This enables buttons, overflow menus, and modal forms (e.g. the feedback modal) to work in Slack messages from Tembo.
+
+---
+
+## Step 5: Install the App to Your Workspace
+
+1. In the left sidebar, go to **Install App**
+2. Click **Install to Workspace** and authorize
+
+---
+
+## Step 6: Configure Tembo
+
+From the Slack app settings page under **Basic Information**, gather the following values:
+
+- **App ID**
+- **Client ID**
+- **Client Secret**
+- **Signing Secret**
+
+Open `/var/lib/tembo/config.json` (via the VS Code server at `http://<your-instance-ip>:8888` or via SSH) and add the following keys:
+
+```json
+{
+  "slack.appId": "<your-slack-app-id>",
+  "slack.clientId": "<your-slack-client-id>",
+  "slack.clientSecret": "<your-slack-client-secret>",
+  "slack.signingSecret": "<your-slack-signing-secret>"
+}
+```
+
+| Key | Where to find it |
+|---|---|
+| `slack.appId` | Basic Information page, listed as **App ID** |
+| `slack.clientId` | Basic Information page, listed as **Client ID** |
+| `slack.clientSecret` | Basic Information page, listed as **Client Secret** |
+| `slack.signingSecret` | Basic Information page, listed as **Signing Secret** |
+
+After saving, restart the API:
+
+```bash
+sudo systemctl restart tembo-ts-api
+```
+
+Updating the config.json will also cause the instance API to restart automatically.
+
+---
+
+## Step 7: Verify
+
+1. Go to your Tembo instance and navigate to **Settings > Integrations**
+2. Click **Connect** on the Slack integration
+3. Authorize the app in your workspace
+4. Try mentioning the bot in a channel or sending it a direct message
+
+---
+
+## Need Help?
+
+If you run into any issues, contact [support@tembo.io](mailto:support@tembo.io).

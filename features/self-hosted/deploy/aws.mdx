@@ -9,8 +9,8 @@ The Tembo self-hosted stack runs as a single NixOS machine. All services sit beh
 
 | Service | Path | Port (internal) |
 |---|---|---|
-| tembo-web (Next.js frontend) | `/` | 3000 |
-| tembo-ts-api (REST API) | `/api/*` | 3001 |
+| Web UI | `/` | 3000 |
+| API | `/api/*` | 3001 |
 | Admin UI | `/admin/` | 3002 |
 | Installer / setup wizard | `/installer/` | 3999 |
 | PostgreSQL 16 | — | 5432 |
@@ -55,9 +55,9 @@ Tembo will share the AMI with your account. You will receive an AMI ID (e.g. `am
 | Disk | 128 GB | 256 GB |
 
 <Note>
-    We recommend **`c5.metal`** for the best experience more than any other instance type. The other `.metal` instances are also good choices.
-    Instances that have 8th-gen Intel Nitro will also work (Eg. `m8i.*`), just slower than metal. We also support virtualization.
-    All other instance types are not fully supported.
+    We recommend **`c5.metal`** or another bare-metal instance for the best experience. Bare-metal instances expose `/dev/kvm` natively so sandbox VMs run with full hardware acceleration.
+
+    8th-gen Intel Nitro instances (e.g. `m8i.*`) also work but require **nested virtualization** to be enabled at launch (see step 7 below). All other instance types fall back to software emulation, which is significantly slower.
 </Note>
 
 
@@ -66,11 +66,11 @@ Tembo will share the AMI with your account. You will receive an AMI ID (e.g. `am
 
 1. Go to **EC2 > Instances > Launch instances**
 2. Under **Application and OS Images**, choose **My AMIs** and select the AMI shared by Tembo
-3. Choose an instance type (`c5.metal` recommended, or `m8i.xlarge` or equivalent)
+3. Choose an instance type (`c5.metal` recommended, or `m8i.4xlarge` or equivalent)
 4. Under **Key pair**, select an existing key pair or create a new one — you will need this to SSH in
 5. Under **Network settings**, create or select a security group (you will configure inbound rules in the next step)
-6. Under **Configure storage**, set the root volume to at least **128 GiB**
-7. Expand **Advanced details** and enable **Nested virtualization**
+6. Under **Configure storage**, set the root volume to at least **256 GiB**
+7. If using a **non-bare-metal** instance (e.g. `m8i.*`): expand **Advanced details** and set **Nested virtualization** to **Enable**. Skip this step for bare-metal instances (`c5.metal`, `r7i.metal-*`) — nested virtualization is not available on bare metal and is not needed
 8. Launch the instance
 
 ### Via the AWS CLI
@@ -89,7 +89,7 @@ aws ec2 run-instances \
 Replace `CoreCount` with the number of physical cores for your instance type. For `c5.metal` this is `48`.
 
 <Note>
-  Nested virtualization is required for Tembo's sandbox execution environment. Without it, agent task sandboxes will fail to start.
+  Nested virtualization is only required for non-bare-metal instances (e.g. `m8i.*`). Bare-metal instances (`c5.metal`, `r7i.metal-*`) expose KVM natively — do not enable nested virtualization on them.
 </Note>
 
 ---
@@ -100,12 +100,10 @@ By default, EC2 instances block all inbound traffic. Add inbound rules to allow 
 
 | Type | Protocol | Port | Source | Purpose |
 |---|---|---|---|---|
-| Custom TCP | TCP | 80 | `0.0.0.0/0` (or your IP range) | Tembo web UI and API |
+| Custom TCP | TCP | 80 | (Your IP range) | Tembo web UI and API |
 | Custom TCP | TCP | 3999 | Your IP | Installer / setup wizard |
 | Custom TCP | TCP | 8888 | Your IP | VS Code server (config editing) |
 | SSH | TCP | 22 | Your IP | SSH access |
-
-Ports 3999 and 8888 are only needed during initial setup. You can remove those rules after configuration is complete.
 
 ### Via the AWS Console
 
@@ -177,18 +175,16 @@ Ensure these keys are present and correct:
 ```json
 {
   "betterAuth.secret": "<random string, at least 32 characters>",
-  "api.base": "http://<instance-public-ip>/api/",
-  "frontend.url": "http://<instance-public-ip>"
+  "api.base": "http://<instance-ip>/api/",
+  "frontend.url": "http://<instance-ip>"
 }
 ```
 
 | Key | Notes |
 |---|---|
 | `betterAuth.secret` | Auto-generated on first boot if missing. Leave it if it is already set. |
-| `api.base` | Must match the public URL of the API. **Must end with a trailing `/`**. |
-| `frontend.url` | Defaults to `http://localhost:3000`, which breaks auth on a remote VM. Set this to the actual public IP or hostname. |
-
-For the full list of available configuration keys, see [Environment Variables](/features/self-hosted/environment-variables).
+| `api.base` | Must match the URL of the API. **Must end with a trailing `/`**. |
+| `frontend.url` | Defaults to `http://localhost:3000`, which breaks auth on a remote VM. Set this to the actual IP or hostname. |
 
 After saving, restart the API. There is a background service that should restart the API for you on finishing edits, but you can also do this from a terminal in the VS Code server, or via SSH:
 
@@ -209,7 +205,7 @@ The config seed runs before `tembo-ts-api`, `tembo-ts-cron`, and agent workers o
 Open a browser and navigate to:
 
 ```
-http://<instance-public-ip>
+http://<instance-ip>
 ```
 
 You should see the Tembo sign-up or sign-in screen.
@@ -286,7 +282,6 @@ cat /var/lib/tembo/config.json
 
 - Confirm the instance is in a **Running** state in the EC2 console
 - Verify the security group has an inbound rule for port 80 (and port 22 for SSH)
-- If using a VPC, confirm the instance is in a **public subnet** with an **Internet Gateway** attached, or that you have a route to reach it
 - If using an Elastic IP, ensure it is associated with the instance
 
 ---
