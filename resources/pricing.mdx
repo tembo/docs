@@ -31,6 +31,20 @@ Credits are used for:
 - Optimizing database queries and indexes
 - Processing pull request feedback through the [Feedback Loop](/features/feedback-loop)
 
+## When credits run out
+
+What happens when your balance reaches zero depends on your plan and overage setting:
+
+- **Free**: new sessions are blocked until your weekly credit refresh, an upgrade, or a credit purchase.
+- **Pro or Max with overages enabled**: sessions continue and are billed as overage, up to the maximum overage limit you set. Once that limit is reached, new sessions are blocked.
+- **Pro or Max with overages disabled**: new sessions are blocked as soon as included credits are exhausted.
+
+When work is blocked, the request is rejected immediately rather than queued. A session already in progress is allowed to finish its current step.
+
+## Usage bursts
+
+Some integrations can create a large batch of work at once — for example, a repository or integration sync, or a token refresh that triggers a backlog of issues. Tembo does not cap or rate-limit how much work an integration enqueues; the batch is processed as worker capacity becomes available, and each resulting session consumes credits when it runs. The same credit and overage limits above apply, so a burst cannot spend beyond your included credits plus your overage limit. To absorb large bursts without interruption, enable overages with an appropriate limit, or use [auto-reload](#auto-reload).
+
 ## Credit refunds
 
 You may receive automatic refunds in some cases:
