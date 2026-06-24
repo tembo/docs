@@ -27,11 +27,11 @@ A standard deployment runs these core services, all behind nginx on port 80:
 |---|---|
 | **Web app** | Next.js frontend for the user interface |
 | **API** | REST API for product workflows, auth, and orchestration |
-| **Agent workers** | 1–64 configurable workers that handle sessions, code execution, and database operations in isolated sandboxes |
+| **Agent workers** | Configurable workers (default 8) that handle sessions, code execution, and database operations in isolated sandboxes |
 | **Cron** | Scheduled jobs, kicked off from Tembo's `Agents` feature or via tool calls from coding agents |
 | **Admin UI** | Administrative dashboard for system management |
-| **PostgreSQL 16** | Application database — runs locally or can point to an external instance using your own connection string |
-| **Redis** | Caching and job queuing |
+| **PostgreSQL 16** | Application database (and the job queue) — runs locally or can point to an external instance using your own connection string |
+| **Redis** | Caching |
 | **Prometheus** | Metrics collection and monitoring (optional) |
 
 ## Web-based installer
@@ -39,6 +39,15 @@ A standard deployment runs these core services, all behind nginx on port 80:
 Every deployment ships with a built-in installer at `/installer/`. On first boot, it walks you through setup — configuring services, setting your license key, and tuning options like the number of agent workers. No Nix knowledge is required.
 
 For releases and updates, Tembo can manage them for you, or your team can manually opt in to changes through the installer UI.
+
+### How updates are delivered
+
+Updates are **pull-based**. Your instance checks for new releases by calling Tembo's release endpoint over outbound HTTPS, authenticated with your license key, then downloads the packaged release. Tembo never connects inbound to your environment to push updates. Because the stack is NixOS-based, updates apply atomically and roll back automatically if they fail.
+
+You choose how updates are applied:
+
+- **Self-service:** your team opts in to a new release through the installer UI, on your own schedule.
+- **Managed (optional):** if you would rather Tembo run updates for you, we can do so as an optional service using access you explicitly grant. Contact your Tembo account team to set this up.
 
 ## What you manage
 
