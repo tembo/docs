@@ -74,7 +74,9 @@
                                         "group": "Integrations",
                                         "pages": [
                                             "features/self-hosted/integrations/github",
-                                            "features/self-hosted/integrations/slack"
+                                            "features/self-hosted/integrations/slack",
+                                            "features/self-hosted/integrations/aws-storage",
+                                            "features/self-hosted/integrations/azure-storage"
                                         ]
                                     }
                                 ]
