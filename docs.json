@@ -76,8 +76,7 @@
                                             "features/self-hosted/integrations/github",
                                             "features/self-hosted/integrations/slack"
                                         ]
-                                    },
-                                    "features/self-hosted/changelog"
+                                    }
                                 ]
                             },
                             {
@@ -126,8 +125,7 @@
                         "group": "Other",
                         "pages": [
                             "resources/pwa",
-                            "resources/pricing",
-                            "resources/changelog"
+                            "resources/pricing"
                         ]
                     }
                 ]
