@@ -40,10 +40,12 @@
                 "groups": [
                     {
                         "group": "Get Started",
+                        "public": true,
                         "pages": ["index", "quickstart", "support"]
                     },
                     {
                         "group": "Features",
+                        "public": true,
                         "pages": [
                             "features/agents",
                             "features/models",
@@ -93,6 +95,7 @@
                     },
                     {
                         "group": "Actions",
+                        "public": true,
                         "pages": [
                             "features/agent-actions",
                             "features/pull-requests"
@@ -100,6 +103,7 @@
                     },
                     {
                         "group": "Integrations",
+                        "public": true,
                         "pages": [
                             "integrations/mcp",
                             "integrations/bitbucket",
@@ -125,6 +129,7 @@
                     },
                     {
                         "group": "Other",
+                        "public": true,
                         "pages": [
                             "resources/pwa",
                             "resources/pricing"
@@ -137,10 +142,12 @@
                 "groups": [
                     {
                         "group": "Overview",
+                        "public": true,
                         "pages": ["api/index"]
                     },
                     {
                         "group": "Tembo API",
+                        "public": true,
                         "openapi": {
                             "source": "openapi.documented.yml",
                             "directory": "api"
@@ -173,6 +180,7 @@
                 "groups": [
                     {
                         "group": "Use Cases",
+                        "public": true,
                         "pages": [
                             "learn/fix-production-bugs",
                             "learn/implement-from-issues",
