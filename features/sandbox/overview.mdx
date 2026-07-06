@@ -5,6 +5,14 @@ description: 'Secure, isolated environments where coding agents execute sessions
 
 Every session runs in its own isolated sandbox. Sandboxes are ephemeral: spun up for the session, destroyed when it's done. No code or state persists after execution.
 
+## Data handling
+
+Your repository is cloned into the sandbox for the duration of a session and torn down when the session ends — no repository contents or working state persist afterward.
+
+The one exception is snapshots. If you use the snapshot feature to speed up environment setup, your repository and pre-installed dependencies are cached into a reusable snapshot image so future sessions start faster. That cached copy persists until the snapshot is rebuilt or removed.
+
+Model providers handle prompt data according to their own retention policies — see the retention table in [Max](/features/max) for Tembo-hosted models. With [BYOK](/features/models), model requests run against your own provider account, so provider-side retention follows that account's terms.
+
 ## Sandbox sizes
 
 Tembo offers five sandbox sizes. Each session runs in a dedicated Linux VM, and no two sessions share the same VM.

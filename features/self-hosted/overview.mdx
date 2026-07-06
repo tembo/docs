@@ -7,28 +7,47 @@ description: 'Run Tembo inside infrastructure you control, with packaged release
   <img src="/images/self-hosted.png" alt="Tembo self-hosted overview" />
 </Frame>
 
-Tembo offers a self-hosted deployment for teams that need Tembo to run inside infrastructure they control.
+Tembo self-hosted runs the entire Tembo platform on a **single instance** inside infrastructure you control. No cluster, no orchestrator — one machine, fully configured and ready to go.
 
-With self-hosted, Tembo runs in your environment instead of Tembo-managed infrastructure. Tembo provides the packaged release, upgrade path, and support, and you decide how it is deployed, networked, and operated.
+<Note>
+  Kubernetes and GCP support are currently in early access. To get on the list, book a demo call with the Tembo team: <a href="https://book.avoma.com/tembo/tembo-demo/" target="_blank">Book a Demo</a>
+</Note>
+
+Tembo provides the packaged release, upgrade path, and support. You decide how it is deployed, networked, and operated.
 
 ## How it works
 
-At a high level, self-hosted Tembo is a small set of core services that you run in your own environment.
+The self-hosted stack is a NixOS-based machine image with all services pre-configured. You launch an instance from a Tembo-provided image (AMI, VHD, etc.), run a web-based installer, and configure a single JSON file. No OS setup or image building is required on your end.
 
-If you want the simplest deployment model, Tembo **can run on a single VM**.
+NixOS gives you atomic updates with automatic rollback — upgrades either succeed completely or roll back to the previous working state.
 
-At a lower level, a standard deployment runs **6 core services**:
+A standard deployment runs these core services, all behind nginx on port 80:
 
-- **Web app** for the user interface
-- **API** for product workflows, auth, and orchestration
-- **Sandbox service** for executing your sessions in isolated VMs
-- **Cron** for scheduled jobs (kicked off from tembo's `Agents` feature or via tool calls from coding agents)
-- **Redis**
-- **Postgres**
+| Service | Description |
+|---|---|
+| **Web app** | Next.js frontend for the user interface |
+| **API** | REST API for product workflows, auth, and orchestration |
+| **Agent workers** | Configurable workers (default 8) that handle sessions, code execution, and database operations in isolated sandboxes |
+| **Cron** | Scheduled jobs, kicked off from Tembo's `Agents` feature or via tool calls from coding agents |
+| **Admin UI** | Administrative dashboard for system management |
+| **PostgreSQL 16** | Application database (and the job queue) — runs locally or can point to an external instance using your own connection string |
+| **Redis** | Caching |
+| **Prometheus** | Metrics collection and monitoring (optional) |
 
-Postgres can run on that same VM, or you can point Tembo at a separate Postgres instance using your own connection string.
+## Web-based installer
 
-This makes the deployment straightforward: you can start with a simple single-VM setup, or connect Tembo to customer-managed infrastructure where needed. For larger environments, auto scaling is the default posture.
+Every deployment ships with a built-in installer at `/installer/`. On first boot, it walks you through setup — configuring services, setting your license key, and tuning options like the number of agent workers. No Nix knowledge is required.
+
+For releases and updates, Tembo can manage them for you, or your team can manually opt in to changes through the installer UI.
+
+### How updates are delivered
+
+Updates are **pull-based**. Your instance checks for new releases by calling Tembo's release endpoint over outbound HTTPS, authenticated with your license key, then downloads the packaged release. Tembo never connects inbound to your environment to push updates. Because the stack is NixOS-based, updates apply atomically and roll back automatically if they fail.
+
+You choose how updates are applied:
+
+- **Self-service:** your team opts in to a new release through the installer UI, on your own schedule.
+- **Managed (optional):** if you would rather Tembo run updates for you, we can do so as an optional service using access you explicitly grant. Contact your Tembo account team to set this up.
 
 ## What you manage
 
@@ -37,8 +56,6 @@ You manage the infrastructure, networking, secrets, backups, and day-to-day oper
 Tembo provides the application release, deployment guidance, and support for upgrades.
 
 You can also work with the Tembo team more directly through support packages, including optional FDE support for features specific to your team. If you want help operating the VM layer, the Tembo team can help manage your VMs and stay ahead of scaling, availability, and downtime risks as usage grows.
-
-For releases and updates, Tembo can manage them for you, or your team can manually opt in to changes through the installer web UI that ships with the deployment by default.
 
 ## Security and networking
 
@@ -53,7 +70,7 @@ Self-hosted is designed for teams that want Tembo inside a private cloud, dedica
 
 - Teams that need Tembo inside infrastructure they control
 - Organizations with security or compliance requirements around source code, credentials, or runtime data
-- Companies that want a simple single-VM deployment, with the option to use an external Postgres database
+- Companies that want a simple single-instance deployment, with the option to use an external Postgres database
 - Buyers who want a predictable, customer-managed upgrade process
 
 If you do not need that level of control, the hosted SaaS product is usually simpler to adopt and operate.
