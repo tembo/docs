@@ -124,7 +124,8 @@
                             "integrations/infisical",
                             "integrations/snyk",
                             "integrations/stripe",
-                            "integrations/teams"
+                            "integrations/teams",
+                            "integrations/vpn"
                         ]
                     },
                     {

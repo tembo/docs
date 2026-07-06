@@ -1,0 +1,65 @@
+---
+title: "VPN"
+description: "Connect sandboxes to private networks via OpenConnect VPN."
+---
+
+## Features
+
+- Connect agent sandboxes to private networks so they can reach internal databases and services
+- Supports Fortinet SSL VPN, Cisco AnyConnect, Palo Alto GlobalProtect, and Juniper Network Connect
+- VPN connection is established automatically at the start of every session
+- Works alongside the Postgres integration to access databases that aren't publicly reachable
+
+## Installation
+
+<Steps>
+  <Step title="Go to Integrations">
+    Open [Integrations](https://app.tembo.io/integrations) and click **Install** next to VPN under the **Network** category.
+  </Step>
+  <Step title="Enter your VPN details">
+    Fill in the connection form:
+    - **Connection Name** — a label for this VPN (e.g. "Production VPN")
+    - **Protocol** — select your VPN type (Fortinet, Cisco AnyConnect, Palo Alto GlobalProtect, or Juniper)
+    - **VPN Gateway** — the hostname or IP of your VPN concentrator (e.g. `vpn.example.com`)
+    - **Username** and **Password** — credentials that the sandbox will use to authenticate
+  </Step>
+  <Step title="Connect your database">
+    Once the VPN is configured, add a [Postgres integration](/integrations/postgres) using the **private** connection string of your database. Tembo will connect to the VPN first, then reach the database through the tunnel.
+  </Step>
+</Steps>
+
+## Usage
+
+When a session starts, Tembo automatically connects to your VPN before the agent begins work. The tunnel stays active for the duration of the session.
+
+This is useful when your database or internal services are behind a firewall and not reachable from the public internet. Instead of exposing your database publicly or setting up a bastion host, you provide the same VPN credentials your team already uses.
+
+### Example workflow
+
+1. Configure the VPN integration with your Fortinet gateway credentials
+2. Add a Postgres integration with your private connection string (e.g. `postgresql://user:pass@10.0.1.50:5432/mydb`)
+3. Create a session — Tembo connects to the VPN, then the agent can query your database as if it were on your network
+
+## Advanced
+
+<AccordionGroup>
+  <Accordion title="Supported protocols">
+    The VPN integration uses [OpenConnect](https://www.infradead.org/openconnect/), which supports:
+    - **Fortinet SSL VPN** (`fortinet`) — compatible with FortiClient
+    - **Cisco AnyConnect** (`anyconnect`) — compatible with Cisco Secure Client
+    - **Palo Alto GlobalProtect** (`gp`) — compatible with GlobalProtect client
+    - **Juniper Network Connect** (`nc`) — compatible with Juniper/Pulse Secure
+  </Accordion>
+
+  <Accordion title="How it works">
+    At each session start, the sandbox VM runs OpenConnect in the background to establish a VPN tunnel. This creates a virtual network interface (`tun0`) that routes traffic to your private network through the encrypted tunnel. The connection is re-established on every session start since VPN state does not persist across sessions.
+  </Accordion>
+
+  <Accordion title="MFA / two-factor authentication">
+    OpenConnect supports some forms of MFA (e.g. TOTP tokens appended to the password field), but interactive MFA prompts are not supported. If your VPN requires interactive two-factor authentication, consider creating a dedicated service account with a static password or certificate-based authentication for Tembo access.
+  </Accordion>
+
+  <Accordion title="Security considerations">
+    VPN credentials are stored encrypted and are only injected into the sandbox at session start. The credentials are never exposed to the agent — they are used by the system to establish the tunnel before the agent begins work. Consider using a dedicated VPN account with limited network access scoped to only the resources Tembo needs.
+  </Accordion>
+</AccordionGroup>
