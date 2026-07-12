@@ -10,6 +10,7 @@ description: "Trigger sessions by mentioning @tembo in any channel."
 ## Features
 
 - Create sessions by mentioning `@tembo` in any channel or DM
+- Queue one-time sessions to start later
 - Specify repos, branches, and agents inline
 - Thread context is automatically read
 - Status reactions and PR notifications in Slack
@@ -55,6 +56,22 @@ Tembo creates separate PRs for each repo and coordinates changes.
 ### Thread context
 
 Mention `@tembo` in a thread and it reads the full conversation history for context.
+
+### Delayed work
+
+Ask Tembo to start work at a future time when you want a one-time follow-up from Slack.
+
+```txt
+@tembo tomorrow at 9am, check owner/webapp for failing tests and open a PR if needed
+```
+
+```txt
+@tembo in 2 hours, summarize this thread and create Linear tickets for the action items
+```
+
+Tembo queues the session and starts it at the requested time. When the delayed session starts, the agent uses the same Slack context, selected repositories, branch, agent, and connected MCP servers as a normal Slack-created session.
+
+Use delayed work for one-time reminders or follow-ups. For recurring work like "every Monday at 9am," create a scheduled [Agent](/features/agents) instead.
 
 ### Iterate in Slack
 
