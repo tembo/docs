@@ -59,7 +59,7 @@ Mention `@tembo` in a thread and it reads the full conversation history for cont
 
 ### Delayed work
 
-Ask Tembo to start work at a future time when you want a one-time follow-up from Slack.
+Ask Tembo to start work at a future time when you want a one-time follow-up from Slack. Use a relative time like `in 2 hours` or an absolute time like `tomorrow at 9am`.
 
 ```txt
 @tembo tomorrow at 9am, check owner/webapp for failing tests and open a PR if needed
@@ -69,7 +69,9 @@ Ask Tembo to start work at a future time when you want a one-time follow-up from
 @tembo in 2 hours, summarize this thread and create Linear tickets for the action items
 ```
 
-Tembo queues the session and starts it at the requested time. When the delayed session starts, the agent uses the same Slack context, selected repositories, branch, agent, and connected MCP servers as a normal Slack-created session.
+Tembo queues the session and starts it at the requested time. Delayed work has the same requirements as normal Slack-created sessions: include the repository in your message, or configure a default repository in Slack integration settings.
+
+When the delayed session starts, the agent uses the same Slack context, selected repositories, branch, agent, and connected MCP servers as a normal Slack-created session. Tembo posts a confirmation in the thread when the work is queued.
 
 Use delayed work for one-time reminders or follow-ups. For recurring work like "every Monday at 9am," create a scheduled [Agent](/features/agents) instead.
 
