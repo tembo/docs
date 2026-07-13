@@ -88,6 +88,7 @@
                                 "pages": [
                                     "features/agent-skills",
                                     "features/hooks",
+                                    "features/model-settings",
                                     "features/rule-files"
                                 ]
                             }
