@@ -18,6 +18,7 @@ A single session can span multiple repositories. Tembo can use context from conn
 | Query databases | Postgres, Supabase, Neon, PlanetScale |
 | Analyze errors and stack traces | Sentry |
 | Run browser automation | Kernel (Playwright) |
+| Create visual reports and structured exports | Tembo artifacts |
 | Access analytics and feature flags | PostHog |
 | Manage users and auth | Clerk |
 | Access payments and subscriptions | Stripe |
@@ -34,6 +35,8 @@ A single session can span multiple repositories. Tembo can use context from conn
 **Query production data**: During a session, an agent queries your Postgres database to understand the schema and writes a migration based on actual table structure.
 
 **Ship a cross-repo change**: One session updates multiple services, uses Linear and Sentry context to verify the work, and opens a PR or MR in each affected repository.
+
+**Create an artifact**: For complex work, Tembo can create an [artifact](/features/artifacts) such as an HTML walkthrough, incident timeline, CSV export, or security report that stays attached to the session.
 
 ## How it works
 

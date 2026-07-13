@@ -35,6 +35,18 @@ export OPENAI_API_KEY="your-tembo-api-key"
   "provider": {
     "openai": {
       "models": {
+        "gpt-5.6-sol": {
+          "id": "gpt-5.6-sol",
+          "name": "GPT-5.6 Sol"
+        },
+        "gpt-5.6-terra": {
+          "id": "gpt-5.6-terra",
+          "name": "GPT-5.6 Terra"
+        },
+        "gpt-5.5-pro": {
+          "id": "gpt-5.5-pro",
+          "name": "GPT-5.5 Pro"
+        },
         "gpt-5.4": {
           "id": "gpt-5.4",
           "name": "GPT-5.4"
@@ -66,7 +78,7 @@ export OPENAI_API_KEY="your-tembo-api-key"
   Codex may store credentials in `~/.codex/auth.json` that override environment variables.
 </Note>
 
-Codex and OpenCode both support `gpt-5.4`, `gpt-5.4-mini`, and `gpt-5.4-nano`. In OpenCode, the `gpt-5.4-mini` and `gpt-5.4-nano` aliases map to OpenAI's `gpt-5-mini` and `gpt-5-nano` model IDs.
+Codex and OpenCode both support `gpt-5.5`, `gpt-5.4`, `gpt-5.4-mini`, and `gpt-5.4-nano`. In OpenCode, the `gpt-5.4-mini` and `gpt-5.4-nano` aliases map to OpenAI's `gpt-5-mini` and `gpt-5-nano` model IDs.
 
 ## Proxy models
 
@@ -74,17 +86,26 @@ All models are tested across real-world coding work before being made available.
 
 | Model             | Model ID                   | Endpoint                      |
 | ----------------- | -------------------------- | ----------------------------- |
+| Claude Sonnet 5   | `claude-sonnet-5`          | `proxy.tembo.io/anthropic`    |
+| Claude Fable 5    | `claude-fable-5`           | `proxy.tembo.io/anthropic`    |
+| Claude Opus 4.8   | `claude-opus-4-8`          | `proxy.tembo.io/anthropic`    |
+| Claude Opus 4.7   | `claude-opus-4-7`          | `proxy.tembo.io/anthropic`    |
+| Claude Opus 4.6   | `claude-opus-4-6`          | `proxy.tembo.io/anthropic`    |
+| Claude Sonnet 4.6 | `claude-sonnet-4-6`        | `proxy.tembo.io/anthropic`    |
 | Claude Opus 4.5   | `claude-opus-4-5`          | `proxy.tembo.io/anthropic`    |
 | Claude 4.5 Sonnet | `claude-4-5-sonnet`        | `proxy.tembo.io/anthropic`    |
 | Claude 4.1 Opus   | `claude-4.1-opus`          | `proxy.tembo.io/anthropic`    |
 | Claude 4.5 Haiku  | `claude-4-5-haiku`         | `proxy.tembo.io/anthropic`    |
 | Claude 4 Sonnet   | `claude-4-sonnet`          | `proxy.tembo.io/anthropic`    |
+| GPT-5.6 Sol       | `gpt-5.6-sol`              | `proxy.tembo.io/openai`       |
+| GPT-5.6 Terra     | `gpt-5.6-terra`            | `proxy.tembo.io/openai`       |
+| GPT-5.5 Pro       | `gpt-5.5-pro`              | `proxy.tembo.io/openai`       |
+| GPT-5.5           | `gpt-5.5`                  | `proxy.tembo.io/openai`       |
 | GPT-5.4           | `gpt-5.4`                  | `proxy.tembo.io/openai`       |
 | GPT-5.4 Mini      | `gpt-5.4-mini`             | `proxy.tembo.io/openai`       |
 | GPT-5.4 Nano      | `gpt-5.4-nano`             | `proxy.tembo.io/openai`       |
+| GPT-5.3 Codex     | `gpt-5.3-codex`            | `proxy.tembo.io/openai`       |
 | GPT-5.2           | `gpt-5.2`                  | `proxy.tembo.io/openai`       |
-| GPT-5.1 Codex     | `gpt-5.1-codex`            | `proxy.tembo.io/openai`       |
-| GPT-5.1 Codex Max | `gpt-5.1-codex-max`        | `proxy.tembo.io/openai`       |
 | GPT-5.2 Codex     | `gpt-5.2-codex`            | `proxy.tembo.io/openai`       |
 | Gemini 2.5 Pro    | `gemini-2.5-pro`           | `proxy.tembo.io/anthropic`    |
 | Gemini 3 Pro      | `gemini-3-pro`             | `proxy.tembo.io/anthropic`    |
