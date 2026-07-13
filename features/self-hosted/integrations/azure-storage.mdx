@@ -1,0 +1,122 @@
+---
+title: 'Azure Storage'
+description: 'Configure Azure Blob Storage for Tembo self-hosted on Azure.'
+---
+
+Tembo can use an Azure Blob Storage container as a single bucket for image attachments, org profile pictures, VM snapshots, and user storage. If you skip this configuration, file upload features will be unavailable.
+
+---
+
+## Step 1: Create a Storage Account
+
+### Via the Azure CLI
+
+```bash
+az storage account create \
+  --name <storage-account-name> \
+  --resource-group tembo-self-hosted-rg \
+  --location eastus \
+  --sku Standard_LRS
+```
+
+### Via the Azure Portal
+
+1. Go to **Storage accounts** → **+ Create**
+2. Select your subscription and resource group
+3. Enter a **Storage account name** (globally unique, 3–24 characters, lowercase alphanumeric only)
+4. Choose your **Region**
+5. Leave **Redundancy** as **Locally-redundant storage (LRS)**
+6. Click **Review + create**, then **Create**
+
+---
+
+## Step 2: Create the Container
+
+### Via the Azure CLI
+
+```bash
+az storage container create \
+  --name <container-name> \
+  --account-name <storage-account-name>
+```
+
+### Via the Azure Portal
+
+1. Go to **Storage accounts** → select your account
+2. In the left sidebar, under **Data storage**, click **Containers**
+3. Click **+ Container**
+4. Enter a name and click **Create**
+
+---
+
+## Step 3: Get the Account Key
+
+### Via the Azure CLI
+
+```bash
+az storage account keys list \
+  --account-name <storage-account-name> \
+  --resource-group tembo-self-hosted-rg \
+  --query "[0].value" -o tsv
+```
+
+### Via the Azure Portal
+
+1. Go to **Storage accounts** → select your account
+2. In the left sidebar, under **Security + networking**, click **Access keys**
+3. Click **Show** next to **key1** and copy the **Key** value
+
+---
+
+## Step 4: Configure CORS
+
+Tembo uploads image attachments directly from the browser to the storage container. Azure blocks these cross-origin requests by default, so you must add a CORS rule.
+
+### Via the Azure CLI
+
+```bash
+az storage cors add \
+  --account-name <storage-account-name> \
+  --services b \
+  --methods DELETE GET HEAD OPTIONS PUT \
+  --origins 'http://<vm-ip>' \
+  --allowed-headers '*' \
+  --exposed-headers '*' \
+  --max-age 3600
+```
+
+If you are using a custom domain, replace `http://<vm-ip>` with your domain.
+
+### Via the Azure Portal
+
+1. Go to **Storage accounts** → select your account
+2. In the left sidebar, under **Settings**, click **Resource sharing (CORS)**
+3. Select the **Blob service** tab
+4. Click **+ Add** and fill in:
+   - **Allowed origins**: `http://<vm-ip>` (or your domain)
+   - **Allowed methods**: `DELETE`, `GET`, `HEAD`, `OPTIONS`, `PUT`
+   - **Allowed headers**: `*`
+   - **Exposed headers**: `*`
+   - **Max age**: `3600`
+5. Click **Save**
+
+---
+
+## Step 5: Add to config.json
+
+Open `/var/lib/tembo/config.json` (via the VS Code server at `http://<vm-ip>:8888` or SSH) and add:
+
+```json
+{
+  "selfHosted.objectStorage.provider": "azure",
+  "selfHosted.objectStorage.bucket": "<container-name>",
+  "selfHosted.objectStorage.azure.storageAccountName": "<storage-account-name>",
+  "selfHosted.objectStorage.azure.storageAccountKey": "<account-key>"
+}
+```
+
+Then restart the API:
+
+```bash
+sudo systemctl restart tembo-ts-api
+```

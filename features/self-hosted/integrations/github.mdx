@@ -1,0 +1,169 @@
+---
+title: 'GitHub'
+description: 'Set up the GitHub App integration for Tembo self-hosted.'
+---
+
+## Overview
+
+The GitHub integration allows Tembo to clone repositories, create branches, push commits, open pull requests, and respond to issues and webhooks. On the SaaS platform this is pre-configured — on self-hosted you need to create your own GitHub App and point it at your instance.
+
+---
+
+## Step 1: Create a GitHub App
+
+1. Go to **GitHub > Settings > Developer settings > GitHub Apps > New GitHub App**
+
+### GitHub App name
+
+Choose a name for your app, e.g. `Tembo (self-hosted)`. This will be visible to users when they install the app.
+
+### Homepage URL
+
+```
+http://<your-instance-ip>
+```
+
+### Callback URL
+
+```
+http://<your-instance-ip>/api/oauth/github/callback
+```
+
+This is where GitHub redirects users after they authorize the app.
+
+### Check **Request user authorization (OAuth) during installation**
+
+This is important — it ensures that when a user installs the app, they are also prompted to authorize Tembo to act on their behalf. Without this, Tembo cannot perform actions as the installing user.
+
+### Webhook URL
+
+```
+http://<your-instance-ip>/api/webhook/github
+```
+
+### Webhook secret
+
+Generate a random string and enter it here. Save this value — you will need it for the Tembo config later.
+
+### Permissions
+
+Under **Repository permissions**, set:
+
+| Permission | Access |
+|---|---|
+| **Actions** | Read-only |
+| **Checks** | Read & write |
+| **Commit statuses** | Read-only |
+| **Contents** | Read & write |
+| **Issues** | Read & write |
+| **Metadata** | Read-only |
+| **Pull requests** | Read & write |
+| **Webhooks** | Read & write |
+
+Under **Account permissions**, no changes are needed.
+
+### Subscribe to events
+
+Check the following:
+
+- Check run
+- Create
+- Delete
+- Issue comment
+- Issues
+- Pull request
+- Pull request review
+- Pull request review comment
+- Pull request review thread
+- Push
+- Repository
+- Status
+- Workflow run
+
+### Where can this GitHub App be installed?
+
+Select **Only on this account** if you only need it for a single org. Select **Any account** if you want to install it across multiple orgs.
+
+### Create the app
+
+Click **Create GitHub App**.
+
+---
+
+## Step 2: Generate a Client Secret
+
+After the app is created, you will be on the app settings page.
+
+1. Under **Client secrets**, click **Generate a new client secret**
+2. Copy the secret immediately — it will only be shown once
+
+---
+
+## Step 3: Generate a Private Key
+
+Still on the app settings page:
+
+1. Scroll down to **Private keys**
+2. Click **Generate a private key**
+3. A `.pem` file will be downloaded — you will need its full contents for the config
+
+---
+
+## Step 4: Install the App
+
+1. In the left sidebar, click **Install App**
+2. Select the organization or account to install it on
+3. Choose **All repositories** or select specific repositories
+4. Click **Install** — because you checked **Request user authorization (OAuth) during installation**, you will be redirected to authorize the app as well
+
+---
+
+## Step 5: Configure Tembo
+
+Open `/var/lib/tembo/config.json` (via the VS Code server at `http://<your-instance-ip>:8888` or via SSH) and add the following keys:
+
+```json
+{
+  "github.appId": "<your-github-app-id>",
+  "github.appName": "<your-github-app-name>",
+  "github.clientId": "<your-github-app-client-id>",
+  "github.clientSecret": "<your-github-app-client-secret>",
+  "github.privateKey": "<contents-of-the-pem-file>",
+  "github.webhookSecret": "<your-webhook-secret>",
+  "github.clientUserName": "<your-bot-username>",
+  "github.clientUserEmail": "<your-bot-email>"
+}
+```
+
+| Key | Where to find it |
+|---|---|
+| `appId` | App settings page, listed as **App ID** |
+| `appName` | The slug of your app name (e.g. `tembo-self-hosted`) |
+| `clientId` | App settings page, listed as **Client ID** |
+| `clientSecret` | The client secret you generated in Step 2 |
+| `privateKey` | Contents of the `.pem` file from Step 3 (include the full key with newlines) |
+| `webhookSecret` | The random string you set as the webhook secret in Step 1 |
+| `clientUserName` | The GitHub username the bot will commit as |
+| `clientUserEmail` | The email the bot will commit as |
+
+After saving, restart the API:
+
+```bash
+sudo systemctl restart tembo-ts-api
+```
+
+Updating the config.json will also cause the instance api to restart automatically.
+
+---
+
+## Step 6: Verify
+
+1. Go to your Tembo instance and navigate to **Settings > Integrations**
+2. Confirm GitHub shows as connected
+3. Try creating a session against one of the repositories you installed the app on
+
+---
+
+## Need Help?
+
+If you run into any issues, contact [support@tembo.io](mailto:support@tembo.io).

@@ -40,10 +40,12 @@
                 "groups": [
                     {
                         "group": "Get Started",
+                        "public": true,
                         "pages": ["index", "quickstart", "support"]
                     },
                     {
                         "group": "Features",
+                        "public": true,
                         "pages": [
                             "features/agents",
                             "features/models",
@@ -66,10 +68,19 @@
                                         "pages": [
                                             "features/self-hosted/deploy/aws",
                                             "features/self-hosted/deploy/gcp",
-                                            "features/self-hosted/deploy/azure"
+                                            "features/self-hosted/deploy/azure",
+                                            "features/self-hosted/deploy/kubernetes"
                                         ]
                                     },
-                                    "features/self-hosted/changelog"
+                                    {
+                                        "group": "Integrations",
+                                        "pages": [
+                                            "features/self-hosted/integrations/github",
+                                            "features/self-hosted/integrations/slack",
+                                            "features/self-hosted/integrations/aws-storage",
+                                            "features/self-hosted/integrations/azure-storage"
+                                        ]
+                                    }
                                 ]
                             },
                             {
@@ -85,6 +96,7 @@
                     },
                     {
                         "group": "Actions",
+                        "public": true,
                         "pages": [
                             "features/agent-actions",
                             "features/pull-requests"
@@ -92,6 +104,7 @@
                     },
                     {
                         "group": "Integrations",
+                        "public": true,
                         "pages": [
                             "integrations/mcp",
                             "integrations/bitbucket",
@@ -102,12 +115,12 @@
                             "integrations/linear",
                             "integrations/notion",
                             "integrations/postgres",
+                            "integrations/aws",
                             "integrations/raycast",
                             "integrations/sentry",
                             "integrations/slack",
                             "integrations/snowflake",
                             "integrations/supabase",
-                            "integrations/aws",
                             "integrations/fathom",
                             "integrations/infisical",
                             "integrations/snyk",
@@ -117,10 +130,10 @@
                     },
                     {
                         "group": "Other",
+                        "public": true,
                         "pages": [
                             "resources/pwa",
-                            "resources/pricing",
-                            "resources/changelog"
+                            "resources/pricing"
                         ]
                     }
                 ]
@@ -130,10 +143,12 @@
                 "groups": [
                     {
                         "group": "Overview",
+                        "public": true,
                         "pages": ["api/index"]
                     },
                     {
                         "group": "Tembo API",
+                        "public": true,
                         "openapi": {
                             "source": "openapi.documented.yml",
                             "directory": "api"
@@ -166,6 +181,7 @@
                 "groups": [
                     {
                         "group": "Use Cases",
+                        "public": true,
                         "pages": [
                             "learn/fix-production-bugs",
                             "learn/implement-from-issues",
@@ -179,8 +195,8 @@
         ]
     },
     "logo": {
-        "light": "/logo/light.svg",
-        "dark": "/logo/dark.svg"
+        "light": "/logo/tembo-text-black.svg",
+        "dark": "/logo/tembo-text-white.svg"
     },
     "navbar": {
         "links": [

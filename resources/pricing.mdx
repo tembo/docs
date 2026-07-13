@@ -7,11 +7,13 @@ Tembo uses subscription plans with credits so you can match usage to your team's
 
 ## Plans
 
-- **Free ($0/month)**: 10 credits per week
-- **Pro ($60/month)**: 100 credits per month, up to 10 users, with overage billing
+- **Free**: $10 one time, up to 3 users
+- **Pro ($60/month)**: 100 credits per month, up to 5 users, with overage billing
 - **Max ($200/month)**: 400 credits per month, up to 10 users, with overage billing
 
-Paid plans include overage billing so your work can continue after you use your monthly plan credits. You can set a maximum overage limit to control spend. On Free, sessions pause when credits are exhausted until your weekly refresh, an upgrade, or an additional credit purchase.
+Paid plans include overage billing so your work can continue after you use your monthly plan credits. You can set a maximum overage limit to control spend. On Free, sessions pause when credits are exhausted until an upgrade or an additional credit purchase.
+
+BYOK (Bring Your Own Key) is available only on the Enterprise plan.
 
 ## How credits work
 
@@ -30,6 +32,20 @@ Credits are used for:
 - Fixing production errors from Sentry
 - Optimizing database queries and indexes
 - Processing pull request feedback through the [Feedback Loop](/features/feedback-loop)
+
+## When credits run out
+
+What happens when your balance reaches zero depends on your plan and overage setting:
+
+- **Free**: new sessions are blocked until an upgrade or a credit purchase.
+- **Pro or Max with overages enabled**: sessions continue and are billed as overage, up to the maximum overage limit you set. Once that limit is reached, new sessions are blocked.
+- **Pro or Max with overages disabled**: new sessions are blocked as soon as included credits are exhausted.
+
+When work is blocked, the request is rejected immediately rather than queued. A session already in progress is allowed to finish its current step.
+
+## Usage bursts
+
+Some integrations can create a large batch of work at once — for example, a repository or integration sync, or a token refresh that triggers a backlog of issues. Tembo does not cap or rate-limit how much work an integration enqueues; the batch is processed as worker capacity becomes available, and each resulting session consumes credits when it runs. The same credit and overage limits above apply, so a burst cannot spend beyond your included credits plus your overage limit. To absorb large bursts without interruption, enable overages with an appropriate limit, or use [auto-reload](#auto-reload).
 
 ## Credit refunds
 
@@ -86,5 +102,6 @@ If you need custom pricing, reach out to [support@tembo.io](mailto:support@tembo
 
 - Custom credit allocations
 - Volume pricing
+- BYOK (Bring Your Own Key)
 - Dedicated support
 - Flexible billing options
