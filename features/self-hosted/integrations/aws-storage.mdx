@@ -1,0 +1,159 @@
+---
+title: 'AWS S3 Storage'
+description: 'Configure Amazon S3 for Tembo self-hosted on AWS.'
+---
+
+Tembo can use an S3 bucket as a single store for image attachments, org profile pictures, VM snapshots, and user storage. If you skip this configuration, file upload features will be unavailable.
+
+---
+
+## Step 1: Create an S3 Bucket
+
+### Via the AWS CLI
+
+```bash
+aws s3api create-bucket \
+  --bucket <bucket-name> \
+  --region us-east-1
+```
+
+For regions other than `us-east-1`, add the location constraint:
+
+```bash
+aws s3api create-bucket \
+  --bucket <bucket-name> \
+  --region us-west-2 \
+  --create-bucket-configuration LocationConstraint=us-west-2
+```
+
+### Via the AWS Console
+
+1. Go to **S3** → **Create bucket**
+2. Enter a **Bucket name** (globally unique)
+3. Select your **AWS Region**
+4. Leave all other settings as default and click **Create bucket**
+
+---
+
+## Step 2: Create IAM Credentials
+
+Tembo needs an IAM user with read/write access to the bucket. If your EC2 instance already has an IAM instance profile with S3 access, you can skip this step — Tembo will use the instance's credentials automatically.
+
+### Via the AWS CLI
+
+```bash
+# Create the IAM user
+aws iam create-user --user-name tembo-storage
+
+# Create an inline policy granting access to the bucket
+aws iam put-user-policy \
+  --user-name tembo-storage \
+  --policy-name tembo-s3-access \
+  --policy-document '{
+    "Version": "2012-10-17",
+    "Statement": [{
+      "Effect": "Allow",
+      "Action": ["s3:GetObject", "s3:PutObject", "s3:DeleteObject", "s3:ListBucket"],
+      "Resource": [
+        "arn:aws:s3:::<bucket-name>",
+        "arn:aws:s3:::<bucket-name>/*"
+      ]
+    }]
+  }'
+
+# Create access keys
+aws iam create-access-key --user-name tembo-storage
+```
+
+Note the `AccessKeyId` and `SecretAccessKey` from the output.
+
+### Via the AWS Console
+
+1. Go to **IAM** → **Users** → **Create user**
+2. Enter a username (e.g. `tembo-storage`) and click **Next**
+3. Select **Attach policies directly**, then click **Create policy**
+4. In the policy editor, paste:
+   ```json
+   {
+     "Version": "2012-10-17",
+     "Statement": [{
+       "Effect": "Allow",
+       "Action": ["s3:GetObject", "s3:PutObject", "s3:DeleteObject", "s3:ListBucket"],
+       "Resource": [
+         "arn:aws:s3:::<bucket-name>",
+         "arn:aws:s3:::<bucket-name>/*"
+       ]
+     }]
+   }
+   ```
+5. Name the policy (e.g. `tembo-s3-access`) and click **Create policy**
+6. Back on the user creation page, attach the new policy and click **Next** → **Create user**
+7. Open the user, go to the **Security credentials** tab, and click **Create access key**
+8. Select **Application running outside AWS**, then click **Next** → **Create access key**
+9. Copy the **Access key** and **Secret access key**
+
+---
+
+## Step 3: Configure CORS
+
+Tembo uploads image attachments directly from the browser to S3. S3 blocks these cross-origin requests by default, so you must add a CORS rule.
+
+### Via the AWS CLI
+
+```bash
+aws s3api put-bucket-cors \
+  --bucket <bucket-name> \
+  --cors-configuration '{
+    "CORSRules": [{
+      "AllowedOrigins": ["http://<instance-ip>"],
+      "AllowedMethods": ["GET", "PUT", "DELETE", "HEAD"],
+      "AllowedHeaders": ["*"],
+      "ExposeHeaders": [],
+      "MaxAgeSeconds": 3600
+    }]
+  }'
+```
+
+If you are using a custom domain, replace `http://<instance-ip>` with your domain.
+
+### Via the AWS Console
+
+1. Go to **S3** → select your bucket → **Permissions** tab
+2. Scroll to **Cross-origin resource sharing (CORS)** and click **Edit**
+3. Paste:
+   ```json
+   [
+     {
+       "AllowedOrigins": ["http://<instance-ip>"],
+       "AllowedMethods": ["GET", "PUT", "DELETE", "HEAD"],
+       "AllowedHeaders": ["*"],
+       "ExposeHeaders": [],
+       "MaxAgeSeconds": 3600
+     }
+   ]
+   ```
+4. Click **Save changes**
+
+---
+
+## Step 4: Add to config.json
+
+Open `/var/lib/tembo/config.json` (via the VS Code server at `http://<instance-ip>:8888` or SSH) and add:
+
+```json
+{
+  "selfHosted.objectStorage.provider": "aws",
+  "selfHosted.objectStorage.bucket": "<bucket-name>",
+  "aws.region": "us-east-1",
+  "selfHosted.objectStorage.aws.accessKeyId": "<access-key-id>",
+  "selfHosted.objectStorage.aws.secretAccessKey": "<secret-access-key>"
+}
+```
+
+If your EC2 instance has an IAM instance profile with S3 access, omit `accessKeyId` and `secretAccessKey` — Tembo will use the instance's credentials automatically.
+
+Then restart the API:
+
+```bash
+sudo systemctl restart tembo-ts-api
+```

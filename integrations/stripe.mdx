@@ -1,0 +1,64 @@
+---
+title: "Stripe"
+description: "Payments, billing, and customer operations via Stripe MCP."
+---
+
+<Frame>
+  <img src="/images/integrations/stripe.png" alt="Stripe" />
+</Frame>
+
+## Features
+
+- Read/write access to your connected Stripe account through the Stripe MCP server
+- Coverage across accounts, customers, products, pricing, payments, invoicing, subscriptions, payment links, and disputes
+- Search and lookup any Stripe object by ID or query syntax
+- Generic Stripe API escape hatch — execute any Stripe API call
+- Built-in Stripe documentation search and integration recommender
+
+## Installation
+
+<Steps>
+  <Step title="Open Integrations">
+    In the Tembo app, go to **Settings → Integrations**.
+  </Step>
+  <Step title="Install Stripe">
+    Scroll to the **Business Operations** group and click **Install** next to Stripe.
+  </Step>
+  <Step title="Sign in to Stripe">
+    Sign in with your organization email using an approved auth method.
+
+    <Note>
+      If you don't have a Stripe account yet, you'll be guided through business setup with Stripe. After creating the account, return to **Settings → Integrations** in Tembo and click **Install** again to complete the connection.
+    </Note>
+  </Step>
+  <Step title="Authorize Tembo">
+    Stripe will request information from your account. Click **Authorize**.
+
+    <Warning>
+      If you see **"Enable MCP Access"** below your account name, [MCP access must be enabled on the Stripe account](https://docs.stripe.com/mcp?mcp-client=other#access) before the integration will work. Enable it as a Stripe administrator, or ask an admin to enable it for you.
+    </Warning>
+  </Step>
+  <Step title="Confirm install">
+    After authorizing, you'll be redirected to the Tembo Integrations page. Stripe will switch from uninstalled to installed.
+  </Step>
+</Steps>
+
+## Usage
+
+Once installed, Tembo agents automatically have access to the Stripe MCP server during sessions. No further configuration is needed inside Tembo — agents can read account data, manage customers and products, query payments and invoices, and call any Stripe API operation on your behalf.
+
+## Advanced
+
+<AccordionGroup>
+  <Accordion title="MCP server">
+    When connected, a Stripe MCP server is automatically available to agents. They can query account info, search customers and charges, manage products and subscriptions, handle disputes, and fall back to the generic Stripe API for anything not covered by a dedicated tool.
+  </Accordion>
+
+  <Accordion title="Enable MCP Access blocker">
+    If MCP access is not enabled on the Stripe account, the integration will not function. This is a Stripe-side setting and is admin-only. See [Stripe's MCP access documentation](https://docs.stripe.com/mcp?mcp-client=other#access).
+  </Accordion>
+
+  <Accordion title="Install state stuck after creating a new Stripe account">
+    If you created a new Stripe business during the install flow, the install state in Tembo may not auto-complete. Return to **Settings → Integrations** in Tembo and click **Install** again to finish the connection.
+  </Accordion>
+</AccordionGroup>

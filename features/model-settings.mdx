@@ -32,10 +32,11 @@ Keys are saved at the workspace level and used when a selected model requires th
 {
   "mcpServers": {
     "my-server": {
+      "type": "stdio",
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-github"],
       "env": {
-        "GITHUB_TOKEN": "ghp_xxx"
+        "GITHUB_TOKEN": "your-github-token"
       }
     }
   }

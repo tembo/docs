@@ -1,52 +1,146 @@
 ---
 title: 'AWS'
-description: 'RDS PostgreSQL performance monitoring and optimization.'
+description: 'Give your agents access to any AWS service via OIDC web identity federation — no static credentials required.'
 ---
 
 <Frame>
   <img src="/images/integrations/aws.png" alt="AWS" />
 </Frame>
 
-<Note>Email support@tembo.io for access to this integration.</Note>
+Tembo acts as an OIDC Identity Provider. Your agents receive short-lived STS credentials that expire automatically — no AWS access keys are stored in Tembo.
 
-## Features
+[→ Jump to Manual CloudFormation Setup](/integrations/aws#manual-cloudformation-setup)
 
-- Monitor slow queries across RDS PostgreSQL instances
-- Detect missing and unused indexes
-- Open PRs with migration scripts
-- Multi-region RDS instance discovery
+## What agents can do
 
-## Installation
+Once connected, agents have access to the [AWS Agent Toolkit](https://github.com/awslabs/mcp/tree/main/src/aws-api) — AWS's official MCP service covering 15,000+ APIs across every AWS service:
+
+- **`call_aws`** — execute any authenticated AWS API call
+- **`suggest_aws_commands`** — translate natural language to AWS API calls
+- **`run_script`** — run Python code with AWS API access in a sandboxed environment
+- **`search_documentation` / `read_documentation`** — search and read all AWS documentation
+- **`get_presigned_url`** — generate pre-signed S3 URLs
+
+The default CloudFormation stack grants `ReadOnlyAccess`. You can modify the role's policies to expand or restrict what agents are permitted to do.
+
+## Connect
 
 <Steps>
-  <Step title="Connect">
-    Go to [Integrations](https://app.tembo.io/integrations) and click **Connect** next to AWS. You'll be redirected to CloudFormation.
+  <Step title="Open the connect modal">
+    Go to [Integrations](https://app.tembo.io/integrations) and click **Connect** next to AWS. Enter a name for this account (e.g. `production` or `dev`).
   </Step>
-  <Step title="Deploy stack">
-    Deploy the CloudFormation stack to create an IAM role for Tembo.
+  <Step title="Deploy the CloudFormation stack">
+    Click **Create via CloudFormation** to open a pre-filled stack in your AWS console. If the link shows "Access Denied", [use the manual setup](/integrations/aws#manual-cloudformation-setup) in the section below instead — it creates the same resources.
   </Step>
-  <Step title="Activate instances">
-    Select which RDS PostgreSQL instances to monitor under "Active Instances".
-  </Step>
-  <Step title="Map repository">
-    Map instances to the repository where migrations are stored.
+  <Step title="Paste the role ARN">
+    Once the stack is deployed, open the **Outputs** tab in CloudFormation and copy the `RoleArn` value. Back in the Tembo connect modal, switch to **Enter ARN manually** and paste it. Click **Connect**.
   </Step>
 </Steps>
 
-## Usage
+You can connect multiple AWS accounts — each gets its own label and isolated MCP server session.
 
-Tembo monitors your RDS instances using `pg_stat_statements`. When it finds optimization opportunities, it opens PRs with migration scripts.
+## Manual CloudFormation setup
 
-Requires `pg_stat_statements` extension enabled on your RDS instances.
+Use this if the one-click CloudFormation link shows "Access Denied". The template below creates the same IAM resources.
 
-## Advanced
+1. Download the CloudFormation template. It creates an OIDC provider and a cross-account IAM role that trusts Tembo's issuer, scoped to your org ID.
+
+<div style={{marginLeft:'24px'}}>
+  <a href="/files/tembo-identity.json" download="tembo-identity.json">
+    <button>Download tembo-identity.json</button>
+  </a>
+</div>
+
+```json tembo-identity.json
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Tembo cross-account access via OIDC web identity federation",
+  "Parameters": {
+    "TemboOrgId": {
+      "Type": "String",
+      "Description": "Your Tembo organization ID (shown in the connect modal)",
+      "MinLength": 1
+    }
+  },
+  "Resources": {
+    "TemboOidcProvider": {
+      "Type": "AWS::IAM::OIDCProvider",
+      "Properties": {
+        "Url": "https://app.tembo.io",
+        "ClientIdList": ["sts.amazonaws.com"],
+        "ThumbprintList": ["0000000000000000000000000000000000000000"]
+      }
+    },
+    "TemboCrossAccountRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Federated": { "Ref": "TemboOidcProvider" }
+              },
+              "Action": "sts:AssumeRoleWithWebIdentity",
+              "Condition": {
+                "StringEquals": {
+                  "app.tembo.io:aud": "sts.amazonaws.com",
+                  "app.tembo.io:sub": { "Fn::Sub": "org:${TemboOrgId}" }
+                }
+              }
+            }
+          ]
+        },
+        "MaxSessionDuration": 3600,
+        "ManagedPolicyArns": ["arn:aws:iam::aws:policy/ReadOnlyAccess"]
+      }
+    }
+  },
+  "Outputs": {
+    "RoleArn": {
+      "Description": "Paste this ARN into the Tembo AWS connect modal",
+      "Value": { "Fn::GetAtt": ["TemboCrossAccountRole", "Arn"] }
+    }
+  }
+}
+```
+
+<Note>
+  **Self-hosted Tembo:** replace both occurrences of `app.tembo.io` with your instance's public hostname (the value of `TEMBO_OIDC_ISSUER` in your config).
+</Note>
+
+2. In the [AWS CloudFormation console](https://console.aws.amazon.com/cloudformation), click **Create stack → With new resources**.
+3. Choose **Upload a template file** and upload `tembo-identity.json`.
+4. Enter your **Tembo organization ID** when prompted (visible in the connect modal).
+5. Deploy the stack. When it completes, open the **Outputs** tab and copy the `RoleArn` value.
+6. Back in Tembo, switch to **Enter ARN manually** and paste the ARN. Click **Connect**.
+
+## How authentication works
+
+Tembo never stores AWS credentials. For each agent run:
+
+1. Tembo mints a short-lived RS256 JWT (5-minute TTL) signed with its OIDC private key
+2. The JWT is exchanged with AWS STS via `AssumeRoleWithWebIdentity`
+3. STS validates the JWT by fetching Tembo's public JWKS endpoint (`/.well-known/jwks.json`)
+4. Resulting temporary credentials (1-hour TTL) are injected into the agent's sandbox at startup — they never leave the sandbox environment
+
+## Troubleshooting
 
 <AccordionGroup>
-  <Accordion title="Instances not appearing">
-    Wait a few minutes for region scanning. Verify the CloudFormation stack deployed successfully and the IAM role has permission to describe RDS instances.
+  <Accordion title='"Access Denied" when opening the CloudFormation link'>
+    The one-click URL fetches the CloudFormation template from an S3 bucket. If the bucket policy hasn't been updated yet, AWS's console will return an access denied error. Use the manual setup steps above — they create identical resources and work independently of S3 hosting.
   </Accordion>
 
-  <Accordion title="Connection issues">
-    Verify security groups allow Tembo's IP ranges. Ensure your RDS instance is accessible and SSL/TLS settings are correct.
+  <Accordion title="STS AssumeRoleWithWebIdentity fails after deploy">
+    Confirm the OIDC provider URL in your CloudFormation stack matches your Tembo instance exactly (including protocol, no trailing slash). For hosted Tembo this is `https://app.tembo.io`. Check that the `TemboOrgId` parameter matches the organization ID shown in the Tembo connect modal.
+  </Accordion>
+
+  <Accordion title="Agent can't reach AWS APIs">
+    The agent sandbox requires outbound access to `https://aws-mcp.us-east-1.api.aws` for the AWS Agent Toolkit MCP service. In self-hosted deployments on a private network, confirm egress to that endpoint is allowed.
+  </Accordion>
+
+  <Accordion title="Agent hits permission errors on AWS calls">
+    The default stack attaches `ReadOnlyAccess`. To allow write operations, modify the `TemboCrossAccountRole` in your AWS account and attach additional policies. You can scope permissions tightly using IAM condition keys — the agent's identity is distinguishable from human calls in CloudTrail.
   </Accordion>
 </AccordionGroup>

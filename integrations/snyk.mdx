@@ -1,0 +1,89 @@
+---
+title: "Snyk"
+description: "Vulnerability scanning and auto-fix PRs for your dependencies."
+---
+
+<Frame>
+  <img src="/images/integrations/snyk.png" alt="Snyk" />
+</Frame>
+
+## Features
+
+- Scan repositories for known vulnerabilities in dependencies (Snyk Open Source)
+- Surface Snyk-detected issues to Tembo agents during sessions
+- Open PRs that bump vulnerable packages to fixed versions
+
+## Installation
+
+<Steps>
+  <Step title="Open Integrations">
+    In the Tembo app, go to **Settings → Integrations**.
+  </Step>
+  <Step title="Install Snyk">
+    Scroll to the **Monitoring** group and click **Install** next to Snyk.
+  </Step>
+  <Step title="Sign in to Snyk">
+    Sign in with your organization email using an approved auth method.
+
+    <Note>
+      If you don't have a Snyk account yet, you'll be guided through Snyk's account setup after the initial sign-in. Once your account is ready, return to **Settings → Integrations** in Tembo and click **Install** again to complete the connection.
+    </Note>
+
+    <Tip>
+      If you're already signed in to Snyk, click **Authorize** and confirm you've selected the correct Snyk organization before continuing.
+    </Tip>
+  </Step>
+  <Step title="Authorize Tembo">
+    Snyk will request access to your organization. Click **Authorize**.
+
+    <Warning>
+      The install must be authorized by a **Snyk organization admin**. If you're not an admin on the Snyk org, ask one to complete this step for you.
+    </Warning>
+  </Step>
+  <Step title="Confirm install">
+    After authorizing, you'll be redirected to the Tembo Integrations page. Snyk will switch from uninstalled to installed.
+  </Step>
+</Steps>
+
+## Usage
+
+Once installed, Tembo monitors your Snyk-connected repositories for known vulnerabilities and opens fix PRs that bump affected dependencies to safe versions. Tembo agents can reference Snyk-detected issues during sessions to inform the changes they propose.
+
+## Advanced
+
+<AccordionGroup>
+  <Accordion title="Snyk organization scope">
+    The integration connects to a single Snyk **organization**, not a Snyk user. All scanning and issue access happens within that org. To monitor projects across multiple Snyk orgs, install the integration once per org.
+  </Accordion>
+
+  <Accordion title="Permissions">
+    <Warning>
+      Tembo's Snyk integration grants both read and write access to your connected Snyk organization, including the ability to create, edit, and delete ignore rules (which suppress vulnerability findings). **Read and review this list before installing** to be sure what information and data you are sharing.
+    </Warning>
+
+    At install time, Tembo's Snyk App requests the following 11 OAuth scopes on your Snyk organization:
+
+    **Read access**
+
+    - `org.read` — your Snyk organization's metadata (name, slug, settings)
+    - `org.project.read` — the list of projects in your org and their details
+    - `org.project.snapshot.read` — historical scan snapshots (vulnerability findings over time)
+    - `org.report.read` — org-level reports (aggregated vulnerability and compliance data)
+    - `org.project.ignore.read` — which vulnerabilities you've configured Snyk to ignore
+
+    **Write access**
+
+    - `org.project.test` — trigger Snyk to re-test (re-scan) a project on demand
+    - `org.project.attributes.edit` — edit project attributes (e.g., business criticality, environment, lifecycle)
+    - `org.project.tag.edit` — add, modify, or remove tags on projects
+    - `org.project.ignore.create` — create new ignore rules (suppress specific vulnerability findings)
+    - `org.project.ignore.edit` — modify existing ignore rules
+    - `org.project.ignore.delete` — delete ignore rules
+
+    Tembo cannot modify Snyk organization membership, change billing settings, or create or delete Snyk projects.
+  </Accordion>
+
+  <Accordion title="Install not completing">
+    If you're redirected back to Tembo but the integration still shows as uninstalled, the most common cause is the OAuth flow being cancelled or rejected on Snyk's side. Try the install again and make sure you click **Authorize** on the Snyk consent screen.
+  </Accordion>
+</AccordionGroup>

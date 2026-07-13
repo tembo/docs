@@ -2,7 +2,8 @@
 title: "Tembo Documentation"
 mode: "wide"
 sidebarTitle: "Welcome"
-description: "Tembo is the orchestration layer for running engineering work across agents, repos and integrations."
+description: "Run any coding agent across your repos, tickets, and tools, with full visibility."
+"og:title": "Tembo Documentation"
 "og:image": "/images/og-image.png"
 "twitter:image": "/images/og-image.png"
 ---
@@ -12,12 +13,10 @@ description: "Tembo is the orchestration layer for running engineering work acro
   <img src="/images/hero-dark.png" alt="Tembo" className="hidden dark:block" />
 </Frame>
 
-Delegate work to any coding agent. Tembo works autonomously with Claude Code, Cursor, Codex, and more to ship features, review code, and take on work from Slack, Linear, or anywhere else.
-
 ## What you can do with Tembo
 
 <CardGroup cols={3}>
-  <Card title="Automate tasks" icon="repeat" href="/features/automations">
+  <Card title="Automate work" icon="repeat" href="/features/agents">
     Set up recurring workflows triggered by events or schedules.
   </Card>
   <Card title="Fix bugs" icon="bug" href="/learn/fix-production-bugs">
@@ -39,11 +38,11 @@ Delegate work to any coding agent. Tembo works autonomously with Claude Code, Cu
 
 ## Agents & integrations
 
-Tembo is agent and model agnostic. Pick the right tool for each task. Tag `@tembo` from wherever you already work.
+Tembo is harness and model agnostic. Pick the right tool for each session. Tag `@tembo` from wherever you already work.
 
 <Tabs>
-  <Tab title="Coding agents">
-    | Agent | Providers | Default Model |
+  <Tab title="Harnesses">
+    | Harness | Providers | Default Model |
     |-------|-----------|---------------|
     | **Claude Code** | Anthropic | `claude-opus-4-6` |
     | **Codex** | OpenAI | `gpt-5.2` |
@@ -51,7 +50,9 @@ Tembo is agent and model agnostic. Pick the right tool for each task. Tag `@temb
     | **Opencode** | Anthropic, OpenAI, OSS | `claude-4-5-sonnet` |
     | **Amp** | Anthropic (auto-selected) | `auto` |
 
-    See [all agents and models →](/features/coding-agents)
+    Codex and OpenCode also support `gpt-5.4`, `gpt-5.4-mini`, and `gpt-5.4-nano`.
+
+    See [all harnesses and models →](/features/agents#agent-harness)
 
   </Tab>
   <Tab title="Integrations">
@@ -74,7 +75,7 @@ Tembo is agent and model agnostic. Pick the right tool for each task. Tag `@temb
   <Card title="Quickstart" icon="rocket" href="/quickstart">
     Get up and running with Tembo in minutes.
   </Card>
-  <Card title="Automations" icon="repeat" href="/features/automations">
+  <Card title="Agents" icon="repeat" href="/features/agents">
     Set up event-driven workflows that run automatically.
   </Card>
 </CardGroup>

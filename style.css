@@ -1,3 +1,49 @@
+/* ABC Oracle — display face shared with tembo.io (licensed Dinamo family,
+   order 2026-3826992). Statics: Regular (400), Medium (500), Bold (700)
+   plus matching italics. Used for headings; body/UI text stays Inter. */
+@font-face {
+    font-family: "ABC Oracle";
+    src: url("/fonts/ABCOracle-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "ABC Oracle";
+    src: url("/fonts/ABCOracle-RegularItalic.woff2") format("woff2");
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: "ABC Oracle";
+    src: url("/fonts/ABCOracle-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "ABC Oracle";
+    src: url("/fonts/ABCOracle-MediumItalic.woff2") format("woff2");
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: "ABC Oracle";
+    src: url("/fonts/ABCOracle-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "ABC Oracle";
+    src: url("/fonts/ABCOracle-BoldItalic.woff2") format("woff2");
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
+
 * {
     scrollbar-width: none !important;
     -ms-overflow-style: none !important;
@@ -11,6 +57,84 @@
     color: #005cad;
 }
 
+#navigation-items {
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+#navbar :has(+ nav) {
+    flex: none;
+}
+
+#navbar nav {
+    flex: none;
+
+    .bg-gray-950\/\[0\.03\] {
+        border-bottom: 3px solid #0083f5;
+        border-radius: 0px;
+        background: transparent;
+    }
+
+    li a {
+        display: flex !important;
+        align-items: center !important;
+        padding-bottom: 11px !important;
+        margin-bottom: -15px;
+        border-bottom: 3px solid transparent;
+        border-radius: 0px;
+
+        &:hover {
+            border-bottom: 3px solid #0083f5;
+            border-radius: 0px;
+            background: transparent;
+        }
+    }
+}
+
+/* wider homepage layout */
+[data-page-mode="wide"] #content-area {
+    @media screen and (width >= 1536px) {
+        --default-max-w: 696px;
+        --effective-max-w: min(calc(900px + 10vw), 1000px);
+        --max-w-offset: calc(var(--effective-max-w) - var(--default-max-w));
+        --default-ml: max(0px, calc(50vw - 348px - 14rem));
+        --effective-ml: calc(var(--default-ml) - var(--max-w-offset, 0px) / 2);
+        max-width: var(--effective-max-w);
+        margin-left: var(--effective-ml);
+    }
+    @media screen and (width < 1536px) {
+        width: 100%;
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* add support for responsive columns */
+.responsive-columns {
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(
+            max(
+                var(--min-col-width, 250px),
+                calc(100% / var(--cols, 4) - 1rem)
+            ),
+            1fr
+        )
+    ) !important;
+}
+
+#sidebar-content .sidebar-group-header {
+    margin-bottom: 4px;
+    font-weight: 800 !important;
+}
+
+/* tighten the spacing between items within a sidebar group (default py is 6px) */
+#sidebar-content li a {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+}
+
 .dark ::selection {
     background-color: #299bff;
     color: #fff;
@@ -20,8 +144,52 @@
     background: #212121 !important;
 }
 
-[data-callout-type="note"] svg {
-    margin-top: 4px;
+.card {
+    border-radius: 8px !important;
+    border-width: 2px;
+
+    &:hover {
+        border-color: rgba(0, 131, 245, 1) !important;
+
+        [data-component-part="card-icon"] svg {
+            background-color: #0083f5 !important;
+        }
+    }
+}
+
+[data-component-part="card-content-container"] {
+    padding: 14px 18px;
+}
+
+[data-component-part="card-icon"] {
+    margin-top: 3.5px;
+    width: 20px;
+    height: 20px;
+
+    svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+[data-component-part="card-title"] {
+    font-size: 15px !important;
+    margin-top: 10px;
+}
+
+[data-component-part="card-content"] {
+    font-size: 14px !important;
+}
+
+#body-content [data-component-part="card-content"] [data-as="p"] {
+    line-height: 1.5 !important;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: "ABC Oracle", "Inter", system-ui, sans-serif !important;
 }
 
 h1,
@@ -45,16 +213,50 @@ h3 {
     margin-top: 30px !important;
 }
 
-span {
+#body-content [data-as="p"],
+#body-content h2,
+#body-content h3,
+#body-content li {
     line-height: 1.75rem !important;
     letter-spacing: -0.1px !important;
 }
 
-span.method-nav-pill span {
+#body-content .cloud-provider {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+#body-content .cloud-provider svg {
+    width: 1.15rem;
+    height: 1.15rem;
+    flex: none;
+}
+
+#body-content .cloud-provider-label {
+    color: #111827;
+    font-weight: 600;
+}
+
+.dark #body-content .cloud-provider-label {
+    color: #f9fafb;
+}
+
+#body-content .cloud-provider-aws {
+    color: #111827;
+}
+
+.dark #body-content .cloud-provider-aws {
+    color: #f9fafb;
+}
+
+#body-content span.method-nav-pill span {
     line-height: 1.25 !important;
 }
 
-.bg-gray-200\/70 {
+[data-component-part="step-line"] {
     background-color: #dedede !important;
 }
 
@@ -73,16 +275,23 @@ span.method-nav-pill span {
 #navbar {
     border-bottom: 1px solid #dedede !important;
 }
+
+#navbar .lg\:px-5 {
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+#navbar .nav-logo {
+    height: 18px;
+    width: auto;
+}
+
 #sidebar-content {
     border-right: 1px solid #dedede !important;
 }
 
 .dark {
-    body > div {
-        background-color: #141414;
-    }
-
-    .bg-gray-200\/70 {
+    [data-component-part="step-line"] {
         background-color: #ffffff0f !important;
     }
 
@@ -102,6 +311,10 @@ span.method-nav-pill span {
         border-bottom: 1px solid #ffffff0f !important;
     }
 
+    .card:hover {
+        border-color: #0083f5 !important;
+    }
+
     #navbar > .dark\:bg-background-dark {
         background-color: #202020 !important;
     }
@@ -113,4 +326,8 @@ span.method-nav-pill span {
     #sidebar-content {
         border-right: 1px solid #ffffff0f !important;
     }
+}
+
+.chat-assistant-floating-input {
+    visibility: hidden;
 }
