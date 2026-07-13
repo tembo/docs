@@ -50,9 +50,9 @@ Comment `@tembo` on any issue to start implementation. Tembo reads the issue tit
 @tembo Implement the API endpoint described in this issue
 ```
 
-## Automations
+## Agents
 
-See [Automations](/features/automations#event-driven) for available GitHub event triggers.
+See [Agents](/features/agents#event-driven) for available GitHub event triggers.
 
 ### PR reviews
 
@@ -76,6 +76,10 @@ Detects GitHub Actions failures and opens fix PRs automatically.
 <Accordion title="Signed commits">
   All commits in Tembo PRs are automatically signed and verified with a "Verified" badge in GitHub.
   No configuration needed.
+</Accordion>
+
+<Accordion title="Merge or close actions">
+  Tembo can merge or close a pull request through GitHub tool calls. If a merge or close action is requested while another Tembo job is already running on that pull request, the agent rejects the request. Wait for the active job to finish, then try again.
 </Accordion>
 
 <Accordion title="Repositories not appearing">

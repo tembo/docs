@@ -1,0 +1,52 @@
+---
+title: 'Overview'
+description: 'Secure, isolated environments where coding agents execute sessions.'
+---
+
+Every session runs in its own isolated sandbox. Sandboxes are ephemeral: spun up for the session, destroyed when it's done. No code or state persists after execution.
+
+## Data handling
+
+Your repository is cloned into the sandbox for the duration of a session and torn down when the session ends — no repository contents or working state persist afterward.
+
+The one exception is snapshots. If you use the snapshot feature to speed up environment setup, your repository and pre-installed dependencies are cached into a reusable snapshot image so future sessions start faster. That cached copy persists until the snapshot is rebuilt or removed.
+
+Model providers handle prompt data according to their own retention policies — see the retention table in [Max](/features/max) for Tembo-hosted models. With [BYOK](/features/models), model requests run against your own provider account, so provider-side retention follows that account's terms.
+
+## Sandbox sizes
+
+Tembo offers five sandbox sizes. Each session runs in a dedicated Linux VM, and no two sessions share the same VM.
+
+| Size | vCPU | Memory | Disk |
+|------|------|--------|------|
+| Micro | 2 | 4 GB | 50 GB |
+| Medium | 4 | 8 GB | 50 GB |
+| Large | 8 | 32 GB | 100 GB |
+| XL | 16 | 64 GB | 200 GB |
+| Ultra | 32 | 128 GB | 200 GB |
+
+Micro and Medium are best for routine code analysis, fixes, features, and reviews. Large, XL, and Ultra are best for heavier builds, integration tests, Docker workloads, large repositories, or multi-container setups.
+
+VM sandboxes include full nested virtualization for Docker-in-Docker and provide a stronger isolation boundary.
+
+If your org requires that untrusted code only runs with a VM boundary, we can enforce a VM-only posture. Contact support@tembo.io.
+
+## Pre-installed tools
+
+All sandbox sizes come with:
+
+| Category | Tools |
+|----------|-------|
+| **JavaScript** | Node.js 22, Bun, pnpm, Yarn |
+| **Python** | Python 3.12, pipx, uv, ruff |
+| **Ruby** | Ruby 3.3, Bundler, RuboCop |
+| **.NET** | .NET SDK 9 |
+| **Cloud** | Google Cloud SDK |
+| **Containers** | Docker 28, Docker Compose 2.31 |
+| **Other** | Git, curl, ShellCheck, httpie |
+
+<Note>Go, Rust, Java, and Elixir are available through Nix dev shells. Add a `tembo.nix` to install language-specific tooling for your project.</Note>
+
+## Add custom dependencies
+
+Add a [`tembo.nix`](/features/sandbox/custom-dependencies) file to your repository when your project needs tools that are not pre-installed in the sandbox.

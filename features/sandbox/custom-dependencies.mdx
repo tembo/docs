@@ -1,0 +1,115 @@
+---
+title: 'Custom Dependencies'
+description: 'Add project-specific tools to Tembo sandboxes with tembo.nix.'
+---
+
+Add a `tembo.nix` file to your repository root when your project needs tools that are not pre-installed in the sandbox. Tembo automatically detects the file and runs commands inside your Nix dev shell.
+
+## Prerequisites
+
+- You have a repository connected to Tembo.
+- You know which system packages or language toolchains your project needs.
+
+## Create tembo.nix
+
+Create `tembo.nix` in your repository root with a default dev shell. Tembo uses `devShells.x86_64-linux.default` in the sandbox.
+
+```nix
+{
+  description = "Tembo Cloud VM Dependencies";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
+
+  outputs = { self, nixpkgs, flake-utils }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
+      in {
+        devShells.default = pkgs.mkShell {
+          packages = with pkgs; [
+            go
+            rustc
+            cargo
+            jdk
+          ];
+        };
+      }
+    );
+}
+```
+
+After you commit the file, new Tembo sessions use the dev shell automatically. Agents can then run commands that depend on those packages, such as `go test`, `cargo test`, or Java build tools.
+
+## Add packages
+
+Add packages to the `packages` list. For example, this dev shell adds PostgreSQL client tools and `pkg-config` for projects that compile native dependencies:
+
+```nix
+{
+  description = "Tembo Cloud VM Dependencies";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
+
+  outputs = { self, nixpkgs, flake-utils }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
+      in {
+        devShells.default = pkgs.mkShell {
+          packages = with pkgs; [
+            postgresql
+            pkg-config
+            openssl
+          ];
+        };
+      }
+    );
+}
+```
+
+## Configure the shell
+
+Use `shellHook` when the sandbox needs environment variables for local commands:
+
+```nix
+{
+  description = "Tembo Cloud VM Dependencies";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
+
+  outputs = { self, nixpkgs, flake-utils }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
+      in {
+        devShells.default = pkgs.mkShell {
+          packages = with pkgs; [
+            nodejs_22
+            pnpm
+          ];
+
+          shellHook = ''
+            export NODE_ENV=development
+          '';
+        };
+      }
+    );
+}
+```
+
+Keep secrets out of `tembo.nix`. Add secrets through your sandbox environment variables instead.
+
+## Tips
+
+- Keep `tembo.nix` focused on system packages and toolchains that your project needs.
+- Commit the file so Tembo can load it in every new session.
+- Use [snapshots](../snapshots) if installing dependencies still takes meaningful time at the start of each session.

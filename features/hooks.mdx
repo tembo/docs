@@ -3,7 +3,7 @@ title: 'Hooks'
 description: 'Run custom commands at lifecycle events like post-clone and pre-push.'
 ---
 
-Hooks run shell commands at specific points during a task. Configure them in `.tembo.json` at your repository root.
+Hooks run shell commands at specific points during a session. Configure them in `.tembo.json` at your repository root.
 
 ## Available hooks
 
@@ -44,5 +44,5 @@ This ensures hooks and config are read from the same branch context the agent wi
 
 - Commands run sequentially in the repository root
 - If a command fails, the hook stops
-- Hooks run in the same [sandbox](/features/sandbox-environment) as the task
+- Hooks run in the same [sandbox](/features/sandbox/overview) as the session
 - Shell features (piping, redirects, `&&`) are supported
