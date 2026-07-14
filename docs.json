@@ -88,6 +88,7 @@
                                 "pages": [
                                     "features/agent-skills",
                                     "features/hooks",
+                                    "features/model-settings",
                                     "features/rule-files"
                                 ]
                             }
@@ -165,6 +166,7 @@
                             {
                                 "group": "Agents",
                                 "pages": [
+                                    "POST /agent",
                                     "api/trigger-agent"
                                 ]
                             },
