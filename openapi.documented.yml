@@ -398,6 +398,174 @@ paths:
                       const response = await client.session.search({ q: 'authentication bug' });
 
                       console.log(response.issues);
+    /agent:
+        post:
+            responses:
+                "200":
+                    description: Agent created successfully
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: string
+                                        format: uuid
+                                        description: Unique identifier for the agent
+                                    name:
+                                        type: string
+                                        description: Agent name
+                                        example: Daily triage
+                                    key:
+                                        type: string
+                                        nullable: true
+                                        description: Macro key generated for the agent
+                                        example: daily-triage
+                                    jsonContent:
+                                        type: object
+                                        nullable: true
+                                        additionalProperties: true
+                                        description: Agent instructions as a structured document
+                                    agent:
+                                        type: string
+                                        nullable: true
+                                        description: Agent harness or model to use
+                                        example: claudeCode:claude-opus-4-5
+                                    mcpServers:
+                                        type: array
+                                        items:
+                                            type: string
+                                        description: MCP servers available to the agent
+                                    organizationId:
+                                        type: string
+                                        format: uuid
+                                    enabledAt:
+                                        type: string
+                                        format: date-time
+                                        nullable: true
+                                    createdAt:
+                                        type: string
+                                        format: date-time
+                                    updatedAt:
+                                        type: string
+                                        format: date-time
+                                required:
+                                    - id
+                                    - name
+                                    - organizationId
+                                    - createdAt
+                                    - updatedAt
+                "400":
+                    description: Bad request - invalid input
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                required:
+                                    - error
+            operationId: postPublic-apiAgent
+            parameters: []
+            description: Create a new agent for your organization.
+            summary: Create Agent
+            requestBody:
+                description: Agent creation payload
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                    description: Agent name
+                                    example: Daily triage
+                                jsonContent:
+                                    type: object
+                                    additionalProperties: true
+                                    description: Agent instructions as a structured document
+                                    example:
+                                        type: doc
+                                        content:
+                                            - type: paragraph
+                                              content:
+                                                  - type: text
+                                                    text: Review new issues and summarize priority, owner, and next steps.
+                                mcpServers:
+                                    type: array
+                                    items:
+                                        type: string
+                                    description: MCP servers available to the agent
+                                    example:
+                                        - linear
+                                        - github
+                                agent:
+                                    type: string
+                                    description: Agent harness or model to use
+                                    example: claudeCode:claude-opus-4-5
+                                triggers:
+                                    type: array
+                                    description: Event triggers to attach to the agent
+                                    items:
+                                        type: object
+                                        properties:
+                                            name:
+                                                type: string
+                                                description: Trigger name
+                                                example: linear.issue.created
+                                            integrationId:
+                                                type: string
+                                                description: Integration ID for the trigger
+                                            filters:
+                                                type: object
+                                                additionalProperties: true
+                                                description: Trigger-specific filters
+                                        required:
+                                            - name
+                                schedules:
+                                    type: array
+                                    description: Schedules to attach to the agent
+                                    items:
+                                        type: object
+                                        properties:
+                                            cron:
+                                                type: string
+                                                description: Cron expression for the schedule
+                                                example: 0 9 * * 1-5
+                                        required:
+                                            - cron
+                            required:
+                                - name
+                                - jsonContent
+                required: true
+            x-codeSamples:
+                - lang: bash
+                  source: |-
+                      curl -s -X POST \
+                        "https://api.tembo.io/agent" \
+                        -H "Authorization: Bearer ${API_KEY}" \
+                        -H "Content-Type: application/json" \
+                        -d '{
+                          "name": "Daily triage",
+                          "jsonContent": {
+                            "type": "doc",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "text": "Review new issues and summarize priority, owner, and next steps."
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          "agent": "claudeCode:claude-opus-4-5",
+                          "mcpServers": ["linear", "github"],
+                          "schedules": [{ "cron": "0 9 * * 1-5" }]
+                        }' | jq .
     /agent/{keyOrId}/trigger:
         post:
             responses:
