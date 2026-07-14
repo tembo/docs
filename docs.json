@@ -165,6 +165,7 @@
                             {
                                 "group": "Agents",
                                 "pages": [
+                                    "POST /agent",
                                     "api/trigger-agent"
                                 ]
                             },
