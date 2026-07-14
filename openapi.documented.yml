@@ -398,11 +398,11 @@ paths:
                       const response = await client.session.search({ q: 'authentication bug' });
 
                       console.log(response.issues);
-    /automation/{keyOrId}/trigger:
+    /agent/{keyOrId}/trigger:
         post:
             responses:
                 "200":
-                    description: Automation triggered successfully
+                    description: Agent triggered successfully
                     content:
                         application/json:
                             schema:
@@ -415,7 +415,7 @@ paths:
                                     task:
                                         type: string
                                         description: The type of job that was queued
-                                        example: RunWorkflow
+                                        example: RunAgent
                                     status:
                                         type: string
                                         description: Current status of the job
@@ -438,7 +438,7 @@ paths:
                                     - createdAt
                                     - updatedAt
                 "404":
-                    description: Automation not found (no automation with the given key or ID exists in your organization)
+                    description: Agent not found (no agent with the given key or ID exists in your organization)
                     content:
                         application/json:
                             schema:
@@ -446,14 +446,14 @@ paths:
                                 properties:
                                     error:
                                         type: string
-                                        example: Automation not found
+                                        example: Agent not found
                                 required:
                                     - error
-            operationId: postPublic-apiAutomationTrigger
+            operationId: postPublic-apiAgentTrigger
             parameters:
                 - name: keyOrId
                   in: path
-                  description: The automation's UUID or its macro (key). You can find the UUID in the automation's properties panel.
+                  description: The agent's UUID or its macro (key). You can find the UUID in the agent's properties panel.
                   required: true
                   schema:
                       type: string
@@ -465,12 +465,12 @@ paths:
                   schema:
                       type: string
             description: |-
-                Trigger an automation with an arbitrary JSON payload, which is passed to the automation as event context.
+                Trigger an agent with an arbitrary JSON payload, which is passed to the agent as event context.
 
-                You can identify the automation by either its UUID or its macro (key). The API key can be supplied via the `Authorization: Bearer` header or the `apiKey` query parameter.
-            summary: Trigger Automation
+                You can identify the agent by either its UUID or its macro (key). The API key can be supplied via the `Authorization: Bearer` header or the `apiKey` query parameter.
+            summary: Trigger Agent
             requestBody:
-                description: Arbitrary JSON payload passed to the automation as event context. Your automation instructions can reference any values in this payload.
+                description: Arbitrary JSON payload passed to the agent as event context. Your agent instructions can reference any values in this payload.
                 content:
                     application/json:
                         schema:
@@ -485,7 +485,7 @@ paths:
                   label: Bearer Auth
                   source: |-
                       curl -s -X POST \
-                        "https://api.tembo.io/automation/${AUTOMATION_ID}/trigger" \
+                        "https://api.tembo.io/agent/${AGENT_ID}/trigger" \
                         -H "Authorization: Bearer ${API_KEY}" \
                         -H "Content-Type: application/json" \
                         -d '{"issue_url": "https://github.com/org/repo/issues/42"}' | jq .
@@ -493,7 +493,7 @@ paths:
                   label: Query Param Auth
                   source: |-
                       curl -s -X POST \
-                        "https://api.tembo.io/automation/${AUTOMATION_ID}/trigger?apiKey=${API_KEY}" \
+                        "https://api.tembo.io/agent/${AGENT_ID}/trigger?apiKey=${API_KEY}" \
                         -H "Content-Type: application/json" \
                         -d '{"issue_url": "https://github.com/org/repo/issues/42"}' | jq .
     /repository/list:
