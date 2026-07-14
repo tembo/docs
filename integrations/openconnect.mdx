@@ -6,7 +6,7 @@ description: "Connect sandboxes to private networks via OpenConnect VPN."
 ## Features
 
 - Connect agent sandboxes to private networks so they can reach internal databases and services
-- VPN connection is established automatically at the start of every session
+- The agent connects on demand — only when a task actually needs the private network — instead of on every session
 - Works alongside the Postgres integration to access databases that aren't publicly reachable
 
 ## Supported VPNs
@@ -26,7 +26,7 @@ If your organization uses any of these VPN products, Tembo can connect to it dir
 
 <Steps>
   <Step title="Go to Integrations">
-    Open [Integrations](https://app.tembo.io/integrations) and click **Install** next to VPN under the **Network** category.
+    Open [Integrations](https://app.tembo.io/integrations) and click **Install** next to OpenConnect under the **Developer Tools** category.
   </Step>
   <Step title="Enter your VPN details">
     Fill in the connection form:
@@ -36,13 +36,13 @@ If your organization uses any of these VPN products, Tembo can connect to it dir
     - **Username** and **Password** — credentials that the sandbox will use to authenticate
   </Step>
   <Step title="Connect your database">
-    Once the VPN is configured, add a [Postgres integration](/integrations/postgres) using the **private** connection string of your database. Tembo will connect to the VPN first, then reach the database through the tunnel.
+    Once the VPN is configured, add a [Postgres integration](/integrations/postgres) using the **private** connection string of your database. When the agent needs to reach the database, it connects the VPN first, then reaches it through the tunnel.
   </Step>
 </Steps>
 
 ## Usage
 
-When a session starts, Tembo automatically connects to your VPN before the agent begins work. The tunnel stays active for the duration of the session.
+Once configured, the agent gains a **connect** tool. It brings up the VPN on demand — when a task requires reaching a host that's only available on your private network — rather than on every session. You can also just ask the agent to connect. The tunnel then stays active for the rest of the session.
 
 This is useful when your database or internal services are behind a firewall and not reachable from the public internet. Instead of exposing your database publicly or setting up a bastion host, you provide the same VPN credentials your team already uses.
 
@@ -50,13 +50,13 @@ This is useful when your database or internal services are behind a firewall and
 
 1. Configure the VPN integration with your gateway credentials
 2. Add a Postgres integration with your private connection string (e.g. `postgresql://user:pass@10.0.1.50:5432/mydb`)
-3. Create a session — Tembo connects to the VPN, then the agent can query your database as if it were on your network
+3. In a session, the agent connects to the VPN when it needs the database (or when you ask it to), then queries your database as if it were on your network
 
 ## Advanced
 
 <AccordionGroup>
   <Accordion title="How it works">
-    At each session start, the sandbox VM runs OpenConnect in the background to establish a VPN tunnel. This creates a virtual network interface (`tun0`) that routes traffic to your private network through the encrypted tunnel. The connection is re-established on every session start since VPN state does not persist across sessions.
+    The connect tool runs OpenConnect inside the sandbox VM to establish a VPN tunnel. This creates a virtual network interface (`tun0`) that routes traffic to your private network through the encrypted tunnel. The connection is on demand — nothing happens until the agent invokes the tool — and does not persist across sessions, so a new session starts without a tunnel until it's needed again.
   </Accordion>
 
   <Accordion title="MFA / two-factor authentication">
@@ -64,6 +64,6 @@ This is useful when your database or internal services are behind a firewall and
   </Accordion>
 
   <Accordion title="Security considerations">
-    VPN credentials are injected into the sandbox at session start for the system to establish the tunnel before the agent begins work. Consider using a dedicated VPN account with limited network access scoped to only the resources Tembo needs.
+    VPN credentials are never exposed to the agent. When the connect tool runs, the system fetches the credentials over an authenticated channel only for the moment of connecting, hands the password directly to OpenConnect, and discards it — it is not written to disk or placed in the agent's context. Even so, consider using a dedicated VPN account with limited network access scoped to only the resources Tembo needs.
   </Accordion>
 </AccordionGroup>
