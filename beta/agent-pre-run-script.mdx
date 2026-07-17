@@ -1,5 +1,5 @@
 ---
-title: "Agent pre-run script"
+title: "Agent post-trigger hooks"
 description: "Run a custom setup script before an agent starts."
 hidden: true
 ---
@@ -8,38 +8,39 @@ hidden: true
   This feature is in beta. This page is intentionally unlisted and available only by direct URL.
 </Note>
 
-Agent pre-run scripts let you run a Bash script in the sandbox before an agent starts. Use them when an agent needs repository setup, generated files, dependency checks, or environment preparation that should happen after Tembo prepares the workspace and before the agent begins work.
+Agent post-trigger hooks are user-defined shell commands that run in the sandbox before a triggered Agent starts. They execute after Tembo prepares the workspace and before the agent begins work.
+
+Use post-trigger hooks to provide the Agent with context that can be deterministically fetched, or to check conditions before the agent runs. A non-zero exit code will prevent the Agent from running.
+
+<Note>
+  Post-trigger hooks aren't meant for configuring dependencies. See [Tembo Snapshots]() instead.
+</Note>
 
 ## Prerequisites
 
 - Agent pre-run scripts must be enabled for your workspace.
 - You need permission to edit the agent.
-- The script must be safe to run in the agent sandbox.
+## Prerequisites
 
-## Configure a pre-run script
+- Agent post-trigger hooks must be enabled for your organization or user account.
+
+## Configure a post-trigger hook
 
 1. Open the agent you want to configure.
-2. Add your Bash script in the pre-run script field.
+2. Add any valid shell command to the field labeled "Post-trigger hook".
 3. Save the agent.
 4. Trigger the agent.
 
 The script runs in `/workspace`, after Tembo sets up the repository and before the agent harness starts.
 
-## Example
+## Generic Example
 
-```bash
-#!/usr/bin/env bash
-set -euo pipefail
-
-npm ci
-npm run generate
-```
 
 ## How output affects the agent
 
-When the script succeeds, Tembo passes its output to the agent as pre-run context. The agent can use that output to understand what setup completed, which files changed, or what checks already ran.
+When the script succeeds, Tembo passes its output to the agent as pre-run context. The agent uses that output to seed the Agent run.
 
-When the script exits with a non-zero status, Tembo stops the run before the agent starts. Use this behavior for required setup or validation that should block the agent from working with an incomplete environment.
+When the script exits with a non-zero status, Tembo stops the run before the agent starts. Use this behavior for required validation that should block the agent from working with an incomplete environment.
 
 ## Trigger payloads
 
