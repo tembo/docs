@@ -37,7 +37,6 @@ When the script succeeds, Tembo captures what the script prints and adds it to t
 
 Print the information the agent should use to standard output. Markdown, plain text, and compact JSON all work well. Keep it focused on the decision the agent needs to make, such as the issue URL, current state, acceptance criteria, relevant logs, or links to source records.
 
-Use standard error for diagnostics that help you debug the hook. Do not rely on standard error as the place to give the agent required context.
 
 ```bash
 #!/usr/bin/env bash
@@ -50,11 +49,11 @@ echo "- Issue: TEM-123"
 echo "- Goal: reproduce the failing test and open a fix PR"
 ```
 
-When the script exits with a non-zero status, Tembo stops the run before the agent starts. Use this behavior for required validation that should block the agent from working with an incomplete environment.
+If the script exits with a non-zero status, Tembo stops the run before the agent starts. Use this behavior for required validation that should block the agent.
 
 ## Trigger payloads
 
-For triggered agent runs, Tembo exposes the trigger payload to the script through the `TRIGGER_PAYLOAD` environment variable. For webhook-triggered runs, this is the JSON request body sent to the [trigger endpoint](/api/trigger-agent).
+For triggered Agent runs, Tembo makes the trigger payload available to the post-trigger hook through the `TRIGGER_PAYLOAD` environment variable. For webhook-triggered runs, this is the JSON request body sent to the [trigger endpoint](/api/trigger-agent).
 
 Use the payload to decide what extra context to fetch and print. For example, the payload might identify a GitHub issue, Slack thread, Sentry event, Linear ticket, or any internal record your hook can look up before the agent starts.
 
