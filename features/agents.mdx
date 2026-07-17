@@ -90,9 +90,7 @@ React to events from your integrations in real-time.
 
 You can trigger an agent on demand from external systems using the agent's [webhook trigger endpoint](/api/trigger-agent).
 
-The JSON payload is passed to the agent as event context, so your instructions can reference it directly. For example, you could write instructions like _"Fix the issue at the URL provided in the event payload"_.
-
-If you need to transform the payload or fetch extra data before the agent starts, use an [agent post-trigger hook](/beta/agent-post-trigger-hook). The hook can read `TRIGGER_PAYLOAD` and print Markdown, text, or JSON to standard output; Tembo adds that output to the agent's starting context.
+The payload is passed to the agent as event context, so your instructions can reference it directly. For example, you could write instructions like _"Fix the issue at the URL provided in the event payload"_.
 
 ## Creating an agent
 
