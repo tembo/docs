@@ -633,12 +633,14 @@ paths:
                   schema:
                       type: string
             description: |-
-                Trigger an agent with an arbitrary JSON payload, which is passed to the agent as event context.
+                Trigger an agent with an arbitrary JSON payload. Tembo passes the request body to the agent as event context, so the agent can use values such as issue URLs, ticket IDs, Slack thread links, Sentry event IDs, priorities, or customer-provided instructions.
+
+                If the agent has a post-trigger hook, Tembo also exposes the same request body to that hook as the `TRIGGER_PAYLOAD` environment variable. To add dynamically fetched context to the agent's starting thread, have the hook print the final useful context to standard output.
 
                 You can identify the agent by either its UUID or its macro (key). The API key can be supplied via the `Authorization: Bearer` header or the `apiKey` query parameter.
             summary: Trigger Agent
             requestBody:
-                description: Arbitrary JSON payload passed to the agent as event context. Your agent instructions can reference any values in this payload.
+                description: Arbitrary JSON payload passed to the agent as event context and, when configured, to the post-trigger hook as `TRIGGER_PAYLOAD`.
                 content:
                     application/json:
                         schema:
@@ -647,6 +649,7 @@ paths:
                             example:
                                 issue_url: https://github.com/org/repo/issues/42
                                 priority: high
+                                instructions: Reproduce the issue, fix it, and open a pull request.
                 required: false
             x-codeSamples:
                 - lang: bash
