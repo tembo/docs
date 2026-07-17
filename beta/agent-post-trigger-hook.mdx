@@ -65,7 +65,6 @@ issue_identifier="$(jq -r '.issue.identifier // .issue.key // "unknown"' <<< "$T
 description="$(jq -r '.issue.description // .issue.body // ""' <<< "$TRIGGER_PAYLOAD")"
 
 if [[ -z "${description//[[:space:]]/}" ]]; then
-```suggestion
   echo "Linear issue ${issue_identifier} does not have a description." >&2
   echo "Add implementation context before running Tembo." >&2
   exit 1
