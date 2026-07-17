@@ -52,6 +52,7 @@ fi
 ```
 
 If the script exits with a non-zero status, Tembo stops the run before the agent starts. Use this to prevent a wasted run: when required inputs are missing, preconditions aren't met, or there's simply no work to do..
+
 ## Trigger payloads
 
 For triggered agent runs, Tembo exposes the trigger payload to the script through the `TRIGGER_PAYLOAD` environment variable. For most integration triggers, Tembo provides the payload shape automatically. 
