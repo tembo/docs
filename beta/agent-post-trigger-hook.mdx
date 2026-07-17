@@ -54,9 +54,9 @@ When the script exits with a non-zero status, Tembo stops the run before the age
 
 ## Trigger payloads
 
-For triggered agent runs, Tembo exposes the trigger payload to the script through the `TRIGGER_PAYLOAD` environment variable. For webhook-triggered runs, this is the JSON request body sent to the [trigger endpoint](/api/trigger-agent).
+For triggered agent runs, Tembo exposes the trigger payload to the script through the `TRIGGER_PAYLOAD` environment variable. For most integration triggers, Tembo provides the payload shape automatically. For webhook-triggered runs, this is the JSON request body sent to the [trigger endpoint](/api/trigger-agent).
 
-Use the payload to decide what extra context to fetch and print. For example, the payload might identify a GitHub issue, Slack thread, Sentry event, Linear ticket, or any internal record your hook can look up before the agent starts.
+Use the payload to decide what extra context to fetch and print. For example, Tembo's preconfigured trigger payload might identify a GitHub issue, Slack thread, Sentry event, or Linear ticket that your hook can look up before the agent starts. If you trigger an agent through the webhook API, your own payload can identify any internal record the hook should fetch.
 
 ```bash
 #!/usr/bin/env bash
