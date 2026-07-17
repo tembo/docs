@@ -33,7 +33,10 @@ The script runs in `/workspace`, after Tembo sets up the repository and before t
 
 ## How output affects the agent
 
-When the script succeeds, Tembo captures what the script prints and adds it to the agent's starting thread as pre-run context. This is the primary way to get dynamically fetched output into the agent run.
+Post-trigger hooks impact triggered agent runs in two ways:
+
+1. When the script succeeds, Tembo captures what the script prints and adds it to the agent's starting thread as context. 
+2. When the script fails (exits with a non-zero `exit` code), Tembo stops the run before the agent starts.
 
 Print the information the agent should use to standard output (e.g. `echo`). Markdown, plain text, and compact JSON all work well.
 
@@ -74,7 +77,7 @@ The hook output above is appended to the agent's starting context. If the descri
 
 ## Workspace resumes
 
-Tembo skips the pre-run script when resuming an existing workspace. If a job is retried, the script runs again before the agent starts.
+Tembo skips the post-tripper hook when resuming an existing workspace. If a job is retried, the script runs again before the agent starts.
 
 ## Related configuration
 
