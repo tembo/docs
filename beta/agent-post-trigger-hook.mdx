@@ -33,23 +33,12 @@ The script runs in `/workspace`, after Tembo sets up the repository and before t
 
 ## How output affects the agent
 
-When the script succeeds, Tembo captures what the script prints and adds it to the agent's starting thread as pre-run context. This is the main way to get dynamically fetched output into the agent run.
+When the script succeeds, Tembo captures what the script prints and adds it to the agent's starting thread as pre-run context. This is the primary way to get dynamically fetched output into the agent run.
 
-Print the information the agent should use to standard output (e.g. `echo`). Markdown, plain text, and compact JSON all work well. 
+Print the information the agent should use to standard output (e.g. `echo`). Markdown, plain text, and compact JSON all work well.
 
+## Example: Generic
 
-```bash
-#!/usr/bin/env bash
-set -euo pipefail
-
-echo "## Pre-run context"
-echo
-echo "- Source: Linear"
-echo "- Issue: TEM-123"
-echo "- Goal: reproduce the failing test and open a fix PR"
-```
-
-If the script exits with a non-zero status, Tembo stops the run before the agent starts. Use this behavior for required validation that should block the agent from working with an incomplete environment.
 
 ## Trigger payloads
 
