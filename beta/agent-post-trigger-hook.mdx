@@ -35,7 +35,7 @@ The script runs in `/workspace`, after Tembo sets up the repository and before t
 
 Post-trigger hooks impact triggered agent runs in two ways:
 
-1. When the script succeeds, Tembo captures what the script prints and adds it to the agent's starting thread as context. 
+1. When the script succeeds, Tembo captures what the script prints and adds it to the agent's starting thread as context.
 2. When the script fails (exits with a non-zero `exit` code), Tembo stops the run before the agent starts.
 
 Print the information the agent should use to standard output (e.g. `echo`). Markdown, plain text, and compact JSON all work well.
