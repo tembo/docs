@@ -1,0 +1,81 @@
+---
+title: "Agent post-trigger hooks"
+description: "Run a custom setup script before an agent starts."
+hidden: true
+---
+
+<Warning>
+  This feature is in beta. This page is intentionally unlisted and available only by direct URL.
+</Warning>
+
+Agent post-trigger hooks are user-defined shell commands that run in the sandbox before a triggered agent starts. They execute after Tembo prepares the workspace but before the agent begins work.
+
+Use post-trigger hooks to provide the agent with context that can be deterministically fetched, or to check conditions before the agent runs. A non-zero exit code will prevent the agent from running.
+
+
+<Note>
+  Post-trigger hooks aren't meant for configuring dependencies. See [Tembo Snapshots](/features/snapshots) instead.
+</Note>
+
+## Prerequisites
+
+- Agent post-trigger hooks must be enabled for your organization or user account.
+- You need permission to edit the agent.
+
+## Configure a post-trigger hook
+
+1. Open the agent you want to configure.
+2. Add any valid shell command to the field labeled "Post-trigger hook".
+3. Save the agent.
+4. Trigger the agent.
+
+The script runs in `/workspace`, after Tembo sets up the repository and before the agent session starts.
+
+## How output affects the agent
+
+When the script succeeds, Tembo captures what the script prints and adds it to the agent's starting thread as pre-run context. This is the primary way to get dynamically fetched output into the agent run.
+
+Print the information the agent should use to standard output (e.g. `echo`). Markdown, plain text, and compact JSON all work well.
+
+## Example Usage
+
+```bash
+# Run a script and surface its output to the agent
+./scripts/check-preconditions.sh
+
+# Stop the run if a required secret isn't set
+if [ -z "$DEPLOY_TOKEN" ]; then
+  echo "DEPLOY_TOKEN is not set; skipping run."
+  exit 1
+fi
+```
+
+If the script exits with a non-zero status, Tembo stops the run before the agent starts. Use this to prevent a wasted run: when required inputs are missing, preconditions aren't met, or there's simply no work to do..
+
+## Trigger payloads
+
+For triggered agent runs, Tembo exposes the trigger payload to the script through the `TRIGGER_PAYLOAD` environment variable. For most integration triggers, Tembo provides the payload shape automatically. 
+
+Use the payload to decide what extra context to fetch, print, or validate. The agent receives both the trigger payload and the hook's standard output, so there is no need to restate fields that are already in the payload.
+
+```bash
+### Check if a Linear Ticket has a description before starting the session
+issue_identifier="$(jq -r '.issue.identifier // .issue.key // "unknown"' <<< "$TRIGGER_PAYLOAD")"
+description="$(jq -r '.issue.description // .issue.body // ""' <<< "$TRIGGER_PAYLOAD")"
+
+if [[ -z "${description//[[:space:]]/}" ]]; then
+  echo "Linear issue ${issue_identifier} does not have a description. Add implementation context before running Tembo." >&2
+  exit 1
+fi
+```
+
+The hook output above is appended to the agent's starting context. If the description is missing, the non-zero exit code stops the agent before it starts.
+
+
+## Workspace resumes
+
+Tembo skips the pre-run script when resuming an existing workspace. If a job is retried, the script runs again before the agent starts.
+
+## Related configuration
+
+For repository-level lifecycle commands that are independent of a specific agent, use [Hooks](/features/hooks).
