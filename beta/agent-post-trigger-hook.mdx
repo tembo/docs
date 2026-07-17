@@ -4,9 +4,9 @@ description: "Run a custom setup script before an agent starts."
 hidden: true
 ---
 
-<Note>
+<Warning>
   This feature is in beta. This page is intentionally unlisted and available only by direct URL.
-</Note>
+</Warning>
 
 Agent post-trigger hooks are user-defined shell commands that run in the sandbox before a triggered agent starts. They execute after Tembo prepares the workspace and before the agent begins work.
 
@@ -35,9 +35,8 @@ The script runs in `/workspace`, after Tembo sets up the repository and before t
 
 When the script succeeds, Tembo captures what the script prints and adds it to the agent's starting thread as pre-run context. This is the main way to get dynamically fetched output into the agent run.
 
-Print the information the agent should use to standard output. Markdown, plain text, and compact JSON all work well. Keep it focused on the decision the agent needs to make, such as the issue URL, current state, acceptance criteria, relevant logs, or links to source records.
+Print the information the agent should use to standard output (e.g. `echo`). Markdown, plain text, and compact JSON all work well. 
 
-Use standard error for diagnostics that help you debug the hook. Do not rely on standard error as the place to give the agent required context.
 
 ```bash
 #!/usr/bin/env bash
@@ -50,13 +49,13 @@ echo "- Issue: TEM-123"
 echo "- Goal: reproduce the failing test and open a fix PR"
 ```
 
-When the script exits with a non-zero status, Tembo stops the run before the agent starts. Use this behavior for required validation that should block the agent from working with an incomplete environment.
+If the script exits with a non-zero status, Tembo stops the run before the agent starts. Use this behavior for required validation that should block the agent from working with an incomplete environment.
 
 ## Trigger payloads
 
-For triggered agent runs, Tembo exposes the trigger payload to the script through the `TRIGGER_PAYLOAD` environment variable. For most integration triggers, Tembo provides the payload shape automatically. For webhook-triggered runs, this is the JSON request body sent to the [trigger endpoint](/api/trigger-agent).
+For triggered agent runs, Tembo exposes the trigger payload to the script through the `TRIGGER_PAYLOAD` environment variable. For most integration triggers, Tembo provides the payload shape automatically. 
 
-Use the payload to decide what extra context to fetch, print, or validate. The agent receives both the trigger payload and the hook's standard output, so print the result of the check instead of restating fields that are already in the payload.
+Use the payload to decide what extra context to fetch, print, or validate. The agent receives both the trigger payload and the hook's standard output, so there is no need to restate fields that are already in the payload.
 
 ```bash
 #!/usr/bin/env bash
@@ -78,22 +77,6 @@ echo "- Description: present"
 
 The hook output above is appended to the agent's starting context. If the description is missing, the non-zero exit code stops the agent before it starts.
 
-If the hook needs to fetch more detail, print the final useful summary, not only the raw payload:
-
-```bash
-#!/usr/bin/env bash
-set -euo pipefail
-
-issue_url="$(jq -r '.issue_url' <<< "$TRIGGER_PAYLOAD")"
-
-issue_json="$(gh issue view "$issue_url" --json title,body,labels,state)"
-
-{
-  echo "## GitHub issue context"
-  echo
-  echo "$issue_json" | jq -r '"Title: \(.title)\nState: \(.state)\nLabels: \(.labels | map(.name) | join(", "))\n\n\(.body)"'
-}
-```
 
 ## Workspace resumes
 
