@@ -8,7 +8,7 @@ hidden: true
   This feature is in beta. This page is intentionally unlisted and available only by direct URL.
 </Warning>
 
-Agent post-trigger hooks are user-defined shell commands that run in the sandbox before a triggered agent starts. They execute after Tembo prepares the workspace and before the agent begins work.
+Agent post-trigger hooks are user-defined shell commands that run in the sandbox before a triggered agent starts. They execute after Tembo prepares the workspace but before the agent begins work.
 
 Use post-trigger hooks to provide the agent with context that can be deterministically fetched, or to check conditions before the agent runs. A non-zero exit code will prevent the agent from running.
 
