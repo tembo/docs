@@ -8,9 +8,9 @@ hidden: true
   This feature is in beta. This page is intentionally unlisted and available only by direct URL.
 </Note>
 
-Agent post-trigger hooks are user-defined shell commands that run in the sandbox before a triggered Agent starts. They execute after Tembo prepares the workspace and before the agent begins work.
+Agent post-trigger hooks are user-defined shell commands that run in the sandbox before a triggered agent starts. They execute after Tembo prepares the workspace and before the agent begins work.
 
-Use post-trigger hooks to provide the Agent with context that can be deterministically fetched, or to check conditions before the agent runs. A non-zero exit code will prevent the Agent from running.
+Use post-trigger hooks to provide the agent with context that can be deterministically fetched, or to check conditions before the agent runs. A non-zero exit code will prevent the agent from running.
 
 
 <Note>
@@ -19,11 +19,8 @@ Use post-trigger hooks to provide the Agent with context that can be determinist
 
 ## Prerequisites
 
-- Agent pre-run scripts must be enabled for your workspace.
-- You need permission to edit the agent.
-## Prerequisites
-
 - Agent post-trigger hooks must be enabled for your organization or user account.
+- You need permission to edit the agent.
 
 ## Configure a post-trigger hook
 
@@ -34,27 +31,64 @@ Use post-trigger hooks to provide the Agent with context that can be determinist
 
 The script runs in `/workspace`, after Tembo sets up the repository and before the agent harness starts.
 
-## Generic Example
-
-
 ## How output affects the agent
 
-When the script succeeds, Tembo passes its output to the agent as pre-run context. The agent uses that output to seed the Agent run.
+When the script succeeds, Tembo captures what the script prints and adds it to the agent's starting thread as pre-run context. This is the main way to get dynamically fetched output into the agent run.
 
-When the script exits with a non-zero status, Tembo stops the run before the agent starts. Use this behavior for required validation that should block the agent from working with an incomplete environment.
+Print the information the agent should use to standard output. Markdown, plain text, and compact JSON all work well. Keep it focused on the decision the agent needs to make, such as the issue URL, current state, acceptance criteria, relevant logs, or links to source records.
 
-## Trigger payloads
-
-For triggered agent runs, Tembo exposes the trigger payload to the script through the `TRIGGER_PAYLOAD` environment variable.
+Use standard error for diagnostics that help you debug the hook. Do not rely on standard error as the place to give the agent required context.
 
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "$TRIGGER_PAYLOAD" | jq .
+echo "## Pre-run context"
+echo
+echo "- Source: Linear"
+echo "- Issue: TEM-123"
+echo "- Goal: reproduce the failing test and open a fix PR"
 ```
 
-Use this when the setup step depends on event data, such as a GitHub issue, Slack message, webhook body, or other trigger source.
+When the script exits with a non-zero status, Tembo stops the run before the agent starts. Use this behavior for required validation that should block the agent from working with an incomplete environment.
+
+## Trigger payloads
+
+For triggered agent runs, Tembo exposes the trigger payload to the script through the `TRIGGER_PAYLOAD` environment variable. For webhook-triggered runs, this is the JSON request body sent to the [trigger endpoint](/api/trigger-agent).
+
+Use the payload to decide what extra context to fetch and print. For example, the payload might identify a GitHub issue, Slack thread, Sentry event, Linear ticket, or any internal record your hook can look up before the agent starts.
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+issue_url="$(jq -r '.issue_url' <<< "$TRIGGER_PAYLOAD")"
+priority="$(jq -r '.priority // "normal"' <<< "$TRIGGER_PAYLOAD")"
+
+echo "## Trigger context"
+echo
+echo "- Issue URL: ${issue_url}"
+echo "- Priority: ${priority}"
+```
+
+The hook output above is appended to the agent's starting context. You do not need a separate API call to write that information into the agent thread.
+
+If the hook needs to fetch more detail, print the final useful summary, not only the raw payload:
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+issue_url="$(jq -r '.issue_url' <<< "$TRIGGER_PAYLOAD")"
+
+issue_json="$(gh issue view "$issue_url" --json title,body,labels,state)"
+
+{
+  echo "## GitHub issue context"
+  echo
+  echo "$issue_json" | jq -r '"Title: \(.title)\nState: \(.state)\nLabels: \(.labels | map(.name) | join(", "))\n\n\(.body)"'
+}
+```
 
 ## Workspace resumes
 
