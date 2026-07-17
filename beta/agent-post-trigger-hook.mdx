@@ -55,22 +55,27 @@ If the script exits with a non-zero status, Tembo stops the run before the agent
 
 For triggered Agent runs, Tembo makes the trigger payload available to the post-trigger hook through the `TRIGGER_PAYLOAD` environment variable. For most integration triggers, Tembo provides the payload shape automatically. For webhook-triggered runs, this is the JSON request body sent to the [trigger endpoint](/api/trigger-agent).
 
-Use the payload to decide what extra context to fetch and print. For example, Tembo's preconfigured trigger payload might identify a GitHub issue, Slack thread, Sentry event, or Linear ticket that your hook can look up before the agent starts. If you trigger an agent through the webhook API, your own payload can identify any internal record the hook should fetch.
+Use the payload to decide what extra context to fetch, print, or validate. The agent receives both the trigger payload and the hook's standard output, so print the result of the check instead of restating fields that are already in the payload.
 
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
 
-issue_url="$(jq -r '.issue_url' <<< "$TRIGGER_PAYLOAD")"
-priority="$(jq -r '.priority // "normal"' <<< "$TRIGGER_PAYLOAD")"
+issue_identifier="$(jq -r '.issue.identifier // .issue.key // "unknown"' <<< "$TRIGGER_PAYLOAD")"
+description="$(jq -r '.issue.description // .issue.body // ""' <<< "$TRIGGER_PAYLOAD")"
 
-echo "## Trigger context"
+if [[ -z "${description//[[:space:]]/}" ]]; then
+  echo "Linear issue ${issue_identifier} does not have a description. Add implementation context before running Tembo." >&2
+  exit 1
+fi
+
+echo "## Linear ticket check"
 echo
-echo "- Issue URL: ${issue_url}"
-echo "- Priority: ${priority}"
+echo "- Issue: ${issue_identifier}"
+echo "- Description: present"
 ```
 
-The hook output above is appended to the agent's starting context. You do not need a separate API call to write that information into the agent thread.
+The hook output above is appended to the agent's starting context. If the description is missing, the non-zero exit code stops the agent before it starts.
 
 If the hook needs to fetch more detail, print the final useful summary, not only the raw payload:
 
