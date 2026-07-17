@@ -36,7 +36,22 @@ The script runs in `/workspace`, after Tembo sets up the repository and before t
 When the script succeeds, Tembo captures what the script prints and adds it to the agent's starting thread as pre-run context. This is the primary way to get dynamically fetched output into the agent run.
 
 Print the information the agent should use to standard output (e.g. `echo`). Markdown, plain text, and compact JSON all work well.
+Print the information the agent should use to standard output (e.g. `echo`). Markdown, plain text, and compact JSON all work well.
 
+## Example Usage
+
+```bash
+# Run a script and surface its output to the agent
+./scripts/check-preconditions.sh
+
+# Stop the run if a required secret isn't set
+if [ -z "$DEPLOY_TOKEN" ]; then
+  echo "DEPLOY_TOKEN is not set; skipping run."
+  exit 1
+fi
+```
+
+If the script exits with a non-zero status, Tembo stops the run before the agent starts. Use this to prevent a wasted run: when required inputs are missing, preconditions aren't met, or there's simply no work to do..
 ## Trigger payloads
 
 For triggered agent runs, Tembo exposes the trigger payload to the script through the `TRIGGER_PAYLOAD` environment variable. For most integration triggers, Tembo provides the payload shape automatically. 
