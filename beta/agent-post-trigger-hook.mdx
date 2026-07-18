@@ -63,12 +63,14 @@ For triggered agent runs, Tembo exposes the trigger payload to the script throug
 Use the payload to decide what extra context to fetch, print, or validate. The agent receives both the trigger payload and the hook's standard output, so there is no need to restate fields that are already in the payload.
 
 ```bash
-### Check if a Linear Ticket has a description before starting the session
+### Check if a Linear Ticket has a description 
+### before starting the session
 issue_identifier="$(jq -r '.issue.identifier // .issue.key // "unknown"' <<< "$TRIGGER_PAYLOAD")"
 description="$(jq -r '.issue.description // .issue.body // ""' <<< "$TRIGGER_PAYLOAD")"
 
 if [[ -z "${description//[[:space:]]/}" ]]; then
-  echo "Linear issue ${issue_identifier} does not have a description. Add implementation context before running Tembo." >&2
+  echo "Linear issue ${issue_identifier} does not have a description." >&2
+  echo "Add implementation context before running Tembo." >&2
   exit 1
 fi
 ```
