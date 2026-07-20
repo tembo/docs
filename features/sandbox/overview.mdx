@@ -15,10 +15,20 @@ Model providers handle prompt data according to their own retention policies —
 
 ## Sandbox sizes
 
-Tembo offers five sandbox sizes. Each session runs in a dedicated Linux VM, and no two sessions share the same VM.
+Tembo offers six sandbox sizes. Each session runs in a dedicated Linux VM, and no two sessions share the same VM.
+
+Plan limits determine the largest sandbox size an organization can select:
+
+| Plan | Max sandbox size |
+|------|------------------|
+| Free | `nano` |
+| Pro | `large` |
+| Max | `ultra` |
+| Enterprise/custom | Custom or unlimited |
 
 | Size | vCPU | Memory | Disk |
 |------|------|--------|------|
+| Nano | 2 | 2 GB | 30 GB |
 | Micro | 2 | 4 GB | 50 GB |
 | Medium | 4 | 8 GB | 50 GB |
 | Large | 8 | 32 GB | 100 GB |
