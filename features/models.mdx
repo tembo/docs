@@ -3,15 +3,20 @@ title: "Models"
 description: "Supported models, providers, and BYOK options."
 ---
 
-Tembo supports multiple model providers across coding agents. You can use Tembo-hosted models with [Max](/features/max), or connect your own keys with BYOK (Bring Your Own Key).
+Tembo supports multiple model providers across coding agents. You can use Tembo-hosted models with [Max](/features/max), connect your own keys with BYOK (Bring Your Own Key), or connect supported agent subscriptions on paid Tembo plans.
 
 ## BYOK (Bring Your Own Key)
 
 BYOK lets your workspace call models with your own provider credentials instead of Tembo-managed credentials.
 
+- BYOK is available on all plans, including Free.
 - Add keys in **Settings -> Models -> API Keys**.
 - You can connect OpenAI, Anthropic, Cursor, Amp, and AWS Bedrock credentials.
 - Tembo still handles orchestration, session context, sandbox execution, and PR automation.
+
+## Agent subscriptions
+
+Paid Tembo plans can connect supported agent subscriptions, including Codex, from **Settings -> Connected accounts -> LLM subscriptions**. This is separate from BYOK: BYOK uses provider API keys, while an agent subscription uses the user's subscription account for that agent.
 
 ### Switch a model between BYOK and Tembo Managed Inference
 
