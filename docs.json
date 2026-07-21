@@ -2,6 +2,9 @@
     "$schema": "https://mintlify.com/docs.json",
     "theme": "luma",
     "name": "Tembo Docs",
+    "thumbnails": {
+        "background": "/images/og-background.png"
+    },
     "icons": {
         "library": "lucide"
     },
@@ -131,10 +134,7 @@
                     {
                         "group": "Other",
                         "public": true,
-                        "pages": [
-                            "resources/pwa",
-                            "resources/pricing"
-                        ]
+                        "pages": ["resources/pwa", "resources/pricing"]
                     }
                 ]
             },
@@ -164,10 +164,7 @@
                             },
                             {
                                 "group": "Agents",
-                                "pages": [
-                                    "POST /agent",
-                                    "api/trigger-agent"
-                                ]
+                                "pages": ["POST /agent", "api/trigger-agent"]
                             },
                             {
                                 "group": "Repositories",
