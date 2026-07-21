@@ -9,7 +9,7 @@ description: "Call Tembo from Snowflake Cortex Agents via the Model Context Prot
 
 ## Overview
 
-This integration is the inverse of most Tembo integrations: Snowflake is the **MCP client** and Tembo is the **MCP server**. Once configured, your Snowflake users can ask a Cortex Agent things like *"list my Tembo sessions"* or *"trigger a Tembo automation on issue X"* directly from **Snowflake Intelligence** chat — the same surface they already use for Cortex Analyst and Cortex Search.
+This integration is the inverse of most Tembo integrations: Snowflake is the **MCP client** and Tembo is the **MCP server**. Once configured, your Snowflake users can ask a Cortex Agent things like *"list my Tembo sessions"* or *"trigger a Tembo agent on issue X"* directly from **Snowflake Intelligence** chat — the same surface they already use for Cortex Analyst and Cortex Search.
 
 The integration is implemented as a Snowflake-managed MCP server that exposes Tembo's public REST API as a set of `GENERIC` tools. The API token lives in Snowflake's secret store; agents call the tools through a Python UDF that handles auth and routing.
 
@@ -103,7 +103,7 @@ ROUTES = {
     "search_sessions":    ("GET",  "/session/search"),
     "list_repositories":  ("GET",  "/repository/list"),
     "create_session":     ("POST", "/session/create"),
-    "trigger_automation": ("POST", "/automation/{keyOrId}/trigger"),
+    "trigger_agent":      ("POST", "/agent/{keyOrId}/trigger"),
 }
 
 def handler(tool, args):
@@ -176,13 +176,13 @@ tools:
     title: "Create Tembo Session"
     input_constants:
       tool: "create_session"
-  - name: "trigger_automation"
+  - name: "trigger_agent"
     type: "GENERIC"
     identifier: "<db>.<schema>.tembo_call"
-    description: "Trigger a Tembo automation. Pass { keyOrId: '<uuid_or_macro>', ...payload } in args."
-    title: "Trigger Tembo Automation"
+    description: "Trigger a Tembo agent. Pass { keyOrId: '<uuid_or_macro>', ...payload } in args."
+    title: "Trigger Tembo Agent"
     input_constants:
-      tool: "trigger_automation"
+      tool: "trigger_agent"
 $$;
 ```
 
@@ -202,7 +202,7 @@ $$
 COMMENT = 'Chat with Tembo from inside Snowflake'
 FROM SPECIFICATION $$
 instructions:
-  orchestration: "When the user asks about Tembo sessions, repos, or automations, use the Tembo MCP tools."
+  orchestration: "When the user asks about Tembo sessions, repos, or agents, use the Tembo MCP tools."
 mcp_servers:
   - server_spec:
       name: "<db>.<schema>.tembo_mcp_server"
@@ -237,7 +237,7 @@ GRANT USAGE ON AGENT my_tembo_agent                 TO ROLE <user_role>;
 3. Try one of:
    - *"Show me my five most recent Tembo sessions."*
    - *"Which repositories are enabled for Tembo?"*
-   - *"Trigger the Tembo automation `daily-triage` with `{ priority: 'high' }`."*
+   - *"Trigger the Tembo agent `daily-triage` with `{ priority: 'high' }`."*
 
 The agent calls `tools/list` against `tembo_mcp_server`, picks the right `GENERIC` tool, which routes through `tembo_call` → Tembo REST API → response.
 
