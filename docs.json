@@ -109,6 +109,7 @@
                         "group": "Integrations",
                         "public": true,
                         "pages": [
+                            "integrations",
                             "integrations/mcp",
                             "integrations/bitbucket",
                             "integrations/github",

@@ -166,10 +166,25 @@
     width: 20px;
     height: 20px;
 
+    img {
+        width: 20px;
+        height: 20px;
+        margin: 0;
+        object-fit: contain;
+    }
+
+    img[src="/images/integrations/mcp-icon.png"] {
+        filter: invert(1);
+    }
+
     svg {
         width: 20px;
         height: 20px;
     }
+}
+
+.dark [data-component-part="card-icon"] img[src="/images/integrations/mcp-icon.png"] {
+    filter: none;
 }
 
 [data-component-part="card-title"] {
