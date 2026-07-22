@@ -15,7 +15,7 @@ Model providers handle prompt data according to their own retention policies —
 
 ## Sandbox sizes
 
-Tembo offers six sandbox sizes. Each session runs in a dedicated Linux VM, and no two sessions share the same VM.
+Tembo offers five sandbox sizes. Each session runs in a dedicated Linux VM, and no two sessions share the same VM.
 
 | Size | vCPU | Memory | Disk |
 |------|------|--------|------|
@@ -24,11 +24,10 @@ Tembo offers six sandbox sizes. Each session runs in a dedicated Linux VM, and n
 | Medium | 4 | 8 GB | 50 GB |
 | Large | 8 | 16 GB | 100 GB |
 | XL | 16 | 32 GB | 200 GB |
-| XXL | 16 | 64 GB | 200 GB |
 
-Micro and Medium are best for routine code analysis, fixes, features, and reviews. Large, XL, and XXL are best for heavier builds, integration tests, Docker workloads, large repositories, or multi-container setups.
+Micro and Medium are best for routine code analysis, fixes, features, and reviews. Large and XL are best for heavier builds, integration tests, Docker workloads, large repositories, or multi-container setups.
 
-Need more than 64 GB of RAM? Contact [support@tembo.io](mailto:support@tembo.io) to request access.
+Need more than 32 GB of RAM? Contact [support@tembo.io](mailto:support@tembo.io) to request access.
 
 VM sandboxes include full nested virtualization for Docker-in-Docker and provide a stronger isolation boundary.
 
