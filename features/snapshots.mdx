@@ -48,6 +48,12 @@ To configure snapshots:
 
 Tembo uses the latest successful snapshot for matching new sessions.
 
+## Setup script
+
+Use the setup script to add project-specific tooling, dependencies, or other environment setup to your snapshot. Tembo runs the script while the snapshot is being built, after all selected repositories have been cloned to disk.
+
+The script has access to all environment variables configured in **Settings** > **Sandbox**, including secrets your setup commands need. Anything the script installs or writes to disk becomes part of the snapshot and is available to sessions that start from it.
+
 ## Sizes and schedules
 
 You can build snapshots for any number of sandbox sizes. For example, you can keep a small snapshot ready for routine tasks and a larger snapshot ready for heavier builds or test suites.
