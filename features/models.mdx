@@ -10,7 +10,7 @@ Tembo supports multiple model providers across coding agents. You can use Tembo-
 BYOK lets your workspace call models with your own provider credentials instead of Tembo-managed credentials.
 
 - Add keys in **Settings -> Models -> API Keys**.
-- You can connect OpenAI, Anthropic, Cursor, Amp, and AWS Bedrock credentials.
+- You can connect OpenAI, Anthropic, Cursor, Amp, AWS Bedrock, and GCP Vertex AI credentials.
 - Tembo still handles orchestration, session context, sandbox execution, and PR automation.
 
 ### Switch a model between BYOK and Tembo Managed Inference
@@ -38,6 +38,18 @@ in **Settings -> Models -> API Keys -> AWS Bedrock**.
 <Frame>
   <img src="/images/models/aws-bedrock-byok.png" alt="AWS Bedrock BYOK API key fields in Tembo Settings" />
 </Frame>
+
+### GCP Vertex AI BYOK support
+
+Tembo supports BYOK with GCP Vertex AI.
+
+To enable it, add:
+
+- **Service account JSON**
+- **Project ID**
+- **Location**
+
+in **Settings -> Models -> API Keys -> GCP Vertex AI**.
 
 ## Supported models
 
