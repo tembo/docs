@@ -1,0 +1,69 @@
+---
+title: "OpenConnect"
+description: "Connect sandboxes to private networks via OpenConnect VPN."
+---
+
+## Features
+
+- Connect agent sandboxes to private networks so they can reach internal databases and services
+- The agent connects on demand — only when a task actually needs the private network — instead of on every session
+- Works alongside the Postgres integration to access databases that aren't publicly reachable
+
+## Supported VPNs
+
+The VPN integration uses [OpenConnect](https://www.infradead.org/openconnect/), an open-source VPN client that is compatible with several enterprise VPN servers:
+
+| Protocol | Compatible with |
+|----------|----------------|
+| Fortinet SSL VPN | FortiClient, FortiGate |
+| Cisco AnyConnect | Cisco Secure Client, ASA, IOS |
+| Palo Alto GlobalProtect | GlobalProtect client, PAN-OS |
+| Juniper Network Connect | Juniper/Pulse Secure, Ivanti Connect Secure |
+
+If your organization uses any of these VPN products, Tembo can connect to it directly — no changes to your VPN infrastructure required.
+
+## Installation
+
+<Steps>
+  <Step title="Go to Integrations">
+    Open [Integrations](https://app.tembo.io/integrations) and click **Install** next to OpenConnect under the **Developer Tools** category.
+  </Step>
+  <Step title="Enter your VPN details">
+    Fill in the connection form:
+    - **Connection Name** — a label for this VPN (e.g. "Production VPN")
+    - **Protocol** — select your VPN type
+    - **VPN Gateway** — the hostname or IP of your VPN concentrator (e.g. `vpn.example.com`)
+    - **Username** and **Password** — credentials that the sandbox will use to authenticate
+  </Step>
+  <Step title="Connect your database">
+    Once the VPN is configured, add a [Postgres integration](/integrations/postgres) using the **private** connection string of your database. When the agent needs to reach the database, it connects the VPN first, then reaches it through the tunnel.
+  </Step>
+</Steps>
+
+## Usage
+
+Once configured, the agent gains a **connect** tool. It brings up the VPN on demand — when a task requires reaching a host that's only available on your private network — rather than on every session. You can also just ask the agent to connect. The tunnel then stays active for the rest of the session.
+
+This is useful when your database or internal services are behind a firewall and not reachable from the public internet. Instead of exposing your database publicly or setting up a bastion host, you provide the same VPN credentials your team already uses.
+
+### Example workflow
+
+1. Configure the VPN integration with your gateway credentials
+2. Add a Postgres integration with your private connection string (e.g. `postgresql://user:pass@10.0.1.50:5432/mydb`)
+3. In a session, the agent connects to the VPN when it needs the database (or when you ask it to), then queries your database as if it were on your network
+
+## Advanced
+
+<AccordionGroup>
+  <Accordion title="How it works">
+    The connect tool runs OpenConnect inside the sandbox VM to establish a VPN tunnel. This creates a virtual network interface (`tun0`) that routes traffic to your private network through the encrypted tunnel. The connection is on demand — nothing happens until the agent invokes the tool — and does not persist across sessions, so a new session starts without a tunnel until it's needed again.
+  </Accordion>
+
+  <Accordion title="MFA / two-factor authentication">
+    OpenConnect supports some forms of MFA (e.g. TOTP tokens appended to the password field), but interactive MFA prompts are not supported. If your VPN requires interactive two-factor authentication, consider creating a dedicated service account with a static password or certificate-based authentication for Tembo access.
+  </Accordion>
+
+  <Accordion title="Security considerations">
+    VPN credentials are never exposed to the agent. When the connect tool runs, the system fetches the credentials over an authenticated channel only for the moment of connecting, hands the password directly to OpenConnect, and discards it — it is not written to disk or placed in the agent's context. Even so, consider using a dedicated VPN account with limited network access scoped to only the resources Tembo needs.
+  </Accordion>
+</AccordionGroup>
