@@ -77,10 +77,10 @@
                                     {
                                         "group": "Integrations",
                                         "pages": [
-                                            "features/self-hosted/integrations/github",
-                                            "features/self-hosted/integrations/slack",
                                             "features/self-hosted/integrations/aws-storage",
-                                            "features/self-hosted/integrations/azure-storage"
+                                            "features/self-hosted/integrations/azure-storage",
+                                            "features/self-hosted/integrations/github",
+                                            "features/self-hosted/integrations/slack"
                                         ]
                                     }
                                 ]
@@ -109,27 +109,27 @@
                         "public": true,
                         "pages": [
                             "integrations",
-                            "integrations/mcp",
+                            "integrations/aws",
+                            "integrations/bigquery",
                             "integrations/bitbucket",
+                            "integrations/fathom",
                             "integrations/github",
-                            "integrations/hubspot",
                             "integrations/gitlab",
+                            "integrations/hubspot",
+                            "integrations/infisical",
                             "integrations/jira",
                             "integrations/linear",
+                            "integrations/mcp",
+                            "integrations/teams",
                             "integrations/notion",
                             "integrations/postgres",
-                            "integrations/bigquery",
-                            "integrations/aws",
                             "integrations/raycast",
                             "integrations/sentry",
                             "integrations/slack",
                             "integrations/snowflake",
-                            "integrations/supabase",
-                            "integrations/fathom",
-                            "integrations/infisical",
                             "integrations/snyk",
                             "integrations/stripe",
-                            "integrations/teams"
+                            "integrations/supabase"
                         ]
                     },
                     {
