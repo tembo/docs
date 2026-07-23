@@ -1,0 +1,32 @@
+---
+title: "BigQuery"
+description: "Query BigQuery datasets from Tembo agents."
+---
+
+## Features
+
+- MCP server for querying BigQuery datasets during sessions
+
+## Installation
+
+<Steps>
+  <Step title="Add your project and credentials">
+    Go to [Integrations](https://app.tembo.io/integrations) and click **Connect** next to BigQuery, then enter your Google Cloud **Project ID** and a service account JSON key with access to your BigQuery datasets.
+  </Step>
+</Steps>
+
+## Usage
+
+After connecting, Tembo can query your BigQuery datasets during sessions through a dedicated MCP server for that project.
+
+## Advanced
+
+<AccordionGroup>
+  <Accordion title="MCP server">
+    The BigQuery MCP can run queries against your project during sessions when querying would help complete the work.
+  </Accordion>
+
+  <Accordion title="Service account">
+    Use a dedicated service account scoped to only the datasets Tembo needs to query.
+  </Accordion>
+</AccordionGroup>

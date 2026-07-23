@@ -118,6 +118,7 @@
                             "integrations/linear",
                             "integrations/notion",
                             "integrations/postgres",
+                            "integrations/bigquery",
                             "integrations/aws",
                             "integrations/raycast",
                             "integrations/sentry",
