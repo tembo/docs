@@ -7,12 +7,41 @@ Skills are instructions that live in your repository and guide how agents approa
 
 ## How it works
 
-Place skills in the dotfile directory for your coding agent at the root of your repository:
+A skill is a directory that contains an entry file with YAML frontmatter. Place it under the skills directory for your [coding agent](/features/agents#agent-harness) at the root of your repository. Each agent discovers skills from its own location:
 
-- `.claude/` for Claude Code
-- `.codex/` for Codex
-- `.opencode/` for OpenCode
-- `.cursor/` for Cursor
+| Harness     | Skill directory   | Entry file  |
+| ----------- | ----------------- | ----------- |
+| Claude Code | `.claude/skills`  | `SKILL.md`  |
+| Codex       | `.codex/skills`   | `SKILL.md`  |
+| OpenCode    | `.opencode/skills`| `SKILL.md`  |
+| Cursor      | `.cursor/rules`   | `SKILL.mdc` |
+| Amp         | `.agents/skills`  | `SKILL.md`  |
+| Pi          | `.agents/skills`  | `SKILL.md`  |
+
+`.agents/skills` is the agent-agnostic location: it is read by Tembo's default agent (Pi) and by Amp. The path is one skill directory per skill, for example `.claude/skills/code-review/SKILL.md`.
+
+### Skill file format
+
+Every entry file starts with YAML frontmatter:
+
+```markdown
+---
+name: code-review
+description: Review the diff for correctness and style before opening a PR.
+---
+
+1. Read the full diff and summarize what changed.
+2. Check each change against the project's conventions.
+3. Flag correctness bugs, missing tests, and style issues.
+4. Only open a PR once the checklist passes.
+```
+
+Requirements Tembo enforces when it picks up a skill:
+
+- `description` is required, and must be 1024 characters or fewer.
+- `name` is required in `SKILL.md` files and must exactly match the skill's directory name. It must be lowercase kebab-case (`^[a-z0-9]+(-[a-z0-9]+)*$`) and 64 characters or fewer.
+- Cursor's `SKILL.mdc` files take the name from the directory, so only `description` is required in frontmatter.
+- The entry file must be UTF-8 text under 1 MB. Files that miss any requirement are skipped silently.
 
 The agent picks up these skills when working on sessions in that repo. You need to instruct the agent to use a skill, either in the session description or after a PR is opened via the [feedback loop](/features/feedback-loop):
 
@@ -26,10 +55,13 @@ The agent picks up these skills when working on sessions in that repo. You need 
 
 ## Example
 
-A skill that guides the agent through a structured implementation flow:
+A skill that guides the agent through a structured implementation flow, saved as `.claude/skills/implementation/SKILL.md`:
 
 ```markdown
-# Implementation Skill
+---
+name: implementation
+description: Research, plan, implement, and self-review before opening a PR.
+---
 
 1. Research the codebase to understand existing patterns
 2. Create a plan with specific files and changes
