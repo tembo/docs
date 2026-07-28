@@ -146,7 +146,7 @@
                     {
                         "group": "Overview",
                         "public": true,
-                        "pages": ["api/index"]
+                        "pages": ["api/index", "api/self-hosted"]
                     },
                     {
                         "group": "Tembo API",

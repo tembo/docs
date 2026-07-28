@@ -1,0 +1,54 @@
+---
+title: 'Self-hosted API'
+description: 'Call public API endpoints and trigger agents in a self-hosted Tembo deployment.'
+---
+
+Self-hosted Tembo exposes the same public API as Tembo Cloud, but the base URL includes `/api/public-api`:
+
+```text
+https://<your-tembo-domain>/api/public-api
+```
+
+For example, to list tasks from `tembo.example.com`:
+
+```bash
+curl -H "Authorization: Bearer YOUR_API_KEY" \
+  "https://tembo.example.com/api/public-api/task/list?limit=100&page=1"
+```
+
+<Warning>
+  Include both `/api` and `/public-api` in self-hosted URLs. A request to
+  `https://<your-tembo-domain>/public-api/...` is handled by the web app and may
+  return a redirect instead of reaching the API.
+</Warning>
+
+## Authentication
+
+Generate an API key from **Settings > API Keys** in your self-hosted dashboard. Send it as a bearer token with every request:
+
+```bash
+-H "Authorization: Bearer YOUR_API_KEY"
+```
+
+The endpoint paths and request bodies in the [Tembo API reference](/api) also apply to self-hosted deployments. Prefix each documented path with your self-hosted base URL. For example, `POST /session/create` becomes:
+
+```text
+POST https://<your-tembo-domain>/api/public-api/session/create
+```
+
+## Trigger an agent from a webhook
+
+External systems can trigger an agent by its macro or UUID. Send the webhook payload as JSON; Tembo passes it to the agent as event context.
+
+```bash
+curl -X POST \
+  "https://<your-tembo-domain>/api/public-api/agent/<macro-or-agent-id>/trigger" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "issueUrl": "https://example.com/issues/123",
+    "priority": "high"
+  }'
+```
+
+Configure your webhook provider to send `POST` requests to that URL. The JSON object can contain any fields your agent instructions expect.
