@@ -13,7 +13,7 @@ Tembo gives your workspace a dollar-denominated usage allowance. Tembo-managed m
 
 Need more than 32 GB of RAM? Contact [support@tembo.io](mailto:support@tembo.io) to request access.
 
-Pro and Max can use overage billing so your work can continue after you use your monthly allowance. You can set a maximum overage limit to control spend. On Free, new sessions are blocked when the allowance is exhausted until you upgrade or add usage.
+Pro and Max can use overage billing so your work can continue after you use your monthly allowance. You can set a maximum overage limit to control spend. On Free, new sessions are blocked when the allowance is exhausted until you upgrade or purchase more usage on demand.
 
 BYOK (Bring Your Own Key) is available on Pro, Max, and Enterprise.
 
@@ -22,9 +22,9 @@ BYOK (Bring Your Own Key) is available on Pro, Max, and Enterprise.
 Two usage categories draw from the same balance:
 
 - **Managed inference**: model input, output, and cache usage is charged at the rates in [Usage Pricing](/models/pricing).
-- **Cloud VM compute**: runtime costs $0.0403 per vCPU-hour plus $0.0130 per GiB RAM-hour.
+- **Cloud VM compute**: metered from the CPU, memory, and runtime used by each session.
 
-BYOK and ChatGPT/Codex OAuth inference cost $0 through Tembo because you provide the model access. The cloud VM running the session remains billable at the normal compute rate.
+BYOK and ChatGPT/Codex OAuth inference cost $0 through Tembo because you provide the model access. The cloud VM running the session continues to draw from your usage allowance.
 
 Included monthly allowance expires at the end of each billing cycle and does not roll over. Purchased usage does not expire.
 
@@ -41,7 +41,7 @@ Managed inference and VM compute are metered while Tembo runs work such as:
 
 What happens when your balance reaches zero depends on your plan and overage setting:
 
-- **Free**: new sessions are blocked until you upgrade or add usage.
+- **Free**: new sessions are blocked until you upgrade or purchase more usage on demand.
 - **Pro or Max with overages enabled**: sessions continue and are billed as overage, up to the maximum overage limit you set. Once that limit is reached, new sessions are blocked.
 - **Pro or Max with overages disabled**: new sessions are blocked as soon as the included allowance is exhausted.
 
@@ -63,9 +63,9 @@ Managed inference usage may be refunded automatically in some cases:
 
 You can track managed inference, compute, total usage, VM resource-hours, and daily spend in the [Billing dashboard](https://app.tembo.io/settings/billing). Overage invoices list managed inference and compute separately.
 
-## Buying additional usage
+## On-demand usage
 
-- **Free plan**: upgrade to Pro or Max for overages, or purchase additional usage
+- **Free plan**: upgrade to Pro or Max for overages, or purchase more usage on demand
 - **Pro and Max**: enable overage billing and set a monthly spend limit, or use auto-reload
 - **Purchased usage**: does not expire
 
@@ -86,7 +86,7 @@ Auto-reload purchases usage when your available balance drops below a threshold 
 
 - You cannot remove a payment method while auto-reload is enabled
 - Monthly limits cap automatic purchases
-- You can still purchase usage manually at any time
+- You can still purchase more usage on demand at any time
 
 ## Troubleshooting
 
@@ -107,6 +107,6 @@ If you need custom pricing, reach out to [support@tembo.io](mailto:support@tembo
 - Custom usage allowances
 - Custom or unlimited sandbox sizing
 - Volume pricing
-- Custom BYOK deployment and provider configuration
+- Custom AWS Bedrock and GCP Vertex AI configuration
 - Dedicated support
 - Flexible billing options
