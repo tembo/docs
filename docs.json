@@ -173,6 +173,33 @@
                                 "pages": ["GET /repository/list"]
                             }
                         ]
+                    },
+                    {
+                        "group": "Self-Hosted API",
+                        "public": true,
+                        "openapi": {
+                            "source": "openapi.self-hosted.yml",
+                            "directory": "api/self-hosted"
+                        },
+                        "pages": [
+                            "api/self-hosted/index",
+                            {
+                                "group": "Sessions",
+                                "pages": [
+                                    "POST /session/create",
+                                    "GET /session/list",
+                                    "GET /session/search"
+                                ]
+                            },
+                            {
+                                "group": "Agents",
+                                "pages": ["POST /agent", "POST /agent/{keyOrId}/trigger"]
+                            },
+                            {
+                                "group": "Repositories",
+                                "pages": ["GET /repository/list"]
+                            }
+                        ]
                     }
                 ]
             },
