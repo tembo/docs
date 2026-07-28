@@ -112,6 +112,7 @@
                             "integrations/aws",
                             "integrations/bigquery",
                             "integrations/bitbucket",
+                            "integrations/chrome-extension",
                             "integrations/fathom",
                             "integrations/github",
                             "integrations/gitlab",
