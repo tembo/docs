@@ -1,0 +1,15 @@
+# CODEOWNERS — path-scoped ownership for the docs.
+#
+# Rules: the LAST matching pattern wins, so keep the catch-all fallback at the
+# top and more specific paths below it. Owners must have write access to the
+# repo (teams must also be visible). Check for silently-ignored entries under
+# Repository -> Insights -> Code owners errors.
+
+# Fallback — last-resort owners for anything not matched below
+*                       @tembo/engineers
+
+# Sensitive: CI/CD
+/.github/workflows/     @DarrenBaldwin07 @milldr @coleary005
+
+# Changes to ownership itself get reviewed by leads
+/.github/CODEOWNERS     @DarrenBaldwin07 @milldr
