@@ -1,0 +1,180 @@
+---
+title: "Tailscale"
+description: "Connect Tembo sandbox sessions to your private network (tailnet) with on-demand, single-use ephemeral keys."
+---
+
+<Note>
+  The Tailscale integration is currently in preview. Contact
+  [support](/support) if you'd like it enabled for your organization.
+</Note>
+
+## Overview
+
+The Tailscale integration lets Tembo agent sessions join your
+[tailnet](https://tailscale.com/kb/1136/tailnet) so they can reach private
+resources — internal databases, staging hosts, admin APIs — that aren't
+exposed to the public internet.
+
+It is designed to be safe by default:
+
+- **Opt-in per task** — sessions never join your tailnet automatically. An
+  agent connects only when a task needs private-network access, using the
+  managed `/tailscale` skill the integration installs.
+- **Single-use, ephemeral keys** — each join uses a short-lived, single-use
+  auth key minted on demand. Your Tailscale OAuth credentials never enter a
+  sandbox, and ephemeral nodes remove themselves from your tailnet when the
+  session ends.
+- **Your ACLs decide access** — a joined session is just a tagged device on
+  your tailnet. What it can reach is governed entirely by your Tailscale ACL
+  policy for the tag you assign. No inbound access to the session is required
+  or expected.
+- **Unprivileged** — inside the sandbox, Tailscale runs in userspace
+  networking mode with no root access and no kernel networking changes.
+
+## Prerequisites
+
+You need admin access to your Tailscale organization to complete the setup:
+
+<Steps>
+  <Step title="Choose a device tag">
+    Sessions join your tailnet as tagged devices. We recommend a dedicated
+    tag such as `tag:tembo-session` so you can scope access rules to Tembo
+    sessions only.
+  </Step>
+  <Step title="Add the tag to your tailnet policy">
+    In the [Tailscale admin console](https://login.tailscale.com/admin/acls),
+    declare the tag in `tagOwners`:
+
+    ```jsonc
+    "tagOwners": {
+      "tag:tembo-session": [],
+    },
+    ```
+  </Step>
+  <Step title="Grant the tag access in your ACLs">
+    Add ACL rules for what Tembo sessions may reach. This is entirely your
+    choice — start narrow. For example, to allow sessions to reach a staging
+    database subnet and hosts tagged `tag:staging`:
+
+    ```jsonc
+    "acls": [
+      {
+        "action": "accept",
+        "src":    ["tag:tembo-session"],
+        "dst":    ["tag:staging:*", "10.20.0.0/16:5432"],
+      },
+    ],
+    ```
+
+    If you want agents to SSH into hosts via
+    [Tailscale SSH](https://tailscale.com/kb/1193/tailscale-ssh), add an
+    `ssh` rule as well:
+
+    ```jsonc
+    "ssh": [
+      {
+        "action": "accept",
+        "src":    ["tag:tembo-session"],
+        "dst":    ["tag:staging"],
+        "users":  ["ubuntu"],
+      },
+    ],
+    ```
+  </Step>
+  <Step title="Create an OAuth client">
+    In **Settings → OAuth clients**, create a client with the **Keys → Auth
+    keys** write scope, and assign it the tag you created
+    (`tag:tembo-session`). Tembo uses this client to mint short-lived auth
+    keys — it can only create keys for the tags it owns.
+
+    Copy the **client ID** and **client secret**; you'll enter them in Tembo
+    next.
+  </Step>
+</Steps>
+
+## Installation
+
+<Steps>
+  <Step title="Open Integrations">
+    In the Tembo app, go to **Settings → Integrations**.
+  </Step>
+  <Step title="Install Tailscale">
+    Find **Tailscale** in the **Developer Tools** group and click
+    **Install**.
+  </Step>
+  <Step title="Enter your OAuth client credentials">
+    Fill in a connection name, the OAuth **client ID** and **client secret**,
+    and the device tag(s) sessions should advertise (for example
+    `tag:tembo-session`).
+
+    Tembo validates the credentials against the Tailscale API before saving
+    — if the client ID or secret is wrong, you'll see an error immediately.
+  </Step>
+</Steps>
+
+Installing the integration also creates a managed **`/tailscale`** skill for
+your organization. This skill teaches agents how to join the tailnet and how
+to reach hosts through it; you don't need to configure anything else.
+
+## Usage
+
+Ask an agent to do something that requires your private network, and mention
+the tailnet or Tailscale if you want to be explicit:
+
+- "Use tailscale to query the staging database and summarize yesterday's failed jobs."
+- "SSH into the metrics host on our tailnet and check disk usage."
+- "Hit the internal admin API and pull the feature-flag config."
+
+The agent invokes the `/tailscale` skill, requests a one-time key from the
+Tembo API, joins your tailnet as `tembo-session-<session-id>`, and does the
+work. Sessions appear in your Tailscale admin console as tagged devices
+while active and remove themselves when the session ends.
+
+## Advanced
+
+<AccordionGroup>
+  <Accordion title="Security model">
+    - Your OAuth client credentials are stored encrypted with the integration
+      and used only server-side by the Tembo API. They are never sent to a
+      sandbox.
+    - When a session joins, the Tembo API mints a **single-use, ephemeral,
+      pre-authorized** auth key restricted to your configured tags, with an
+      expiry of minutes. That key is the only credential the sandbox ever
+      sees.
+    - Sessions are outbound-only participants on your tailnet. Nothing on
+      your tailnet needs to (or should) connect into a session.
+    - Removing the integration deletes the managed skill; you can also revoke
+      the OAuth client in Tailscale at any time to cut off all key minting.
+  </Accordion>
+
+  <Accordion title="How sessions connect">
+    Sandboxes run `tailscaled` in userspace networking mode (no root, no TUN
+    device). Traffic to your tailnet flows through Tailscale's encrypted
+    WireGuard tunnel, typically relayed over HTTPS (DERP) since sandboxes
+    don't accept inbound UDP. Agents reach your hosts via Tailscale SSH, a
+    local SOCKS5/HTTP proxy, or TCP tunneling — the managed skill covers all
+    of this so agents handle it automatically.
+  </Accordion>
+
+  <Accordion title="Multiple tags or tailnets">
+    You can list multiple tags when installing (all must be owned by the
+    OAuth client). The integration connects to the OAuth client's tailnet;
+    to serve multiple tailnets, install the integration once per tailnet.
+  </Accordion>
+
+  <Accordion title="Troubleshooting">
+    - **Install fails with "Invalid Tailscale credentials"** — the client ID
+      or secret is wrong, or the OAuth client lacks the auth-keys write
+      scope.
+    - **Agent reports `requested tags are invalid or not permitted`** — the
+      tag you configured in Tembo isn't assigned to the OAuth client in
+      Tailscale (check both `tagOwners` and the client's tag assignment).
+    - **Agent reports connections to a host time out** — your ACL policy
+      doesn't allow `tag:tembo-session` to reach that host and port. This is
+      Tailscale working as intended; extend your ACLs if the access is
+      wanted.
+    - **A skill named `tailscale` already exists** — the integration installs
+      a managed `/tailscale` skill and won't overwrite a skill you authored
+      with the same name. Rename or delete yours and install again.
+  </Accordion>
+</AccordionGroup>

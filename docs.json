@@ -130,7 +130,8 @@
                             "integrations/snowflake",
                             "integrations/snyk",
                             "integrations/stripe",
-                            "integrations/supabase"
+                            "integrations/supabase",
+                            "integrations/tailscale"
                         ]
                     },
                     {
