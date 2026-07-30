@@ -74,7 +74,7 @@ When work is blocked, the request is rejected immediately rather than queued. Wo
 
 ## Usage bursts
 
-Some integrations can create a large batch of work at once — for example, a repository or integration sync, or a token refresh that triggers a backlog of issues. Tembo does not cap or rate-limit how much work an integration enqueues; the batch is processed as worker capacity becomes available, and each resulting session records dollar usage when it runs. The same allowance and overage limits above apply, so a burst cannot spend beyond your available balance plus your overage limit. To absorb large bursts without interruption, enable overages with an appropriate limit, or use [auto recharge](#auto-recharge).
+Some integrations can create a large batch of work at once — for example, a repository or integration sync, or a token refresh that triggers a backlog of issues. Tembo does not cap or rate-limit how much work an integration enqueues; the batch is processed as worker capacity becomes available, and each resulting session records dollar usage when it runs. The same allowance and overage limits above apply, so a burst cannot spend beyond your available balance plus your overage limit. To absorb large bursts without interruption, enable overages with an appropriate limit.
 
 ## Usage refunds
 
@@ -91,33 +91,12 @@ You can track managed inference, compute, total usage, VM resource-hours, and da
 ## Prepaid balance and on-demand usage
 
 - **Free plan**: upgrade to Pro or Max for overages, or add prepaid balance
-- **Pro and Max**: enable overage billing and set a monthly spend limit, or use auto recharge
+- **Pro and Max**: enable overage billing and set a monthly spend limit
 - **Prepaid balance**: does not expire
 
 To change plans, open [Billing settings](https://app.tembo.io/settings/billing).
 
-## Auto recharge
-
-Auto recharge adds prepaid balance when your available balance drops below a threshold so sessions can keep running. Accrued compute is included when Tembo evaluates the balance.
-
-### Set up auto recharge
-
-1. Go to [Billing settings](https://app.tembo.io/settings/billing)
-2. Add a payment method if needed
-3. Configure your threshold, target balance, and monthly limit
-4. Turn on auto recharge
-
-### Notes
-
-- You cannot remove a payment method while auto recharge is enabled
-- Monthly limits cap automatic purchases
-- You can still add prepaid balance manually at any time
-
 ## Troubleshooting
-
-**Auto recharge is not running**: confirm your payment method is valid, your balance is below threshold, your monthly limit is not reached, and auto recharge is enabled.
-
-**You cannot remove your payment method**: disable auto recharge first.
 
 **Payment failed**: confirm the card is valid and has available funds.
 
