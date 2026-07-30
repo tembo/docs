@@ -1,0 +1,25 @@
+# CODEOWNERS — path-scoped ownership for the docs.
+#
+# Rules: the LAST matching pattern wins, so keep the catch-all fallback at the
+# top and more specific paths below it. Owners must have write access to the
+# repo (teams must also be visible). Check for silently-ignored entries under
+# Repository -> Insights -> Code owners errors.
+
+# Fallback — active maintainers with repository-wide context
+*                       @DarrenBaldwin07 @benja @ryw
+
+# Documentation areas
+/api/                   @DarrenBaldwin07 @benja
+/features/              @Coleary005 @DarrenBaldwin07 @benja
+/integrations/          @benja @DarrenBaldwin07
+/learn/                 @benja @DarrenBaldwin07
+/models/                @DarrenBaldwin07
+/resources/             @DarrenBaldwin07 @cooper-gadd
+/docs.json              @benja @DarrenBaldwin07 @Coleary005
+/openapi*.yml           @DarrenBaldwin07 @benja @vrmiguel
+
+# Sensitive: CI/CD and repository automation
+/.github/workflows/     @Coleary005 @milldr @DarrenBaldwin07
+
+# Changes to ownership itself get reviewed by repository maintainers
+/.github/CODEOWNERS     @DarrenBaldwin07 @benja @ryw
