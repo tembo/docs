@@ -1,13 +1,9 @@
 ---
-title: "Usage Pricing"
-description: "Managed inference rates and how usage is billed."
+title: "Models Pricing"
+description: "Model pricing by provider, input, output, and cache usage."
 ---
 
-Your dollar-denominated allowance covers both managed inference and cloud VM compute. Managed inference pricing is shown in USD per 1M tokens.
-
-BYOK and ChatGPT/Codex OAuth inference cost $0 through Tembo. Their cloud VM compute remains billable.
-
-## Managed inference
+Pricing is shown in USD per 1M tokens.
 
 | Provider | Model | Input | Output | Cache create | Cache read |
 | --- | --- | ---: | ---: | ---: | ---: |
@@ -23,6 +19,7 @@ BYOK and ChatGPT/Codex OAuth inference cost $0 through Tembo. Their cloud VM com
 | OpenAI | `gpt-5.4-mini` | $0.2875 | $2.30 | n/a | $0.02875 |
 | OpenAI | `gpt-5.4-nano` | $0.0575 | $0.46 | n/a | $0.00575 |
 | OpenAI | `gpt-5.3-codex` | $2.0125 | $16.10 | n/a | $0.20125 |
+| OpenAI | `gpt-5.3-codex-spark` | Missing | Missing | Missing | Missing |
 | OpenAI | `gpt-5.2-codex` | $2.0125 | $16.10 | n/a | $0.20125 |
 | OpenAI | `gpt-5.2` | $2.0125 | $16.10 | n/a | $0.20125 |
 | Tembo | `kimi-k2p6` | $0.69 | $3.45 | n/a | $0.115 |
