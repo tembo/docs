@@ -1,55 +1,82 @@
 ---
 title: "Pricing"
-description: "Understand Tembo plans, credits, overages, and auto-reload."
+description: "Understand Tembo plans, usage allowances, prepaid balance, and overages."
 ---
 
-Tembo uses subscription plans with credits so you can match usage to your team's needs.
+Tembo gives your workspace a dollar-denominated usage allowance. Tembo-managed model inference and cloud VM compute draw from the same balance.
 
 ## Plans
 
-- **Free ($0/month)**: 10 credits per week
-- **Pro ($60/month)**: 100 credits per month, up to 10 users, with overage billing
-- **Max ($200/month)**: 400 credits per month, up to 10 users, with overage billing
+- **Free**: \$10 one-time usage allowance, up to 3 users, sandbox size up to `micro`
+- **Pro (\$60/month)**: \$60 monthly usage allowance, up to 5 users, sandbox size up to `medium`, with overage billing
+- **Max (\$200/month)**: \$200 monthly usage allowance, up to 10 users, sandbox size up to `xl`, with overage billing
 
-Paid plans include overage billing so your work can continue after you use your monthly plan credits. You can set a maximum overage limit to control spend. On Free, sessions pause when credits are exhausted until your weekly refresh, an upgrade, or an additional credit purchase.
+Need more than 32 GB of RAM? Contact [support@tembo.io](mailto:support@tembo.io) to request access.
 
-BYOK (Bring Your Own Key) is available only on the Enterprise plan.
+Pro and Max can use overage billing so your work can continue after you use your monthly allowance and prepaid balance. You can set a maximum overage limit to control spend. On Free, new sessions are blocked when the allowance and prepaid balance are exhausted until you upgrade or add funds.
 
-## How credits work
+BYOK (Bring Your Own Key) is available on Pro, Max, and Enterprise.
 
-Credits are consumed when Tembo analyzes code and creates pull requests.
+## How the usage allowance works
 
-- **Complex sessions can use more credits**: consumption depends on token usage, which varies by session complexity
-- **Simple sessions generally use fewer credits**: straightforward fixes usually consume fewer tokens
-- **Included monthly credits expire each billing cycle**
-- **Unused included monthly credits do not roll over**
+Two usage categories draw from the same balance:
 
-## What consumes credits
+- **Managed inference**: model input, output, and cache usage is charged at the rates in [Usage Pricing](/models/pricing).
+- **Cloud VM compute**: metered from the CPU, memory, and runtime used by each session.
 
-Credits are used for:
+BYOK and ChatGPT/Codex OAuth inference cost \$0 through Tembo because you provide the model access. The cloud VM running the session continues to draw from your usage allowance.
+
+Included monthly allowance expires at the end of each billing cycle and does not roll over. Prepaid balance does not expire.
+
+## Cloud VM compute rates
+
+VM compute is a separate usage category from managed inference. It draws from the same dollar-denominated allowance at **\$0.0403/vCPU-hour + \$0.0130/GiB-RAM-hour**.
+
+| Resource | Rate |
+| --- | ---: |
+| vCPU | $0.0403 per vCPU-hour |
+| Memory | $0.0130 per GiB RAM-hour |
+
+The per-size hourly prices below apply those resource rates to each VM configuration.
+
+| Size | vCPU | Memory | Price per hour |
+| --- | ---: | ---: | --- |
+| Nano | 2 | 2 GiB | $0.1066 |
+| Micro | 2 | 4 GiB | $0.1326 |
+| Medium | 4 | 8 GiB | $0.2652 |
+| Large | 8 | 16 GiB | $0.5304 |
+| XL | 16 | 32 GiB | $1.0608 |
+
+Tembo measures each running VM in seconds and bills its actual running time at the per-second equivalent of the hourly rate. Stopped, snapshotted, and otherwise non-running VMs do not accrue compute.
+
+See [Sandboxes](/features/sandbox/overview) for more about the execution environment and [Usage Pricing](/models/pricing) for managed inference rates.
+
+## What consumes the allowance
+
+Managed inference and VM compute are metered while Tembo runs work such as:
 
 - Creating pull requests from assigned issues (Linear, Jira, Slack)
 - Fixing production errors from Sentry
 - Optimizing database queries and indexes
 - Processing pull request feedback through the [Feedback Loop](/features/feedback-loop)
 
-## When credits run out
+## When the allowance runs out
 
 What happens when your balance reaches zero depends on your plan and overage setting:
 
-- **Free**: new sessions are blocked until your weekly credit refresh, an upgrade, or a credit purchase.
-- **Pro or Max with overages enabled**: sessions continue and are billed as overage, up to the maximum overage limit you set. Once that limit is reached, new sessions are blocked.
-- **Pro or Max with overages disabled**: new sessions are blocked as soon as included credits are exhausted.
+- **Free**: new sessions are blocked until you upgrade or add prepaid balance.
+- **Pro or Max with overages enabled**: sessions continue and are billed as overage after the included allowance and prepaid balance are used, up to the maximum overage limit you set. Once that limit is reached, new sessions are blocked.
+- **Pro or Max with overages disabled**: new sessions are blocked as soon as the included allowance and prepaid balance are exhausted.
 
-When work is blocked, the request is rejected immediately rather than queued. A session already in progress is allowed to finish its current step.
+When work is blocked, the request is rejected immediately rather than queued. Work that has already started can continue its current session so its compute and inference are accounted for correctly.
 
 ## Usage bursts
 
-Some integrations can create a large batch of work at once — for example, a repository or integration sync, or a token refresh that triggers a backlog of issues. Tembo does not cap or rate-limit how much work an integration enqueues; the batch is processed as worker capacity becomes available, and each resulting session consumes credits when it runs. The same credit and overage limits above apply, so a burst cannot spend beyond your included credits plus your overage limit. To absorb large bursts without interruption, enable overages with an appropriate limit, or use [auto-reload](#auto-reload).
+Some integrations can create a large batch of work at once — for example, a repository or integration sync, or a token refresh that triggers a backlog of issues. Tembo does not cap or rate-limit how much work an integration enqueues; the batch is processed as worker capacity becomes available, and each resulting session records dollar usage when it runs. The same allowance and overage limits above apply, so a burst cannot spend beyond your available balance plus your overage limit. To absorb large bursts without interruption, enable overages with an appropriate limit.
 
-## Credit refunds
+## Usage refunds
 
-You may receive automatic refunds in some cases:
+Managed inference usage may be refunded automatically in some cases:
 
 - **Failed sessions**: if Tembo cannot complete a session because of an internal error
 - **Duplicate issues**: if the same issue is queued more than once
@@ -57,42 +84,21 @@ You may receive automatic refunds in some cases:
 
 ## Usage and monitoring
 
-You can track credit usage in the [Billing dashboard](https://app.tembo.io/settings/billing).
+You can track managed inference, compute, total usage, VM resource-hours, and daily spend in the [Billing dashboard](https://app.tembo.io/settings/billing). Overage invoices list managed inference and compute separately.
 
-## Buying additional credits
+## Prepaid balance and on-demand usage
 
-- **Free plan**: upgrade to Pro or Max for overages, or buy credit packs
-- **Pro and Max**: overage billing is automatic after included credits are used
-- **All plans**: credit packs can be purchased from [Billing settings](https://app.tembo.io/settings/billing) and do not expire
+- **Free plan**: upgrade to Pro or Max for overages, or add prepaid balance
+- **Pro and Max**: enable overage billing and set a monthly spend limit
+- **Prepaid balance**: does not expire
 
 To change plans, open [Billing settings](https://app.tembo.io/settings/billing).
 
-## Auto-reload
-
-Auto-reload buys credits when your balance drops below a threshold so sessions can keep running.
-
-### Set up auto-reload
-
-1. Go to [Billing settings](https://app.tembo.io/settings/billing)
-2. Add a payment method if needed
-3. Configure your threshold, target balance, and monthly limit
-4. Turn on auto-reload
-
-### Notes
-
-- You cannot remove a payment method while auto-reload is enabled
-- Monthly limits cap automatic purchases
-- You can still buy credits manually at any time
-
 ## Troubleshooting
-
-**Auto-reload is not running**: confirm your payment method is valid, your balance is below threshold, your monthly limit is not reached, and auto-reload is enabled.
-
-**You cannot remove your payment method**: disable auto-reload first.
 
 **Payment failed**: confirm the card is valid and has available funds.
 
-**Credits did not appear immediately**: billing updates can take a few minutes.
+**Prepaid balance did not appear immediately**: billing updates can take a few minutes.
 
 Need help? Contact [hi@tembo.io](mailto:hi@tembo.io).
 
@@ -100,8 +106,9 @@ Need help? Contact [hi@tembo.io](mailto:hi@tembo.io).
 
 If you need custom pricing, reach out to [support@tembo.io](mailto:support@tembo.io) for:
 
-- Custom credit allocations
+- Custom usage allowances
+- Custom or unlimited sandbox sizing
 - Volume pricing
-- BYOK (Bring Your Own Key)
+- Custom inference configuration
 - Dedicated support
 - Flexible billing options

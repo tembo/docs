@@ -1,0 +1,64 @@
+---
+title: "Chrome extension"
+description: "Open GitHub, GitLab, and Bitbucket pull requests in Tembo review."
+---
+
+<Frame>
+  <img src="/images/integrations/chrome.png" alt="Tembo and Chrome logos" />
+</Frame>
+
+The Tembo Chrome extension redirects supported pull request pages to the matching Tembo review, so you can review code in Tembo instead of staying in the git provider.
+
+## Features
+
+- Redirect GitHub pull requests to Tembo review
+- Redirect GitLab merge requests to Tembo review
+- Redirect Bitbucket pull requests to Tembo review
+- Toggle redirects on or off from the extension popup
+- Configure the redirect base URL for self-hosted Tembo deployments
+
+## Installation
+
+<Steps>
+  <Step title="Install">
+    Install [Tembo from the Chrome Web Store](https://chromewebstore.google.com/detail/tembo/ndddjkpleekhdmmnnlpoofojjhapekbi?authuser=0&hl=en).
+  </Step>
+  <Step title="Sign in">
+    Sign in to [Tembo](https://app.tembo.io) with the workspace that has access to the repository.
+  </Step>
+  <Step title="Open a pull request">
+    Open a supported GitHub, GitLab, or Bitbucket pull request. The extension redirects the page to the matching Tembo review.
+  </Step>
+</Steps>
+
+## Supported pull request URLs
+
+The extension supports pull requests and merge requests on the hosted git providers:
+
+| Provider | Supported URL pattern |
+| --- | --- |
+| GitHub | `https://github.com/{owner}/{repo}/pull/{number}` |
+| GitLab | `https://gitlab.com/{group}/{project}/-/merge_requests/{number}` |
+| Bitbucket | `https://bitbucket.org/{workspace}/{repo}/pull-requests/{number}` |
+
+## Usage
+
+When you visit a supported pull request URL, the extension sends you to Tembo's review redirect page. Tembo resolves the provider URL inside your active organization and opens the matching review.
+
+The repository must be connected to Tembo through [GitHub](/integrations/github), [GitLab](/integrations/gitlab), or [Bitbucket](/integrations/bitbucket).
+
+## Advanced
+
+<AccordionGroup>
+  <Accordion title="Disable redirects">
+    Click the Tembo extension icon and turn redirects off. Turn them back on when you want provider pull request pages to open in Tembo again.
+  </Accordion>
+
+  <Accordion title="Use a custom Tembo URL">
+    Click the Tembo extension icon and change **Base URL** if you use self-hosted Tembo. The extension uses this as the redirect base URL. The default is `https://app.tembo.io`.
+  </Accordion>
+
+  <Accordion title="Pull request does not redirect">
+    Confirm redirects are enabled, you are using a supported hosted provider URL, and the repository is connected to Tembo. Self-hosted git provider domains are not supported by the extension.
+  </Accordion>
+</AccordionGroup>

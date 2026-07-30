@@ -1,0 +1,788 @@
+openapi: 3.1.0
+info:
+    title: Self-Hosted Developer API
+    description: Tembo Self-Hosted Developer API
+    version: 1.0.0
+servers:
+    - url: https://tembo.example.com/api/public-api/
+      description: Tembo self-hosted API
+components:
+    securitySchemes:
+        apiKeyAuth:
+            type: apiKey
+            in: header
+            name: Authorization
+    schemas: {}
+paths:
+    /session/create:
+        post:
+            responses:
+                "200":
+                    description: Session created successfully
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: string
+                                        format: uuid
+                                    title:
+                                        type: string
+                                    description:
+                                        type: string
+                                    status:
+                                        type: string
+                                    createdAt:
+                                        type: string
+                                        format: date-time
+                                    updatedAt:
+                                        type: string
+                                        format: date-time
+                                    organizationId:
+                                        type: string
+                                        format: uuid
+                                    htmlUrl:
+                                        type: string
+                                        format: uri
+                                        description: URL to view this session in the Tembo web application
+                                        example: https://app.tembo.io/sessions/123e4567-e89b-12d3-a456-426614174000
+                                required:
+                                    - id
+                                    - title
+                                    - description
+                                    - status
+                                    - createdAt
+                                    - updatedAt
+                                    - organizationId
+                                    - htmlUrl
+                "400":
+                    description: Bad request - invalid input or missing organization ID
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                required:
+                                    - error
+                "500":
+                    description: Internal server error
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                required:
+                                    - error
+            operationId: postPublic-apiSessionCreate
+            parameters: []
+            description: Create a session for tembo to start working on in the background
+            summary: Create Session
+            requestBody:
+                description: Session creation payload
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                prompt:
+                                    type: string
+                                    minLength: 1
+                                    description: Description of the session to be performed. Supports tagging files.
+                                    example: Fix the authentication bug in the login component
+                                description:
+                                    type: string
+                                    minLength: 1
+                                    description: Detailed description of the session (alternative to prompt)
+                                    example: Users are reporting they cannot log in. JWT token validation appears to be failing.
+                                agent:
+                                    type: string
+                                    description: The agent to use for this session
+                                    example: claudeCode:claude-opus-4-5
+                                repositories:
+                                    type: array
+                                    items:
+                                        type: string
+                                    description: Array of code repository urls that this session relates to
+                                    example:
+                                        - https://github.com/org/repo
+                                        - https://gitlab.com/org/repo-2
+                                codeRepoIds:
+                                    type: array
+                                    items:
+                                        type: string
+                                    description: Array of Tembo code repository IDs to target directly
+                                    example:
+                                        - cbad4334-c844-4fef-a8da-d08f209f267e
+                                        - 6307d53a-b99d-4e90-ab89-f29114f33d53
+                                targetBranch:
+                                    type: string
+                                    nullable: true
+                                    description: The branch to open the pull request against (e.g. main, develop)
+                                    example: main
+                                branchName:
+                                    type: string
+                                    nullable: true
+                                    description: The branch name to use for the work
+                                    example: feature/auth-fix
+                                queueRightAway:
+                                    type: boolean
+                                    nullable: true
+                                    default: true
+                                    description: Whether to immediately queue the session for processing (optional, defaults to true)
+                                    example: false
+                            anyOf:
+                                - required:
+                                      - prompt
+                                - required:
+                                      - description
+                required: true
+            x-codeSamples:
+                - lang: JavaScript
+                  source: |-
+                      import Tembo from '@tembo-io/sdk';
+
+                      const client = new Tembo({
+                        apiKey: 'My API Key',
+                      });
+
+                      const session = await client.session.create({
+                        prompt: 'Fix the authentication bug in the login component',
+                        agent: 'claudeCode:claude-opus-4-5',
+                        repositories: [
+                          'https://github.com/org/repo',
+                          'https://gitlab.com/org/repo-2',
+                        ],
+                        targetBranch: 'dev',
+                        branchName: "cooper-is-awesome",
+                      });
+
+                      console.log(session.id);
+    /session/list:
+        get:
+            responses:
+                "200":
+                    description: Successfully retrieved paginated list of issues
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    issues:
+                                        type: array
+                                        items:
+                                            type: object
+                                            properties:
+                                                id:
+                                                    type: string
+                                                    format: uuid
+                                                title:
+                                                    type: string
+                                                description:
+                                                    type: string
+                                                status:
+                                                    type: string
+                                                createdAt:
+                                                    type: string
+                                                    format: date-time
+                                                updatedAt:
+                                                    type: string
+                                                    format: date-time
+                                                organizationId:
+                                                    type: string
+                                                    format: uuid
+                                                htmlUrl:
+                                                    type: string
+                                                    format: uri
+                                                    description: URL to view this session in the Tembo web application
+                                                    example: https://app.tembo.io/sessions/123e4567-e89b-12d3-a456-426614174000
+                                            required:
+                                                - id
+                                                - title
+                                                - description
+                                                - status
+                                                - createdAt
+                                                - updatedAt
+                                                - organizationId
+                                                - htmlUrl
+                                    meta:
+                                        type: object
+                                        properties:
+                                            totalCount:
+                                                type: integer
+                                            totalPages:
+                                                type: integer
+                                            currentPage:
+                                                type: integer
+                                            pageSize:
+                                                type: integer
+                                            hasNext:
+                                                type: boolean
+                                            hasPrevious:
+                                                type: boolean
+                                        required:
+                                            - totalCount
+                                            - totalPages
+                                            - currentPage
+                                            - pageSize
+                                            - hasNext
+                                            - hasPrevious
+                                required:
+                                    - issues
+                                    - meta
+            operationId: getPublic-apiSessionList
+            parameters:
+                - name: limit
+                  in: query
+                  description: Number of items to return per page (max 100)
+                  required: false
+                  schema:
+                      type: integer
+                      minimum: 1
+                      maximum: 100
+                      default: 10
+                      example: 10
+                - name: page
+                  in: query
+                  description: Page number to retrieve (starts from 1)
+                  required: false
+                  schema:
+                      type: integer
+                      minimum: 1
+                      default: 1
+                      example: 1
+            description: Gets a paginated list of issues for the organization
+            summary: List Sessions
+            x-codeSamples:
+                - lang: JavaScript
+                  source: |-
+                      import Tembo from '@tembo-io/sdk';
+
+                      const client = new Tembo({
+                        apiKey: 'My API Key',
+                      });
+
+                      const sessions = await client.session.list();
+
+                      console.log(sessions.issues);
+    /session/search:
+        get:
+            responses:
+                "200":
+                    description: Successfully retrieved search results with pagination
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    issues:
+                                        type: array
+                                        items:
+                                            type: object
+                                            properties:
+                                                id:
+                                                    type: string
+                                                    format: uuid
+                                                title:
+                                                    type: string
+                                                description:
+                                                    type: string
+                                                status:
+                                                    type: string
+                                                createdAt:
+                                                    type: string
+                                                    format: date-time
+                                                updatedAt:
+                                                    type: string
+                                                    format: date-time
+                                                organizationId:
+                                                    type: string
+                                                    format: uuid
+                                                htmlUrl:
+                                                    type: string
+                                                    format: uri
+                                                    description: URL to view this session in the Tembo web application
+                                                    example: https://app.tembo.io/sessions/123e4567-e89b-12d3-a456-426614174000
+                                            required:
+                                                - id
+                                                - title
+                                                - description
+                                                - status
+                                                - createdAt
+                                                - updatedAt
+                                                - organizationId
+                                                - htmlUrl
+                                    meta:
+                                        type: object
+                                        properties:
+                                            totalCount:
+                                                type: integer
+                                            totalPages:
+                                                type: integer
+                                            currentPage:
+                                                type: integer
+                                            pageSize:
+                                                type: integer
+                                            hasNext:
+                                                type: boolean
+                                            hasPrevious:
+                                                type: boolean
+                                        required:
+                                            - totalCount
+                                            - totalPages
+                                            - currentPage
+                                            - pageSize
+                                            - hasNext
+                                            - hasPrevious
+                                    query:
+                                        type: string
+                                required:
+                                    - issues
+                                    - meta
+                                    - query
+                "400":
+                    description: Bad request - invalid search query or missing organization ID
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                required:
+                                    - error
+            operationId: getPublic-apiSessionSearch
+            parameters:
+                - name: q
+                  in: query
+                  description: Search query to find issues by title or description
+                  required: true
+                  schema:
+                      type: string
+                      minLength: 1
+                      example: authentication bug
+                - name: limit
+                  in: query
+                  description: Number of items to return per page (max 100)
+                  required: false
+                  schema:
+                      type: integer
+                      minimum: 1
+                      maximum: 100
+                      default: 10
+                      example: 10
+                - name: page
+                  in: query
+                  description: Page number to retrieve (starts from 1)
+                  required: false
+                  schema:
+                      type: integer
+                      minimum: 1
+                      default: 1
+                      example: 1
+            description: Search issues for the organization with pagination
+            summary: Search Sessions
+            x-codeSamples:
+                - lang: JavaScript
+                  source: |-
+                      import Tembo from '@tembo-io/sdk';
+
+                      const client = new Tembo({
+                        apiKey: 'My API Key',
+                      });
+
+                      const response = await client.session.search({ q: 'authentication bug' });
+
+                      console.log(response.issues);
+    /agent:
+        post:
+            responses:
+                "200":
+                    description: Agent created successfully
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: string
+                                        format: uuid
+                                        description: Unique identifier for the agent
+                                    name:
+                                        type: string
+                                        description: Agent name
+                                        example: Daily triage
+                                    key:
+                                        type: string
+                                        nullable: true
+                                        description: Macro key generated for the agent
+                                        example: daily-triage
+                                    jsonContent:
+                                        type: object
+                                        nullable: true
+                                        additionalProperties: true
+                                        description: Agent instructions as a structured document
+                                    agent:
+                                        type: string
+                                        nullable: true
+                                        description: Agent harness or model to use
+                                        example: claudeCode:claude-opus-4-5
+                                    mcpServers:
+                                        type: array
+                                        items:
+                                            type: string
+                                        description: MCP servers available to the agent
+                                    organizationId:
+                                        type: string
+                                        format: uuid
+                                    enabledAt:
+                                        type: string
+                                        format: date-time
+                                        nullable: true
+                                    createdAt:
+                                        type: string
+                                        format: date-time
+                                    updatedAt:
+                                        type: string
+                                        format: date-time
+                                required:
+                                    - id
+                                    - name
+                                    - organizationId
+                                    - createdAt
+                                    - updatedAt
+                "400":
+                    description: Bad request - invalid input
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                required:
+                                    - error
+            operationId: postPublic-apiAgent
+            parameters: []
+            description: Create a new agent for your organization.
+            summary: Create Agent
+            requestBody:
+                description: Agent creation payload
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                    description: Agent name
+                                    example: Daily triage
+                                jsonContent:
+                                    type: object
+                                    additionalProperties: true
+                                    description: Agent instructions as a structured document
+                                    example:
+                                        type: doc
+                                        content:
+                                            - type: paragraph
+                                              content:
+                                                  - type: text
+                                                    text: Review new issues and summarize priority, owner, and next steps.
+                                mcpServers:
+                                    type: array
+                                    items:
+                                        type: string
+                                    description: MCP servers available to the agent
+                                    example:
+                                        - linear
+                                        - github
+                                agent:
+                                    type: string
+                                    description: Agent harness or model to use
+                                    example: claudeCode:claude-opus-4-5
+                                triggers:
+                                    type: array
+                                    description: Event triggers to attach to the agent
+                                    items:
+                                        type: object
+                                        properties:
+                                            name:
+                                                type: string
+                                                description: Trigger name
+                                                example: linear.issue.created
+                                            integrationId:
+                                                type: string
+                                                description: Integration ID for the trigger
+                                            filters:
+                                                type: object
+                                                additionalProperties: true
+                                                description: Trigger-specific filters
+                                        required:
+                                            - name
+                                schedules:
+                                    type: array
+                                    description: Schedules to attach to the agent
+                                    items:
+                                        type: object
+                                        properties:
+                                            cron:
+                                                type: string
+                                                description: Cron expression for the schedule
+                                                example: 0 9 * * 1-5
+                                        required:
+                                            - cron
+                            required:
+                                - name
+                                - jsonContent
+                required: true
+            x-codeSamples:
+                - lang: bash
+                  source: |-
+                      curl -s -X POST \
+                        "https://tembo.example.com/api/public-api/agent" \
+                        -H "Authorization: Bearer ${API_KEY}" \
+                        -H "Content-Type: application/json" \
+                        -d '{
+                          "name": "Daily triage",
+                          "jsonContent": {
+                            "type": "doc",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "text": "Review new issues and summarize priority, owner, and next steps."
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          "agent": "claudeCode:claude-opus-4-5",
+                          "mcpServers": ["linear", "github"],
+                          "schedules": [{ "cron": "0 9 * * 1-5" }]
+                        }' | jq .
+    /agent/{keyOrId}/trigger:
+        post:
+            responses:
+                "200":
+                    description: Agent triggered successfully
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: string
+                                        format: uuid
+                                        description: Unique identifier for the queued job
+                                    task:
+                                        type: string
+                                        description: The type of job that was queued
+                                        example: RunAgent
+                                    status:
+                                        type: string
+                                        description: Current status of the job
+                                        example: pending
+                                    priority:
+                                        type: integer
+                                        description: Job priority
+                                        example: 5
+                                    createdAt:
+                                        type: string
+                                        format: date-time
+                                    updatedAt:
+                                        type: string
+                                        format: date-time
+                                required:
+                                    - id
+                                    - task
+                                    - status
+                                    - priority
+                                    - createdAt
+                                    - updatedAt
+                "404":
+                    description: Agent not found (no agent with the given key or ID exists in your organization)
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: Agent not found
+                                required:
+                                    - error
+            operationId: postPublic-apiAgentTrigger
+            parameters:
+                - name: keyOrId
+                  in: path
+                  description: The agent's UUID or its macro (key). You can find the UUID in the agent's properties panel.
+                  required: true
+                  schema:
+                      type: string
+                      example: a1b2c3d4-5678-9abc-def0-1234567890ab
+                - name: apiKey
+                  in: query
+                  description: API key for authentication. Alternative to using the Authorization header.
+                  required: false
+                  schema:
+                      type: string
+            description: |-
+                Trigger an agent with an arbitrary JSON payload, which is passed to the agent as event context.
+
+                You can identify the agent by either its UUID or its macro (key). The API key can be supplied via the `Authorization: Bearer` header or the `apiKey` query parameter.
+            summary: Trigger Agent
+            requestBody:
+                description: Arbitrary JSON payload passed to the agent as event context. Your agent instructions can reference any values in this payload.
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            additionalProperties: true
+                            example:
+                                issue_url: https://github.com/org/repo/issues/42
+                                priority: high
+                required: false
+            x-codeSamples:
+                - lang: bash
+                  label: Bearer Auth
+                  source: |-
+                      curl -s -X POST \
+                        "https://tembo.example.com/api/public-api/agent/${AGENT_ID}/trigger" \
+                        -H "Authorization: Bearer ${API_KEY}" \
+                        -H "Content-Type: application/json" \
+                        -d '{"issue_url": "https://github.com/org/repo/issues/42"}' | jq .
+                - lang: bash
+                  label: Query Param Auth
+                  source: |-
+                      curl -s -X POST \
+                        "https://tembo.example.com/api/public-api/agent/${AGENT_ID}/trigger?apiKey=${API_KEY}" \
+                        -H "Content-Type: application/json" \
+                        -d '{"issue_url": "https://github.com/org/repo/issues/42"}' | jq .
+    /repository/list:
+        get:
+            responses:
+                "200":
+                    description: Successfully retrieved list of enabled code repositories
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    codeRepositories:
+                                        type: array
+                                        items:
+                                            type: object
+                                            properties:
+                                                id:
+                                                    type: string
+                                                    format: uuid
+                                                    description: Unique identifier for the code repository
+                                                    example: 123e4567-e89b-12d3-a456-426614174000
+                                                name:
+                                                    type: string
+                                                    description: Name of the repository
+                                                    example: my-awesome-project
+                                                url:
+                                                    type: string
+                                                    format: uri
+                                                    description: Repository URL
+                                                    example: https://github.com/username/my-awesome-project
+                                                branch:
+                                                    type: string
+                                                    description: Default branch name
+                                                    example: main
+                                                description:
+                                                    type: string
+                                                    description: Repository description
+                                                    example: An awesome web application built with React
+                                                enabledAt:
+                                                    type: string
+                                                    format: date-time
+                                                    description: Timestamp when the repository was enabled
+                                                    example: "2023-12-01T10:30:00.000Z"
+                                                createdAt:
+                                                    type: string
+                                                    format: date-time
+                                                    description: Timestamp when the repository record was created
+                                                    example: "2023-12-01T09:15:00.000Z"
+                                                updatedAt:
+                                                    type: string
+                                                    format: date-time
+                                                    description: Timestamp when the repository record was last updated
+                                                    example: "2023-12-01T11:45:00.000Z"
+                                                organizationId:
+                                                    type: string
+                                                    format: uuid
+                                                    description: Organization ID that owns this repository
+                                                    example: 456e7890-e89b-12d3-a456-426614174001
+                                                integration:
+                                                    type: object
+                                                    properties:
+                                                        id:
+                                                            type: string
+                                                            format: uuid
+                                                            description: Unique identifier for the integration
+                                                            example: 123e4567-e89b-12d3-a456-426614174000
+                                                        type:
+                                                            type: string
+                                                            description: Type of integration (e.g., github, gitlab)
+                                                            example: github
+                                                        name:
+                                                            type: string
+                                                            description: Name of the integration
+                                                            example: GitHub Integration
+                                                        configuration:
+                                                            type: object
+                                                            additionalProperties:
+                                                                {}
+                                                            description: Integration configuration settings
+                                                    required:
+                                                        - id
+                                                        - type
+                                                        - name
+                                                        - configuration
+                                                    description: Associated integration details
+                                            required:
+                                                - id
+                                                - name
+                                                - enabledAt
+                                                - createdAt
+                                                - updatedAt
+                                                - organizationId
+                                        description: Array of enabled code repositories for the organization
+                                required:
+                                    - codeRepositories
+                "400":
+                    description: Bad request - missing organization ID
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: Organization ID is required
+                                required:
+                                    - error
+            operationId: getPublic-apiRepositoryList
+            parameters: []
+            description: Gets a list of enabled repositories for the organization
+            summary: List Repositories
+            x-codeSamples:
+                - lang: JavaScript
+                  source: |-
+                      import Tembo from '@tembo-io/sdk';
+
+                      const client = new Tembo({
+                        apiKey: 'My API Key',
+                      });
+
+                      const repositories = await client.repository.list();
+
+                      console.log(repositories.codeRepositories);

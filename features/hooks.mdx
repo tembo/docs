@@ -25,18 +25,13 @@ Hooks run shell commands at specific points during a session. Configure them in 
       "npm run test",
       "npm run build"
     ]
-  },
-  "autoFix": true
+  }
 }
 ```
-
-## Auto-fix
-
-Set `"autoFix": true` to let Tembo analyze hook failures and attempt to fix issues before retrying.
 
 ## Details
 
 - Commands run sequentially in the repository root
-- If a command fails, the hook stops
+- If a command fails, Tembo logs the failure and continues with the remaining commands in the hook
 - Hooks run in the same [sandbox](/features/sandbox/overview) as the session
 - Shell features (piping, redirects, `&&`) are supported

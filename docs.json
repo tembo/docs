@@ -2,6 +2,9 @@
     "$schema": "https://mintlify.com/docs.json",
     "theme": "luma",
     "name": "Tembo Docs",
+    "thumbnails": {
+        "background": "/images/og-background.png"
+    },
     "icons": {
         "library": "lucide"
     },
@@ -50,7 +53,6 @@
                             "features/agents",
                             "features/models",
                             "features/feedback-loop",
-                            "features/max",
                             {
                                 "group": "Sandbox",
                                 "pages": [
@@ -75,10 +77,10 @@
                                     {
                                         "group": "Integrations",
                                         "pages": [
-                                            "features/self-hosted/integrations/github",
-                                            "features/self-hosted/integrations/slack",
                                             "features/self-hosted/integrations/aws-storage",
-                                            "features/self-hosted/integrations/azure-storage"
+                                            "features/self-hosted/integrations/azure-storage",
+                                            "features/self-hosted/integrations/github",
+                                            "features/self-hosted/integrations/slack"
                                         ]
                                     }
                                 ]
@@ -88,6 +90,7 @@
                                 "pages": [
                                     "features/agent-skills",
                                     "features/hooks",
+                                    "features/model-settings",
                                     "features/rule-files"
                                 ]
                             }
@@ -105,36 +108,38 @@
                         "group": "Integrations",
                         "public": true,
                         "pages": [
-                            "integrations/mcp",
+                            "integrations",
+                            "integrations/aws",
+                            "integrations/bigquery",
                             "integrations/bitbucket",
+                            "integrations/chrome-extension",
+                            "integrations/fathom",
                             "integrations/github",
-                            "integrations/hubspot",
                             "integrations/gitlab",
+                            "integrations/hubspot",
+                            "integrations/infisical",
                             "integrations/jira",
                             "integrations/linear",
+                            "integrations/mcp",
+                            "integrations/teams",
                             "integrations/notion",
                             "integrations/postgres",
-                            "integrations/aws",
                             "integrations/raycast",
                             "integrations/sentry",
                             "integrations/slack",
                             "integrations/snowflake",
-                            "integrations/supabase",
-                            "integrations/fathom",
-                            "integrations/infisical",
                             "integrations/snyk",
                             "integrations/stripe",
                             "integrations/teams",
                             "integrations/openconnect"
+                            "integrations/supabase",
+                            "integrations/tailscale"
                         ]
                     },
                     {
                         "group": "Other",
                         "public": true,
-                        "pages": [
-                            "resources/pwa",
-                            "resources/pricing"
-                        ]
+                        "pages": ["resources/pwa", "resources/pricing"]
                     }
                 ]
             },
@@ -164,9 +169,34 @@
                             },
                             {
                                 "group": "Agents",
+                                "pages": ["POST /agent", "api/trigger-agent"]
+                            },
+                            {
+                                "group": "Repositories",
+                                "pages": ["GET /repository/list"]
+                            }
+                        ]
+                    },
+                    {
+                        "group": "Self-Hosted API",
+                        "public": true,
+                        "openapi": {
+                            "source": "openapi.self-hosted.yml",
+                            "directory": "api/self-hosted"
+                        },
+                        "pages": [
+                            "api/self-hosted/index",
+                            {
+                                "group": "Sessions",
                                 "pages": [
-                                    "api/trigger-agent"
+                                    "POST /session/create",
+                                    "GET /session/list",
+                                    "GET /session/search"
                                 ]
+                            },
+                            {
+                                "group": "Agents",
+                                "pages": ["POST /agent", "POST /agent/{keyOrId}/trigger"]
                             },
                             {
                                 "group": "Repositories",

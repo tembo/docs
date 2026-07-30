@@ -398,11 +398,179 @@ paths:
                       const response = await client.session.search({ q: 'authentication bug' });
 
                       console.log(response.issues);
-    /automation/{keyOrId}/trigger:
+    /agent:
         post:
             responses:
                 "200":
-                    description: Automation triggered successfully
+                    description: Agent created successfully
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: string
+                                        format: uuid
+                                        description: Unique identifier for the agent
+                                    name:
+                                        type: string
+                                        description: Agent name
+                                        example: Daily triage
+                                    key:
+                                        type: string
+                                        nullable: true
+                                        description: Macro key generated for the agent
+                                        example: daily-triage
+                                    jsonContent:
+                                        type: object
+                                        nullable: true
+                                        additionalProperties: true
+                                        description: Agent instructions as a structured document
+                                    agent:
+                                        type: string
+                                        nullable: true
+                                        description: Agent harness or model to use
+                                        example: claudeCode:claude-opus-4-5
+                                    mcpServers:
+                                        type: array
+                                        items:
+                                            type: string
+                                        description: MCP servers available to the agent
+                                    organizationId:
+                                        type: string
+                                        format: uuid
+                                    enabledAt:
+                                        type: string
+                                        format: date-time
+                                        nullable: true
+                                    createdAt:
+                                        type: string
+                                        format: date-time
+                                    updatedAt:
+                                        type: string
+                                        format: date-time
+                                required:
+                                    - id
+                                    - name
+                                    - organizationId
+                                    - createdAt
+                                    - updatedAt
+                "400":
+                    description: Bad request - invalid input
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                required:
+                                    - error
+            operationId: postPublic-apiAgent
+            parameters: []
+            description: Create a new agent for your organization.
+            summary: Create Agent
+            requestBody:
+                description: Agent creation payload
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                    description: Agent name
+                                    example: Daily triage
+                                jsonContent:
+                                    type: object
+                                    additionalProperties: true
+                                    description: Agent instructions as a structured document
+                                    example:
+                                        type: doc
+                                        content:
+                                            - type: paragraph
+                                              content:
+                                                  - type: text
+                                                    text: Review new issues and summarize priority, owner, and next steps.
+                                mcpServers:
+                                    type: array
+                                    items:
+                                        type: string
+                                    description: MCP servers available to the agent
+                                    example:
+                                        - linear
+                                        - github
+                                agent:
+                                    type: string
+                                    description: Agent harness or model to use
+                                    example: claudeCode:claude-opus-4-5
+                                triggers:
+                                    type: array
+                                    description: Event triggers to attach to the agent
+                                    items:
+                                        type: object
+                                        properties:
+                                            name:
+                                                type: string
+                                                description: Trigger name
+                                                example: linear.issue.created
+                                            integrationId:
+                                                type: string
+                                                description: Integration ID for the trigger
+                                            filters:
+                                                type: object
+                                                additionalProperties: true
+                                                description: Trigger-specific filters
+                                        required:
+                                            - name
+                                schedules:
+                                    type: array
+                                    description: Schedules to attach to the agent
+                                    items:
+                                        type: object
+                                        properties:
+                                            cron:
+                                                type: string
+                                                description: Cron expression for the schedule
+                                                example: 0 9 * * 1-5
+                                        required:
+                                            - cron
+                            required:
+                                - name
+                                - jsonContent
+                required: true
+            x-codeSamples:
+                - lang: bash
+                  source: |-
+                      curl -s -X POST \
+                        "https://api.tembo.io/agent" \
+                        -H "Authorization: Bearer ${API_KEY}" \
+                        -H "Content-Type: application/json" \
+                        -d '{
+                          "name": "Daily triage",
+                          "jsonContent": {
+                            "type": "doc",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "text": "Review new issues and summarize priority, owner, and next steps."
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          "agent": "claudeCode:claude-opus-4-5",
+                          "mcpServers": ["linear", "github"],
+                          "schedules": [{ "cron": "0 9 * * 1-5" }]
+                        }' | jq .
+    /agent/{keyOrId}/trigger:
+        post:
+            responses:
+                "200":
+                    description: Agent triggered successfully
                     content:
                         application/json:
                             schema:
@@ -415,7 +583,7 @@ paths:
                                     task:
                                         type: string
                                         description: The type of job that was queued
-                                        example: RunWorkflow
+                                        example: RunAgent
                                     status:
                                         type: string
                                         description: Current status of the job
@@ -438,7 +606,7 @@ paths:
                                     - createdAt
                                     - updatedAt
                 "404":
-                    description: Automation not found (no automation with the given key or ID exists in your organization)
+                    description: Agent not found (no agent with the given key or ID exists in your organization)
                     content:
                         application/json:
                             schema:
@@ -446,14 +614,14 @@ paths:
                                 properties:
                                     error:
                                         type: string
-                                        example: Automation not found
+                                        example: Agent not found
                                 required:
                                     - error
-            operationId: postPublic-apiAutomationTrigger
+            operationId: postPublic-apiAgentTrigger
             parameters:
                 - name: keyOrId
                   in: path
-                  description: The automation's UUID or its macro (key). You can find the UUID in the automation's properties panel.
+                  description: The agent's UUID or its macro (key). You can find the UUID in the agent's properties panel.
                   required: true
                   schema:
                       type: string
@@ -465,12 +633,12 @@ paths:
                   schema:
                       type: string
             description: |-
-                Trigger an automation with an arbitrary JSON payload, which is passed to the automation as event context.
+                Trigger an agent with an arbitrary JSON payload, which is passed to the agent as event context.
 
-                You can identify the automation by either its UUID or its macro (key). The API key can be supplied via the `Authorization: Bearer` header or the `apiKey` query parameter.
-            summary: Trigger Automation
+                You can identify the agent by either its UUID or its macro (key). The API key can be supplied via the `Authorization: Bearer` header or the `apiKey` query parameter.
+            summary: Trigger Agent
             requestBody:
-                description: Arbitrary JSON payload passed to the automation as event context. Your automation instructions can reference any values in this payload.
+                description: Arbitrary JSON payload passed to the agent as event context. Your agent instructions can reference any values in this payload.
                 content:
                     application/json:
                         schema:
@@ -485,7 +653,7 @@ paths:
                   label: Bearer Auth
                   source: |-
                       curl -s -X POST \
-                        "https://api.tembo.io/automation/${AUTOMATION_ID}/trigger" \
+                        "https://api.tembo.io/agent/${AGENT_ID}/trigger" \
                         -H "Authorization: Bearer ${API_KEY}" \
                         -H "Content-Type: application/json" \
                         -d '{"issue_url": "https://github.com/org/repo/issues/42"}' | jq .
@@ -493,7 +661,7 @@ paths:
                   label: Query Param Auth
                   source: |-
                       curl -s -X POST \
-                        "https://api.tembo.io/automation/${AUTOMATION_ID}/trigger?apiKey=${API_KEY}" \
+                        "https://api.tembo.io/agent/${AGENT_ID}/trigger?apiKey=${API_KEY}" \
                         -H "Content-Type: application/json" \
                         -d '{"issue_url": "https://github.com/org/repo/issues/42"}' | jq .
     /repository/list:
