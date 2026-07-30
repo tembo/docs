@@ -82,8 +82,9 @@ You need admin access to your Tailscale organization to complete the setup:
     ```
   </Step>
   <Step title="Create an OAuth client">
-    In **Settings → OAuth clients**, create a client with the **Keys → Auth
-    keys** write scope, and assign it the tag you created
+    In [**Settings → Trust credentials**](https://console.tailscale.com/admin/settings/trust-credentials),
+    click **+ Credential**, select **OAuth**, and continue. Give the client
+    the **Keys → Auth keys** write scope, and assign it the tag you created
     (`tag:tembo-session`). Tembo uses this client to mint short-lived auth
     keys — it can only create keys for the tags it owns.
 
