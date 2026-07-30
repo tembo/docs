@@ -121,8 +121,8 @@
                             "integrations/jira",
                             "integrations/linear",
                             "integrations/mcp",
-                            "integrations/teams",
                             "integrations/notion",
+                            "integrations/openconnect",
                             "integrations/postgres",
                             "integrations/raycast",
                             "integrations/sentry",
@@ -130,10 +130,9 @@
                             "integrations/snowflake",
                             "integrations/snyk",
                             "integrations/stripe",
-                            "integrations/teams",
-                            "integrations/openconnect"
                             "integrations/supabase",
-                            "integrations/tailscale"
+                            "integrations/tailscale",
+                            "integrations/teams"
                         ]
                     },
                     {
