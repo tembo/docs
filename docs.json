@@ -266,6 +266,10 @@
             "destination": "/resources/pricing"
         },
         {
+            "source": "/models/pricing",
+            "destination": "/resources/pricing"
+        },
+        {
             "source": "/features/self-hosted/aws",
             "destination": "/features/self-hosted/deploy/aws"
         },
