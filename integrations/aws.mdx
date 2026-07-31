@@ -34,10 +34,10 @@ You need permission to create IAM roles and identity providers in the target AWS
 ## Choose a setup method
 
 <CardGroup cols={2}>
-  <Card title="Use the CloudFormation template" icon="cloud">
+  <Card title="Use the CloudFormation template" icon="cloud" href="#option-1-use-the-cloudformation-template">
     Fastest path. Tembo gives you a template that creates the OIDC provider and role for you.
   </Card>
-  <Card title="Create the resources yourself" icon="wrench">
+  <Card title="Create the resources yourself" icon="wrench" href="#option-2-create-the-resources-yourself">
     Use your own Terraform, CDK, Pulumi, or the AWS CLI. Full requirements below.
   </Card>
 </CardGroup>
@@ -53,7 +53,7 @@ Both produce identical results. Tembo only needs the finished role ARN.
   <Step title="Deploy the stack">
     Click **Create via CloudFormation** to open a pre-filled stack in your AWS console, then deploy it.
 
-    If that link returns "Access Denied", download the template from the connect modal and upload it manually instead: in the [CloudFormation console](https://console.aws.amazon.com/cloudformation), choose **Create stack → With new resources → Upload a template file**, then supply your [workspace ID](/integrations/aws#find-your-workspace-id) when prompted.
+    If that link returns "Access Denied", download the template from the connect modal and upload it manually instead: in the [CloudFormation console](https://console.aws.amazon.com/cloudformation), choose **Create stack → With new resources → Upload a template file**, then supply your [workspace ID](#find-your-workspace-id) when prompted.
   </Step>
   <Step title="Copy the role ARN">
     When the stack completes, open its **Outputs** tab and copy the `RoleArn` value.
@@ -69,7 +69,7 @@ Create two resources in the AWS account you want to connect, then hand Tembo the
 
 ### Find your workspace ID
 
-The role's trust policy has to name the workspace allowed to assume it. In Tembo, go to **Settings → Workspace** and copy the value under **Workspace ID** — use the copy button next to the field.
+The role's trust policy has to name the workspace allowed to assume it. In Tembo, go to **Settings → Workspace** and copy the value under **Workspace ID**.
 
 The value starts with `org_`, because a workspace is an organization internally. That's why the trust policy's subject is `org:` followed by this value.
 
