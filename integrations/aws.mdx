@@ -7,9 +7,9 @@ description: 'Give your agents access to any AWS service via OIDC web identity f
   <img src="/images/integrations/aws.png" alt="AWS" />
 </Frame>
 
-Tembo acts as an OIDC Identity Provider. Your agents receive short-lived STS credentials that expire automatically — no AWS access keys are stored in Tembo.
+Tembo acts as an OIDC identity provider. Your agents receive short-lived STS credentials that expire automatically — no AWS access keys are ever stored in Tembo.
 
-[→ Jump to Manual CloudFormation Setup](/integrations/aws#manual-cloudformation-setup)
+Connecting an account takes two things: an OIDC provider and an IAM role in your AWS account. You can let Tembo's CloudFormation template create both, or create them yourself with your own tooling.
 
 ## What agents can do
 
@@ -21,128 +21,255 @@ Once connected, agents have access to the [AWS Agent Toolkit](https://github.com
 - **`search_documentation` / `read_documentation`** — search and read all AWS documentation
 - **`get_presigned_url`** — generate pre-signed S3 URLs
 
-The default CloudFormation stack grants `ReadOnlyAccess`. You can modify the role's policies to expand or restrict what agents are permitted to do.
+Agents can only do what the IAM role permits. The default is `ReadOnlyAccess`; you control this entirely.
 
-## Connect
+## Before you start
+
+You need permission to create IAM roles and identity providers in the target AWS account.
+
+<Note>
+  Connect as many AWS accounts as you like. Each gets its own label and an isolated MCP server session, so a `production` and a `staging` account never share credentials.
+</Note>
+
+## Choose a setup method
+
+<CardGroup cols={2}>
+  <Card title="Use the CloudFormation template" icon="cloud">
+    Fastest path. Tembo gives you a template that creates the OIDC provider and role for you.
+  </Card>
+  <Card title="Create the resources yourself" icon="wrench">
+    Use your own Terraform, CDK, Pulumi, or the AWS CLI. Full requirements below.
+  </Card>
+</CardGroup>
+
+Both produce identical results. Tembo only needs the finished role ARN.
+
+## Option 1: Use the CloudFormation template
 
 <Steps>
   <Step title="Open the connect modal">
-    Go to [Integrations](https://app.tembo.io/integrations) and click **Connect** next to AWS. Enter a name for this account (e.g. `production` or `dev`).
+    Go to [Integrations](https://app.tembo.io/integrations) and click **Connect** next to AWS. Enter a name for this account, for example `production`.
   </Step>
-  <Step title="Deploy the CloudFormation stack">
-    Click **Create via CloudFormation** to open a pre-filled stack in your AWS console. If the link shows "Access Denied", [use the manual setup](/integrations/aws#manual-cloudformation-setup) in the section below instead — it creates the same resources.
+  <Step title="Deploy the stack">
+    Click **Create via CloudFormation** to open a pre-filled stack in your AWS console, then deploy it.
+
+    If that link returns "Access Denied", download the template from the connect modal and upload it manually instead: in the [CloudFormation console](https://console.aws.amazon.com/cloudformation), choose **Create stack → With new resources → Upload a template file**, then supply your [workspace ID](/integrations/aws#find-your-workspace-id) when prompted.
   </Step>
-  <Step title="Paste the role ARN">
-    Once the stack is deployed, open the **Outputs** tab in CloudFormation and copy the `RoleArn` value. Back in the Tembo connect modal, switch to **Enter ARN manually** and paste it. Click **Connect**.
+  <Step title="Copy the role ARN">
+    When the stack completes, open its **Outputs** tab and copy the `RoleArn` value.
+  </Step>
+  <Step title="Finish in Tembo">
+    Back in the connect modal, switch to **Enter ARN manually**, paste the ARN, and click **Connect**.
   </Step>
 </Steps>
 
-You can connect multiple AWS accounts — each gets its own label and isolated MCP server session.
+## Option 2: Create the resources yourself
 
-## Manual CloudFormation setup
+Create two resources in the AWS account you want to connect, then hand Tembo the role ARN.
 
-Use this if the one-click CloudFormation link shows "Access Denied". The template below creates the same IAM resources.
+### Find your workspace ID
 
-1. **Find your org ID.** In the connect modal, click **Open AWS Console**. Before the AWS page loads, copy the `param_TemboOrgId` value from the URL — it looks like `org_2vyf1Ja...`. You'll need this in step 4.
+The role's trust policy has to name the workspace allowed to assume it. In Tembo, go to **Settings → Workspace** and copy the value under **Workspace ID** — use the copy button next to the field.
 
-2. Download the CloudFormation template. It creates an OIDC provider and a cross-account IAM role that trusts Tembo's issuer, scoped to your org ID.
+The value starts with `org_`, because a workspace is an organization internally. That's why the trust policy's subject is `org:` followed by this value.
 
-<div style={{marginLeft:'24px'}}>
-  <a href="https://tembo-public-resources-us-east-1.s3.us-east-1.amazonaws.com/aws-cf-identity/tembo-identity.json" download="tembo-identity.json">
-    <button>Download tembo-identity.json</button>
-  </a>
-</div>
+### Requirements
 
-```json tembo-identity.json
+| Setting | Value |
+|---|---|
+| OIDC provider URL | `https://internal.tembo.io` |
+| Audience (client ID) | `sts.amazonaws.com` |
+| Trust policy action | `sts:AssumeRoleWithWebIdentity` |
+| `internal.tembo.io:aud` condition | `sts.amazonaws.com` |
+| `internal.tembo.io:sub` condition | `org:<your-workspace-id>` |
+| Max session duration | 3600 seconds |
+| Permissions | Your choice. `ReadOnlyAccess` is the default Tembo suggests. |
+
+Three details are easy to get wrong:
+
+- **The provider must live in the same AWS account as the role.** AWS resolves the federated principal locally when the role is assumed, so a provider in another account will not work.
+- **The condition keys drop the scheme.** They are `internal.tembo.io:sub`, not `https://internal.tembo.io:sub`.
+- **The subject is prefixed.** If your workspace ID is `org_2vyf1Ja...`, the `sub` value is `org:org_2vyf1Ja...` — the literal string `org:` followed by the full ID.
+
+<Warning>
+  Always pin the `sub` condition to your workspace ID. The OIDC provider only proves that Tembo signed the token, not which workspace it was issued for. Without the `sub` condition, a token issued to any other Tembo workspace would satisfy your trust policy.
+</Warning>
+
+### The OIDC provider
+
+Register `https://internal.tembo.io` as an IAM OIDC identity provider with `sts.amazonaws.com` as the only audience.
+
+You only need one per AWS account. IAM identity providers are global, so if you manage infrastructure per-region, create it once rather than once per region. If the provider already exists in the account, reuse it instead of creating a second one.
+
+Thumbprints do not need maintaining. AWS verifies the JWKS endpoint's TLS certificate against its own library of trusted root certificate authorities, and only falls back to the configured thumbprint if the certificate is not signed by one of those. Tembo's endpoint uses a publicly trusted certificate, so a placeholder value of forty zeroes is fine.
+
+### The IAM role
+
+Attach this trust policy, replacing the account ID and workspace ID:
+
+```json Trust policy
 {
-  "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "Tembo cross-account access via OIDC web identity federation",
-  "Parameters": {
-    "TemboOrgId": {
-      "Type": "String",
-      "Description": "Your Tembo organization ID (copy param_TemboOrgId from the Open AWS Console URL)",
-      "MinLength": 1
-    }
-  },
-  "Resources": {
-    "TemboOidcProvider": {
-      "Type": "AWS::IAM::OIDCProvider",
-      "Properties": {
-        "Url": "https://app.tembo.io",
-        "ClientIdList": ["sts.amazonaws.com"],
-        "ThumbprintList": ["0000000000000000000000000000000000000000"]
-      }
-    },
-    "TemboCrossAccountRole": {
-      "Type": "AWS::IAM::Role",
-      "Properties": {
-        "AssumeRolePolicyDocument": {
-          "Version": "2012-10-17",
-          "Statement": [
-            {
-              "Effect": "Allow",
-              "Principal": {
-                "Federated": { "Ref": "TemboOidcProvider" }
-              },
-              "Action": "sts:AssumeRoleWithWebIdentity",
-              "Condition": {
-                "StringEquals": {
-                  "app.tembo.io:aud": "sts.amazonaws.com",
-                  "app.tembo.io:sub": { "Fn::Sub": "org:${TemboOrgId}" }
-                }
-              }
-            }
-          ]
-        },
-        "MaxSessionDuration": 3600,
-        "ManagedPolicyArns": ["arn:aws:iam::aws:policy/ReadOnlyAccess"]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::111122223333:oidc-provider/internal.tembo.io"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "internal.tembo.io:aud": "sts.amazonaws.com",
+          "internal.tembo.io:sub": "org:org_2vyf1Ja..."
+        }
       }
     }
-  },
-  "Outputs": {
-    "RoleArn": {
-      "Description": "Paste this ARN into the Tembo AWS connect modal",
-      "Value": { "Fn::GetAtt": ["TemboCrossAccountRole", "Arn"] }
-    }
-  }
+  ]
 }
 ```
 
-<Note>
-  **Self-hosted Tembo:** replace both occurrences of `app.tembo.io` with your instance's public hostname (the value of `TEMBO_OIDC_ISSUER` in your config).
-</Note>
+Then attach permissions. Start with `arn:aws:iam::aws:policy/ReadOnlyAccess` and narrow or widen it to suit. Set the role's maximum session duration to 3600 seconds to match the session length Tembo requests.
 
-3. In the [AWS CloudFormation console](https://console.aws.amazon.com/cloudformation), click **Create stack → With new resources**.
-4. Choose **Upload a template file** and upload `tembo-identity.json`.
-5. Enter the **Tembo organization ID** you copied in step 1 when prompted.
-6. Deploy the stack. When it completes, open the **Outputs** tab and copy the `RoleArn` value.
-7. Back in Tembo, switch to **Enter ARN manually** and paste the ARN. Click **Connect**.
+The role name does not matter — Tembo identifies the role by ARN.
+
+### Terraform
+
+```hcl
+resource "aws_iam_openid_connect_provider" "tembo" {
+  url             = "https://internal.tembo.io"
+  client_id_list  = ["sts.amazonaws.com"]
+  thumbprint_list = ["0000000000000000000000000000000000000000"]
+}
+
+data "aws_iam_policy_document" "tembo_assume_role" {
+  statement {
+    effect  = "Allow"
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+
+    principals {
+      type        = "Federated"
+      identifiers = [aws_iam_openid_connect_provider.tembo.arn]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "internal.tembo.io:aud"
+      values   = ["sts.amazonaws.com"]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "internal.tembo.io:sub"
+      values   = ["org:${var.tembo_workspace_id}"]
+    }
+  }
+}
+
+resource "aws_iam_role" "tembo" {
+  name                 = "tembo-integration"
+  assume_role_policy   = data.aws_iam_policy_document.tembo_assume_role.json
+  max_session_duration = 3600
+}
+
+resource "aws_iam_role_policy_attachment" "tembo_read_only" {
+  role       = aws_iam_role.tembo.name
+  policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
+}
+
+output "tembo_role_arn" {
+  value = aws_iam_role.tembo.arn
+}
+```
+
+### AWS CLI
+
+```bash
+ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+TEMBO_WORKSPACE_ID=org_2vyf1Ja...   # from Settings → Workspace
+
+aws iam create-open-id-connect-provider \
+  --url https://internal.tembo.io \
+  --client-id-list sts.amazonaws.com \
+  --thumbprint-list 0000000000000000000000000000000000000000
+
+cat > trust-policy.json <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Effect": "Allow",
+    "Principal": { "Federated": "arn:aws:iam::${ACCOUNT_ID}:oidc-provider/internal.tembo.io" },
+    "Action": "sts:AssumeRoleWithWebIdentity",
+    "Condition": {
+      "StringEquals": {
+        "internal.tembo.io:aud": "sts.amazonaws.com",
+        "internal.tembo.io:sub": "org:${TEMBO_WORKSPACE_ID}"
+      }
+    }
+  }]
+}
+EOF
+
+aws iam create-role \
+  --role-name tembo-integration \
+  --assume-role-policy-document file://trust-policy.json \
+  --max-session-duration 3600
+
+aws iam attach-role-policy \
+  --role-name tembo-integration \
+  --policy-arn arn:aws:iam::aws:policy/ReadOnlyAccess
+
+aws iam get-role --role-name tembo-integration --query 'Role.Arn' --output text
+```
+
+### Connect it
+
+Paste the role ARN into the Tembo connect modal under **Enter ARN manually** and click **Connect**.
+
+<Note>
+  **Self-hosted Tembo:** replace `internal.tembo.io` throughout with your instance's `TEMBO_OIDC_ISSUER` hostname, scheme stripped. Your instance must serve `/.well-known/openid-configuration` and `/.well-known/jwks.json` over public HTTPS, because AWS STS fetches the JWKS itself when a role is assumed — reachability from inside your own network is not enough.
+</Note>
 
 ## How authentication works
 
 Tembo never stores AWS credentials. For each agent run:
 
-1. Tembo mints a short-lived RS256 JWT (5-minute TTL) signed with its OIDC private key
-2. The JWT is exchanged with AWS STS via `AssumeRoleWithWebIdentity`
-3. STS validates the JWT by fetching Tembo's public JWKS endpoint (`/.well-known/jwks.json`)
-4. Resulting temporary credentials (1-hour TTL) are injected into the agent's sandbox at startup — they never leave the sandbox environment
+1. Tembo mints a short-lived RS256 JWT (5-minute TTL) signed with its OIDC private key, carrying `iss` of the Tembo issuer, `aud` of `sts.amazonaws.com`, and `sub` of `org:<your-workspace-id>`
+2. Tembo calls `sts:AssumeRoleWithWebIdentity` against your role, presenting that JWT. This call carries no AWS credentials of its own — the token is the identity
+3. STS finds the OIDC provider in your account matching the token's issuer, fetches Tembo's public JWKS to verify the signature, then evaluates your trust policy conditions
+4. The resulting temporary credentials (1-hour TTL) are injected into the agent's sandbox and never leave it
+
+Because the token is the identity, nothing about this depends on which AWS account Tembo runs in.
 
 ## Troubleshooting
 
 <AccordionGroup>
   <Accordion title='"Access Denied" when opening the CloudFormation link'>
-    The one-click URL fetches the CloudFormation template from an S3 bucket. If the bucket policy hasn't been updated yet, AWS's console will return an access denied error. Use the manual setup steps above — they create identical resources and work independently of S3 hosting.
+    The one-click URL fetches the template from an S3 bucket. If the bucket policy has not been updated, the AWS console returns an access denied error. Download the template from the connect modal and upload it manually instead — it creates identical resources.
   </Accordion>
 
-  <Accordion title="STS AssumeRoleWithWebIdentity fails after deploy">
-    Confirm the OIDC provider URL in your CloudFormation stack matches your Tembo instance exactly (including protocol, no trailing slash). For hosted Tembo this is `https://app.tembo.io`. Check that the `TemboOrgId` parameter matches the organization ID from the `param_TemboOrgId` value in the Open AWS Console URL.
+  <Accordion title="AssumeRoleWithWebIdentity fails after deploy">
+    Work through these in order:
+
+    1. **Provider URL exact match.** It must be `https://internal.tembo.io` — correct scheme, no trailing slash, no typos. STS matches the token's `iss` claim against the registered provider URL exactly.
+    2. **Provider is in the same account as the role.** A provider in a different account is not usable.
+    3. **`sub` includes the `org:` prefix.** The value is `org:org_2vyf1Ja...`, not `org_2vyf1Ja...`.
+    4. **Condition keys have no scheme.** `internal.tembo.io:sub`, not `https://internal.tembo.io:sub`.
+    5. **Workspace ID matches.** Compare against the value under **Workspace ID** in **Settings → Workspace**.
+  </Accordion>
+
+  <Accordion title="Credentials expire during a long agent run">
+    Sessions are 1 hour. If your role's maximum session duration is lower than 3600 seconds, sessions will be shorter than expected — raise it to 3600.
   </Accordion>
 
   <Accordion title="Agent can't reach AWS APIs">
-    The agent sandbox requires outbound access to `https://aws-mcp.us-east-1.api.aws` for the AWS Agent Toolkit MCP service. In self-hosted deployments on a private network, confirm egress to that endpoint is allowed.
+    The agent sandbox requires outbound access to `https://aws-mcp.us-east-1.api.aws` for the AWS Agent Toolkit MCP service. On self-hosted deployments in a private network, confirm egress to that endpoint is allowed.
   </Accordion>
 
   <Accordion title="Agent hits permission errors on AWS calls">
-    The default stack attaches `ReadOnlyAccess`. To allow write operations, modify the `TemboCrossAccountRole` in your AWS account and attach additional policies. You can scope permissions tightly using IAM condition keys — the agent's identity is distinguishable from human calls in CloudTrail.
+    The role's policies decide what agents can do, and `ReadOnlyAccess` is read-only by design. To allow writes, attach additional policies to the role. Note that `ReadOnlyAccess` does grant `s3:Get*`, so agents can read object contents — attach an explicit `Deny` if you need to keep specific buckets out of reach.
+  </Accordion>
+
+  <Accordion title="Performance Insights or other encrypted data returns access denied">
+    Some AWS features encrypt data with a customer-managed KMS key and require the caller to hold `kms:Decrypt` on that key. `ReadOnlyAccess` does not grant `kms:Decrypt`. Add a scoped statement to the role for the specific key, ideally conditioned on `kms:ViaService` so it is only usable through the owning service.
   </Accordion>
 </AccordionGroup>
