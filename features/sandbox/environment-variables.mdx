@@ -3,10 +3,10 @@ title: 'Environment Variables'
 description: 'Store secrets and configuration that Tembo injects into every sandbox session.'
 ---
 
-Environment variables let you store secrets and configuration once and have Tembo inject them into every session's [sandbox](/features/sandbox/overview). They're the recommended way to pass API keys, tokens, and other configuration to agent commands, [hooks](/features/hooks), MCP servers, and connected integrations — without committing secrets to your repository.
+Environment variables let you store secrets and configuration once and have Tembo inject them into every session's [sandbox](/features/sandbox/overview). They're the recommended way to pass API keys, tokens, and other configuration to agent commands, [hooks](/features/hooks), MCP servers, and connected integrations, without committing secrets to your repository.
 
 <Note>
-  Environment variables are workspace-wide. Every session your workspace runs — agent runs and interactive terminal sessions — receives them in its sandbox environment.
+  Environment variables are workspace-wide. Every session your workspace runs, including agent runs and interactive terminal sessions, receives them in its sandbox environment.
 </Note>
 
 ## Prerequisites
@@ -20,8 +20,8 @@ Environment variables let you store secrets and configuration once and have Temb
 2. Go to **Sandbox**.
 3. Under **Environment Variables**, click **Create Secret**.
 4. Add variables one of two ways:
-   - **Single Variable** — enter a **Key** (for example `CLIENT_KEY`) and its **Value**.
-   - **Bulk Import** — paste `.env`-style contents, one `KEY=value` per line.
+   - **Single Variable**: enter a **Key** (for example `CLIENT_KEY`) and its **Value**.
+   - **Bulk Import**: paste `.env`-style contents, one `KEY=value` per line.
 5. Click **Create Secret**.
 
 For bulk import, each line must use the `KEY=value` format. Blank lines and lines without a value are skipped:
@@ -36,10 +36,10 @@ SENTRY_DSN=https://examplePublicKey@o0.ingest.sentry.io/0
 
 Once saved, a variable is available in the sandbox for the whole session. You can use it from:
 
-- **Agent commands** — the agent can read the variable when it runs builds, tests, or scripts.
-- **[Hooks](/features/hooks)** — `postClone` and `prePush` commands run with the variables set.
-- **[Snapshot](/features/snapshots) setup scripts** — variables are available while a snapshot is built and are baked into anything the setup script writes to disk.
-- **[MCP servers](/integrations/mcp) and integrations** — reference a variable so a server or integration can authenticate.
+- **Agent commands**: the agent can read the variable when it runs builds, tests, or scripts.
+- **[Hooks](/features/hooks)**: `postClone` and `prePush` commands run with the variables set.
+- **[Snapshot](/features/snapshots) setup scripts**: variables are available while a snapshot is built and are baked into anything the setup script writes to disk.
+- **[MCP servers](/integrations/mcp) and integrations**: reference a variable so a server or integration can authenticate.
 
 For example, reference a variable in a `globalMcpServers` definition instead of hardcoding the value:
 
@@ -61,19 +61,19 @@ For example, reference a variable in a `globalMcpServers` definition instead of 
 ## Security
 
 - **Encrypted at rest.** Values are encrypted before they're stored.
-- **Write-only in the dashboard.** After you save a variable, the value is hidden — the list shows only the key and when it was created. There is no way to reveal a stored value.
+- **Write-only in the dashboard.** After you save a variable, the value is hidden. The list shows only the key and when it was created, and there is no way to reveal a stored value.
 - **Scoped to your workspace.** Variables are only injected into sessions that belong to the workspace where you created them.
 
 ## Constraints
 
 - Keys are unique within a workspace.
-- To rotate or change a value, delete the variable and create it again — values can't be edited in place because they're hidden after saving.
+- To rotate or change a value, delete the variable and create it again. Values can't be edited in place because they're hidden after saving.
 - Tembo injects its own reserved variables into every session, including `TEMBO_`-prefixed variables and, for [triggered agents](/features/agents#triggers), `TRIGGER_PAYLOAD`. Avoid using these names for your own variables, as Tembo's values take precedence.
 - Keep secrets out of [`tembo.nix`](/features/sandbox/custom-dependencies) and out of your repository. Store them here instead.
 
 ## Remove a variable
 
-1. Open **Settings** → **Sandbox**.
+1. Open **Settings** > **Sandbox**.
 2. Find the variable in the **Environment Variables** table.
 3. Open the row menu and select **Delete**.
 
