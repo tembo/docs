@@ -3,7 +3,7 @@ title: "Pricing"
 description: "Understand Tembo plans, model and compute rates, usage allowances, prepaid balance, and overages."
 ---
 
-Tembo gives your workspace a dollar-denominated usage allowance. Tembo-managed model inference and cloud VM compute draw from the same balance.
+Tembo gives your workspace a dollar-denominated usage allowance. Tembo Gateway usage and cloud VM compute draw from the same balance.
 
 ## Plans
 
@@ -19,14 +19,14 @@ BYOK (Bring Your Own Key) is available on Pro, Max, and Enterprise.
 
 Two usage categories draw from the same balance:
 
-- **Managed inference**: model input, output, and cache usage is charged at the rates in [Managed inference pricing](#managed-inference-pricing).
+- **Tembo Gateway**: model input, output, and cache usage is charged at the rates in [Tembo Gateway pricing](#tembo-gateway-pricing).
 - **Cloud VM compute**: metered from the CPU, memory, and runtime used by each session.
 
 BYOK and ChatGPT/Codex OAuth inference cost \$0 through Tembo because you provide the model access. The cloud VM running the session continues to draw from your usage allowance.
 
 Included monthly allowance expires at the end of each billing cycle and does not roll over. Prepaid balance does not expire.
 
-## Managed inference pricing
+## Tembo Gateway pricing
 
 Pricing is shown in USD per 1M tokens.
 
@@ -59,7 +59,7 @@ Pricing is shown in USD per 1M tokens.
 
 ## Cloud VM compute rates
 
-VM compute is a separate usage category from managed inference. It draws from the same dollar-denominated allowance at **\$0.0403/vCPU-hour + \$0.0130/GiB-RAM-hour**.
+VM compute is a separate usage category from Tembo Gateway. It draws from the same dollar-denominated allowance at **\$0.0403/vCPU-hour + \$0.0130/GiB-RAM-hour**.
 
 | Resource | Rate |
 | --- | ---: |
@@ -88,7 +88,7 @@ See [Sandboxes](/features/sandbox/overview) for more about the execution environ
 
 ## What consumes the allowance
 
-Managed inference and VM compute are metered while Tembo runs work such as:
+Tembo Gateway and VM compute are metered while Tembo runs work such as:
 
 - Creating pull requests from assigned issues (Linear, Jira, Slack)
 - Fixing production errors from Sentry
@@ -111,7 +111,7 @@ Some integrations can create a large batch of work at once — for example, a re
 
 ## Usage refunds
 
-Managed inference usage may be refunded automatically in some cases:
+Tembo Gateway usage may be refunded automatically in some cases:
 
 - **Failed sessions**: if Tembo cannot complete a session because of an internal error
 - **Duplicate issues**: if the same issue is queued more than once
@@ -119,7 +119,7 @@ Managed inference usage may be refunded automatically in some cases:
 
 ## Usage and monitoring
 
-You can track managed inference, compute, total usage, VM resource-hours, and daily spend in the [Billing dashboard](https://app.tembo.io/settings/billing). Overage invoices list managed inference and compute separately.
+You can track Tembo Gateway usage, compute, total usage, VM resource-hours, and daily spend in the [Billing dashboard](https://app.tembo.io/settings/billing). Overage invoices list Tembo Gateway and compute separately.
 
 ## Prepaid balance and on-demand usage
 
