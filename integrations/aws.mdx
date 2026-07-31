@@ -25,10 +25,7 @@ Agents can only do what the IAM role permits. The default is `ReadOnlyAccess`; y
 
 ## Before you start
 
-You need:
-
-- Permission to create IAM roles and identity providers in the target AWS account
-- Your **Tembo organization ID**. Open [Integrations](https://app.tembo.io/integrations), click **Connect** next to AWS, then click **Open AWS Console**. Before the AWS page loads, copy the `param_TemboOrgId` value out of the URL — it looks like `org_2vyf1Ja...`.
+You need permission to create IAM roles and identity providers in the target AWS account.
 
 <Note>
   Connect as many AWS accounts as you like. Each gets its own label and an isolated MCP server session, so a `production` and a `staging` account never share credentials.
@@ -56,7 +53,7 @@ Both produce identical results. Tembo only needs the finished role ARN.
   <Step title="Deploy the stack">
     Click **Create via CloudFormation** to open a pre-filled stack in your AWS console, then deploy it.
 
-    If that link returns "Access Denied", download the template from the connect modal and upload it manually instead: in the [CloudFormation console](https://console.aws.amazon.com/cloudformation), choose **Create stack → With new resources → Upload a template file**, then supply your Tembo organization ID when prompted.
+    If that link returns "Access Denied", download the template from the connect modal and upload it manually instead: in the [CloudFormation console](https://console.aws.amazon.com/cloudformation), choose **Create stack → With new resources → Upload a template file**, then supply your [workspace ID](/integrations/aws#find-your-workspace-id) when prompted.
   </Step>
   <Step title="Copy the role ARN">
     When the stack completes, open its **Outputs** tab and copy the `RoleArn` value.
@@ -70,6 +67,12 @@ Both produce identical results. Tembo only needs the finished role ARN.
 
 Create two resources in the AWS account you want to connect, then hand Tembo the role ARN.
 
+### Find your workspace ID
+
+The role's trust policy has to name the workspace allowed to assume it. In Tembo, go to **Settings → Workspace** and copy the value under **Workspace ID** — use the copy button next to the field.
+
+The value starts with `org_`, because a workspace is an organization internally. That's why the trust policy's subject is `org:` followed by this value.
+
 ### Requirements
 
 | Setting | Value |
@@ -78,7 +81,7 @@ Create two resources in the AWS account you want to connect, then hand Tembo the
 | Audience (client ID) | `sts.amazonaws.com` |
 | Trust policy action | `sts:AssumeRoleWithWebIdentity` |
 | `internal.tembo.io:aud` condition | `sts.amazonaws.com` |
-| `internal.tembo.io:sub` condition | `org:<your-tembo-org-id>` |
+| `internal.tembo.io:sub` condition | `org:<your-workspace-id>` |
 | Max session duration | 3600 seconds |
 | Permissions | Your choice. `ReadOnlyAccess` is the default Tembo suggests. |
 
@@ -86,10 +89,10 @@ Three details are easy to get wrong:
 
 - **The provider must live in the same AWS account as the role.** AWS resolves the federated principal locally when the role is assumed, so a provider in another account will not work.
 - **The condition keys drop the scheme.** They are `internal.tembo.io:sub`, not `https://internal.tembo.io:sub`.
-- **The subject is prefixed.** If your organization ID is `org_2vyf1Ja...`, the `sub` value is `org:org_2vyf1Ja...` — the literal string `org:` followed by the full ID.
+- **The subject is prefixed.** If your workspace ID is `org_2vyf1Ja...`, the `sub` value is `org:org_2vyf1Ja...` — the literal string `org:` followed by the full ID.
 
 <Warning>
-  Always pin the `sub` condition to your organization ID. The OIDC provider only proves that Tembo signed the token, not which organization it was issued for. Without the `sub` condition, a token issued to any other Tembo organization would satisfy your trust policy.
+  Always pin the `sub` condition to your workspace ID. The OIDC provider only proves that Tembo signed the token, not which workspace it was issued for. Without the `sub` condition, a token issued to any other Tembo workspace would satisfy your trust policy.
 </Warning>
 
 ### The OIDC provider
@@ -102,7 +105,7 @@ Thumbprints do not need maintaining. AWS verifies the JWKS endpoint's TLS certif
 
 ### The IAM role
 
-Attach this trust policy, replacing the account ID and organization ID:
+Attach this trust policy, replacing the account ID and workspace ID:
 
 ```json Trust policy
 {
@@ -157,7 +160,7 @@ data "aws_iam_policy_document" "tembo_assume_role" {
     condition {
       test     = "StringEquals"
       variable = "internal.tembo.io:sub"
-      values   = ["org:${var.tembo_org_id}"]
+      values   = ["org:${var.tembo_workspace_id}"]
     }
   }
 }
@@ -182,7 +185,7 @@ output "tembo_role_arn" {
 
 ```bash
 ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
-TEMBO_ORG_ID=org_2vyf1Ja...   # your organization ID
+TEMBO_WORKSPACE_ID=org_2vyf1Ja...   # from Settings → Workspace
 
 aws iam create-open-id-connect-provider \
   --url https://internal.tembo.io \
@@ -199,7 +202,7 @@ cat > trust-policy.json <<EOF
     "Condition": {
       "StringEquals": {
         "internal.tembo.io:aud": "sts.amazonaws.com",
-        "internal.tembo.io:sub": "org:${TEMBO_ORG_ID}"
+        "internal.tembo.io:sub": "org:${TEMBO_WORKSPACE_ID}"
       }
     }
   }]
@@ -230,7 +233,7 @@ Paste the role ARN into the Tembo connect modal under **Enter ARN manually** and
 
 Tembo never stores AWS credentials. For each agent run:
 
-1. Tembo mints a short-lived RS256 JWT (5-minute TTL) signed with its OIDC private key, carrying `iss` of the Tembo issuer, `aud` of `sts.amazonaws.com`, and `sub` of `org:<your-org-id>`
+1. Tembo mints a short-lived RS256 JWT (5-minute TTL) signed with its OIDC private key, carrying `iss` of the Tembo issuer, `aud` of `sts.amazonaws.com`, and `sub` of `org:<your-workspace-id>`
 2. Tembo calls `sts:AssumeRoleWithWebIdentity` against your role, presenting that JWT. This call carries no AWS credentials of its own — the token is the identity
 3. STS finds the OIDC provider in your account matching the token's issuer, fetches Tembo's public JWKS to verify the signature, then evaluates your trust policy conditions
 4. The resulting temporary credentials (1-hour TTL) are injected into the agent's sandbox and never leave it
@@ -251,7 +254,7 @@ Because the token is the identity, nothing about this depends on which AWS accou
     2. **Provider is in the same account as the role.** A provider in a different account is not usable.
     3. **`sub` includes the `org:` prefix.** The value is `org:org_2vyf1Ja...`, not `org_2vyf1Ja...`.
     4. **Condition keys have no scheme.** `internal.tembo.io:sub`, not `https://internal.tembo.io:sub`.
-    5. **Organization ID matches.** Compare against the `param_TemboOrgId` value in the **Open AWS Console** URL.
+    5. **Workspace ID matches.** Compare against the value under **Workspace ID** in **Settings → Workspace**.
   </Accordion>
 
   <Accordion title="Credentials expire during a long agent run">
