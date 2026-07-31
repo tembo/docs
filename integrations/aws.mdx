@@ -69,7 +69,7 @@ Create two resources in the AWS account you want to connect, then hand Tembo the
 
 ### Find your workspace ID
 
-The role's trust policy has to name the workspace allowed to assume it. In Tembo, go to **Settings → Workspace** and copy the value under **Workspace ID** — use the copy button next to the field.
+The role's trust policy has to name the workspace allowed to assume it. In Tembo, go to **Settings → Workspace** and copy the value under **Workspace ID**.
 
 The value starts with `org_`, because a workspace is an organization internally. That's why the trust policy's subject is `org:` followed by this value.
 
