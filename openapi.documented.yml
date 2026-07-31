@@ -166,13 +166,13 @@ paths:
         get:
             responses:
                 "200":
-                    description: Successfully retrieved paginated list of issues
+                    description: Successfully retrieved paginated list of sessions
                     content:
                         application/json:
                             schema:
                                 type: object
                                 properties:
-                                    issues:
+                                    sessions:
                                         type: array
                                         items:
                                             type: object
@@ -232,7 +232,7 @@ paths:
                                             - hasNext
                                             - hasPrevious
                                 required:
-                                    - issues
+                                    - sessions
                                     - meta
             operationId: getPublic-apiSessionList
             parameters:
@@ -255,7 +255,7 @@ paths:
                       minimum: 1
                       default: 1
                       example: 1
-            description: Gets a paginated list of issues for the organization
+            description: Gets a paginated list of sessions for the organization
             summary: List Sessions
             x-codeSamples:
                 - lang: JavaScript
@@ -268,7 +268,7 @@ paths:
 
                       const sessions = await client.session.list();
 
-                      console.log(sessions.issues);
+                      console.log(sessions.sessions);
     /session/search:
         get:
             responses:
@@ -279,7 +279,7 @@ paths:
                             schema:
                                 type: object
                                 properties:
-                                    issues:
+                                    sessions:
                                         type: array
                                         items:
                                             type: object
@@ -341,7 +341,7 @@ paths:
                                     query:
                                         type: string
                                 required:
-                                    - issues
+                                    - sessions
                                     - meta
                                     - query
                 "400":
@@ -359,7 +359,7 @@ paths:
             parameters:
                 - name: q
                   in: query
-                  description: Search query to find issues by title or description
+                  description: Search query to find sessions by title or description
                   required: true
                   schema:
                       type: string
@@ -384,7 +384,7 @@ paths:
                       minimum: 1
                       default: 1
                       example: 1
-            description: Search issues for the organization with pagination
+            description: Search sessions for the organization with pagination
             summary: Search Sessions
             x-codeSamples:
                 - lang: JavaScript
@@ -397,7 +397,7 @@ paths:
 
                       const response = await client.session.search({ q: 'authentication bug' });
 
-                      console.log(response.issues);
+                      console.log(response.sessions);
     /agent:
         post:
             responses:
