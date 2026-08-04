@@ -398,6 +398,165 @@ paths:
                       const response = await client.session.search({ q: 'authentication bug' });
 
                       console.log(response.sessions);
+    /session/{sessionId}/messages:
+        post:
+            responses:
+                "200":
+                    description: Message created successfully
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: object
+                                        properties:
+                                            id:
+                                                type: string
+                                            content:
+                                                type: string
+                                            createdAt:
+                                                type: string
+                                                format: date-time
+                                            isQueued:
+                                                type: boolean
+                                        required:
+                                            - id
+                                            - content
+                                            - createdAt
+                                            - isQueued
+                                    job:
+                                        anyOf:
+                                            - type: object
+                                              properties:
+                                                  id:
+                                                      type: string
+                                                  task:
+                                                      type: string
+                                              required:
+                                                  - id
+                                                  - task
+                                            - type: "null"
+                                    hotPath:
+                                        anyOf:
+                                            - type: object
+                                              properties:
+                                                  providerSessionId:
+                                                      type: string
+                                                  activeProviderTurnId:
+                                                      type: string
+                                                  queuedTurnId:
+                                                      type: string
+                                                  mode:
+                                                      type: string
+                                                      enum:
+                                                          - started
+                                                          - steered
+                                                          - queued
+                                                  transport:
+                                                      type: string
+                                            - type: "null"
+                                    session:
+                                        type: object
+                                        properties:
+                                            id:
+                                                type: string
+                                            title:
+                                                type: string
+                                        required:
+                                            - id
+                                            - title
+                                required:
+                                    - message
+                                    - job
+                                    - session
+                "400":
+                    description: Bad request
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                required:
+                                    - error
+                "404":
+                    description: Session not found
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                required:
+                                    - error
+            operationId: postPublic-apiSessionSessionIdMessages
+            parameters:
+                - name: sessionId
+                  in: path
+                  description: ID of the session to continue
+                  required: true
+                  schema:
+                      type: string
+                      format: uuid
+            description: Create a message for an existing session and queue a follow-up job
+            summary: Send Session Message
+            requestBody:
+                description: Session message payload
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                content:
+                                    type: string
+                                    minLength: 1
+                                    description: Follow-up instructions for the session
+                                jsonContent:
+                                    type: string
+                                    description: Structured message content serialized as JSON
+                                artifactId:
+                                    type: string
+                                    format: uuid
+                                    description: Artifact to associate with the follow-up
+                                pullRequestId:
+                                    type: string
+                                    format: uuid
+                                    description: Pull request to associate with the follow-up
+                                mcpServers:
+                                    type: array
+                                    items:
+                                        type: string
+                                    description: MCP server identifiers available to the agent
+                                agentOptions:
+                                    type: object
+                                    additionalProperties: true
+                                    description: Agent runtime options for this follow-up
+                                slashCommand:
+                                    type: object
+                                    properties:
+                                        command:
+                                            type: string
+                                            minLength: 1
+                                        arguments:
+                                            type: string
+                                    required:
+                                        - command
+                            required:
+                                - content
+                required: true
+            x-codeSamples:
+                - lang: bash
+                  label: cURL
+                  source: |-
+                      curl -s -X POST \
+                        "https://api.tembo.io/session/${SESSION_ID}/messages" \
+                        -H "Authorization: Bearer ${API_KEY}" \
+                        -H "Content-Type: application/json" \
+                        -d '{"content": "Please add a regression test for this change."}'
+
     /agent:
         post:
             responses:

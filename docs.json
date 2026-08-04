@@ -163,7 +163,8 @@
                                 "pages": [
                                     "POST /session/create",
                                     "GET /session/list",
-                                    "GET /session/search"
+                                    "GET /session/search",
+                                    "POST /session/{sessionId}/messages"
                                 ]
                             },
                             {
@@ -190,7 +191,8 @@
                                 "pages": [
                                     "POST /session/create",
                                     "GET /session/list",
-                                    "GET /session/search"
+                                    "GET /session/search",
+                                    "POST /session/{sessionId}/messages"
                                 ]
                             },
                             {
