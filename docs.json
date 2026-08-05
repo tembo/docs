@@ -58,6 +58,7 @@
                                 "pages": [
                                     "features/sandbox/overview",
                                     "features/sandbox/custom-dependencies",
+                                    "features/sandbox/environment-variables",
                                     "features/snapshots"
                                 ]
                             },
