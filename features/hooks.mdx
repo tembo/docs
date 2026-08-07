@@ -1,15 +1,17 @@
 ---
 title: 'Hooks'
-description: 'Run custom commands at lifecycle events like post-clone and pre-push.'
+description: 'Run setup commands in the sandbox before an agent starts working.'
 ---
 
-Hooks run shell commands at specific points during a session. Configure them in `.tembo.json` at your repository root.
+Hooks run shell commands in the sandbox during session setup. Configure them in `.tembo.json` at your repository root.
 
 ## Available hooks
 
-**`postClone`** - Runs after Tembo clones your repo, before it starts working.
+**`postClone`** - Runs after your repositories are ready and before the agent starts working. Use it for dependency installs and other one-time setup.
 
-**`prePush`** - Runs after Tembo makes changes, before pushing and opening a PR.
+<Note>
+  `prePush` is accepted in `.tembo.json` for backwards compatibility, but it is not executed today. Commands placed there never run. Use `postClone` for setup, and run linters, tests, and builds from your CI or by instructing the agent directly.
+</Note>
 
 ## Example
 
@@ -19,19 +21,97 @@ Hooks run shell commands at specific points during a session. Configure them in 
     "postClone": [
       "npm ci",
       "cp .env.example .env.local"
-    ],
-    "prePush": [
-      "npm run lint",
-      "npm run test",
-      "npm run build"
     ]
   }
 }
 ```
 
-## Details
+`hooks` is the only supported top-level key. Any other key is ignored.
 
-- Commands run sequentially in the repository root
-- If a command fails, Tembo logs the failure and continues with the remaining commands in the hook
-- Hooks run in the same [sandbox](/features/sandbox/overview) as the session
-- Shell features (piping, redirects, `&&`) are supported
+## When postClone runs
+
+`postClone` runs during session setup, after Tembo configures git credentials, refreshes your repositories, and sets up MCP servers, and before it builds the prompt and starts the agent.
+
+It also runs when Tembo builds a [snapshot](/features/snapshots), so dependencies installed by the hook are baked into the snapshot image.
+
+<Warning>
+  `postClone` is skipped when a sandbox resumes from a snapshot, because the snapshot already contains the state the hook would have produced. If you rely on a hook for something that must happen every session, such as writing a short-lived credential, it will not run on resumed sessions.
+</Warning>
+
+## Shell behavior
+
+Each entry in a hook array is executed as its own command. Pipes and redirects work as expected:
+
+```json
+{
+  "hooks": {
+    "postClone": ["cat config.template.json | envsubst > config.json"]
+  }
+}
+```
+
+<Warning>
+  Do not chain commands with `&&`, `||`, or `;`. Only the first command in the chain runs, and the rest are silently dropped with no error.
+</Warning>
+
+List each command as a separate array entry instead:
+
+```json
+{
+  "hooks": {
+    "postClone": ["npm ci", "npm run codegen"]
+  }
+}
+```
+
+If you genuinely need conditional chaining inside one command, wrap it in an explicit shell:
+
+```json
+{
+  "hooks": {
+    "postClone": ["bash -c 'npm ci && npm run codegen'"]
+  }
+}
+```
+
+## Failure behavior
+
+- Commands run sequentially in the sandbox
+- A command that exits non-zero is logged, and the remaining commands still run
+- A failing hook does not fail the session, and the agent starts either way
+
+Because failures are non-fatal and easy to miss, avoid chaining critical setup steps and assuming they all succeeded.
+
+## Working with tembo.nix
+
+If your repository has a [`tembo.nix`](/features/sandbox/custom-dependencies) file, hook commands run inside that Nix dev shell, so any toolchain you declare there is on `PATH`.
+
+To do this Tembo temporarily replaces `flake.nix` with the contents of `tembo.nix` while the hook runs, then restores the original afterwards. If your repository already has its own `flake.nix`, hooks run against the `tembo.nix` dev shell rather than yours.
+
+When dependencies are already pre-built into a snapshot, Tembo reuses the saved environment instead of re-entering the dev shell.
+
+## Troubleshooting
+
+**Hooks did not run at all.** If `.tembo.json` is not valid JSON, or does not match the expected shape, Tembo logs the problem and falls back to defaults, which means no hooks run. Validation is all-or-nothing, so a single malformed entry disables every hook in the file. Check that each hook is an array of strings:
+
+```json
+{
+  "hooks": {
+    "postClone": ["npm ci"]
+  }
+}
+```
+
+A common mistake is passing a bare string instead of an array:
+
+```json
+{
+  "hooks": {
+    "postClone": "npm ci"
+  }
+}
+```
+
+**Hooks did not run on a follow-up session.** The sandbox likely resumed from a snapshot. See the warning above.
+
+**A dependency is missing.** Add the toolchain to [`tembo.nix`](/features/sandbox/custom-dependencies) rather than installing it with `apt` or `brew`, which are not available in the sandbox.
