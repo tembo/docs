@@ -36,7 +36,7 @@ The integration is implemented as a Snowflake-managed MCP server that exposes Te
   - `CREATE AGENT` on the target schema
   - `USAGE` on a warehouse the agent will run with
 - A Tembo API token — generate one from your Tembo account settings
-- The Tembo REST API base URL: `https://api.tembo.io`
+- The Tembo REST API base URL: `https://api.tembo.io/public-api`
 
 For self-hosted Tembo installs, substitute your deployment's base URL throughout. See [Self-Hosted Overview](/features/self-hosted/overview) for details.
 
@@ -96,7 +96,7 @@ PACKAGES = ('requests')
 AS $$
 import _snowflake, json, requests
 
-BASE = "https://api.tembo.io"
+BASE = "https://api.tembo.io/public-api"
 
 ROUTES = {
     "list_sessions":      ("GET",  "/session/list"),
@@ -333,7 +333,7 @@ SHOW EXTERNAL ACCESS INTEGRATIONS LIKE 'tembo_api_access_integration';
   </Accordion>
 
   <Accordion title="Self-hosted Tembo">
-    For self-hosted Tembo, replace `https://api.tembo.io` with your deployment's base URL in both the network rule (`VALUE_LIST`) and the Python UDF (`BASE`). The rest of the flow is identical.
+    For self-hosted Tembo, replace `https://api.tembo.io/public-api` with your deployment's public API base URL (for example, `https://tembo.example.com/api/public-api`) in the Python UDF (`BASE`). Update the network rule (`VALUE_LIST`) to allow your deployment's host. The rest of the flow is identical.
   </Accordion>
 
   <Accordion title="Rotating the API token">
