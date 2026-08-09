@@ -14,7 +14,7 @@ BYOK lets your workspace call models with your own provider credentials instead 
 - AWS Bedrock and GCP Vertex AI credentials require a paid Tembo plan.
 - Tembo still handles orchestration, session context, sandbox execution, and PR automation.
 
-BYOK inference costs $0 through Tembo. You can also connect a ChatGPT subscription on every Tembo plan, including Free, to use supported OpenAI models with Codex, OpenCode, or Pi. Sessions still use billable cloud VM compute, which draws from your workspace's [usage allowance](/resources/pricing).
+BYOK inference costs $0 through Tembo. Sessions still use billable cloud VM compute, which draws from your workspace's [usage allowance](/resources/pricing).
 
 ### Switch a model between BYOK and Tembo Managed Inference
 
@@ -53,6 +53,24 @@ To enable it, add:
 - **Location**
 
 in **Settings -> Models -> API Keys -> GCP Vertex AI**.
+
+## Connect a ChatGPT subscription
+
+You can connect a ChatGPT subscription on every Tembo plan, including Free, to use supported OpenAI models with Codex, OpenCode, or Pi. You need a ChatGPT Plus, Pro, Business, Edu, or Enterprise plan.
+
+1. Open **Settings > Connected accounts**.
+2. Under **LLM subscriptions**, click **Connect Codex**.
+3. Copy the authorization code, then click **Open authorization page**.
+4. Enter the code in ChatGPT and approve the connection. Keep the Tembo dialog open while authorization completes.
+5. Return to Tembo and confirm that **ChatGPT Codex** shows **Connected**.
+
+<Note>
+  If prompted, enable device code authorization in [ChatGPT Settings > Security](https://chatgpt.com/settings/security), then try connecting again.
+</Note>
+
+<Frame>
+  <img src="/images/models/chatgpt-codex-connected.png" alt="Connected accounts settings showing a connected ChatGPT Codex subscription under LLM subscriptions" />
+</Frame>
 
 ## Supported models
 
