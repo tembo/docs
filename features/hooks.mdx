@@ -1,13 +1,13 @@
 ---
 title: 'Hooks'
-description: 'Run custom commands at lifecycle events like post-clone and pre-push.'
+description: 'Run custom setup and pre-push commands during a session.'
 ---
 
 Hooks run shell commands at specific points during a session. Configure them in `.tembo.json` at your repository root.
 
 ## Available hooks
 
-**`postClone`** - Runs after Tembo clones your repo, before it starts working.
+**`setupScript`** - Runs after Tembo clones your repo, before it starts working.
 
 **`prePush`** - Runs after Tembo makes changes, before pushing and opening a PR.
 
@@ -16,7 +16,7 @@ Hooks run shell commands at specific points during a session. Configure them in 
 ```json
 {
   "hooks": {
-    "postClone": [
+    "setupScript": [
       "npm ci",
       "cp .env.example .env.local"
     ],
