@@ -26,6 +26,35 @@ BYOK and ChatGPT/Codex OAuth inference cost \$0 through Tembo because you provid
 
 Included monthly allowance expires at the end of each billing cycle and does not roll over. Prepaid balance does not expire.
 
+## Cloud VM compute rates
+
+VM compute is a separate usage category from Tembo Gateway. It draws from the same dollar-denominated allowance at **\$0.0403/vCPU-hour + \$0.0130/GiB-RAM-hour**.
+
+| Resource | Rate |
+| --- | ---: |
+| vCPU | $0.0403 per vCPU-hour |
+| Memory | $0.0130 per GiB RAM-hour |
+
+The per-size hourly prices below apply those resource rates to each VM configuration.
+
+| Size | vCPU | Memory | Price per hour |
+| --- | ---: | ---: | --- |
+| Nano | 2 | 2 GiB | $0.1066 |
+| Micro | 2 | 4 GiB | $0.1326 |
+| Medium | 4 | 8 GiB | $0.2652 |
+| Large | 8 | 16 GiB | $0.5304 |
+| XL | 16 | 32 GiB | $1.0608 |
+| XXL | 16 | 64 GiB | $1.4768 |
+| Ultra | 32 | 128 GiB | $2.9536 |
+
+<Note>
+  **Don't see the VM size you want?** Larger VM sizes are available upon request. Contact [support@tembo.io](mailto:support@tembo.io) to discuss your requirements.
+</Note>
+
+Tembo measures each running VM in seconds and bills its actual running time at the per-second equivalent of the hourly rate. Stopped, snapshotted, and otherwise non-running VMs do not accrue compute.
+
+See [Sandboxes](/features/sandbox/overview) for more about the execution environment.
+
 ## Tembo Gateway pricing
 
 Pricing is shown in USD per 1M tokens.
@@ -56,35 +85,6 @@ Pricing is shown in USD per 1M tokens.
 | Tembo | `deepseek-v4-pro` | $2.001 | $4.002 | n/a | $0.16675 |
 | Tembo | `deepseek-v4-flash` | $0.161 | $0.322 | n/a | $0.0345 |
 | Tembo | `nvidia-nemotron-3-ultra-nvfp4` | $0.69 | $2.76 | n/a | $0.138 |
-
-## Cloud VM compute rates
-
-VM compute is a separate usage category from Tembo Gateway. It draws from the same dollar-denominated allowance at **\$0.0403/vCPU-hour + \$0.0130/GiB-RAM-hour**.
-
-| Resource | Rate |
-| --- | ---: |
-| vCPU | $0.0403 per vCPU-hour |
-| Memory | $0.0130 per GiB RAM-hour |
-
-The per-size hourly prices below apply those resource rates to each VM configuration.
-
-| Size | vCPU | Memory | Price per hour |
-| --- | ---: | ---: | --- |
-| Nano | 2 | 2 GiB | $0.1066 |
-| Micro | 2 | 4 GiB | $0.1326 |
-| Medium | 4 | 8 GiB | $0.2652 |
-| Large | 8 | 16 GiB | $0.5304 |
-| XL | 16 | 32 GiB | $1.0608 |
-| XXL | 16 | 64 GiB | $1.4768 |
-| Ultra | 32 | 128 GiB | $2.9536 |
-
-<Note>
-  **Don't see the VM size you want?** Larger VM sizes are available upon request. Contact [support@tembo.io](mailto:support@tembo.io) to discuss your requirements.
-</Note>
-
-Tembo measures each running VM in seconds and bills its actual running time at the per-second equivalent of the hourly rate. Stopped, snapshotted, and otherwise non-running VMs do not accrue compute.
-
-See [Sandboxes](/features/sandbox/overview) for more about the execution environment.
 
 ## What consumes the allowance
 
