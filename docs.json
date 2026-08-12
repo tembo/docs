@@ -59,7 +59,7 @@
                                     "features/sandbox/overview",
                                     "features/sandbox/custom-dependencies",
                                     "features/sandbox/environment-variables",
-                                    "features/projects"
+                                    "features/snapshots"
                                 ]
                             },
                             {
@@ -293,10 +293,6 @@
         {
             "source": "/features/coding-agents",
             "destination": "/features/agents#agent-harness"
-        },
-        {
-            "source": "/features/snapshots",
-            "destination": "/features/projects"
         },
         {
             "source": "/api/task/:slug",
