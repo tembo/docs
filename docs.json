@@ -165,7 +165,8 @@
                                     "POST /session/create",
                                     "GET /session/list",
                                     "GET /session/search",
-                                    "POST /session/{sessionId}/messages"
+                                    "POST /session/{sessionId}/messages",
+                                    "POST /session/{sessionId}/stop"
                                 ]
                             },
                             {
@@ -193,7 +194,8 @@
                                     "POST /session/create",
                                     "GET /session/list",
                                     "GET /session/search",
-                                    "POST /session/{sessionId}/messages"
+                                    "POST /session/{sessionId}/messages",
+                                    "POST /session/{sessionId}/stop"
                                 ]
                             },
                             {
