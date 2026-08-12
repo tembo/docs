@@ -9,7 +9,7 @@ Every session runs in its own isolated sandbox. Sandboxes are ephemeral: spun up
 
 Your repository is cloned into the sandbox for the duration of a session and torn down when the session ends — no repository contents or working state persist afterward.
 
-The one exception is snapshots. If you use the snapshot feature to speed up environment setup, your repository and pre-installed dependencies are cached into a reusable snapshot image so future sessions start faster. That cached copy persists until the snapshot is rebuilt or removed.
+The one exception is [projects](/features/projects). When you use a project to speed up environment setup, its repositories and pre-installed dependencies are cached in reusable environments so future sessions start faster. Those cached copies persist until the project is rebuilt or removed.
 
 Model providers handle prompt data according to their own retention policies — see the retention table in [Max](/features/max) for Tembo-hosted models. With [BYOK](/features/models), model requests run against your own provider account, so provider-side retention follows that account's terms.
 
