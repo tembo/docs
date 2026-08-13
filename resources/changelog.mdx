@@ -1,0 +1,38 @@
+---
+title: "Changelog"
+description: "Daily release notes for Tembo documentation and API reference updates."
+---
+
+# Changelog
+
+## Docs Release 2026.08.13
+
+Released August 13, 2026. Covers documentation changes merged on August 12, 2026.
+
+<Note>
+  No breaking changes were identified in this release. No migration action is required.
+</Note>
+
+### Added
+
+- Documented the public `POST /session/{sessionId}/stop` API endpoint in both hosted and self-hosted API references. Developers can now see how to stop running sandbox sessions, runtime sessions, and queued jobs through the public API, including response fields and copy-paste cURL examples. [#689](https://github.com/tembo/docs/pull/689) by tembo[bot].
+
+### Changed
+
+- Restored the snapshot documentation as the canonical sandbox setup guide after a short-lived rename to "Projects." The docs navigation and related references now point users back to the Snapshots page, keeping the feature name consistent across sandbox, environment variable, dependency, and beta hook documentation. [#691](https://github.com/tembo/docs/pull/691) by Darren Baldwin and tembo[bot].
+
+### Deprecated
+
+- No deprecations in this release.
+
+### Removed
+
+- Removed the temporary redirect from `/features/snapshots` to `/features/projects` so existing snapshot links resolve to the canonical Snapshots page. [#691](https://github.com/tembo/docs/pull/691) by Darren Baldwin and tembo[bot].
+
+### Fixed
+
+- Fixed stale internal documentation links that referred to projects instead of snapshots, reducing confusion for users configuring reusable sandbox environments. [#691](https://github.com/tembo/docs/pull/691) by Darren Baldwin and tembo[bot].
+
+### Security
+
+- No security fixes in this release.
