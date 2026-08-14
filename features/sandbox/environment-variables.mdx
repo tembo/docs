@@ -38,7 +38,7 @@ Once saved, a variable is available in the sandbox for the whole session. You ca
 
 - **Agent commands**: the agent can read the variable when it runs builds, tests, or scripts.
 - **[Hooks](/features/hooks)**: `setupScript` and `prePush` commands run with the variables set.
-- **[Snapshot](/features/snapshots) setup scripts**: variables are available while a snapshot is built and are baked into anything the setup script writes to disk.
+- **[Project](/features/projects) setup scripts**: variables are available while a project's environments are built and are baked into anything the setup script writes to disk.
 - **[MCP servers](/integrations/mcp) and integrations**: reference a variable so a server or integration can authenticate.
 
 For example, reference a variable in a `globalMcpServers` definition instead of hardcoding the value:
