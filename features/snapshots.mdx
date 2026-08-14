@@ -54,6 +54,14 @@ Use the setup script to add project-specific tooling, dependencies, or other env
 
 The script has access to all [environment variables](/features/sandbox/environment-variables) configured in **Settings** > **Sandbox**, including secrets your setup commands need. Anything the script installs or writes to disk becomes part of the snapshot and is available to sessions that start from it.
 
+<Note>
+  This setup script is separate from the `setupScript` [hook](/features/hooks) in
+  `.tembo.json`. Both run while a snapshot is built, but sessions that restore from
+  a snapshot skip the `.tembo.json` hook, because the restored workspace already
+  carries its results. Rebuild the snapshot after you change setup commands so new
+  sessions pick them up.
+</Note>
+
 ## Sizes and schedules
 
 You can build snapshots for any number of sandbox sizes. For example, you can keep a small snapshot ready for routine tasks and a larger snapshot ready for heavier builds or test suites.
