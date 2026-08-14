@@ -1,0 +1,41 @@
+---
+title: "Changelog"
+description: "Review dated release notes for Tembo demo repositories, including user impact, breaking changes, and follow-up actions."
+---
+
+## 2026.08.14
+
+Release date: August 14, 2026
+
+This release establishes the demo application stack used for live coding, preview, and infrastructure walkthroughs. It adds a working storefront, a companion Orders API, and AWS Terraform modules that can be validated without cloud credentials.
+
+**Breaking changes:** None. These are new demo repositories, so no existing users or integrations need migration work.
+
+**Developer action:** Clone the relevant repository, install dependencies, and run the documented local commands before using the demos.
+
+## Added
+
+- **Demo Storefront** ([`14a8ce9`](https://github.com/tembo/demo-frontend/commit/14a8ce9)): Added a React, Vite, and TypeScript storefront with catalog, product detail, and cart pages. This gives demos a realistic frontend surface for live UI changes and preview workflows.
+- **Demo Orders API** ([`1207f10`](https://github.com/tembo/demo-backend/commit/1207f10)): Added a Node.js, Express, and TypeScript REST API for items and orders, including validation, computed order totals, and health checks. This provides a runnable backend for endpoint, validation, and service-layer demos.
+- **Demo Infrastructure** ([`b812453`](https://github.com/tembo/demo-infrastructure/commit/b812453)): Added Terraform modules for an S3 and CloudFront static site plus a DynamoDB orders table. The configuration supports `terraform init`, `fmt`, and `validate` without AWS credentials, making infrastructure demos easier to run in sandboxes.
+- **Continuous integration for all demo repos:** Added GitHub Actions workflows for frontend builds, backend tests/builds, and Terraform validation. This helps catch broken demo changes before they are shared or used in walkthroughs.
+
+## Changed
+
+- No changes to existing behavior.
+
+## Deprecated
+
+- Nothing deprecated.
+
+## Removed
+
+- Nothing removed.
+
+## Fixed
+
+- No bug fixes in this release.
+
+## Security
+
+- No security fixes in this release.
