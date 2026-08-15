@@ -52,7 +52,7 @@
                         "pages": [
                             "features/agents",
                             "features/models",
-                            "features/feedback-loop",
+                            "features/mentioning-tembo",
                             {
                                 "group": "Sandbox",
                                 "pages": [
@@ -273,6 +273,10 @@
         {
             "source": "/models/pricing",
             "destination": "/resources/pricing"
+        },
+        {
+            "source": "/features/feedback-loop",
+            "destination": "/features/mentioning-tembo"
         },
         {
             "source": "/features/self-hosted/aws",
