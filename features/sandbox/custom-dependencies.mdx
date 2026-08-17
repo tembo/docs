@@ -1,9 +1,19 @@
 ---
 title: 'Custom Dependencies'
-description: 'Add project-specific tools to Tembo sandboxes with tembo.nix.'
+description: 'Add project-specific tools to Tembo sandboxes with setup scripts or tembo.nix.'
 ---
 
-Add a `tembo.nix` file to your repository root when your project needs tools that are not pre-installed in the sandbox. Tembo automatically detects the file and runs commands inside your Nix dev shell.
+Add tools that are not pre-installed in the sandbox with a project setup script or `tembo.nix`.
+
+## Start with a setup script
+
+Use a project setup script as the starting point for custom dependencies. Tembo runs the script after cloning your repositories while it builds the project's prepared environments. Anything the script installs or writes to disk becomes part of those environments.
+
+Add your script under **Advanced setup** when you create or edit a project. See [Setup script](/features/projects#setup-script) for details.
+
+<Note>
+  `tembo.nix` is currently in beta and will be available to everyone very soon. If you have beta access, use the sections below to declare system packages and toolchains in your repository.
+</Note>
 
 ## Prerequisites
 
