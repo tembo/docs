@@ -139,7 +139,11 @@
                     {
                         "group": "Other",
                         "public": true,
-                        "pages": ["resources/pwa", "resources/pricing"]
+                        "pages": [
+                            "resources/changelog",
+                            "resources/pwa",
+                            "resources/pricing"
+                        ]
                     }
                 ]
             },
