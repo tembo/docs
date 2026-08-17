@@ -57,9 +57,9 @@
                                 "group": "Sandbox",
                                 "pages": [
                                     "features/sandbox/overview",
+                                    "features/projects",
                                     "features/sandbox/custom-dependencies",
-                                    "features/sandbox/environment-variables",
-                                    "features/projects"
+                                    "features/sandbox/environment-variables"
                                 ]
                             },
                             {
