@@ -63,6 +63,17 @@ Use the setup script for preparation that is not handled by repository dependenc
 
 The script has access to workspace-wide [environment variables](/features/sandbox/environment-variables) and any environment variables added to the project. Anything the script installs or writes to disk becomes part of the prepared environment.
 
+### Keep setup logic in your repository
+
+To version your setup logic with the rest of your code, commit a script to your repository and call it from the project setup script. For example, if a repository named `my-app` contains `scripts/tembo-setup.sh`, use:
+
+```bash
+cd /workspace/my-app
+bash scripts/tembo-setup.sh
+```
+
+Project setup scripts run from `/workspace`. Tembo clones a repository with a unique name into `/workspace/<repository-name>`. Repository names are lowercased, and unsupported characters are replaced with hyphens. If multiple selected repositories resolve to the same directory name, Tembo clones each one into `/workspace/<repository-id>-<repository-name>` instead.
+
 ## Session sizes and daily refreshes
 
 A project must support at least one session size. If you select several sizes, Tembo builds and maintains a separate prepared environment for each one. People starting a session from the project can choose among those sizes.
