@@ -57,6 +57,19 @@ Before you start a session, open the project and size selector in the session co
 
 Selecting a project also selects the repositories included in that project. You can change the project before the session starts, but not while a session is running.
 
+## Project environment variables
+
+Add environment variables to a project when you only need them while that project's environments are built. Project variables are combined with [workspace-wide environment variables](/features/sandbox/environment-variables). If both scopes use the same key, the project value takes precedence.
+
+To add project-level environment variables:
+
+1. Open **Settings** > **Projects**.
+2. Select the project.
+3. Under **Environment variables**, click **Create Secret**.
+4. Add a single variable or bulk import `.env`-style contents.
+5. Click **Create Secret**.
+6. Build or rebuild the project's environment to apply the variables.
+
 ## Setup script
 
 Use the setup script for preparation that is not handled by repository dependency installation or [`tembo.nix`](/features/sandbox/custom-dependencies). Tembo runs the script while building the project's environments, after it clones the selected repositories.
