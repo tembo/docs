@@ -66,6 +66,12 @@ Self-hosted is designed for teams that want Tembo inside a private cloud, dedica
 - Outbound access can be limited to the systems Tembo needs to reach, such as git providers, model endpoints, or internal services
 - Upgrades happen on your schedule
 
+## Custom inference
+
+You can route model requests through your own inference service by replacing the default Anthropic and OpenAI base URLs with endpoints you control. These endpoints can be internal gateways, proxies, or self-hosted model services, as long as they implement the corresponding Anthropic or OpenAI API.
+
+Make sure the Tembo instance and its agent sandboxes can reach the custom endpoints and that the endpoints expose the model names configured in Tembo.
+
 ## Who it is for
 
 - Teams that need Tembo inside infrastructure they control
