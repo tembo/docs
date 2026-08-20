@@ -4,7 +4,7 @@ info:
     description: Tembo Developer API
     version: 1.0.0
 servers:
-    - url: https://api.tembo.io/
+    - url: https://api.tembo.io/public-api/
       description: Tembo API
 components:
     securitySchemes:
@@ -552,7 +552,7 @@ paths:
                   label: cURL
                   source: |-
                       curl -s -X POST \
-                        "https://api.tembo.io/session/${SESSION_ID}/messages" \
+                        "https://api.tembo.io/public-api/session/${SESSION_ID}/messages" \
                         -H "Authorization: Bearer ${API_KEY}" \
                         -H "Content-Type: application/json" \
                         -d '{"content": "Please add a regression test for this change."}'
@@ -769,7 +769,7 @@ paths:
                 - lang: bash
                   source: |-
                       curl -s -X POST \
-                        "https://api.tembo.io/agent" \
+                        "https://api.tembo.io/public-api/agent" \
                         -H "Authorization: Bearer ${API_KEY}" \
                         -H "Content-Type: application/json" \
                         -d '{
@@ -879,7 +879,7 @@ paths:
                   label: Bearer Auth
                   source: |-
                       curl -s -X POST \
-                        "https://api.tembo.io/agent/${AGENT_ID}/trigger" \
+                        "https://api.tembo.io/public-api/agent/${AGENT_ID}/trigger" \
                         -H "Authorization: Bearer ${API_KEY}" \
                         -H "Content-Type: application/json" \
                         -d '{"issue_url": "https://github.com/org/repo/issues/42"}' | jq .
@@ -887,7 +887,7 @@ paths:
                   label: Query Param Auth
                   source: |-
                       curl -s -X POST \
-                        "https://api.tembo.io/agent/${AGENT_ID}/trigger?apiKey=${API_KEY}" \
+                        "https://api.tembo.io/public-api/agent/${AGENT_ID}/trigger?apiKey=${API_KEY}" \
                         -H "Content-Type: application/json" \
                         -d '{"issue_url": "https://github.com/org/repo/issues/42"}' | jq .
     /repository/list:

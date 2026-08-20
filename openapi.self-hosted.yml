@@ -552,7 +552,7 @@ paths:
                   label: cURL
                   source: |-
                       curl -s -X POST \
-                        "https://api.tembo.io/session/${SESSION_ID}/messages" \
+                        "https://tembo.example.com/api/public-api/session/${SESSION_ID}/messages" \
                         -H "Authorization: Bearer ${API_KEY}" \
                         -H "Content-Type: application/json" \
                         -d '{"content": "Please add a regression test for this change."}'
