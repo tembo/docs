@@ -1,39 +1,43 @@
 ---
-title: "Jira"
-description: "Assign tickets to Tembo and get PRs back."
+title: "Atlassian"
+description: "Connect Jira and Confluence to Tembo for issues, pages, and agent triggers."
 ---
 
 <Frame>
   <img src="/images/integrations/jira.png" alt="Jira" />
 </Frame>
 
-## Features
+The Atlassian integration connects both Jira and Confluence. Jira issues trigger implementation work; Confluence pages can trigger agents on page and comment activity.
+
+## Jira
+
+### Features
 
 - Add the `Tembo` label to trigger implementation
 - Use `tembo/{repo-name}` labels to target specific repositories
 - Status updates and PR links posted as comments
 
-## Installation
+### Installation
 
 <Steps>
   <Step title="Create standard Jira user">
     Create a dedicated standard Jira user for Tembo using an email alias (`you+tembo@company.com`) or dedicated mailbox. In the Jira user profile, set the name/display name to `Tembo` so integration comments show up as `Tembo`.
   </Step>
   <Step title="Install">
-    Go to [Integrations](https://app.tembo.io/integrations) and click **Install** next to Jira. Log in as the standard Jira user.
+    Go to [Integrations](https://app.tembo.io/integrations) and click **Install** next to Atlassian. Log in as the standard Jira user.
   </Step>
   <Step title="Add labels">
     Create a `Tembo` label in your Jira project (recommended). Add it to any issue you want Tembo to work on.
   </Step>
 </Steps>
 
-## Usage
+### Usage
 
 Add the `Tembo` label to any issue. Tembo reads the description, creates a coding session, and opens a PR.
 
 If you add a `tembo/{repo-name}` label, that also triggers Tembo and routes the task to the selected repository.
 
-### Target a specific repository
+#### Target a specific repository
 
 Add a label in the format `tembo/{repo-name}` (for example, `tembo/monorepo`). This label also triggers processing on its own, so you do not need a separate `Tembo` label.
 
@@ -43,18 +47,18 @@ Add a label in the format `tembo/{repo-name}` (for example, `tembo/monorepo`). T
 
 When multiple `tembo/{repo-name}` labels are present, Tembo uses the first one that matches a connected, enabled repository.
 
-### Fallback behavior
+#### Fallback behavior
 
 If no `tembo/{repo-name}` label matches a connected, enabled repository, Tembo falls back in this order:
 
 1. The default repository configured for your Jira integration in Tembo
 2. The first available enabled repository in your Tembo organization
 
-## Agents
+### Agents
 
 See [Agents](/features/agents) for available Jira event triggers.
 
-## Advanced
+### Advanced
 
   <AccordionGroup>
   <Accordion title="Tembo not responding to labels">
@@ -65,3 +69,28 @@ See [Agents](/features/agents) for available Jira event triggers.
     Ensure GitHub/GitLab/Bitbucket is connected. Include clear descriptions with acceptance criteria.
   </Accordion>
 </AccordionGroup>
+
+## Confluence
+
+Confluence page and comment activity can trigger agents once Confluence triggers are enabled on your Atlassian integration.
+
+### Setup
+
+<Steps>
+  <Step title="Enable Confluence triggers">
+    In your [Atlassian integration settings](https://app.tembo.io/integrations), click **Enable Confluence triggers**. This installs Tembo's companion Forge app; a site admin must approve the installation.
+  </Step>
+</Steps>
+
+### Triggers
+
+| Trigger | Description |
+|---------|-------------|
+| Confluence Page Created | When a page is created in Confluence |
+| Confluence Page Updated | When a page is updated in Confluence |
+| Confluence Page Moved | When a page is moved in Confluence |
+| Confluence Comment Created | When a comment is created on a Confluence page |
+| Confluence Page Label Added | When a label is added to a Confluence page |
+| Confluence Page Label Removed | When a label is removed from a Confluence page |
+
+See [Agents](/features/agents) for how to use these as agent triggers.
