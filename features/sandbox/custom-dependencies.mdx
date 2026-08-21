@@ -116,6 +116,30 @@ Use `shellHook` when the sandbox needs environment variables for local commands:
 
 Keep secrets out of `tembo.nix`. Add secrets through your sandbox [environment variables](/features/sandbox/environment-variables) instead.
 
+## How Tembo loads tembo.nix
+
+When Tembo needs your dev shell, it temporarily replaces `flake.nix` in the repository with the contents of `tembo.nix`, evaluates the default dev shell, and then restores the original `flake.nix`.
+
+This has a few consequences worth knowing:
+
+- `tembo.nix` must be a complete, self-contained flake. Tembo does not merge it with a `flake.nix` that your repository already has.
+- A `flake.nix` in your repository is left untouched, and Tembo does not use it to build the dev shell. Put everything the sandbox needs in `tembo.nix`.
+- Tembo never writes a `flake.lock` for `tembo.nix`. Pin `nixpkgs` to a specific revision in `inputs` if you need dependency versions to stay stable over time.
+- Tembo only reads `tembo.nix` from the root of each cloned repository. Files in subdirectories are ignored.
+- Unfree packages are allowed, so you can add them without extra configuration.
+
+## Dependencies in projects
+
+When a [project](/features/projects) builds with repository dependency installation enabled, Tembo evaluates `tembo.nix` once during the build and caches the resulting toolchain in the prepared environment. Sessions started from that project reuse the cached toolchain instead of evaluating the flake again, which is part of why they start faster.
+
+Because the toolchain is captured at build time, edits to `tembo.nix` do not reach project sessions until the environment is rebuilt. Rebuild the project or wait for its daily refresh to pick up the change.
+
+## Troubleshooting
+
+**Dependencies are missing even though the project build succeeded.** If `tembo.nix` fails to evaluate during a project build, Tembo records the failure and finishes the build without the dependencies rather than failing the whole build. Open the project's build log and look for the `nix develop` step. A syntax error, an input that cannot be fetched, or a package name that does not exist in the pinned `nixpkgs` are the usual causes.
+
+**Changes to `tembo.nix` have no effect.** Confirm the file is committed and pushed, then rebuild the project environment so the new toolchain is captured.
+
 ## Tips
 
 - Keep `tembo.nix` focused on system packages and toolchains that your project needs.
