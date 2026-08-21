@@ -1,7 +1,17 @@
 ---
 title: 'Custom Dependencies'
-description: 'Add tools that are not pre-installed in the sandbox, starting with a project setup script or using tembo.nix if you have beta access.'
+description: 'Add tools that are not pre-installed in the sandbox with a setup script, a tembo.nix file, or a Tembo-generated bring your own deps environment.'
 ---
+
+The Tembo sandbox ships with common tooling, but most codebases need something extra: a specific language version, a system library, or a database client. There are three ways to add it.
+
+| Approach | What you write | Scope | Best for |
+| --- | --- | --- | --- |
+| [Setup script](#start-with-a-setup-script) | Shell commands, in the Tembo UI | Per project | Installing project dependencies and running one-off preparation steps |
+| [`tembo.nix`](#declare-packages-with-tembonix) | A Nix dev shell, committed to your repository | Per repository | Teams comfortable with Nix that want toolchains versioned alongside code |
+| [Bring your own deps](#bring-your-own-deps) | Nothing — Tembo generates it for you | Workspace-wide | Translating existing Docker, asdf, or manifest config into a sandbox environment |
+
+You can combine all three. See [How the approaches combine](#how-the-approaches-combine).
 
 ## Start with a setup script
 
@@ -9,16 +19,18 @@ Use a project setup script as the starting point for custom dependencies. Tembo 
 
 Add your script under **Advanced setup** when you create or edit a project. See [Setup script](/features/projects#setup-script) for details.
 
+## Declare packages with tembo.nix
+
 <Note>
   `tembo.nix` is currently in beta and will be available to everyone very soon. If you have beta access, use the sections below to declare system packages and toolchains in your repository.
 </Note>
 
-## Prerequisites
+### Prerequisites
 
 - You have a repository connected to Tembo.
 - You know which system packages or language toolchains your project needs.
 
-## Create tembo.nix
+### Create tembo.nix
 
 Create `tembo.nix` in your repository root with a default dev shell. Tembo uses `devShells.x86_64-linux.default` in the sandbox.
 
@@ -51,7 +63,7 @@ Create `tembo.nix` in your repository root with a default dev shell. Tembo uses 
 
 After you commit the file, new Tembo sessions use the dev shell automatically. Agents can then run commands that depend on those packages, such as `go test`, `cargo test`, or Java build tools.
 
-## Add packages
+### Add packages
 
 Add packages to the `packages` list. For example, this dev shell adds PostgreSQL client tools and `pkg-config` for projects that compile native dependencies:
 
@@ -81,7 +93,7 @@ Add packages to the `packages` list. For example, this dev shell adds PostgreSQL
 }
 ```
 
-## Configure the shell
+### Configure the shell
 
 Use `shellHook` when the sandbox needs environment variables for local commands:
 
@@ -116,8 +128,85 @@ Use `shellHook` when the sandbox needs environment variables for local commands:
 
 Keep secrets out of `tembo.nix`. Add secrets through your sandbox [environment variables](/features/sandbox/environment-variables) instead.
 
+## Bring your own deps
+
+Bring your own deps (BYOD) removes the need to write Nix yourself. Instead of authoring a `tembo.nix` per repository, you point Tembo at the repositories you care about and an agent reads the dependency configuration those repositories already contain, then translates it into a single Nix environment for your whole workspace.
+
+<Note>
+  Bring your own deps is in early access and is not yet enabled for every workspace. It requires the Max or Enterprise plan. If you would like access, [book a call with us](https://book.avoma.com/tembo/tembo-demo/).
+</Note>
+
+### What Tembo reads
+
+The agent starts from the configuration in your repositories rather than guessing, including:
+
+- Container config: `Dockerfile` (and variants such as `Dockerfile.prod`), `docker-compose.yml`, `compose.yml`, and `devcontainer.json`
+- Version pins: `.tool-versions`, `.nvmrc`, `.node-version`, `.python-version`, `.ruby-version`, and `.sdkmanrc`
+- Language manifests and lockfiles: `package.json`, `go.mod`, `pyproject.toml`, `requirements.txt`, `Pipfile`, `Gemfile`, `Cargo.toml`, `pom.xml`, `build.gradle`, `composer.json`, `mix.exs`, `pubspec.yaml`, and their lockfiles
+- Existing Nix files: `flake.nix`, `shell.nix`, `default.nix`, and `tembo.nix`
+
+If a repository already has a working Nix file, the agent refines it rather than replacing it.
+
+### Prerequisites
+
+- Your workspace has bring your own deps enabled.
+- You have workspace admin access.
+- The repositories you want to include are already connected to Tembo.
+
+### Generate an environment
+
+1. Open **Settings** > **Projects**.
+2. Click **New project**.
+3. Choose a name and select the repositories to include.
+4. Turn on **Install dependencies**.
+5. Expand **Advanced setup** and find the **BYOD environment** section.
+6. Click **Generate environment**.
+
+Tembo starts a session named **Bring Your Own Deps: `<name>`** to do the work. Click **View generation session** to watch it: the agent writes a flake, verifies it by entering the dev shell, and then verifies each repository's own build, test, and typecheck commands, retrying and fixing failures as it goes.
+
+The **BYOD environment** section shows a status badge:
+
+| Status | Meaning |
+| --- | --- |
+| `building` | Generation is in progress. Open the linked session to follow along. |
+| `ready` | A flake has been generated and stored. |
+| `failed` | Generation ended without producing a flake. Click **Regenerate** to try again. |
+
+The badge does not update on its own while generation runs. Reload the page to see the current status.
+
+<Note>
+  The environment is shared across your whole workspace, not scoped to the project you created it from. Generating again from any project replaces the workspace's environment.
+</Note>
+
+### Build the environment into your projects
+
+Generating a flake does not by itself change your sessions. Tembo bakes the environment into a project's prepared environment when that project is built, so build or [rebuild the project environment](/features/projects#session-sizes-and-daily-refreshes) after generation completes. Sessions started from that project then have the toolchain already present, with no dependency install at session start.
+
+Because Tembo captures the complete dev shell rather than just `PATH`, variables such as `LD_LIBRARY_PATH`, `PKG_CONFIG_PATH`, and anything you export from a `shellHook` are available to agent commands and to the sandbox terminal.
+
+### Review and edit the flake
+
+Tembo stores the generated flake for your workspace; it is not written to your repository unless the agent opens a pull request adding `flake.nix` and `flake.lock`, which is optional.
+
+To inspect or change it, click **Edit flake** in the **BYOD environment** section, make your changes, and click **Save flake**.
+
+<Warning>
+  Editing the flake by hand clears the pinned `flake.lock`, so the next build resolves inputs fresh instead of using the versions the agent verified. Click **Regenerate** to produce a new pinned lock.
+</Warning>
+
+To pick up new dependencies after your repositories change, click **Regenerate**. Each regeneration runs in a new session.
+
+## How the approaches combine
+
+The three approaches layer rather than compete:
+
+- **Bring your own deps and `tembo.nix` are merged.** When a bring your own deps environment exists, Tembo still reads each selected repository's `tembo.nix` and merges its dev shell into the generated one. If both provide the same tool, the repository's `tembo.nix` wins. A repository that needs an exact toolchain can keep pinning it locally while the generated environment covers everything else.
+- **Setup scripts always run on top.** The dev shell covers system packages and toolchains, not project installs. Your project setup script still runs afterwards, inside the environment, so commands like `pnpm install` or `bundle install` behave as expected.
+- **Without bring your own deps, `tembo.nix` applies per repository.** Each repository's dev shell is prepared on its own, and sessions use the primary repository's shell.
+
 ## Tips
 
 - Keep `tembo.nix` focused on system packages and toolchains that your project needs.
 - Commit the file so Tembo can load it in every new session.
+- Keep secrets out of both `tembo.nix` and the generated flake. Use [environment variables](/features/sandbox/environment-variables) instead.
 - Use [projects](/features/projects) if installing dependencies still takes meaningful time at the start of each session.
