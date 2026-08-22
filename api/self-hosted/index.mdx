@@ -11,7 +11,7 @@ Replace `tembo.example.com` with the hostname of your Tembo instance.
 
 ```bash
 curl -H "Authorization: Bearer YOUR_API_KEY" \
-  https://tembo.example.com/api/public-api/session/list
+  https://tembo.example.com/api/public-api/v1/session/list
 ```
 
 ## SDK
@@ -39,7 +39,7 @@ import Tembo from '@tembo-io/sdk';
 
 const client = new Tembo({
   apiKey: process.env.TEMBO_API_KEY,
-  baseURL: 'https://tembo.example.com/api/public-api/',
+  baseURL: 'https://tembo.example.com/api/public-api/v1/',
 });
 
 const session = await client.session.create({
