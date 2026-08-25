@@ -139,7 +139,11 @@
                     {
                         "group": "Other",
                         "public": true,
-                        "pages": ["resources/pwa", "resources/pricing"]
+                        "pages": [
+                            "release-notes/2026-08-25",
+                            "resources/pwa",
+                            "resources/pricing"
+                        ]
                     }
                 ]
             },
