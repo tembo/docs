@@ -86,3 +86,7 @@ The dev server defaults to `http://localhost:3000`. Keep it running while you ed
 - [Mintlify Documentation](https://mintlify.com/docs)
 - [Support](mailto:support@tembo.io)
 - [Book a Demo](https://book.avoma.com/tembo/tembo-demo/)
+
+## Documentation joke
+
+Why did the developer read the documentation? Because guessing wasn't in the requirements.
