@@ -106,6 +106,16 @@ What happens when your balance reaches zero depends on your plan and overage set
 
 When work is blocked, the request is rejected immediately rather than queued. Work that has already started can continue its current session so its compute and inference are accounted for correctly.
 
+## Usage alerts
+
+Tembo notifies organization admins and owners by email and with a dashboard banner as usage approaches these limits:
+
+- **80% of the monthly allowance** used
+- **Monthly allowance exhausted**
+- **On-demand usage started** (overages enabled)
+- **80% of the on-demand spend limit** used
+- **On-demand spend limit reached**
+
 ## Usage bursts
 
 Some integrations can create a large batch of work at once — for example, a repository or integration sync, or a token refresh that triggers a backlog of issues. Tembo does not cap or rate-limit how much work an integration enqueues; the batch is processed as worker capacity becomes available, and each resulting session records dollar usage when it runs. The same allowance and overage limits above apply, so a burst cannot spend beyond your available balance plus your overage limit. To absorb large bursts without interruption, enable overages with an appropriate limit.
