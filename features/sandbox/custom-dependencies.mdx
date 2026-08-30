@@ -132,7 +132,7 @@ This has a few consequences worth knowing:
 
 When a [project](/features/projects) builds with repository dependency installation enabled, Tembo evaluates `tembo.nix` once during the build and caches the resulting toolchain in the prepared environment. Sessions started from that project reuse the cached toolchain instead of evaluating the flake again, which is part of why they start faster.
 
-Because the toolchain is captured at build time, edits to `tembo.nix` do not reach project sessions until the environment is rebuilt. Rebuild the project or wait for its daily refresh to pick up the change.
+Because the toolchain is captured at build time, edits to `tembo.nix` do not reach project sessions until the environment is rebuilt. Rebuild the project, or—if **Refresh every day** is enabled—wait for its next scheduled refresh.
 
 ## Troubleshooting
 
