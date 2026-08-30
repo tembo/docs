@@ -333,7 +333,7 @@ SHOW EXTERNAL ACCESS INTEGRATIONS LIKE 'tembo_api_access_integration';
   </Accordion>
 
   <Accordion title="Self-hosted Tembo">
-    For self-hosted Tembo, replace `https://api.tembo.io` with your deployment's base URL in both the network rule (`VALUE_LIST`) and the Python UDF (`BASE`). The rest of the flow is identical.
+    For self-hosted Tembo, replace `https://api.tembo.io` with your deployment's public API base URL (for example, `https://tembo.example.com/api/public-api`) in the Python UDF (`BASE`). Update the network rule (`VALUE_LIST`) to allow your deployment's host. The rest of the flow is identical.
   </Accordion>
 
   <Accordion title="Rotating the API token">
