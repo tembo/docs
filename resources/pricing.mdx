@@ -100,11 +100,11 @@ Tembo Gateway and VM compute are metered while Tembo runs work such as:
 
 What happens when your balance reaches zero depends on your plan and overage setting:
 
-- **Free**: new sessions are blocked until you upgrade or add prepaid balance.
+- **Free**: new sessions are blocked until you upgrade or add prepaid balance. After each model call, Tembo checks the allowance and stops the running session if it has been exceeded, with a message in the chat explaining why.
 - **Pro or Max with overages enabled**: sessions continue and are billed as overage after the included allowance and prepaid balance are used, up to the maximum overage limit you set. Once that limit is reached, new sessions are blocked.
 - **Pro or Max with overages disabled**: new sessions are blocked as soon as the included allowance and prepaid balance are exhausted.
 
-When work is blocked, the request is rejected immediately rather than queued. Work that has already started can continue its current session so its compute and inference are accounted for correctly.
+When work is blocked, the request is rejected immediately rather than queued. On Pro and Max, work that has already started can continue its current session so its compute and inference are accounted for correctly. On Free, Tembo checks after each model call and stops a running session if the allowance has been exceeded, rather than allowing it to continue to completion.
 
 ## Usage bursts
 
