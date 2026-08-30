@@ -52,14 +52,14 @@
                         "pages": [
                             "features/agents",
                             "features/models",
-                            "features/feedback-loop",
+                            "features/mentioning-tembo",
                             {
                                 "group": "Sandbox",
                                 "pages": [
                                     "features/sandbox/overview",
+                                    "features/projects",
                                     "features/sandbox/custom-dependencies",
-                                    "features/sandbox/environment-variables",
-                                    "features/snapshots"
+                                    "features/sandbox/environment-variables"
                                 ]
                             },
                             {
@@ -275,6 +275,10 @@
             "destination": "/resources/pricing"
         },
         {
+            "source": "/features/feedback-loop",
+            "destination": "/features/mentioning-tembo"
+        },
+        {
             "source": "/features/self-hosted/aws",
             "destination": "/features/self-hosted/deploy/aws"
         },
@@ -293,6 +297,10 @@
         {
             "source": "/features/coding-agents",
             "destination": "/features/agents#agent-harness"
+        },
+        {
+            "source": "/features/snapshots",
+            "destination": "/features/projects"
         },
         {
             "source": "/api/task/:slug",

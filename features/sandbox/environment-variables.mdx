@@ -6,7 +6,7 @@ description: 'Store secrets and configuration that Tembo injects into every sand
 Environment variables let you store secrets and configuration once and have Tembo inject them into every session's [sandbox](/features/sandbox/overview). They're the recommended way to pass API keys, tokens, and other configuration to agent commands, [hooks](/features/hooks), MCP servers, and connected integrations, without committing secrets to your repository.
 
 <Note>
-  Environment variables are workspace-wide. Every session your workspace runs, including agent runs and interactive terminal sessions, receives them in its sandbox environment.
+  Environment variables added in **Settings** > **Sandbox** are workspace-wide. Every session your workspace runs, including agent runs and interactive terminal sessions, receives them in its sandbox environment. You can also add [project-level environment variables](/features/projects#project-environment-variables) that are only injected while that project's environments are built.
 </Note>
 
 ## Prerequisites
@@ -38,7 +38,7 @@ Once saved, a variable is available in the sandbox for the whole session. You ca
 
 - **Agent commands**: the agent can read the variable when it runs builds, tests, or scripts.
 - **[Hooks](/features/hooks)**: `setupScript` and `prePush` commands run with the variables set.
-- **[Snapshot](/features/snapshots) setup scripts**: variables are available while a snapshot is built and are baked into anything the setup script writes to disk.
+- **[Project](/features/projects) setup scripts**: variables are available while a project's environments are built and are baked into anything the setup script writes to disk.
 - **[MCP servers](/integrations/mcp) and integrations**: reference a variable so a server or integration can authenticate.
 
 For example, reference a variable in a `globalMcpServers` definition instead of hardcoding the value:
