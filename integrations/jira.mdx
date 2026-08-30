@@ -94,3 +94,18 @@ Confluence page and comment activity can trigger agents once Confluence triggers
 | Confluence Page Label Removed | When a label is removed from a Confluence page |
 
 See [Agents](/features/agents) for how to use these as agent triggers.
+
+### Filters
+
+Each Confluence trigger supports optional filters so an automation only fires for the pages, spaces, or content you care about. Configure filters when you add the trigger to an agent.
+
+| Filter | Available on | Description |
+|--------|-------------|-------------|
+| Spaces | All triggers | Only trigger if the page is in a space with one of these names or IDs |
+| Title contains | All triggers | Only trigger if the page title contains one of these substrings |
+| Previous spaces | Page Moved | Only trigger if the page was moved from a space with one of these names or IDs |
+| Locations | Comment Created | Only trigger for footer comments, inline comments, or both |
+| Labels | Page Label Added, Page Label Removed | Only trigger if the added or removed label has one of these values |
+| Comment contains | Page Label Added, Page Label Removed | Only trigger if the comment on the label event contains one of these substrings |
+
+Leave a filter empty to match every event for that trigger.
