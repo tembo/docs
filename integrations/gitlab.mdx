@@ -16,17 +16,41 @@ description: 'Merge requests, code scanning, and pipeline monitoring.'
 
 ## Installation
 
+Tembo supports a shared GitLab service account or a personal account connected through OAuth. We recommend a service account so the integration does not depend on an individual team member.
+
+### Connect a service account
+
+You must be a Tembo organization admin. On GitLab.com, you must also be an Owner of the top-level group and may need to verify your identity. For GitLab Self-Managed or Dedicated, you must be an instance administrator or an Owner who is allowed to create service accounts.
+
 <Steps>
-  <Step title="Install">
-    Go to [Integrations](https://app.tembo.io/integrations) and click **Install** next to GitLab.
+  <Step title="Create a GitLab service account">
+    In GitLab, open your top-level group and go to **Settings → Service accounts**. Select **Add service account**, name the account, and select **Create service account**.
+
+    See [GitLab's service account instructions](https://docs.gitlab.com/user/profile/service_accounts/#create-a-service-account) for GitLab.com and self-managed prerequisites.
   </Step>
-  <Step title="Authorize">
-    We recommend creating a dedicated GitLab account for Tembo. Authorize access and select repositories.
+  <Step title="Grant repository access">
+    Add the service account as a member of the top-level group or each project that Tembo should access. Assign the **Maintainer** role so Tembo can create project webhooks as well as branches and merge requests. GitLab requires the Maintainer or Owner role to [create project webhooks](https://docs.gitlab.com/user/project/integrations/webhooks/#create-a-webhook).
   </Step>
-  <Step title="Activate">
-    Select which repositories Tembo should work with under "Active Repositories".
+  <Step title="Create an access token">
+    On **Settings → Service accounts**, open the service account's menu and select **Manage access tokens → Add new token**. Enter a name and expiration date, select only the `api` scope, and select **Create personal access token**. Copy the generated token.
+
+    GitLab documents token creation, expiration limits, rotation, and revocation under [Create a personal access token for a service account](https://docs.gitlab.com/user/profile/service_accounts/#create-a-personal-access-token-for-a-service-account).
+  </Step>
+  <Step title="Connect Tembo">
+    In Tembo, go to [Integrations](https://app.tembo.io/integrations) and select **Install** next to GitLab. Paste the token into **Service account access token**, then select **Connect with access token**.
+  </Step>
+  <Step title="Activate repositories">
+    Select which repositories Tembo should work with under **Active Repositories**.
   </Step>
 </Steps>
+
+<Note>
+  Tembo rejects tokens owned by regular personal user accounts. When the service account token expires, is rotated, or is revoked, reconnect the integration with the new token.
+</Note>
+
+### Connect with OAuth
+
+Go to [Integrations](https://app.tembo.io/integrations), select **Install** next to GitLab, and select **Continue with OAuth**. Authorize access, then select which repositories Tembo should work with under **Active Repositories**.
 
 ## Usage
 
@@ -38,7 +62,7 @@ Comment `@tembo` on any merge request to request changes. Works in the main thre
 @tembo Please add error handling to this function
 ```
 
-Works on MRs created by Tembo and MRs created by your team.
+Works on MRs created by Tembo, MRs created by your team, and merge requests from outside contributors on activated repositories.
 
 ## Agents
 

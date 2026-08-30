@@ -1,35 +1,48 @@
 ---
 title: 'Agent Skills'
-description: 'Guide how agents approach sessions with custom skills in your repository.'
+description: 'Guide how agents approach sessions with skills in your repository or workspace.'
 ---
 
-Skills are instructions that live in your repository and guide how agents approach work. They help agents follow multi-step processes like research, planning, implementation, and review instead of doing everything in a single pass.
+Skills are reusable instructions that guide how agents approach work. They help agents follow multi-step processes like research, planning, implementation, and review instead of doing everything in a single pass.
 
-## How it works
+Tembo loads skills from three places:
 
-Place skills in the dotfile directory for your coding agent at the root of your repository:
+- **Repository skills** you commit alongside your code
+- **Managed skills** you create in **Settings > Skills**
+- **Built-in skills** that ship with every session
 
-- `.claude/` for Claude Code
-- `.codex/` for Codex
-- `.opencode/` for OpenCode
-- `.cursor/` for Cursor
+## Repository skills
 
-The agent picks up these skills when working on sessions in that repo. You need to instruct the agent to use a skill, either in the session description or after a PR is opened via the [feedback loop](/features/feedback-loop):
+Place each skill in its own directory inside the skills folder for your coding agent. The folder differs per agent, so use the one that matches the agent running your sessions.
 
+| Agent | Skill directory | Entry file |
+| --- | --- | --- |
+| Claude Code | `.claude/skills/<skill-name>/` | `SKILL.md` |
+| Codex | `.codex/skills/<skill-name>/` | `SKILL.md` |
+| OpenCode | `.opencode/skills/<skill-name>/` | `SKILL.md` |
+| Amp | `.agents/skills/<skill-name>/` | `SKILL.md` |
+| Pi | `.agents/skills/<skill-name>/` | `SKILL.md` |
+| Cursor | `.cursor/rules/<skill-name>/` | `SKILL.mdc` |
+
+A skill directory looks like this:
+
+```text
+.claude/
+└── skills/
+    └── implementation/
+        ├── SKILL.md
+        └── checklist.md
 ```
-@tembo Use the implementation skill for this session
-```
 
-```
-@tembo Now use the code-review skill to review your changes
-```
+### Required frontmatter
 
-## Example
-
-A skill that guides the agent through a structured implementation flow:
+Every entry file needs YAML frontmatter with `name` and `description`. Tembo skips any skill whose frontmatter is missing or invalid.
 
 ```markdown
-# Implementation Skill
+---
+name: implementation
+description: Research the codebase, plan the change, implement it, then self-review the diff before opening a PR.
+---
 
 1. Research the codebase to understand existing patterns
 2. Create a plan with specific files and changes
@@ -38,6 +51,63 @@ A skill that guides the agent through a structured implementation flow:
 5. Self-review the diff before opening a PR
 ```
 
+Constraints Tembo enforces when it indexes a skill:
+
+- `name` must be lowercase kebab-case (`a-z`, `0-9`, single hyphens), at most 64 characters
+- `name` must exactly match the skill's directory name
+- `description` must be a non-empty string of at most 1024 characters
+- Entry files larger than 1 MiB, or detected as binary, are skipped
+
+<Note>
+  For Cursor skills in `.cursor/rules/`, the skill name comes from the directory name, so frontmatter `name` is optional. `description` is still required.
+</Note>
+
+### Using a skill
+
+Ask the agent to use a skill in the session description, or after a PR is opened by [mentioning Tembo](/features/mentioning-tembo):
+
+```text
+@tembo Use the implementation skill for this session
+```
+
+```text
+@tembo Now use the code-review skill to review your changes
+```
+
+## Managed skills
+
+Create and manage skills directly in Tembo when you want them available across every repository, without committing files.
+
+Open **Settings > Skills** to:
+
+- Add a new skill, then give it a name and description
+- Write the main instructions in `SKILL.md`
+- Add extra reference files if needed
+- Edit or delete existing skills
+- Browse and install community skills from the marketplace
+
+The entry file must be named `SKILL.md`. Tembo writes managed skills into the sandbox at `/workspace/.tembo/agents/skills/<agent>/<skill-slug>/` and copies them into the running agent's own skill directory so the agent discovers them normally. For Cursor, the entry file is converted to `SKILL.mdc`.
+
+<Warning>
+  Managed skills apply across the workspace. Tembo makes every managed skill available in every session, regardless of repository or agent, so keep descriptions specific enough that agents only invoke a skill when it is relevant.
+</Warning>
+
+## Built-in skills
+
+These skills ship with Tembo and are available in every session without any setup:
+
+| Skill | What it does |
+| --- | --- |
+| `agent-browser` | Drives a browser to navigate pages, fill forms, take screenshots, and test web apps |
+| `generate-preview-url` | Exposes a local sandbox port and returns a public preview URL |
+| `install-custom-dependencies` | Installs system packages with Nix, since sandboxes run on NixOS without `apt` or `brew` |
+| `tembo-cli` | Uses the sandbox `tembo` CLI for pull requests, previews, uploads, and replies |
+| `tembo-file-upload` | Uploads sandbox files up to 5 GiB as Tembo assets |
+| `tembo-artifact` | Creates artifacts such as HTML reports, dashboards, diagrams, and CSV or JSON exports |
+| `tembo-git-instructions` | Applies your workspace commit message and PR title instructions |
+
+`tembo-git-instructions` picks up the commit and PR title instructions you set in **Settings > Instructions**. If you leave them blank, Tembo falls back to conventional commit messages.
+
 ## What skills are good for
 
 - Enforcing a research-then-implement workflow
@@ -45,24 +115,4 @@ A skill that guides the agent through a structured implementation flow:
 - Defining code review checklists the agent runs against its own output
 - Setting quality thresholds for different session types
 
-## What's coming
-
-We're building first-party skill support and planning mode so Tembo can handle work in staged steps:
-
-**Research → Plan → Implement → Review → Iterate**
-
-This will improve PR quality on larger sessions, where today the agent may need a few iterations before the output is merge-ready. [Rule files](/features/rule-files) and skills in dotfile directories are the best way to guide agents today.
-
-## Tembo Managed Skills
-
-You can also create and manage skills directly in Tembo.
-
-Open **Settings** → **Skills** to:
-
-- Add a new skill
-- Give it a name and description
-- Write the main instructions in `SKILL.md`
-- Add extra reference files if needed
-- Edit or delete existing skills
-
-Tembo managed skills are stored in your workspace settings and loaded into sessions automatically when Tembo runs an agent.
+For broader project context such as build commands, architecture, and conventions, use a [rule file](/features/rule-files) instead. Rule files describe your project; skills describe a procedure.

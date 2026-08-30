@@ -1,37 +1,116 @@
 ---
 title: 'Hooks'
-description: 'Run custom commands at lifecycle events like post-clone and pre-push.'
+description: 'Run custom setup commands during a session with .tembo.json.'
 ---
 
-Hooks run shell commands at specific points during a session. Configure them in `.tembo.json` at your repository root.
+Hooks run shell commands in the sandbox during session setup. Configure them in `.tembo.json` at your repository root.
 
 ## Available hooks
 
-**`postClone`** - Runs after Tembo clones your repo, before it starts working.
+**`setupScript`** - Runs after Tembo clones your repository, before the agent starts working. Use it to install dependencies and prepare the workspace.
 
-**`prePush`** - Runs after Tembo makes changes, before pushing and opening a PR.
+<Note>
+  `postClone` remains available as a legacy alias for `setupScript`. When both names are present, `setupScript` takes precedence.
+</Note>
+
+**`prePush`** - Accepted in `.tembo.json`, but not currently executed.
+
+<Warning>
+  Do not rely on `prePush` to gate pushes. Put checks you need enforced in `setupScript`, in your CI pipeline, or in a [rule file](/features/rule-files) that instructs the agent to run them before pushing.
+</Warning>
 
 ## Example
 
 ```json
 {
   "hooks": {
-    "postClone": [
+    "setupScript": [
       "npm ci",
       "cp .env.example .env.local"
-    ],
-    "prePush": [
-      "npm run lint",
-      "npm run test",
-      "npm run build"
     ]
   }
 }
 ```
 
-## Details
+## When setupScript runs
 
-- Commands run sequentially in the repository root
-- If a command fails, Tembo logs the failure and continues with the remaining commands in the hook
-- Hooks run in the same [sandbox](/features/sandbox/overview) as the session
-- Shell features (piping, redirects, `&&`) are supported
+`setupScript` runs when a session builds its workspace from scratch:
+
+- A new session clones your repository into a fresh sandbox.
+- A [project environment](/features/projects) is being built with **Install dependencies** enabled, after the selected repositories are cloned.
+
+<Warning>
+  `setupScript` is **skipped** when a session restores a workspace that already
+  exists, such as resuming an earlier session or starting from a project. The
+  workspace is expected to already carry the results of the setup that ran when
+  it was built.
+</Warning>
+
+This matters when you change `setupScript`. Sessions that restore from an existing project environment keep the dependencies baked into that environment, so your new commands do not run until the environment is rebuilt. Rebuild the project environment after changing setup commands, or your sessions will keep starting from the old environment.
+
+## Working with tembo.nix
+
+If your repository root contains a [`tembo.nix`](/features/sandbox/custom-dependencies) file, Tembo runs `setupScript` inside that Nix dev shell, so its packages and environment are available to the hook. During a project environment build with **Install dependencies** enabled, the hook runs before Tembo pre-bakes those dependencies. Sessions restored from the project environment do not rerun the hook.
+
+## Shell behavior
+
+Each entry in a hook array is executed as its own command. Pipes and redirects work as expected:
+
+```json
+{
+  "hooks": {
+    "setupScript": ["cat config.template.json | envsubst > config.json"]
+  }
+}
+```
+
+<Warning>
+  Do not chain commands directly with `&&`, `||`, or `;`. Only the first command in the chain runs in production sandboxes, and the rest are silently skipped.
+</Warning>
+
+List unconditional commands as separate array entries:
+
+```json
+{
+  "hooks": {
+    "setupScript": ["npm ci", "npm run codegen"]
+  }
+}
+```
+
+To run a later command only when an earlier command succeeds, invoke a shell explicitly:
+
+```json
+{
+  "hooks": {
+    "setupScript": ["bash -c 'npm ci && npm run build'"]
+  }
+}
+```
+
+## Failure handling
+
+- Commands run sequentially from the repository root.
+- If a command exits non-zero, Tembo logs the failure and **continues with the remaining commands** in the hook. A failing hook does not stop the session.
+- When a project environment is built, each command and its exit code are streamed into the project build log. This is the most reliable place to confirm what ran and why it failed.
+
+## Configuration reference
+
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `hooks.setupScript` | `string[]` | `[]` | Commands to run after cloning, before the agent starts. |
+| `hooks.prePush` | `string[]` | `[]` | Accepted and validated, but not currently executed. |
+| `hooks.postClone` | `string[]` | `[]` | Legacy alias for `setupScript`. Ignored when `setupScript` is also set. |
+
+Notes on how Tembo reads the file:
+
+- `.tembo.json` is optional. Without it, every hook defaults to an empty list.
+- If `.tembo.json` contains invalid JSON or does not match the expected shape, Tembo logs the error, falls back to the defaults, and continues the session. A malformed file therefore behaves exactly like no hooks at all, with no failure surfaced in the session.
+- Each hook must be an array of strings. A bare string such as `"setupScript": "npm ci"` makes the configuration invalid.
+- Unrecognized fields are ignored, which means a typo like `setupScripts` is dropped without an error.
+
+## Related
+
+- [Custom dependencies](/features/sandbox/custom-dependencies) for declaring system packages and toolchains with `tembo.nix`.
+- [Environment variables](/features/sandbox/environment-variables) for secrets your setup commands need.
+- [Projects](/features/projects) for preloading repositories and dependencies so setup does not run on every session.

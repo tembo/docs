@@ -557,6 +557,73 @@ paths:
                         -H "Content-Type: application/json" \
                         -d '{"content": "Please add a regression test for this change."}'
 
+    /session/{sessionId}/stop:
+        post:
+            responses:
+                "200":
+                    description: Successfully stopped sessions and jobs
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    cancelledSessions:
+                                        type: number
+                                    cancelledJobs:
+                                        type: number
+                                    stoppedRuntimeSessions:
+                                        type: number
+                                    interruptedRuntimeTurns:
+                                        type: number
+                                    cancelledRuntimeTurns:
+                                        type: number
+                                required:
+                                    - cancelledSessions
+                                    - cancelledJobs
+                                    - stoppedRuntimeSessions
+                                    - interruptedRuntimeTurns
+                                    - cancelledRuntimeTurns
+                "400":
+                    description: Organization ID is required
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                required:
+                                    - error
+                "404":
+                    description: Session not found
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                required:
+                                    - error
+            operationId: postPublic-apiSessionSessionIdStop
+            parameters:
+                - name: sessionId
+                  in: path
+                  description: ID of the session to stop
+                  required: true
+                  schema:
+                      type: string
+                      format: uuid
+            description: Stop all running sandbox sessions, runtime sessions, and jobs for a session
+            summary: Stop Session
+            x-codeSamples:
+                - lang: bash
+                  label: cURL
+                  source: |-
+                      curl -s -X POST \
+                        "https://tembo.example.com/api/public-api/session/${SESSION_ID}/stop" \
+                        -H "Authorization: Bearer ${API_KEY}"
+
     /agent:
         post:
             responses:
