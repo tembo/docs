@@ -33,22 +33,20 @@ Hooks run shell commands at specific points during a session. Configure them in 
 `setupScript` runs when a session builds its workspace from scratch:
 
 - A new session clones your repository into a fresh sandbox.
-- A [snapshot](/features/snapshots) is being built, after the selected repositories are cloned.
+- A [project environment](/features/projects) is being built with **Install dependencies** enabled, after the selected repositories are cloned.
 
 <Warning>
   `setupScript` is **skipped** when a session restores a workspace that already
-  exists, such as resuming an earlier session or starting from a snapshot. The
+  exists, such as resuming an earlier session or starting from a project. The
   workspace is expected to already carry the results of the setup that ran when
   it was built.
 </Warning>
 
-This matters when you change `setupScript`. Sessions that restore from an existing snapshot keep the dependencies baked into that snapshot, so your new commands do not run until the snapshot is rebuilt. Rebuild the snapshot after changing setup commands, or your sessions will keep starting from the old environment.
+This matters when you change `setupScript`. Sessions that restore from an existing project environment keep the dependencies baked into that environment, so your new commands do not run until the environment is rebuilt. Rebuild the project environment after changing setup commands, or your sessions will keep starting from the old environment.
 
 ## Working with tembo.nix
 
-If your repository root contains a [`tembo.nix`](/features/sandbox/custom-dependencies) file, Tembo runs your hook commands inside that Nix dev shell, so packages you declare there are on `PATH`.
-
-When a snapshot already pre-built your dependencies, Tembo reuses the saved environment from that build instead of re-entering the dev shell. Either way, your hook commands see the same toolchain.
+If your repository root contains a [`tembo.nix`](/features/sandbox/custom-dependencies) file, Tembo runs `setupScript` inside that Nix dev shell, so its packages and environment are available to the hook. During a project environment build with **Install dependencies** enabled, the hook runs before Tembo pre-bakes those dependencies. Sessions restored from the project environment do not rerun the hook.
 
 ## Failure handling
 
@@ -66,7 +64,7 @@ When a snapshot already pre-built your dependencies, Tembo reuses the saved envi
 
 - Shell features such as piping, redirects, and `&&` are supported.
 
-When a [snapshot](/features/snapshots) is built, each hook command and its exit code are streamed into the snapshot build log, which is the most reliable place to confirm what ran and why it failed.
+When a [project environment](/features/projects) is built, each hook command and its exit code are streamed into the project build log, which is the most reliable place to confirm what ran and why it failed.
 
 ## Configuration reference
 
@@ -86,4 +84,4 @@ Notes on how Tembo reads the file:
 
 - [Custom dependencies](/features/sandbox/custom-dependencies) for declaring system packages and toolchains with `tembo.nix`.
 - [Environment variables](/features/sandbox/environment-variables) for secrets your setup commands need.
-- [Snapshots](/features/snapshots) for preloading repositories and dependencies so setup does not run on every session.
+- [Projects](/features/projects) for preloading repositories and dependencies so setup does not run on every session.

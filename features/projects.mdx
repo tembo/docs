@@ -75,6 +75,10 @@ Use the setup script for preparation that is not handled by repository dependenc
 
 The script has access to workspace-wide [environment variables](/features/sandbox/environment-variables) and any environment variables added to the project. Anything the script installs or writes to disk becomes part of the prepared environment.
 
+<Note>
+  This project setup script is separate from the `setupScript` [hook](/features/hooks) in `.tembo.json`. The `.tembo.json` hook runs during the environment build only when **Install dependencies** is enabled, while the project setup script runs whenever it is configured. Sessions restored from a prepared environment do not run the `.tembo.json` hook at startup. Rebuild the project environment after changing setup commands so new sessions pick them up.
+</Note>
+
 ### Keep setup logic in your repository
 
 To version your setup logic with the rest of your code, commit a script to your repository and call it from the project setup script. For example, if a repository named `my-app` contains `scripts/tembo-setup.sh`, use:
