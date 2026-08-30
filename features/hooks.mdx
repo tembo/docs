@@ -9,10 +9,14 @@ Hooks run shell commands in the sandbox during session setup. Configure them in 
 
 **`setupScript`** - Runs after Tembo clones your repository, before the agent starts working. Use it to install dependencies and prepare the workspace.
 
-**`prePush`** - Reserved for commands that run before Tembo pushes changes and opens a pull request.
+<Note>
+  `postClone` remains available as a legacy alias for `setupScript`. When both names are present, `setupScript` takes precedence.
+</Note>
+
+**`prePush`** - Accepted in `.tembo.json`, but not currently executed.
 
 <Warning>
-  `prePush` is accepted and validated in `.tembo.json`, but Tembo does not currently execute it. Do not rely on it to gate pushes. Put checks you need enforced in `setupScript`, in your CI pipeline, or in a [rule file](/features/rule-files) that instructs the agent to run them before pushing.
+  Do not rely on `prePush` to gate pushes. Put checks you need enforced in `setupScript`, in your CI pipeline, or in a [rule file](/features/rule-files) that instructs the agent to run them before pushing.
 </Warning>
 
 ## Example

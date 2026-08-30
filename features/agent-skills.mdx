@@ -89,7 +89,7 @@ Open **Settings > Skills** to:
 The entry file must be named `SKILL.md`. Tembo writes managed skills into the sandbox at `/workspace/.tembo/agents/skills/<agent>/<skill-slug>/` and copies them into the running agent's own skill directory so the agent discovers them normally. For Cursor, the entry file is converted to `SKILL.mdc`.
 
 <Warning>
-  Every skill in your workspace is loaded into every session for that workspace. There is no per-repository or per-agent filtering, so keep descriptions specific enough that agents only invoke a skill when it is relevant.
+  Managed skills apply across the workspace. Tembo makes every managed skill available in every session, regardless of repository or agent, so keep descriptions specific enough that agents only invoke a skill when it is relevant.
 </Warning>
 
 ## Built-in skills
