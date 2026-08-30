@@ -3,16 +3,20 @@ title: 'Hooks'
 description: 'Run custom setup commands during a session with .tembo.json.'
 ---
 
-Hooks run shell commands at specific points during a session. Configure them in `.tembo.json` at your repository root.
+Hooks run shell commands in the sandbox during session setup. Configure them in `.tembo.json` at your repository root.
 
 ## Available hooks
 
 **`setupScript`** - Runs after Tembo clones your repository, before the agent starts working. Use it to install dependencies and prepare the workspace.
 
-**`prePush`** - Reserved for commands that run before Tembo pushes changes and opens a pull request.
+<Note>
+  `postClone` remains available as a legacy alias for `setupScript`. When both names are present, `setupScript` takes precedence.
+</Note>
+
+**`prePush`** - Accepted in `.tembo.json`, but not currently executed.
 
 <Warning>
-  `prePush` is accepted and validated in `.tembo.json`, but Tembo does not currently execute it. Do not rely on it to gate pushes. Put checks you need enforced in `setupScript`, in your CI pipeline, or in a [rule file](/features/rule-files) that instructs the agent to run them before pushing.
+  Do not rely on `prePush` to gate pushes. Put checks you need enforced in `setupScript`, in your CI pipeline, or in a [rule file](/features/rule-files) that instructs the agent to run them before pushing.
 </Warning>
 
 ## Example
@@ -48,23 +52,47 @@ This matters when you change `setupScript`. Sessions that restore from an existi
 
 If your repository root contains a [`tembo.nix`](/features/sandbox/custom-dependencies) file, Tembo runs `setupScript` inside that Nix dev shell, so its packages and environment are available to the hook. During a project environment build with **Install dependencies** enabled, the hook runs before Tembo pre-bakes those dependencies. Sessions restored from the project environment do not rerun the hook.
 
-## Failure handling
+## Shell behavior
 
-- Commands run sequentially from the repository root.
-- If a command exits non-zero, Tembo logs the failure and **continues with the remaining commands** in the hook. A failing hook does not stop the session.
-- Chain commands with `&&` in a single entry when a later step must not run after an earlier one fails:
+Each entry in a hook array is executed as its own command. Pipes and redirects work as expected:
 
 ```json
 {
   "hooks": {
-    "setupScript": ["npm ci && npm run build"]
+    "setupScript": ["cat config.template.json | envsubst > config.json"]
   }
 }
 ```
 
-- Shell features such as piping, redirects, and `&&` are supported.
+<Warning>
+  Do not chain commands directly with `&&`, `||`, or `;`. Only the first command in the chain runs in production sandboxes, and the rest are silently skipped.
+</Warning>
 
-When a [project environment](/features/projects) is built, each hook command and its exit code are streamed into the project build log, which is the most reliable place to confirm what ran and why it failed.
+List unconditional commands as separate array entries:
+
+```json
+{
+  "hooks": {
+    "setupScript": ["npm ci", "npm run codegen"]
+  }
+}
+```
+
+To run a later command only when an earlier command succeeds, invoke a shell explicitly:
+
+```json
+{
+  "hooks": {
+    "setupScript": ["bash -c 'npm ci && npm run build'"]
+  }
+}
+```
+
+## Failure handling
+
+- Commands run sequentially from the repository root.
+- If a command exits non-zero, Tembo logs the failure and **continues with the remaining commands** in the hook. A failing hook does not stop the session.
+- When a project environment is built, each command and its exit code are streamed into the project build log. This is the most reliable place to confirm what ran and why it failed.
 
 ## Configuration reference
 
@@ -78,6 +106,7 @@ Notes on how Tembo reads the file:
 
 - `.tembo.json` is optional. Without it, every hook defaults to an empty list.
 - If `.tembo.json` contains invalid JSON or does not match the expected shape, Tembo logs the error, falls back to the defaults, and continues the session. A malformed file therefore behaves exactly like no hooks at all, with no failure surfaced in the session.
+- Each hook must be an array of strings. A bare string such as `"setupScript": "npm ci"` makes the configuration invalid.
 - Unrecognized fields are ignored, which means a typo like `setupScripts` is dropped without an error.
 
 ## Related
