@@ -249,7 +249,7 @@ Tembo never stores long-lived AWS credentials. Authentication begins only when a
 3. When the selected profile needs credentials, Tembo mints a short-lived RS256 JWT (5-minute TTL) signed with its OIDC private key. It carries an `iss` of the Tembo issuer, an `aud` of `sts.amazonaws.com`, and a `sub` of `org:<your-workspace-id>`.
 4. Tembo calls `sts:AssumeRoleWithWebIdentity` against the selected role. This call carries no AWS credentials of its own — the token is the identity.
 5. STS finds the OIDC provider in your account, verifies the JWT with Tembo's public JWKS, evaluates your trust policy, and returns temporary credentials with a 1-hour TTL.
-6. The credential helper caches those temporary credentials in the sandbox and refreshes them when needed while the agent run remains active and the integration remains enabled.
+6. The credential helper caches those temporary credentials in the sandbox and refreshes them when needed while the sandbox or authorized runtime remains active and the integration remains enabled.
 
 The selected profile is scoped to the child process and does not become the sandbox's default AWS identity. Because the OIDC token is the identity, nothing about this depends on which AWS account Tembo runs in.
 
@@ -279,11 +279,15 @@ The selected profile is scoped to the child process and does not become the sand
   </Accordion>
 
   <Accordion title="Credentials stop refreshing during a long-running command">
-    Credentials refresh automatically while the agent run remains active. Refresh fails closed if the run ends or the AWS integration is disabled, removed, or no longer belongs to the workspace. Start a new active session or re-enable the integration, then retry the command.
+    Credentials refresh while the sandbox or authorized runtime remains active and the integration remains enabled. Refresh fails closed if the runtime is no longer authorized or the AWS integration is disabled, removed, or no longer belongs to the workspace.
   </Accordion>
 
   <Accordion title="Agent can't reach AWS APIs">
-    The agent sandbox requires outbound HTTPS access to AWS STS and the AWS service endpoints used by the command. On self-hosted deployments in a private network, confirm that this egress is allowed.
+    During authentication, the sandbox credential helper contacts the Tembo API, and the Tembo API calls AWS STS. On self-hosted deployments in a private network, confirm that:
+
+    - The Tembo API or control plane has outbound HTTPS access to AWS STS.
+    - The agent sandbox has outbound HTTPS access to the AWS service endpoints used by the child command.
+    - The agent sandbox only needs access to AWS STS when the child command itself calls STS.
   </Accordion>
 
   <Accordion title="Agent hits permission errors on AWS calls">
