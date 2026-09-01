@@ -7,19 +7,30 @@ description: 'Give your agents access to any AWS service via OIDC web identity f
   <img src="/images/integrations/aws.png" alt="AWS" />
 </Frame>
 
-Tembo acts as an OIDC identity provider. Your agents receive short-lived STS credentials that expire automatically — no AWS access keys are ever stored in Tembo.
+Tembo acts as an OIDC identity provider. Agents request short-lived STS credentials on demand from any session or automation in your workspace — no long-lived AWS access keys are stored in Tembo.
 
 Connecting an account takes two things: an OIDC provider and an IAM role in your AWS account. You can let Tembo's CloudFormation template create both, or create them yourself with your own tooling.
 
 ## What agents can do
 
-Once connected, agents have access to the [AWS Agent Toolkit](https://github.com/awslabs/mcp/tree/main/src/aws-api) — AWS's official MCP service covering 15,000+ APIs across every AWS service:
+Once connected, agents can run AWS CLI commands and programs that use an AWS SDK. Each enabled integration can be configured as a standard AWS profile inside the agent sandbox.
 
-- **`call_aws`** — execute any authenticated AWS API call
-- **`suggest_aws_commands`** — translate natural language to AWS API calls
-- **`run_script`** — run Python code with AWS API access in a sandboxed environment
-- **`search_documentation` / `read_documentation`** — search and read all AWS documentation
-- **`get_presigned_url`** — generate pre-signed S3 URLs
+Agents can list the accounts available to your workspace:
+
+```bash
+tembo aws profiles
+```
+
+They select an account when running each command:
+
+```bash
+tembo aws exec staging -- aws sts get-caller-identity
+tembo aws exec production -- aws s3 ls
+```
+
+The selector can be the integration's environment label, generated profile name, AWS account ID, or integration ID. If two integrations use the same label or AWS account ID, use the generated profile name shown by `tembo aws profiles`.
+
+The `exec` command authenticates on demand and limits the selected profile to its child process. This makes it safe to use different AWS accounts concurrently in one session without changing ambient credentials.
 
 Agents can only do what the IAM role permits. The default is `ReadOnlyAccess`; you control this entirely.
 
@@ -28,7 +39,7 @@ Agents can only do what the IAM role permits. The default is `ReadOnlyAccess`; y
 You need permission to create IAM roles and identity providers in the target AWS account.
 
 <Note>
-  Connect as many AWS accounts as you like. Each gets its own label and an isolated MCP server session, so a `production` and a `staging` account never share credentials.
+  Connect as many AWS accounts as you like. Every enabled AWS integration is available to every session and automation in your workspace; it does not have to be assigned when a session starts. The agent explicitly selects an account for each command.
 </Note>
 
 ## Choose a setup method
@@ -231,14 +242,16 @@ Paste the role ARN into the Tembo connect modal under **Enter ARN manually** and
 
 ## How authentication works
 
-Tembo never stores AWS credentials. For each agent run:
+Tembo never stores long-lived AWS credentials. Authentication begins only when an agent uses an AWS integration:
 
-1. Tembo mints a short-lived RS256 JWT (5-minute TTL) signed with its OIDC private key, carrying `iss` of the Tembo issuer, `aud` of `sts.amazonaws.com`, and `sub` of `org:<your-workspace-id>`
-2. Tembo calls `sts:AssumeRoleWithWebIdentity` against your role, presenting that JWT. This call carries no AWS credentials of its own — the token is the identity
-3. STS finds the OIDC provider in your account matching the token's issuer, fetches Tembo's public JWKS to verify the signature, then evaluates your trust policy conditions
-4. The resulting temporary credentials (1-hour TTL) are injected into the agent's sandbox and never leave it
+1. The agent lists the enabled AWS integrations in your workspace and explicitly selects one for a command.
+2. Tembo configures standard AWS profiles that use a credential helper. No static access keys are written to the AWS config.
+3. When the selected profile needs credentials, Tembo mints a short-lived RS256 JWT (5-minute TTL) signed with its OIDC private key. It carries an `iss` of the Tembo issuer, an `aud` of `sts.amazonaws.com`, and a `sub` of `org:<your-workspace-id>`.
+4. Tembo calls `sts:AssumeRoleWithWebIdentity` against the selected role. This call carries no AWS credentials of its own — the token is the identity.
+5. STS finds the OIDC provider in your account, verifies the JWT with Tembo's public JWKS, evaluates your trust policy, and returns temporary credentials with a 1-hour TTL.
+6. The credential helper caches those temporary credentials in the sandbox and refreshes them when needed while the agent run remains active and the integration remains enabled.
 
-Because the token is the identity, nothing about this depends on which AWS account Tembo runs in.
+The selected profile is scoped to the child process and does not become the sandbox's default AWS identity. Because the OIDC token is the identity, nothing about this depends on which AWS account Tembo runs in.
 
 ## Troubleshooting
 
@@ -257,12 +270,20 @@ Because the token is the identity, nothing about this depends on which AWS accou
     5. **Workspace ID matches.** Compare against the value under **Workspace ID** in **Settings → Workspace**.
   </Accordion>
 
-  <Accordion title="Credentials expire during a long agent run">
-    Sessions are 1 hour. If your role's maximum session duration is lower than 3600 seconds, sessions will be shorter than expected — raise it to 3600.
+  <Accordion title="No AWS integrations are available">
+    The workspace does not have an enabled AWS integration. Connect one from **Settings → Integrations**, then retry the command. Sessions and automations that do not use AWS continue to work normally.
+  </Accordion>
+
+  <Accordion title="An AWS profile selector is ambiguous or not found">
+    List the enabled profiles again and use the generated profile name or integration ID. Environment labels and AWS account IDs are convenient selectors, but they may match more than one integration.
+  </Accordion>
+
+  <Accordion title="Credentials stop refreshing during a long-running command">
+    Credentials refresh automatically while the agent run remains active. Refresh fails closed if the run ends or the AWS integration is disabled, removed, or no longer belongs to the workspace. Start a new active session or re-enable the integration, then retry the command.
   </Accordion>
 
   <Accordion title="Agent can't reach AWS APIs">
-    The agent sandbox requires outbound access to `https://aws-mcp.us-east-1.api.aws` for the AWS Agent Toolkit MCP service. On self-hosted deployments in a private network, confirm egress to that endpoint is allowed.
+    The agent sandbox requires outbound HTTPS access to AWS STS and the AWS service endpoints used by the command. On self-hosted deployments in a private network, confirm that this egress is allowed.
   </Accordion>
 
   <Accordion title="Agent hits permission errors on AWS calls">
