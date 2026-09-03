@@ -115,7 +115,10 @@ Tembo accepts both of these formats:
 
 <AccordionGroup>
   <Accordion title="OAuth-based servers">
-    If a remote server requires OAuth, Tembo prompts you to authorize during setup and completes the connection after you approve access.
+    If a remote server requires OAuth, choose how the OAuth client is registered when adding the custom server:
+
+    - **Automatic**: Tembo registers an OAuth client with servers that support dynamic client registration, then prompts you to authorize during setup and completes the connection after you approve access.
+    - **Pre-registered**: Use credentials from an OAuth client you already registered with the MCP provider. Register the callback URL shown in the dialog as the provider's OAuth redirect URL, then enter the **Client ID** (required), **Client Secret** (optional for public clients, but required by some providers such as Slack), and an optional space-separated **Scope**.
   </Accordion>
 
   <Accordion title="Server not showing up in sessions">
