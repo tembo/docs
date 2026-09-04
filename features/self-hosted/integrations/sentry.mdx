@@ -1,0 +1,107 @@
+---
+title: 'Sentry'
+description: 'Set up the Sentry integration for Tembo self-hosted.'
+---
+
+## Overview
+
+The Sentry integration lets Tembo monitor new issues in your Sentry organization and open pull requests with code fixes and improvements. On the SaaS platform this is pre-configured — on self-hosted you need to create your own Sentry integration and point it at your instance.
+
+---
+
+## Step 1: Create a Sentry Integration
+
+1. Go to **Sentry > Organization Settings > Developer Settings > New Integration**
+2. Choose **Public Integration** (not Internal — Tembo relies on the install/authorize flow that only public integrations support)
+
+### Name
+
+Choose a name, e.g. `Tembo (self-hosted)`. The slug generated from this name is your `appName` — note it, you'll need it for the config.
+
+### Webhook URL
+
+```
+http://<your-instance-ip>/api/webhook/sentry
+```
+
+### Redirect URL
+
+```
+http://<your-instance-ip>/api/oauth/sentry/callback
+```
+
+This is where Sentry redirects after a user installs and authorizes the integration.
+
+### Permissions
+
+Set:
+
+| Permission | Access |
+|---|---|
+| **Organization** | Read |
+| **Issue & Event** | Read |
+
+### Webhooks
+
+Under **Resource Subscriptions**, check **Issue**.
+
+### Create the integration
+
+Click **Save Changes**.
+
+---
+
+## Step 2: Generate a Client Secret
+
+On the integration's settings page, copy the **Client ID** and **Client Secret**. Save both — you will need them for the Tembo config.
+
+---
+
+## Step 3: Configure Tembo
+
+Open `/var/lib/tembo/config.json` (via the VS Code server at `http://<your-instance-ip>:8888` or via SSH) and add the following keys:
+
+```json
+{
+  "sentry.clientId": "<your-sentry-client-id>",
+  "sentry.clientSecret": "<your-sentry-client-secret>",
+  "sentry.appName": "<your-sentry-integration-slug>"
+}
+```
+
+| Key | Where to find it |
+|---|---|
+| `clientId` | Integration settings page, listed as **Client ID** |
+| `clientSecret` | Integration settings page, listed as **Client Secret** |
+| `appName` | The slug of the integration name you chose in Step 1 |
+
+After saving, restart the API:
+
+```bash
+sudo systemctl restart tembo-ts-api
+```
+
+Updating the config.json will also cause the instance API to restart automatically.
+
+---
+
+## Step 4: Install the Integration
+
+1. In your Tembo instance, go to **Settings > Integrations**, find Sentry, and click **Install**
+2. Complete the Sentry install and authorization flow
+
+Install from Tembo, not from Sentry's own Integrations page — Tembo's generated authorize URL carries a `state` token that ties the install back to your org. Starting from Sentry directly skips that and the callback will fail even with valid credentials.
+
+---
+
+## Step 5: Verify
+
+1. Go to your Tembo instance and navigate to **Settings > Integrations**
+2. Confirm Sentry shows as connected
+3. Trigger a new issue in a project the integration can see and confirm Tembo picks it up
+
+---
+
+## Need Help?
+
+If you run into any issues, contact [support@tembo.io](mailto:support@tembo.io).

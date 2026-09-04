@@ -1,0 +1,107 @@
+---
+title: 'Linear'
+description: 'Set up the Linear integration for Tembo self-hosted.'
+---
+
+## Overview
+
+The Linear integration lets you assign issues to Tembo and have it open pull requests against them. Tagging Tembo on an issue or comment (via Linear's agent protocol) spins up a Tembo session and streams its progress back as activity on the issue. On the SaaS platform this is pre-configured — on self-hosted you need to create your own Linear OAuth application and point it at your instance.
+
+---
+
+## Step 1: Create an OAuth Application
+
+1. Go to **Linear > Settings > API > OAuth Applications > New**
+
+### Application name
+
+Choose a name, e.g. `Tembo (self-hosted)`. This will be visible to users when they authorize the app.
+
+### Callback URL
+
+```
+http://<your-instance-ip>/api/oauth/linear/callback
+```
+
+### Enable Agent
+
+Toggle **Agent** on for the application. This is required — it's what allows Tembo to be assigned to or @mentioned on issues and to respond via Linear's agent session protocol. Without it, Tembo cannot act as an agent in Linear.
+
+### Create the application
+
+Click **Create**.
+
+---
+
+## Step 2: Generate a Client Secret
+
+On the application's settings page, copy the **Client ID** and generate/copy the **Client Secret**. Save both — you will need them for the Tembo config.
+
+---
+
+## Step 3: Add a Webhook
+
+Still on the application's settings page:
+
+1. Go to the **Webhooks** tab and click **New webhook**
+2. Set the **Webhook URL** to:
+   ```
+   http://<your-instance-ip>/api/webhook/linear
+   ```
+3. Under **Data change events**, check **Issues**
+4. Save — Linear will generate a **Webhook signing secret**. Copy it, you will need it for the config.
+
+Agent session events (from the **Agent** toggle in Step 1) are delivered on this same webhook automatically.
+
+---
+
+## Step 4: Configure Tembo
+
+Open `/var/lib/tembo/config.json` (via the VS Code server at `http://<your-instance-ip>:8888` or via SSH) and add the following keys:
+
+```json
+{
+  "linear.clientId": "<your-linear-client-id>",
+  "linear.clientSecret": "<your-linear-client-secret>",
+  "linear.webhookSecret": "<your-linear-webhook-signing-secret>",
+  "linear.appName": "<your-linear-app-name>"
+}
+```
+
+| Key | Where to find it |
+|---|---|
+| `clientId` | Application settings page, listed as **Client ID** |
+| `clientSecret` | The client secret you generated in Step 2 |
+| `webhookSecret` | The webhook signing secret from Step 3 |
+| `appName` | The name you gave the app in Step 1 — used as Tembo's display name in Linear activity |
+
+After saving, restart the API:
+
+```bash
+sudo systemctl restart tembo-ts-api
+```
+
+Updating the config.json will also cause the instance API to restart automatically.
+
+---
+
+## Step 5: Install and Authorize
+
+1. In your Tembo instance, go to **Settings > Integrations**, find Linear, and click **Install**
+2. Complete the Linear authorization flow
+
+Install from Tembo, not from Linear directly — Tembo's generated authorize URL carries a `state` token that ties the install back to your org. Starting from Linear's own OAuth Applications page skips that and the callback will fail even with valid credentials.
+
+---
+
+## Step 6: Verify
+
+1. Go to your Tembo instance and navigate to **Settings > Integrations**
+2. Confirm Linear shows as connected
+3. Assign a Linear issue to Tembo, or @mention it in a comment, and confirm a session starts
+
+---
+
+## Need Help?
+
+If you run into any issues, contact [support@tembo.io](mailto:support@tembo.io).
