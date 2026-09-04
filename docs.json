@@ -58,6 +58,8 @@
                                 "pages": [
                                     "features/sandbox/overview",
                                     "features/projects",
+                                    "features/sandbox/computer",
+                                    "features/sandbox/keep-alive",
                                     "features/sandbox/custom-dependencies",
                                     "features/sandbox/environment-variables"
                                 ]
