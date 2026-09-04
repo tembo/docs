@@ -55,14 +55,7 @@ Agent session events (from the **Agent** toggle in Step 1) are delivered on this
 
 ---
 
-## Step 4: Authorize the App on Your Workspace
-
-1. Use your app's authorize URL (`https://linear.app/oauth/authorize?...`) or have a workspace admin install it from **Settings > API > OAuth Applications**
-2. Approve the requested scopes
-
----
-
-## Step 5: Configure Tembo
+## Step 4: Configure Tembo
 
 Open `/var/lib/tembo/config.json` (via the VS Code server at `http://<your-instance-ip>:8888` or via SSH) and add the following keys:
 
@@ -89,6 +82,15 @@ sudo systemctl restart tembo-ts-api
 ```
 
 Updating the config.json will also cause the instance API to restart automatically.
+
+---
+
+## Step 5: Install and Authorize
+
+1. In your Tembo instance, go to **Settings > Integrations**, find Linear, and click **Install**
+2. Complete the Linear authorization flow
+
+Install from Tembo, not from Linear directly — Tembo's generated authorize URL carries a `state` token that ties the install back to your org. Starting from Linear's own OAuth Applications page skips that and the callback will fail even with valid credentials.
 
 ---
 

@@ -87,8 +87,10 @@ Updating the config.json will also cause the instance API to restart automatical
 
 ## Step 4: Install the Integration
 
-1. In your Sentry organization, go to **Settings > Integrations**, find your new integration, and click **Install**
-2. Authorize it against your organization
+1. In your Tembo instance, go to **Settings > Integrations**, find Sentry, and click **Install**
+2. Complete the Sentry install and authorization flow
+
+Install from Tembo, not from Sentry's own Integrations page — Tembo's generated authorize URL carries a `state` token that ties the install back to your org. Starting from Sentry directly skips that and the callback will fail even with valid credentials.
 
 ---
 
