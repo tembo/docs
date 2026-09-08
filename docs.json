@@ -57,6 +57,7 @@
                                 "group": "Sandbox",
                                 "pages": [
                                     "features/sandbox/overview",
+                                    "features/sandbox/built-in-skills-and-tools",
                                     "features/projects",
                                     "features/sandbox/custom-dependencies",
                                     "features/sandbox/environment-variables"

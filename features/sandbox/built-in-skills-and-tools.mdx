@@ -1,0 +1,142 @@
+---
+title: 'Built-in skills and tools'
+description: 'Reference for the MCP tools, Tembo CLI commands, and skills available in your sandbox.'
+---
+
+Your sandbox gives your agent MCP tools for interacting with Tembo, a `tembo` CLI for terminal operations, and skills that explain how to use those capabilities.
+
+This page lists Tembo's built-in capabilities. Your available tools and skills can also depend on your agent, organization settings, and connected integrations. Third-party MCP servers and custom skills can add to this list.
+
+## MCP tools
+
+### Tool discovery and execution
+
+Your agent uses these tools to discover and call the MCP tools connected to your session.
+
+| Tool | Description |
+| --- | --- |
+| `search_mcp_tools` | Search connected servers for tools by capability or name. |
+| `list_mcp_servers` | List configured servers, connection status, discovered tool counts, and initialization errors. |
+| `get_mcp_tool_details` | Get the complete input schemas and metadata for selected tools. |
+| `call_mcp_tool` | Call a tool on a selected server with its arguments. |
+| `execute_mcp_code` | Run TypeScript that calls multiple MCP tools and returns a final result without placing intermediate results in the agent's context. |
+
+### Sessions, repositories, and artifacts
+
+| Tool | Description |
+| --- | --- |
+| `list_repositories` | List your organization's enabled repositories, including IDs, URLs, owners, and base or target branches. |
+| `create_pull_request` | Open and record a pull request after changes have been committed and pushed. |
+| `setVmKeepAlive` | Set how many seconds your session VM should remain alive, starting when the tool is called. |
+| `createArtifact` | Create a shareable HTML, Markdown, CSV, JSON, or uploaded-file artifact. |
+| `uploadFile` | Prepare a direct file upload of up to 5 GiB and return the upload URL, required headers, asset ID, and download URL. |
+| `completeFileUpload` | Mark an upload as complete after the file bytes have been sent to the upload URL. |
+| `respond_to_user` | Send the final result for your session. |
+
+### Agent state
+
+These tools are available when the session is associated with an agent.
+
+| Tool | Description |
+| --- | --- |
+| `getAgentState` | Read a value from the current agent's state, or omit the key to read the full state object. |
+| `setAgentState` | Set a string value for a key in the current agent's state. |
+
+### Slack
+
+These tools require a connected Slack workspace and the appropriate permissions for the requested action.
+
+| Tool | Description |
+| --- | --- |
+| `readSlackMessages` | Read a Slack thread using its channel and thread timestamp. |
+| `sendSlackMessage` | Send a message to a Slack channel. |
+| `sendSlackDirectMessage` | Send a direct message to a Slack user as the Tembo bot. |
+| `addTemboToChannel` | Add the Tembo bot to a Slack channel. |
+| `listSlackWorkspaceUsers` | List workspace users, including user IDs and display names. |
+| `add_slack_reaction` | Add an emoji reaction to a Slack message. |
+
+## Tembo CLI commands
+
+You can inspect the installed CLI with `tembo --help`. Use `--help` on any command or subcommand for its arguments and options. Placeholders in the tables below, such as `<port>`, represent values you supply; square brackets indicate optional arguments.
+
+### Git and repositories
+
+| Command | Description |
+| --- | --- |
+| `tembo list-repositories` | List repositories attached to your sandbox session. Alias: `tembo repositories`. |
+| `tembo commit` | Create and push a verified commit for your session. Use this instead of `git commit`. |
+| `tembo merge <branch>` | Merge another branch into your current branch and finalize merge commits through Tembo. Use this instead of `git merge`. |
+| `tembo merge --continue` | Finish a merge after you resolve conflicts and stage the resolutions. |
+| `tembo merge --abort` | Abort an in-progress merge. |
+| `tembo pull-request create` | Open a pull request after your source branch has been pushed. Alias: `tembo pr create`. |
+
+### Browser, previews, and recordings
+
+| Command | Description |
+| --- | --- |
+| `tembo browser open <url>` | Open a URL in the sandbox browser. |
+| `tembo service --port <port>` | Expose a running local HTTP service through a public preview URL and create a service artifact. |
+| `tembo record desktop [output]` | Record the entire Computer preview desktop. |
+| `tembo record focused-window [output]` | Record the currently focused desktop window. |
+| `tembo record window --class <class> [output]` | Focus and record a desktop window identified by its class. |
+
+### Files, artifacts, and sessions
+
+| Command | Description |
+| --- | --- |
+| `tembo upload-file <path>` | Upload a local file of up to 5 GiB to Tembo assets. |
+| `tembo artifact create` | Create an artifact from inline content, a local file, or an existing uploaded asset. |
+| `tembo respond-to-user` | Send your session's final response, with optional Slack attachments. |
+| `tembo set-vm-keep-alive <seconds>` | Keep your session VM alive for a positive whole-number duration in seconds. |
+| `tembo mcp-gateway` | Run the session's MCP gateway. |
+| `tembo help [command]` | Show general help or help for a command. |
+| `tembo --version` | Show the installed CLI version. |
+
+### AWS
+
+You need an enabled AWS integration to authenticate and access your organization's accounts.
+
+| Command | Description |
+| --- | --- |
+| `tembo aws auth` | Install or refresh short-lived AWS credential profiles. |
+| `tembo aws profiles` | List enabled AWS accounts for your organization. |
+| `tembo aws exec <selector> <command...>` | Run a command using a selected profile, environment label, account ID, or integration ID. |
+
+### Tailscale
+
+You need a connected Tailscale integration to join your organization's tailnet.
+
+| Command | Description |
+| --- | --- |
+| `tembo tailscale join` | Start Tailscale in userspace mode and join the tailnet using a one-time key; safe to call again when already joined. |
+| `tembo tailscale ssh <target> [command...]` | Connect to a tailnet host over SSH with non-interactive defaults. |
+| `tembo tailscale status` | List tailnet hosts reachable from your sandbox. |
+| `tembo tailscale logout` | Leave the tailnet and remove the ephemeral node. |
+
+## Skills
+
+Skills give your agent reusable instructions for a particular task. The tables below summarize their names and purposes without reproducing their contents.
+
+### Built-in skills
+
+| Skill | Description |
+| --- | --- |
+| `agent-browser` | Automate browser interactions, inspect pages, take screenshots, and test web applications. |
+| `aws` | Authenticate AWS CLI and SDK commands with short-lived credentials and work across enabled organization accounts. |
+| `generate-preview-url` | Expose local HTTP services and create shareable preview URLs. |
+| `install-custom-dependencies` | Install missing packages, CLI tools, or libraries using the sandbox's Nix-based environment. |
+| `tembo-artifact` | Create shareable reports, walkthroughs, diagrams, dashboards, structured exports, and uploaded-media artifacts. |
+| `tembo-cli` | Use the sandbox CLI for pull requests, service previews, uploads, and user responses. |
+| `tembo-file-upload` | Upload local sandbox files to Tembo assets. |
+| `tembo-git-instructions` | Follow your organization's commit-message and pull-request-title instructions. |
+
+### Integration-provided skills
+
+These skills are added when you configure the corresponding integration.
+
+| Skill | Description |
+| --- | --- |
+| `tailscale` | Join your organization's tailnet and reach private databases, internal APIs, and other hosts. |
+| `<VPN name> private network access` | Connect to the private network behind a configured OpenConnect VPN gateway. The skill name depends on your VPN's name. |
+
+Your organization, repositories, and selected agent can provide additional skills. Those skills are not part of Tembo's built-in set and vary between sessions.
