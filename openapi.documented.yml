@@ -739,7 +739,7 @@ paths:
                                             name:
                                                 type: string
                                                 description: Trigger name
-                                                example: linear.issue.created
+                                                example: Issue.create
                                             integrationId:
                                                 type: string
                                                 description: Integration ID for the trigger
@@ -749,6 +749,7 @@ paths:
                                                 description: Trigger-specific filters
                                         required:
                                             - name
+                                            - integrationId
                                 schedules:
                                     type: array
                                     description: Schedules to attach to the agent
