@@ -4,8 +4,14 @@ info:
     description: Tembo Developer API
     version: 1.0.0
 servers:
-    - url: https://api.tembo.io/
-      description: Tembo API
+    - url: https://api.tembo.io
+      description: Tembo Cloud
+    - url: https://{host}/api/public-api
+      description: Self-hosted Tembo
+      variables:
+          host:
+              default: tembo.example.com
+              description: Hostname of your self-hosted Tembo deployment
 components:
     securitySchemes:
         apiKeyAuth:
@@ -623,10 +629,16 @@ paths:
             summary: Stop Session
             x-codeSamples:
                 - lang: bash
-                  label: cURL
+                  label: Tembo Cloud
                   source: |-
                       curl -s -X POST \
                         "https://api.tembo.io/session/${SESSION_ID}/stop" \
+                        -H "Authorization: Bearer ${API_KEY}"
+                - lang: bash
+                  label: Self-hosted
+                  source: |-
+                      curl -s -X POST \
+                        "https://tembo.example.com/api/public-api/session/${SESSION_ID}/stop" \
                         -H "Authorization: Bearer ${API_KEY}"
 
     /agent:
@@ -774,9 +786,37 @@ paths:
                 required: true
             x-codeSamples:
                 - lang: bash
+                  label: Tembo Cloud
                   source: |-
                       curl -s -X POST \
                         "https://api.tembo.io/agent" \
+                        -H "Authorization: Bearer ${API_KEY}" \
+                        -H "Content-Type: application/json" \
+                        -d '{
+                          "name": "Daily triage",
+                          "jsonContent": {
+                            "type": "doc",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "text": "Review new issues and summarize priority, owner, and next steps."
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          "agent": "claudeCode:claude-opus-4-5",
+                          "mcpServers": ["linear", "github"],
+                          "schedules": [{ "cron": "0 9 * * 1-5" }]
+                        }' | jq .
+                - lang: bash
+                  label: Self-hosted
+                  source: |-
+                      curl -s -X POST \
+                        "https://tembo.example.com/api/public-api/agent" \
                         -H "Authorization: Bearer ${API_KEY}" \
                         -H "Content-Type: application/json" \
                         -d '{
@@ -887,7 +927,7 @@ paths:
                 required: false
             x-codeSamples:
                 - lang: bash
-                  label: Bearer Auth
+                  label: Cloud Bearer Auth
                   source: |-
                       curl -s -X POST \
                         "https://api.tembo.io/agent/${AGENT_ID}/trigger" \
@@ -895,10 +935,25 @@ paths:
                         -H "Content-Type: application/json" \
                         -d '{"issue_url": "https://github.com/org/repo/issues/42"}' | jq .
                 - lang: bash
-                  label: Query Param Auth
+                  label: Cloud Query Param Auth
                   source: |-
                       curl -s -X POST \
                         "https://api.tembo.io/agent/${AGENT_ID}/trigger?apiKey=${API_KEY}" \
+                        -H "Content-Type: application/json" \
+                        -d '{"issue_url": "https://github.com/org/repo/issues/42"}' | jq .
+                - lang: bash
+                  label: Self-hosted Bearer Auth
+                  source: |-
+                      curl -s -X POST \
+                        "https://tembo.example.com/api/public-api/agent/${AGENT_ID}/trigger" \
+                        -H "Authorization: Bearer ${API_KEY}" \
+                        -H "Content-Type: application/json" \
+                        -d '{"issue_url": "https://github.com/org/repo/issues/42"}' | jq .
+                - lang: bash
+                  label: Self-hosted Query Param Auth
+                  source: |-
+                      curl -s -X POST \
+                        "https://tembo.example.com/api/public-api/agent/${AGENT_ID}/trigger?apiKey=${API_KEY}" \
                         -H "Content-Type: application/json" \
                         -d '{"issue_url": "https://github.com/org/repo/issues/42"}' | jq .
     /repository/list:

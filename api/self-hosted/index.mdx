@@ -1,53 +1,22 @@
 ---
-title: 'Self-Hosted API Overview'
-description: 'Create sessions, manage repositories, and automate workflows in your self-hosted Tembo instance.'
+title: 'Self-hosted setup'
+description: 'Connect the Tembo SDK and API reference to your self-hosted deployment.'
 ---
 
-## Authentication
+Self-hosted Tembo uses the same API operations and schemas as Tembo Cloud. Choose
+the server for your deployment when you use the [API Reference](../):
 
-Generate an API key from **Settings > API Keys** in your self-hosted Tembo dashboard.
+- Tembo Cloud: `https://api.tembo.io`
+- Self-hosted: `https://{host}/api/public-api`
 
-Replace `tembo.example.com` with the hostname of your Tembo instance.
-
-```bash
-curl -H "Authorization: Bearer YOUR_API_KEY" \
-  https://tembo.example.com/api/public-api/session/list
-```
-
-## SDK
-
-<CodeGroup>
-```bash npm
-npm install @tembo-io/sdk
-```
-
-```bash yarn
-yarn add @tembo-io/sdk
-```
-
-```bash pnpm
-pnpm add @tembo-io/sdk
-```
-
-```bash bun
-bun add @tembo-io/sdk
-```
-</CodeGroup>
+Generate an API key from **Settings > API Keys** in your self-hosted dashboard,
+then configure the SDK with your deployment's API base URL:
 
 ```javascript
 import Tembo from '@tembo-io/sdk';
 
 const client = new Tembo({
   apiKey: process.env.TEMBO_API_KEY,
-  baseURL: 'https://tembo.example.com/api/public-api/',
-});
-
-const session = await client.session.create({
-  prompt: 'Fix the authentication bug in the login component',
-  repositories: ['https://github.com/org/repo'],
+  baseURL: 'https://tembo.example.com/api/public-api',
 });
 ```
-
-## Rate limits
-
-100 requests per minute per API key. 1,000 requests per hour per organization.

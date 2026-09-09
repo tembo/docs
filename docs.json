@@ -28,7 +28,10 @@
     },
     "favicon": "/favicon.ico",
     "api": {
-        "openapi": "https://api.tembo.io/public-api/openapi/public"
+        "openapi": {
+            "source": "https://api.tembo.io/public-api/openapi/public",
+            "overlays": ["openapi.servers.overlay.yml"]
+        }
     },
     "integrations": {
         "posthog": {
@@ -155,10 +158,16 @@
                         "pages": ["api/index"]
                     },
                     {
-                        "group": "Tembo API",
+                        "group": "Self-hosted setup",
+                        "public": true,
+                        "pages": ["api/self-hosted/index"]
+                    },
+                    {
+                        "group": "API Reference",
                         "public": true,
                         "openapi": {
                             "source": "https://api.tembo.io/public-api/openapi/public",
+                            "overlays": ["openapi.servers.overlay.yml"],
                             "directory": "api/v1"
                         },
                         "pages": [
@@ -249,35 +258,6 @@
                             {
                                 "group": "Agents",
                                 "pages": ["POST /agent", "api/trigger-agent"]
-                            },
-                            {
-                                "group": "Repositories",
-                                "pages": ["GET /repository/list"]
-                            }
-                        ]
-                    },
-                    {
-                        "group": "Self-Hosted API",
-                        "public": true,
-                        "openapi": {
-                            "source": "openapi.self-hosted.yml",
-                            "directory": "api/self-hosted"
-                        },
-                        "pages": [
-                            "api/self-hosted/index",
-                            {
-                                "group": "Sessions",
-                                "pages": [
-                                    "POST /session/create",
-                                    "GET /session/list",
-                                    "GET /session/search",
-                                    "POST /session/{sessionId}/messages",
-                                    "POST /session/{sessionId}/stop"
-                                ]
-                            },
-                            {
-                                "group": "Agents",
-                                "pages": ["POST /agent", "POST /agent/{keyOrId}/trigger"]
                             },
                             {
                                 "group": "Repositories",

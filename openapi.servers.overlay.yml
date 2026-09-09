@@ -1,0 +1,18 @@
+overlay: 1.0.0
+info:
+    title: Tembo deployment servers
+    version: 1.0.0
+actions:
+    - target: $.servers
+      remove: true
+    - target: $
+      update:
+          servers:
+              - url: https://api.tembo.io
+                description: Tembo Cloud
+              - url: https://{host}/api/public-api
+                description: Self-hosted Tembo
+                variables:
+                    host:
+                        default: tembo.example.com
+                        description: Hostname of your self-hosted Tembo deployment
