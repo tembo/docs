@@ -5,7 +5,7 @@ info:
     version: 1.0.0
 servers:
     - url: https://api.tembo.io
-      description: Tembo Cloud
+      description: Tembo API
     - url: https://{host}/api/public-api
       description: Self-hosted Tembo
       variables:
@@ -629,7 +629,7 @@ paths:
             summary: Stop Session
             x-codeSamples:
                 - lang: bash
-                  label: Tembo Cloud
+                  label: Tembo API
                   source: |-
                       curl -s -X POST \
                         "https://api.tembo.io/session/${SESSION_ID}/stop" \
@@ -786,7 +786,7 @@ paths:
                 required: true
             x-codeSamples:
                 - lang: bash
-                  label: Tembo Cloud
+                  label: Tembo API
                   source: |-
                       curl -s -X POST \
                         "https://api.tembo.io/agent" \
@@ -926,7 +926,7 @@ paths:
                 required: false
             x-codeSamples:
                 - lang: bash
-                  label: Cloud Bearer Auth
+                  label: Tembo API Bearer Auth
                   source: |-
                       curl -s -X POST \
                         "https://api.tembo.io/agent/${AGENT_ID}/trigger" \
@@ -934,7 +934,7 @@ paths:
                         -H "Content-Type: application/json" \
                         -d '{"issue_url": "https://github.com/org/repo/issues/42"}' | jq .
                 - lang: bash
-                  label: Cloud Query Param Auth
+                  label: Tembo API Query Param Auth
                   source: |-
                       curl -s -X POST \
                         "https://api.tembo.io/agent/${AGENT_ID}/trigger?apiKey=${API_KEY}" \

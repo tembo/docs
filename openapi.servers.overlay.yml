@@ -9,7 +9,7 @@ actions:
       update:
           servers:
               - url: https://api.tembo.io
-                description: Tembo Cloud
+                description: Tembo API
               - url: https://{host}/api/public-api
                 description: Self-hosted Tembo
                 variables:
