@@ -3,18 +3,33 @@ title: 'Overview'
 description: 'Create sessions, manage repositories, and automate workflows programmatically.'
 ---
 
-<Card title="Using Tembo self-hosted?" icon="server" href="./self-hosted">
-  Configure the API for your self-hosted Tembo deployment.
-</Card>
+## Base URLs
+
+Tembo API and self-hosted deployments use the same API operations and schemas.
+
+- Tembo API: `https://api.tembo.io`
+- Self-hosted: `https://{deployment-origin}/api/public-api`
+
+Self-hosted deployments use their own deployment origin and currently require
+the additional `/api/public-api` path prefix.
 
 ## Authentication
 
-Generate an API key from **Settings > API Keys** in the [dashboard](https://app.tembo.io).
+For the Tembo API, create an API key from **Settings > API Keys** in the
+[hosted Tembo dashboard](https://app.tembo.io). For self-hosted, create an API
+key in your deployment's own dashboard.
 
-```bash
+<CodeGroup>
+```bash Tembo API
 curl -H "Authorization: Bearer YOUR_API_KEY" \
   https://api.tembo.io/v1/sessions
 ```
+
+```bash Self-hosted
+curl -H "Authorization: Bearer YOUR_API_KEY" \
+  https://tembo.example.com/api/public-api/v1/sessions
+```
+</CodeGroup>
 
 ## Rate limits
 

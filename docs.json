@@ -158,11 +158,6 @@
                         "pages": ["api/index"]
                     },
                     {
-                        "group": "Self-hosted setup",
-                        "public": true,
-                        "pages": ["api/self-hosted/index"]
-                    },
-                    {
                         "group": "API Reference",
                         "public": true,
                         "openapi": {
@@ -370,6 +365,10 @@
         {
             "source": "/api/trigger-agent",
             "destination": "/api/legacy/trigger-agent"
+        },
+        {
+            "source": "/api/self-hosted",
+            "destination": "/api"
         }
     ]
 }

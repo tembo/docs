@@ -10,9 +10,9 @@ actions:
           servers:
               - url: https://api.tembo.io
                 description: Tembo API
-              - url: https://{host}/api/public-api
+              - url: https://{deployment-origin}/api/public-api
                 description: Self-hosted Tembo
                 variables:
-                    host:
+                    deployment-origin:
                         default: tembo.example.com
                         description: Hostname of your self-hosted Tembo deployment
