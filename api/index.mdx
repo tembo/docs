@@ -4,7 +4,7 @@ description: 'Create sessions, manage repositories, and automate workflows progr
 ---
 
 <Card title="Using Tembo self-hosted?" icon="server" href="./self-hosted">
-  View the API documentation for self-hosted Tembo deployments.
+  Configure the API for your self-hosted Tembo deployment.
 </Card>
 
 ## Authentication
@@ -14,39 +14,6 @@ Generate an API key from **Settings > API Keys** in the [dashboard](https://app.
 ```bash
 curl -H "Authorization: Bearer YOUR_API_KEY" \
   https://api.tembo.io/v1/sessions
-```
-
-## SDK
-
-<CodeGroup>
-```bash npm
-npm install @tembo-io/sdk
-```
-
-```bash yarn
-yarn add @tembo-io/sdk
-```
-
-```bash pnpm
-pnpm add @tembo-io/sdk
-```
-
-```bash bun
-bun add @tembo-io/sdk
-```
-</CodeGroup>
-
-```javascript
-import Tembo from '@tembo-io/sdk';
-
-const client = new Tembo({
-  apiKey: process.env.TEMBO_API_KEY,
-});
-
-const session = await client.session.create({
-  prompt: 'Fix the authentication bug in the login component',
-  repositories: ['https://github.com/org/repo'],
-});
 ```
 
 ## Rate limits

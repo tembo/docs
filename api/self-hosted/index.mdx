@@ -1,6 +1,6 @@
 ---
 title: 'Self-hosted setup'
-description: 'Connect the Tembo SDK and API reference to your self-hosted deployment.'
+description: 'Configure API access for your self-hosted deployment.'
 ---
 
 Self-hosted Tembo uses the same API operations and schemas as Tembo Cloud. Choose
@@ -10,13 +10,9 @@ the server for your deployment when you use the [API Reference](../):
 - Self-hosted: `https://{host}/api/public-api`
 
 Generate an API key from **Settings > API Keys** in your self-hosted dashboard,
-then configure the SDK with your deployment's API base URL:
+then replace `tembo.example.com` with your deployment's hostname:
 
-```javascript
-import Tembo from '@tembo-io/sdk';
-
-const client = new Tembo({
-  apiKey: process.env.TEMBO_API_KEY,
-  baseURL: 'https://tembo.example.com/api/public-api',
-});
+```bash
+curl -H "Authorization: Bearer YOUR_API_KEY" \
+  https://tembo.example.com/api/public-api/v1/sessions
 ```
