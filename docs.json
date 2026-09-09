@@ -238,7 +238,7 @@
                         ]
                     },
                     {
-                        "group": "Legacy API (Deprecated)",
+                        "group": "Legacy API",
                         "public": true,
                         "openapi": {
                             "source": "openapi.documented.yml",
