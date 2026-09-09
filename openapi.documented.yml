@@ -16,6 +16,7 @@ components:
 paths:
     /session/create:
         post:
+            deprecated: true
             responses:
                 "200":
                     description: Session created successfully
@@ -164,6 +165,7 @@ paths:
                       console.log(session.id);
     /session/list:
         get:
+            deprecated: true
             responses:
                 "200":
                     description: Successfully retrieved paginated list of sessions
@@ -271,6 +273,7 @@ paths:
                       console.log(sessions.sessions);
     /session/search:
         get:
+            deprecated: true
             responses:
                 "200":
                     description: Successfully retrieved search results with pagination
@@ -400,6 +403,7 @@ paths:
                       console.log(response.sessions);
     /session/{sessionId}/messages:
         post:
+            deprecated: true
             responses:
                 "200":
                     description: Message created successfully
@@ -559,6 +563,7 @@ paths:
 
     /session/{sessionId}/stop:
         post:
+            deprecated: true
             responses:
                 "200":
                     description: Successfully stopped sessions and jobs
@@ -626,6 +631,7 @@ paths:
 
     /agent:
         post:
+            deprecated: true
             responses:
                 "200":
                     description: Agent created successfully
@@ -795,6 +801,7 @@ paths:
                         }' | jq .
     /agent/{keyOrId}/trigger:
         post:
+            deprecated: true
             responses:
                 "200":
                     description: Agent triggered successfully
@@ -896,6 +903,7 @@ paths:
                         -d '{"issue_url": "https://github.com/org/repo/issues/42"}' | jq .
     /repository/list:
         get:
+            deprecated: true
             responses:
                 "200":
                     description: Successfully retrieved list of enabled code repositories
