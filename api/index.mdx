@@ -3,51 +3,33 @@ title: 'Overview'
 description: 'Create sessions, manage repositories, and automate workflows programmatically.'
 ---
 
-<Card title="Using Tembo self-hosted?" icon="server" href="./self-hosted">
-  View the API documentation for self-hosted Tembo deployments.
-</Card>
+## Base URLs
+
+Tembo API and self-hosted deployments use the same API operations and schemas.
+
+- Tembo API: `https://api.tembo.io`
+- Self-hosted: `https://{deployment-origin}/api/public-api`
+
+Self-hosted deployments use their own deployment origin and currently require
+the additional `/api/public-api` path prefix.
 
 ## Authentication
 
-Generate an API key from **Settings > API Keys** in the [dashboard](https://app.tembo.io).
-
-```bash
-curl -H "Authorization: Bearer YOUR_API_KEY" \
-  https://api.tembo.io/session/list
-```
-
-## SDK
+For the Tembo API, create an API key from **Settings > API Keys** in the
+[hosted Tembo dashboard](https://app.tembo.io). For self-hosted, create an API
+key in your deployment's own dashboard.
 
 <CodeGroup>
-```bash npm
-npm install @tembo-io/sdk
+```bash Tembo API
+curl -H "Authorization: Bearer YOUR_API_KEY" \
+  https://api.tembo.io/v1/sessions
 ```
 
-```bash yarn
-yarn add @tembo-io/sdk
-```
-
-```bash pnpm
-pnpm add @tembo-io/sdk
-```
-
-```bash bun
-bun add @tembo-io/sdk
+```bash Self-hosted
+curl -H "Authorization: Bearer YOUR_API_KEY" \
+  https://tembo.example.com/api/public-api/v1/sessions
 ```
 </CodeGroup>
-
-```javascript
-import Tembo from '@tembo-io/sdk';
-
-const client = new Tembo({
-  apiKey: process.env.TEMBO_API_KEY,
-});
-
-const session = await client.session.create({
-  prompt: 'Fix the authentication bug in the login component',
-  repositories: ['https://github.com/org/repo'],
-});
-```
 
 ## Rate limits
 
