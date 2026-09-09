@@ -257,7 +257,7 @@
                             },
                             {
                                 "group": "Agents",
-                                "pages": ["POST /agent", "api/trigger-agent"]
+                                "pages": ["POST /agent", "POST /agent/{keyOrId}/trigger"]
                             },
                             {
                                 "group": "Repositories",
@@ -365,7 +365,11 @@
         },
         {
             "source": "/api/trigger-automation",
-            "destination": "/api/trigger-agent"
+            "destination": "/api/legacy/trigger-agent"
+        },
+        {
+            "source": "/api/trigger-agent",
+            "destination": "/api/legacy/trigger-agent"
         }
     ]
 }
