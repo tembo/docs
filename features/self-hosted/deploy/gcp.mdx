@@ -3,9 +3,297 @@ title: 'GCP'
 description: 'Deploy Tembo self-hosted on Google Cloud Platform.'
 ---
 
+## Overview
+
+The Tembo self-hosted stack runs as a single NixOS virtual machine. All services sit behind nginx on port 80:
+
+| Service | Path | Port (internal) |
+|---|---|---|
+| Web UI | `/` | 3000 |
+| API | `/api/*` | 3001 |
+| Admin UI | `/admin/` | 3002 |
+| Installer / setup wizard | `/installer/` | 3999 |
+| PostgreSQL 16 | — | 5432 |
+| PGAdmin Console | — | 5050 |
+| Redis | — | 6379 |
+| Prometheus | — | 9090 |
+
+Tembo distributes a pre-built NixOS custom image to your Google Cloud project. You create a Compute Engine VM from that image, configure VPC firewall rules, and configure a single JSON file. No OS setup or image building is required on your end.
+
+---
+
+## Step 1: Request Access
+
+To get started with Tembo self-hosted, you need a license key and access to the Tembo custom image. Book a demo with the Tembo team to get set up:
+
+<a href="https://book.avoma.com/tembo/tembo-demo/" target="_blank">
+  <button>Book a Demo</button>
+</a>
+
+Once you have a license key, contact Tembo to have the image shared with your Google Cloud project. You will need to provide:
+
+- Your **license key**
+- Your **Google Cloud project ID**
+- Your preferred **region** (for example, `us-central1`)
+
+Tembo will grant your project access to the custom image. You will receive the image name and the Tembo image project ID once sharing is confirmed.
+
 <Note>
-  GCP support is currently in early access. To get on the list, book a demo call with the Tembo team: <a href="https://book.avoma.com/tembo/tembo-demo/" target="_blank">Book a Demo</a>
+  The image contains no embedded secrets. Initial configuration is written to `/var/lib/tembo/config.json` at first boot by the `tembo-config-seed` service.
 </Note>
+
+---
+
+## Step 2: Create a Compute Engine VM
+
+### VM requirements
+
+| Resource | Minimum | Recommended |
+|---|---|---|
+| vCPUs | 4 | 8 |
+| RAM | 16 GB | 32 GB |
+| Disk | 128 GB | 256 GB |
+
+<Note>
+  For the best sandbox performance, use an N2 machine type with nested virtualization enabled. We recommend **`n2-standard-8`**. Nested virtualization gives sandbox VMs hardware acceleration through KVM; without it, they use significantly slower software emulation.
+</Note>
+
+### Via the Google Cloud CLI
+
+Set the project and zone you will use:
+
+```bash
+gcloud config set project <your-project-id>
+gcloud config set compute/zone us-central1-a
+```
+
+Create the VM from the image shared by Tembo:
+
+```bash
+gcloud compute instances create tembo-self-hosted \
+  --machine-type=n2-standard-8 \
+  --image=<tembo-image-name> \
+  --image-project=<tembo-image-project-id> \
+  --boot-disk-size=256GB \
+  --boot-disk-type=pd-balanced \
+  --enable-nested-virtualization \
+  --tags=tembo-self-hosted
+```
+
+Replace the placeholders with values provided by Tembo. The command creates an external IP address by default; you will use it in the next steps.
+
+### Via the Google Cloud console
+
+1. Go to **Compute Engine > VM instances** and select **Create instance**
+2. Choose your preferred region and zone
+3. Under **Machine configuration**, select the **N2** series and choose **n2-standard-8** or larger
+4. Under **Boot disk**, select **Change**, then choose **Custom images** and select the Tembo image shared with your project
+5. Set the boot disk size to at least **256 GB** and select **Balanced persistent disk**
+6. Under **Advanced options > Security**, enable **Nested virtualization**
+7. Under **Networking**, add the network tag `tembo-self-hosted` and ensure the VM has an external IPv4 address
+8. Select **Create**
+
+---
+
+## Step 3: Configure VPC Firewall Rules
+
+VPC firewall rules control inbound traffic to Compute Engine VMs. Create rules that target the `tembo-self-hosted` network tag:
+
+| Port | Protocol | Source | Purpose |
+|---|---|---|---|
+| 80 | TCP | Your preferred IP range | Tembo web UI and API |
+| 3999 | TCP | Your IP | Installer / setup wizard |
+| 8888 | TCP | Your IP | VS Code server (config editing) |
+| 22 | TCP | Your IP | SSH access |
+
+Ports 3999 and 8888 are only needed during initial setup. You can remove those rules after configuration is complete.
+
+### Via the Google Cloud CLI
+
+```bash
+# Allow HTTP on port 80
+gcloud compute firewall-rules create tembo-allow-http \
+  --network=default \
+  --direction=INGRESS \
+  --action=ALLOW \
+  --rules=tcp:80 \
+  --source-ranges=<your-ip-range> \
+  --target-tags=tembo-self-hosted
+
+# Allow the installer, VS Code server, and SSH — restrict to your IP
+gcloud compute firewall-rules create tembo-allow-installer \
+  --network=default \
+  --direction=INGRESS \
+  --action=ALLOW \
+  --rules=tcp:3999 \
+  --source-ranges=<your-ip>/32 \
+  --target-tags=tembo-self-hosted
+
+gcloud compute firewall-rules create tembo-allow-vscode \
+  --network=default \
+  --direction=INGRESS \
+  --action=ALLOW \
+  --rules=tcp:8888 \
+  --source-ranges=<your-ip>/32 \
+  --target-tags=tembo-self-hosted
+
+gcloud compute firewall-rules create tembo-allow-ssh \
+  --network=default \
+  --direction=INGRESS \
+  --action=ALLOW \
+  --rules=tcp:22 \
+  --source-ranges=<your-ip>/32 \
+  --target-tags=tembo-self-hosted
+```
+
+If you use a VPC other than `default`, replace `default` with its name. You can also create these rules in the console under **VPC network > Firewall**.
+
+<Warning>
+  Tembo services route through nginx on port 80. Do **not** open ports 3000, 3001, or 3002 publicly — those are internal-only ports. Accessing the app directly on port 3000 bypasses nginx and will break authentication.
+</Warning>
+
+---
+
+## Step 4: Run the Installer and Configure the VM
+
+### 4a: Run the install workflow
+
+Find the VM's external IP address:
+
+```bash
+gcloud compute instances describe tembo-self-hosted \
+  --format='get(networkInterfaces[0].accessConfigs[0].natIP)'
+```
+
+Once the VM is running, open the installer in your browser:
+
+```text
+http://<vm-external-ip>:3999
+```
+
+Follow the on-screen steps to complete the install workflow. This provisions the Tembo services and prepares the VM for use. The initial install can take up to an hour; subsequent updates are faster.
+
+### 4b: Configure `/var/lib/tembo/config.json`
+
+After the installer finishes, open the VS Code server to edit the configuration file:
+
+```text
+http://<vm-external-ip>:8888
+```
+
+The VS Code server opens directly to `/var/lib/tembo/config.json`. Ensure these keys are present and correct:
+
+```json
+{
+  "betterAuth.secret": "<random string, at least 32 characters>",
+  "api.base": "http://<vm-external-ip>/api/",
+  "frontend.url": "http://<vm-external-ip>"
+}
+```
+
+| Key | Notes |
+|---|---|
+| `betterAuth.secret` | Auto-generated on first boot if missing. Leave it if it is already set. |
+| `api.base` | Must match the public URL of the API. **Must end with a trailing `/`**. |
+| `frontend.url` | Defaults to `http://localhost:3000`, which breaks auth on a remote VM. Set this to the external IP address or hostname. |
+
+After saving, restart the API. A background service should restart it after you finish editing, but you can also restart it from a terminal in the VS Code server or through SSH:
+
+```bash
+sudo systemctl restart tembo-ts-api
+```
+
+The config seed runs before `tembo-ts-api`, `tembo-ts-cron`, and agent workers on every boot. Manual edits are preserved—the seed writes only values that are missing or empty.
+
+<Tip>
+  If you have a domain name, set both `api.base` and `frontend.url` to the domain (for example, `https://tembo.example.com/api/` and `https://tembo.example.com`) rather than the raw IP address. This makes it easier to rotate VMs or add a load balancer later.
+</Tip>
+
+---
+
+## Step 5: Verify the Install
+
+Open a browser and navigate to:
+
+```text
+http://<vm-external-ip>
+```
+
+You should see the Tembo sign-up or sign-in screen.
+
+Check service status on the VM:
+
+```bash
+systemctl status tembo-ts-api
+systemctl status tembo-ts-agent-X
+systemctl status tembo-web
+systemctl status nginx
+```
+
+For `tembo-ts-agent-X`, `X` is the number of the agent you chose to provision during installation. For example, three agents create `tembo-ts-agent-1`, `tembo-ts-agent-2`, and `tembo-ts-agent-3`.
+
+---
+
+## Troubleshooting
+
+### Auth 404 on sign-up
+
+**Symptom:** `POST http://<vm-external-ip>:3000/api/auth/sign-up/email` returns 404.
+
+**Cause:** You are reaching the Next.js frontend directly on port 3000 and bypassing nginx. The `/api/auth/*` handler does not exist at that port.
+
+**Fix:** Access the app through nginx on port 80:
+
+```text
+http://<vm-external-ip>       # correct
+http://<vm-external-ip>:3000  # wrong — internal port only
+```
+
+If port 80 is blocked, check the VPC firewall rule and its `tembo-self-hosted` target tag.
+
+### 401 after sign-up
+
+**Symptom:** Sign-up succeeds but all subsequent API requests return 401.
+
+**Cause:** Billing is enabled by default. Without Stripe configured, organization creation fails silently, leaving the user with no active organization.
+
+**Fix:** Confirm `billing.enabled: false` is set in the API environment in `config.json`. Contact Tembo support if this was not set in the distributed image.
+
+### Sign-in loops or cookie issues
+
+**Symptom:** Sign-in redirects back to the login page, or cookies are not set.
+
+**Cause:** `api.base` or `frontend.url` in `config.json` does not match the URL you are accessing in the browser. Better Auth uses these values for trusted origins and cookie domain validation.
+
+**Fix:** Edit `/var/lib/tembo/config.json` and set both keys to the exact origin you are using in the browser. Restart the API:
+
+```bash
+sudo systemctl restart tembo-ts-api
+```
+
+### Services not starting
+
+```bash
+# Check all Tembo services at once
+systemctl list-units 'tembo-*'
+
+# View logs for a specific service
+journalctl -u tembo-ts-api -n 100
+journalctl -u tembo-web -n 100
+```
+
+The `tembo-config-seed` service must complete before the API and agents start. If the API fails immediately at boot, check:
+
+```bash
+journalctl -u tembo-config-seed
+cat /var/lib/tembo/config.json
+```
+
+### VM not reachable after launch
+
+- Confirm the VM is in a **Running** state in the Google Cloud console.
+- Verify the VM has an external IPv4 address.
+- Verify the VPC firewall rules allow port 80 and target the `tembo-self-hosted` network tag.
 
 ---
 
