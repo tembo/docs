@@ -841,7 +841,6 @@ paths:
                         }' | jq .
     /agent/{keyOrId}/trigger:
         post:
-            deprecated: true
             responses:
                 "200":
                     description: Agent triggered successfully
