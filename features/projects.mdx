@@ -19,6 +19,7 @@ A project can define:
 - Workspace skills that should be available in every session
 - Repository dependencies to install before sessions start
 - A setup script for additional project-specific preparation
+- Default agent instructions included in every session started from the project
 - One or more session sizes that people can choose when starting a session
 - A daily refresh schedule
 
@@ -44,9 +45,10 @@ To create a project:
 4. Select the repositories to make available in project sessions.
 5. Choose whether to include workspace skills and install repository dependencies.
 6. Under **Advanced setup**, optionally add a setup script.
-7. Select the session sizes the project should support.
-8. Optionally enable **Refresh every day** and choose a time.
-9. Click **Create project**. Tembo automatically starts building an environment for each selected session size.
+7. Optionally add **Default agent instructions** for sessions started from the project.
+8. Select the session sizes the project should support.
+9. Optionally enable **Refresh every day** and choose a time.
+10. Click **Create project**. Tembo automatically starts building an environment for each selected session size.
 
 Tembo prepares a separate environment for each selected session size. You can start prepared sessions as each environment becomes ready.
 
@@ -89,6 +91,16 @@ bash scripts/tembo-setup.sh
 ```
 
 Project setup scripts run from `/workspace`. Tembo clones a repository with a unique name into `/workspace/<repository-name>`. Repository names are lowercased, and unsupported characters are replaced with hyphens. If multiple selected repositories resolve to the same directory name, Tembo clones each one into `/workspace/<repository-id>-<repository-name>` instead.
+
+## Default agent instructions
+
+Add default agent instructions to include guidance, such as coding conventions or testing expectations, in every session started from the project. Tembo adds these instructions to the prompt for each session, in addition to any [workspace skills](/features/agent-skills) included in the project.
+
+To add default agent instructions:
+
+1. Open **Settings** > **Projects**.
+2. Select the project.
+3. Under **Session defaults**, add or edit **Default agent instructions**.
 
 ## Session sizes and daily refreshes
 
