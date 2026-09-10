@@ -3,12 +3,12 @@ title: 'Projects'
 description: 'Create reusable environments so Tembo sessions start with the right repositories, dependencies, and skills.'
 ---
 
-Projects are reusable environments for Tembo sessions. A project defines the repositories, workspace skills, dependencies, setup script, and session sizes that a team uses for a particular codebase or workflow.
+Projects are reusable environments for Tembo sessions. A project defines the repositories, workspace skills, dependencies, setup script, default agent instructions, and session sizes that a team uses for a particular codebase or workflow.
 
 Tembo prepares an environment for each selected session size. When you start a session from that project, Tembo restores the prepared environment instead of cloning repositories and installing dependencies from scratch. This is especially useful for large repositories, monorepos, and projects with slow dependency installs.
 
 <Note>
-  Projects are available on paid plans. If you need access to test them, [book a call with us](https://book.avoma.com/tembo/tembo-demo/).
+  Projects are available on paid plans. Upgrade in **Settings** > **Billing**, or [book a call with us](https://book.avoma.com/tembo/tembo-demo/) if you need access to test them.
 </Note>
 
 ## What projects include
@@ -19,10 +19,11 @@ A project can define:
 - Workspace skills that should be available in every session
 - Repository dependencies to install before sessions start
 - A setup script for additional project-specific preparation
+- Default agent instructions included in every session from the project
 - One or more session sizes that people can choose when starting a session
 - A daily refresh schedule
 
-Each project can have its own name, icon, and color so people can distinguish it in the session composer and sidebar.
+Each project can have its own name, icon, and color so people can distinguish it in the session composer and sidebar. Project names must be unique in the workspace.
 
 ## Create a project
 
@@ -44,17 +45,40 @@ To create a project:
 4. Select the repositories to make available in project sessions.
 5. Choose whether to include workspace skills and install repository dependencies.
 6. Under **Advanced setup**, optionally add a setup script.
-7. Select the session sizes the project should support.
-8. Optionally enable **Refresh every day** and choose a time.
-9. Click **Create project**. Tembo automatically starts building an environment for each selected session size.
+7. Optionally add **Default agent instructions**.
+8. Select the session sizes the project should support.
+9. Optionally enable **Refresh every day** and choose a time.
+10. Click **Create project**. Tembo automatically starts building an environment for each selected session size.
 
 Tembo prepares a separate environment for each selected session size. You can start prepared sessions as each environment becomes ready.
 
+Tembo cannot build an environment if the project has no repositories to clone, no setup script, and workspace skills turned off.
+
 ## Start a session from a project
 
-Before you start a session, open the project and size selector in the session composer. Choose a project, then choose one of its supported session sizes.
+Before you start a session, open the project and size selector in the session composer. Choose a project, then choose one of its supported session sizes. Sessions from a project can only use the sizes that project builds. See [sandbox sizes](/features/sandbox/overview#sandbox-sizes).
 
 Selecting a project also selects the repositories included in that project. You can change the project before the session starts, but not while a session is running.
+
+The sidebar groups sessions by project. From a project there, you can start a new session or open the project to edit it.
+
+If a session does not need a prepared environment, select **No project** in the composer.
+
+## Default project
+
+Workspace admins can set a default project and size in **Settings** > **Sandbox**. New sessions across the workspace use that project and size unless someone picks a different one in the composer.
+
+A project can be the default only for sizes it builds. If more than one project exists, each size has at most one default project.
+
+## Default agent instructions
+
+Add **Default agent instructions** when you create or edit a project. Tembo includes them in every session started from that project, as guidance for how the agent should work.
+
+Use this for coding conventions, testing expectations, or other project-specific guidance that should apply even when the session prompt is different. Changing these instructions applies to new sessions without rebuilding the environment.
+
+## Use a project with agents
+
+When you create or edit an [agent](/features/agents), select a project in its run options. Triggered and scheduled runs then start from that project's prepared environment and repositories.
 
 ## Project environment variables
 
@@ -68,6 +92,8 @@ To add project-level environment variables:
 4. Add a single variable or bulk import `.env`-style contents.
 5. Click **Create Secret**.
 6. Build or rebuild the project's environment to apply the variables.
+
+A project can have at most 100 environment variables. Keys must be unique, values are encrypted and write-only after you save them, and rotating a value means deleting the variable and creating it again.
 
 ## Setup script
 
@@ -90,13 +116,29 @@ bash scripts/tembo-setup.sh
 
 Project setup scripts run from `/workspace`. Tembo clones a repository with a unique name into `/workspace/<repository-name>`. Repository names are lowercased, and unsupported characters are replaced with hyphens. If multiple selected repositories resolve to the same directory name, Tembo clones each one into `/workspace/<repository-id>-<repository-name>` instead.
 
-## Session sizes and daily refreshes
+## Session sizes, builds, and daily refreshes
 
 A project must support at least one session size. If you select several sizes, Tembo builds and maintains a separate prepared environment for each one. People starting a session from the project can choose among those sizes.
 
 Enable **Refresh every day** to pull the latest repository changes and run the project's setup again each day. The refresh time is shown in your local time.
 
-You can also open a project and click **Rebuild environment** at any time. A rebuild pulls the latest repository changes and reruns setup for every selected size. New sessions use an environment when it is ready; running sessions are not affected. If a rebuild fails, the current prepared environments remain active.
+You can also open a project and click **Build environment** or **Rebuild environment**. The first successful build for a size makes that environment available. A rebuild pulls the latest repository changes and reruns setup for every selected size. New sessions use an environment when it is ready; running sessions are not affected. If a rebuild fails, the current prepared environments remain active.
+
+Each project keeps a build history. You can:
+
+- Open a build or environment to view its log and progress
+- Cancel a queued or running build
+- Pin a successful build so new sessions keep using that environment instead of the latest successful one
+- Switch back to the latest successful build
+- Rebuild a single environment, or delete an old one
+
+Rebuild the environment after changing anything captured at build time, such as repositories, dependencies, the setup script, or environment variables.
+
+## Edit or delete a project
+
+Open a project from **Settings** > **Projects** to change its appearance, repositories, setup, instructions, sizes, or schedule, then save. Only workspace admins can edit or delete projects.
+
+Deleting a project archives it and disables its refresh schedule. Running sessions are not affected.
 
 ## When to use projects
 
@@ -111,4 +153,6 @@ Use projects when a team repeatedly starts sessions with the same context or spe
 - Teams that rely on shared workspace skills
 - Work that needs different prepared environments or session sizes
 
-If a session does not need a prepared environment, select **No project** in the composer.
+## API
+
+You can also create and manage projects through the [Projects API](/api/v1/projects/list-projects).
