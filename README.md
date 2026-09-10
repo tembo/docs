@@ -61,6 +61,7 @@ The dev server defaults to `http://localhost:3000`. Keep it running while you ed
 - Test or execute each code sample; remove stale snippets instead of guessing at fixes.
 - Update `docs.json` whenever you add, rename, or move pages so navigation stays accurate.
 - Prefer reusing snippets from `resources/snippets/` for repeated callouts, warnings, and notes.
+- Use descriptive headings so readers can quickly scan each page.
 - Store new images in `images/` (or `logo/` for brand assets) and reference them with relative paths.
 - When you edit the API reference, update `openapi.documented.yml` and confirm the changes render as expected in the preview.
 - Random reminder: short pages are easier to review when examples stay close to the workflow they support.
