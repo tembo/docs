@@ -20,6 +20,15 @@ The Tembo self-hosted stack runs as a single NixOS virtual machine. All services
 
 Tembo distributes a pre-built NixOS custom image to your Google Cloud project. You create a Compute Engine VM from that image, configure VPC firewall rules, and configure a single JSON file. No OS setup or image building is required on your end.
 
+## Prerequisites
+
+Before you begin, you need:
+
+- A GCP project with billing and the Compute Engine API enabled
+- Permission to manage project IAM, instances, and VPC firewall rules
+- The `gcloud` CLI authenticated to your project, or equivalent access in Cloud Shell
+- The trusted public IP ranges that need browser or SSH access
+
 ---
 
 ## Step 1: Request Access
@@ -44,7 +53,35 @@ Tembo will grant your project access to the custom image. You will receive the i
 
 ---
 
-## Step 2: Create a Compute Engine VM
+## Step 2: Configure OS Login
+
+The Tembo image uses [OS Login](https://cloud.google.com/compute/docs/oslogin). Enable it before connecting to the VM and grant operators OS administrator access. This role permits SSH access and `sudo`.
+
+Prefer granting access to a group:
+
+```bash
+gcloud projects add-iam-policy-binding <your-project-id> \
+  --member='group:<operator-group@example.com>' \
+  --role='roles/compute.osAdminLogin'
+```
+
+Enable OS Login for every VM in the project:
+
+```bash
+gcloud compute project-info add-metadata \
+  --project=<your-project-id> \
+  --metadata=enable-oslogin=TRUE
+```
+
+If you cannot enable OS Login project-wide, add `enable-oslogin=TRUE` to each VM's metadata, as shown in the launch command below.
+
+<Note>
+  IAM changes can take several minutes to propagate. If your first SSH or `sudo` attempt fails immediately after granting the role, wait briefly and retry.
+</Note>
+
+---
+
+## Step 3: Create a Compute Engine VM
 
 ### VM requirements
 
@@ -55,7 +92,7 @@ Tembo will grant your project access to the custom image. You will receive the i
 | Disk | 128 GB | 256 GB |
 
 <Note>
-  For the best sandbox performance, use an N2 machine type with nested virtualization enabled. We recommend **`n2-standard-8`**. Nested virtualization gives sandbox VMs hardware acceleration through KVM; without it, they use significantly slower software emulation.
+  For the best sandbox performance, use an Intel machine type that supports nested virtualization, such as **`n2-standard-8`** or **`c3-standard-22`**. Avoid E2, AMD (N2D/C2D/T2D), and Arm machine types. The Tembo image includes the `enable-vmx` license, so `/dev/kvm` is available automatically on compatible machine types.
 </Note>
 
 ### Via the Google Cloud CLI
@@ -72,15 +109,15 @@ Create the VM from the image shared by Tembo:
 ```bash
 gcloud compute instances create tembo-self-hosted \
   --machine-type=n2-standard-8 \
-  --image=<tembo-image-name> \
+  --image-family=tembo-base \
   --image-project=<tembo-image-project-id> \
   --boot-disk-size=256GB \
   --boot-disk-type=pd-balanced \
-  --enable-nested-virtualization \
+  --metadata=enable-oslogin=TRUE \
   --tags=tembo-self-hosted
 ```
 
-Replace the placeholders with values provided by Tembo. The command creates an external IP address by default; you will use it in the next steps.
+Replace the placeholders with values provided by Tembo. The command creates an external IP address by default; you will use it in the next steps. You do not need to pass `--enable-nested-virtualization` because it is enabled by the image.
 
 ### Via the Google Cloud console
 
@@ -89,13 +126,17 @@ Replace the placeholders with values provided by Tembo. The command creates an e
 3. Under **Machine configuration**, select the **N2** series and choose **n2-standard-8** or larger
 4. Under **Boot disk**, select **Change**, then choose **Custom images** and select the Tembo image shared with your project
 5. Set the boot disk size to at least **256 GB** and select **Balanced persistent disk**
-6. Under **Advanced options > Security**, enable **Nested virtualization**
+6. Under **Advanced options > Metadata**, add `enable-oslogin` with the value `TRUE`
 7. Under **Networking**, add the network tag `tembo-self-hosted` and ensure the VM has an external IPv4 address
 8. Select **Create**
 
+<Tip>
+  A `ZONE_RESOURCE_POOL_EXHAUSTED` error means the selected zone currently lacks capacity for that machine type; it is not a quota error. Try another zone in the same region, another compatible Intel machine type, or retry later.
+</Tip>
+
 ---
 
-## Step 3: Configure VPC Firewall Rules
+## Step 4: Configure VPC Firewall Rules
 
 VPC firewall rules control inbound traffic to Compute Engine VMs. Create rules that target the `tembo-self-hosted` network tag:
 
@@ -150,13 +191,35 @@ If you use a VPC other than `default`, replace `default` with its name. You can 
 
 <Warning>
   Tembo services route through nginx on port 80. Do **not** open ports 3000, 3001, or 3002 publicly — those are internal-only ports. Accessing the app directly on port 3000 bypasses nginx and will break authentication.
+  The configuration editor on port 8888 does not provide its own authentication. Never expose ports 3999 or 8888 to `0.0.0.0/0`.
 </Warning>
 
 ---
 
-## Step 4: Run the Installer and Configure the VM
+## Step 5: Connect and Validate the VM
 
-### 4a: Run the install workflow
+Connect using OS Login:
+
+```bash
+gcloud compute ssh tembo-self-hosted \
+  --project=<your-project-id> \
+  --zone=<zone>
+```
+
+Confirm that OS Login administrator access and nested virtualization work:
+
+```bash
+sudo -n id
+ls -l /dev/kvm
+```
+
+`sudo -n id` should report `uid=0(root)`, and `/dev/kvm` should exist.
+
+---
+
+## Step 6: Run the Installer and Configure the VM
+
+### 6a: Run the install workflow
 
 Find the VM's external IP address:
 
@@ -173,7 +236,7 @@ http://<vm-external-ip>:3999
 
 Follow the on-screen steps to complete the install workflow. This provisions the Tembo services and prepares the VM for use. The initial install can take up to an hour; subsequent updates are faster.
 
-### 4b: Configure `/var/lib/tembo/config.json`
+### 6b: Configure `/var/lib/tembo/config.json`
 
 After the installer finishes, open the VS Code server to edit the configuration file:
 
@@ -197,10 +260,12 @@ The VS Code server opens directly to `/var/lib/tembo/config.json`. Ensure these 
 | `api.base` | Must match the public URL of the API. **Must end with a trailing `/`**. |
 | `frontend.url` | Defaults to `http://localhost:3000`, which breaks auth on a remote VM. Set this to the external IP address or hostname. |
 
-After saving, restart the API. A background service should restart it after you finish editing, but you can also restart it from a terminal in the VS Code server or through SSH:
+Use the exact origin that users will enter in their browsers. Do not use a Tailscale address, an internal service port, or a VS Code forwarded URL such as `http://<vm-external-ip>:8888/proxy/...`.
+
+After saving, restart the application services:
 
 ```bash
-sudo systemctl restart tembo-ts-api
+sudo systemctl restart tembo-ts-api tembo-web nginx
 ```
 
 The config seed runs before `tembo-ts-api`, `tembo-ts-cron`, and agent workers on every boot. Manual edits are preserved—the seed writes only values that are missing or empty.
@@ -211,7 +276,7 @@ The config seed runs before `tembo-ts-api`, `tembo-ts-cron`, and agent workers o
 
 ---
 
-## Step 5: Verify the Install
+## Step 7: Verify the Install
 
 Open a browser and navigate to:
 
@@ -235,6 +300,27 @@ For `tembo-ts-agent-X`, `X` is the number of the agent you chose to provision du
 ---
 
 ## Troubleshooting
+
+### SSH connects and immediately closes
+
+Confirm that OS Login is enabled on the project or VM and that your identity has `roles/compute.osAdminLogin`:
+
+```bash
+gcloud compute ssh tembo-self-hosted \
+  --project=<your-project-id> \
+  --zone=<zone> \
+  --troubleshoot
+```
+
+If you just changed IAM, allow time for propagation and retry.
+
+### A port is unreachable
+
+Confirm that the VM has the `tembo-self-hosted` network tag and that the matching firewall rule includes your current public IP. From the VM, confirm that the service is listening locally:
+
+```bash
+sudo ss -lntp | grep -E ':(80|3999|8888)\b'
+```
 
 ### Auth 404 on sign-up
 
@@ -265,11 +351,15 @@ If port 80 is blocked, check the VPC firewall rule and its `tembo-self-hosted` t
 
 **Cause:** `api.base` or `frontend.url` in `config.json` does not match the URL you are accessing in the browser. Better Auth uses these values for trusted origins and cookie domain validation.
 
-**Fix:** Edit `/var/lib/tembo/config.json` and set both keys to the exact origin you are using in the browser. Restart the API:
+**Fix:** Edit `/var/lib/tembo/config.json` and set both keys to the exact origin you are using in the browser. Do not use links from the VS Code **Ports** panel; those links route through port 8888. Restart the application services:
 
 ```bash
-sudo systemctl restart tembo-ts-api
+sudo systemctl restart tembo-ts-api tembo-web nginx
 ```
+
+### `/dev/kvm` is missing
+
+Recreate the VM using a compatible Intel machine type such as N2 or C3. The image already enables nested virtualization; unsupported E2, AMD, and Arm machine types cannot expose KVM.
 
 ### Services not starting
 
