@@ -261,22 +261,6 @@
                         ]
                     }
                 ]
-            },
-            {
-                "tab": "Learn",
-                "groups": [
-                    {
-                        "group": "Use Cases",
-                        "public": true,
-                        "pages": [
-                            "learn/fix-production-bugs",
-                            "learn/implement-from-issues",
-                            "learn/keep-docs-in-sync",
-                            "learn/reduce-technical-debt",
-                            "learn/review-changes"
-                        ]
-                    }
-                ]
             }
         ]
     },
