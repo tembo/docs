@@ -1,0 +1,65 @@
+---
+title: 'Computer'
+description: 'Watch and control the sandbox desktop while a session runs.'
+---
+
+The **Computer** tab streams the Linux desktop running inside your session's [sandbox](/features/sandbox/overview) into the Tembo dashboard. Use it to watch what an agent is doing in a browser or editor, and to take over with your own mouse and keyboard when you want to drive the environment yourself.
+
+The desktop runs in the same VM as the agent, so both see the same `/workspace`, the same installed [dependencies](/features/sandbox/custom-dependencies), and the same [environment variables](/features/sandbox/environment-variables).
+
+## Prerequisites
+
+- The session runs in a VM sandbox.
+- The VM is running. If it has stopped, send a message in the session to start it again.
+
+## Open the Computer tab
+
+1. Open a session in the [dashboard](https://app.tembo.io).
+2. In the session's right sidebar, select **Computer**.
+
+The sidebar also holds **Changes**, **Artifacts**, **Files**, **Terminal**, and **VM logs**. In the expanded view these open as tabs, so you can keep the desktop next to a diff or a terminal.
+
+## What's on the desktop
+
+A dock at the bottom of the desktop launches the tools bundled into the sandbox image:
+
+| Dock item | Application | Opens |
+|-----------|-------------|-------|
+| Menu | Ulauncher | Application search |
+| Browser | Chromium | `about:blank` |
+| Files | PCManFM | `/workspace` |
+| Code | Visual Studio Code | `/workspace` |
+| Terminal | Ghostty | `/workspace` |
+
+Because agents drive this same desktop, browser automation and other GUI work show up live in the preview.
+
+## Copy and paste
+
+The stream carries the clipboard in both directions, so you can copy text out of the sandbox desktop and paste your own text into it using your normal keyboard shortcuts.
+
+## Copy or refresh the preview URL
+
+While the **Computer** tab is open, two buttons appear in the sidebar header:
+
+- **Copy computer URL** copies the preview URL so you can open the desktop in its own browser tab.
+- **Refresh computer URL** re-establishes the tunnel to the desktop. Use it if the stream looks stale or blank.
+
+<Note>
+  The preview URL changes whenever the tunnel restarts. A URL you copied earlier stops working after a refresh or after the VM restarts — copy it again.
+</Note>
+
+## Preview states
+
+| State | What it means |
+|-------|---------------|
+| **Computer is booting up** | The VM is still starting. The message names the current boot phase. |
+| **Refreshing computer URL** | A refresh is in flight. The preview reloads when the new URL is ready. |
+| **Computer unavailable** | The session has no running VM. The preview appears once a VM is running. |
+
+After the VM reports as running, the desktop stream can take up to about a minute to become available. Tembo keeps polling for it in the background and reloads the preview automatically.
+
+## Constraints
+
+- The desktop is streamed at 60 FPS from inside the sandbox. Throughput depends on your network connection to the tunnel.
+- Docker-based sandboxes do not run a desktop, so the **Computer** tab stays unavailable for them.
+- The desktop is part of the sandbox, so the stream ends when the VM stops. Extend the session's [keep-alive window](/features/sandbox/keep-alive) if you want the desktop to stay up after the agent finishes.

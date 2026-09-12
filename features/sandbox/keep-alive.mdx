@@ -1,0 +1,79 @@
+---
+title: 'Keep Alive'
+description: 'Control how long a session sandbox keeps running after the agent finishes.'
+---
+
+A session's [sandbox](/features/sandbox/overview) VM does not stop the moment an agent finishes. Tembo holds it open for a short keep-alive window so you can read the diff, run commands in the terminal, or drive the [Computer](/features/sandbox/computer) desktop. When the window expires, Tembo stops the VM.
+
+Keep-alive is what you extend when you want more time in a live sandbox — and what to watch when a sandbox disappears sooner than you expected.
+
+## Default windows
+
+Each time work completes in a session, Tembo pushes the stop time out based on where the work came from:
+
+| Where the work came from | Keep-alive after it finishes |
+|--------------------------|------------------------------|
+| Dashboard session or chat message | 10 minutes |
+| Slack message or reply | 5 minutes |
+| Scheduled or triggered [agent](/features/agents) | 1 minute |
+
+These automatic extensions only ever move the stop time later. They never shorten a longer window you set yourself.
+
+<Note>
+  Self-hosted deployments can change the dashboard and Slack windows with the `SANDBOX_KEEP_ALIVE_APP_MINUTES` and `SANDBOX_KEEP_ALIVE_SLACK_MINUTES` environment variables. See [Self-hosted](/features/self-hosted/overview).
+</Note>
+
+## An open session tab holds the VM open
+
+While a session is the active tab and your browser window is focused, the dashboard sends a keep-alive heartbeat every 4 minutes that pushes the stop time 10 minutes out. You do not need to do anything to keep a sandbox alive while you are actively looking at it.
+
+Switching tabs, backgrounding the window, or closing the session stops the heartbeat, so the VM stops roughly 10 minutes later.
+
+## Extend from the composer
+
+To hold a sandbox open for longer than the default window:
+
+1. Type `/` in the session composer.
+2. Select **Keep alive**.
+3. Choose **10 minutes**, **1 day**, or **1 week**.
+
+A checkmark marks the window that is currently in effect. If the session has no running VM, the option reads **No active VM** and cannot be selected.
+
+<Warning>
+  Choosing a duration sets the window from now, so it can shorten an existing one. Selecting **10 minutes** while a 1 week window is active leaves 10 minutes, not a week and 10 minutes.
+</Warning>
+
+## Extend from inside the sandbox
+
+Run the `tembo` CLI from a session terminal, a [hook](/features/hooks), or a script:
+
+```bash
+tembo set-vm-keep-alive 3600
+```
+
+The argument is a positive whole number of seconds. The command prints the new window:
+
+```json
+{
+  "vmId": "3f8a1c52-9d4e-4b7a-8f21-6c0b5d2e7a94",
+  "seconds": 3600,
+  "keepAliveUntil": "2026-01-01T12:00:00.000Z"
+}
+```
+
+The command fails if the session has no VM or if its VM is no longer running.
+
+Agents running in a session can do the same thing through Tembo's own MCP server, which exposes a `setVmKeepAlive` tool taking the same `seconds` argument. That is what an agent reaches for when you ask it to keep the sandbox up while you take a look.
+
+## When the window expires
+
+Tembo does not discard the sandbox outright. It suspends the VM, captures a session snapshot, then stops it. When the session needs a VM again — for example because you send another message — Tembo resumes from that snapshot instead of cloning and installing from scratch, falling back to the [project](/features/projects) environment and then to a cold boot if the snapshot cannot be restored.
+
+Tembo also skips stopping a VM that still has active agent work, even if the window has technically expired.
+
+## Constraints
+
+- Keep-alive applies to VM sandboxes and requires the VM to be running.
+- A VM that stays alive keeps consuming compute for the whole window, billed at the hourly rate for its [sandbox size](/resources/pricing#cloud-vm-compute-rates). A 1 week keep-alive on a large sandbox is expensive — prefer the shortest window that covers what you need.
+- Only one window is in effect at a time. Setting a new one replaces the previous value rather than adding to it.
+- The keep-alive window controls how long the VM stays up, not how long the session lasts. Sessions and their history remain available after the sandbox stops.
