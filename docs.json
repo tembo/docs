@@ -231,34 +231,6 @@
                                 "pages": ["GET /v1/users/{userId}", "PATCH /v1/users/{userId}", "DELETE /v1/users/{userId}", "GET /v1/users/{userId}/connected-accounts", "GET /v1/users/{userId}/connected-accounts/{connectedAccountId}"]
                             }
                         ]
-                    },
-                    {
-                        "group": "Legacy API",
-                        "public": true,
-                        "openapi": {
-                            "source": "openapi.documented.yml",
-                            "directory": "api/legacy"
-                        },
-                        "pages": [
-                            {
-                                "group": "Sessions",
-                                "pages": [
-                                    "POST /session/create",
-                                    "GET /session/list",
-                                    "GET /session/search",
-                                    "POST /session/{sessionId}/messages",
-                                    "POST /session/{sessionId}/stop"
-                                ]
-                            },
-                            {
-                                "group": "Agents",
-                                "pages": ["POST /agent", "POST /agent/{keyOrId}/trigger"]
-                            },
-                            {
-                                "group": "Repositories",
-                                "pages": ["GET /repository/list"]
-                            }
-                        ]
                     }
                 ]
             }
@@ -344,11 +316,15 @@
         },
         {
             "source": "/api/trigger-automation",
-            "destination": "/api/legacy/trigger-agent"
+            "destination": "/api"
         },
         {
             "source": "/api/trigger-agent",
-            "destination": "/api/legacy/trigger-agent"
+            "destination": "/api"
+        },
+        {
+            "source": "/api/legacy/:slug",
+            "destination": "/api"
         },
         {
             "source": "/api/self-hosted",
