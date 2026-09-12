@@ -155,7 +155,7 @@
                     {
                         "group": "Overview",
                         "public": true,
-                        "pages": ["api/index"]
+                        "pages": ["api/index", "api/pagination"]
                     },
                     {
                         "group": "API Reference",
