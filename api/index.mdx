@@ -31,6 +31,11 @@ curl -H "Authorization: Bearer YOUR_API_KEY" \
 ```
 </CodeGroup>
 
+## Pagination
+
+List endpoints return `items` plus an opaque `nextCursor`, and accept `cursor`
+and `limit` query parameters. See [Pagination](/api/pagination).
+
 ## Rate limits
 
 100 requests per minute per API key. 1,000 requests per hour per organization.
