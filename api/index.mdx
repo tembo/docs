@@ -45,8 +45,8 @@ import Tembo from '@tembo-io/sdk';
 
 const client = new Tembo();
 
-const models = await client.models.list({ limit: '1' });
-console.log(models);
+const sessions = await client.sessions.list({ limit: '5' });
+console.log(sessions);
 ```
 
 ## Rate limits
