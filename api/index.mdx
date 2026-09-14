@@ -31,6 +31,24 @@ curl -H "Authorization: Bearer YOUR_API_KEY" \
 ```
 </CodeGroup>
 
+## TypeScript SDK
+
+```bash
+npm install @tembo-io/sdk
+```
+
+Set the `TEMBO_API_KEY` environment variable to your API key. Keep it on your
+server, not in browser code or source control.
+
+```typescript
+import Tembo from '@tembo-io/sdk';
+
+const client = new Tembo();
+
+const sessions = await client.sessions.list({ limit: '5' });
+console.log(sessions);
+```
+
 ## Rate limits
 
 100 requests per minute per API key. 1,000 requests per hour per organization.
