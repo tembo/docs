@@ -1,9 +1,11 @@
 ---
 title: 'Integration setup'
-description: 'Choose and configure integrations for your self-hosted Tembo instance.'
+description: 'Configure integrations that require config.json changes on your self-hosted Tembo instance.'
 ---
 
-Self-hosting Tembo does not automatically configure the provider applications used by the hosted service. Use the guides in this section to register your own applications, connect credentials, or authorize MCP servers against your instance.
+This section covers integrations that require integration-specific changes to `/var/lib/tembo/config.json`. Use these guides to configure provider applications, signing credentials, or deployment storage for your self-hosted instance.
+
+For integrations configured entirely through the UI, sandbox environment variables, or external tools, use the [general integration guides](/integrations). Follow those steps from your own Tembo instance rather than the hosted dashboard.
 
 ## Prerequisites
 
@@ -32,15 +34,12 @@ Start OAuth installations from **Settings → Integrations** on **your instance*
 |---|---|
 | Git providers | [GitHub](/features/self-hosted/integrations/github), [GitLab](/features/self-hosted/integrations/gitlab), [Bitbucket](/features/self-hosted/integrations/bitbucket) |
 | Issues and collaboration | [Linear](/features/self-hosted/integrations/linear), [Jira](/features/self-hosted/integrations/jira), [Notion](/features/self-hosted/integrations/notion), [Slack](/features/self-hosted/integrations/slack), [Microsoft Teams](/features/self-hosted/integrations/teams) |
-| Monitoring and CRM | [Sentry](/features/self-hosted/integrations/sentry), [Snyk](/features/self-hosted/integrations/snyk), [HubSpot](/features/self-hosted/integrations/hubspot) |
-| Cloud and data | [AWS](/features/self-hosted/integrations/aws), [BigQuery](/features/self-hosted/integrations/bigquery), [Postgres](/features/self-hosted/integrations/postgres), [Supabase](/features/self-hosted/integrations/supabase), [Snowflake](/features/self-hosted/integrations/snowflake) |
-| Networking and secrets | [Tailscale](/features/self-hosted/integrations/tailscale), [OpenConnect](/features/self-hosted/integrations/openconnect), [Infisical](/features/self-hosted/integrations/infisical) |
-| MCP tools | [MCP setup and catalog](/features/self-hosted/integrations/mcp), [Fathom](/features/self-hosted/integrations/fathom), [Stripe](/features/self-hosted/integrations/stripe) |
-| Client extensions | [Chrome extension](/features/self-hosted/integrations/chrome-extension), [Raycast availability](/features/self-hosted/integrations/raycast) |
+| Monitoring and CRM | [Sentry](/features/self-hosted/integrations/sentry), [HubSpot](/features/self-hosted/integrations/hubspot) |
+| Cloud and data | [AWS](/features/self-hosted/integrations/aws), [Supabase](/features/self-hosted/integrations/supabase) |
 | Deployment storage | [AWS S3](/features/self-hosted/integrations/aws-storage), [Azure Blob Storage](/features/self-hosted/integrations/azure-storage) |
 
 <Note>
-  Integration availability depends on your installed release and organization settings. Pilot, preview, and unsupported client paths are called out in their guides. If a card is missing, contact [support](/support) before provisioning credentials.
+  Integration availability depends on your installed release and organization settings. Pilot features and provider limitations are called out in their guides. If a card is missing, contact [support](/support) before provisioning credentials.
 </Note>
 
 ## Troubleshooting

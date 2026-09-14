@@ -100,7 +100,6 @@
                                                     "features/self-hosted/integrations/slack",
                                                     "features/self-hosted/integrations/teams",
                                                     "features/self-hosted/integrations/sentry",
-                                                    "features/self-hosted/integrations/snyk",
                                                     "features/self-hosted/integrations/hubspot"
                                                 ]
                                             },
@@ -108,51 +107,7 @@
                                                 "group": "Cloud and data",
                                                 "pages": [
                                                     "features/self-hosted/integrations/aws",
-                                                    "features/self-hosted/integrations/bigquery",
-                                                    "features/self-hosted/integrations/postgres",
-                                                    "features/self-hosted/integrations/supabase",
-                                                    "features/self-hosted/integrations/snowflake"
-                                                ]
-                                            },
-                                            {
-                                                "group": "Networking and secrets",
-                                                "pages": [
-                                                    "features/self-hosted/integrations/tailscale",
-                                                    "features/self-hosted/integrations/openconnect",
-                                                    "features/self-hosted/integrations/infisical"
-                                                ]
-                                            },
-                                            {
-                                                "group": "MCP tools",
-                                                "pages": [
-                                                    "features/self-hosted/integrations/mcp",
-                                                    "features/self-hosted/integrations/apify",
-                                                    "features/self-hosted/integrations/attio",
-                                                    "features/self-hosted/integrations/clerk",
-                                                    "features/self-hosted/integrations/context7",
-                                                    "features/self-hosted/integrations/datadog",
-                                                    "features/self-hosted/integrations/fathom",
-                                                    "features/self-hosted/integrations/granola",
-                                                    "features/self-hosted/integrations/hamster",
-                                                    "features/self-hosted/integrations/jam",
-                                                    "features/self-hosted/integrations/kernel",
-                                                    "features/self-hosted/integrations/mobbin",
-                                                    "features/self-hosted/integrations/neon",
-                                                    "features/self-hosted/integrations/notte",
-                                                    "features/self-hosted/integrations/planetscale",
-                                                    "features/self-hosted/integrations/posthog",
-                                                    "features/self-hosted/integrations/pylon",
-                                                    "features/self-hosted/integrations/stripe",
-                                                    "features/self-hosted/integrations/supermemory",
-                                                    "features/self-hosted/integrations/tavily",
-                                                    "features/self-hosted/integrations/tinyfish"
-                                                ]
-                                            },
-                                            {
-                                                "group": "Client extensions",
-                                                "pages": [
-                                                    "features/self-hosted/integrations/chrome-extension",
-                                                    "features/self-hosted/integrations/raycast"
+                                                    "features/self-hosted/integrations/supabase"
                                                 ]
                                             },
                                             {
