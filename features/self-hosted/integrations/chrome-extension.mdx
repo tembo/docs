@@ -1,0 +1,26 @@
+---
+title: 'Chrome extension'
+description: 'Route supported pull request pages to your self-hosted Tembo instance.'
+---
+
+## Prerequisites
+
+You need the Tembo Chrome extension, browser access to your instance, and the relevant repository connected through GitHub, GitLab, or Bitbucket on that instance.
+
+## Configure the extension
+
+1. Follow the [Chrome extension installation guide](/integrations/chrome-extension).
+2. Click the extension icon and change **Base URL** from the hosted default to your browser-facing Tembo URL, such as `https://tembo.example.com`.
+3. Enable redirects and sign in to that Tembo instance.
+
+Use the frontend origin, not an API URL ending in `/api/`. No server-side provider credentials are needed for the extension itself.
+
+## Verify
+
+Open a supported provider pull request URL for a connected repository. Confirm the extension opens the matching review on your own instance.
+
+<Note>
+  A custom Tembo base URL is supported, but self-hosted git provider domains are not supported by the extension. These are separate settings: hosting Tembo yourself does not add support for arbitrary GitLab or GitHub Enterprise domains in Chrome redirects.
+</Note>
+
+If redirection fails, check that redirects are enabled, the repository is connected, and your browser can reach your instance.

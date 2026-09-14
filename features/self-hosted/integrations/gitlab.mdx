@@ -1,0 +1,35 @@
+---
+title: 'GitLab'
+description: 'Configure GitLab repository access and OAuth for self-hosted Tembo.'
+---
+
+## Prerequisites
+
+Complete the [shared setup prerequisites](/features/self-hosted/integrations/overview). Use a GitLab account with access to the projects you want Tembo to modify and permission to create project webhooks.
+
+## 1. Choose an authentication method
+
+For a shared service account, follow the [GitLab service account setup](/integrations/gitlab#connect-a-service-account), using **Settings → Integrations** on your own Tembo instance. This path does not require registering an OAuth application. Use the `api` token scope and grant the account the Maintainer role on the projects Tembo should access.
+
+For personal-account OAuth, create a GitLab.com OAuth application and register `https://tembo.example.com/api/oauth/gitlab/callback` as its redirect URI. Enable the scopes requested by Tembo:
+
+`api`, `profile`, `openid`, `read_api`, `read_user`, `read_repository`, `write_repository`, `read_observability`, `write_observability`, and `email`.
+
+<Note>
+  Both the OAuth flow and service-account validation target GitLab.com. Self-hosting Tembo does not configure a custom GitLab server URL. Contact [support](/support) before planning to connect GitLab Self-Managed or Dedicated.
+</Note>
+
+## 2. Configure Tembo
+
+Set `gitlab.webhookSecret` to a unique, randomly generated secret in `/var/lib/tembo/config.json`. For OAuth, also set `gitlab.clientId` and `gitlab.clientSecret` to your application's credentials. Follow the [configuration and restart instructions](/features/self-hosted/integrations/overview#instance-configuration).
+
+Tembo registers project webhooks during synchronization. Make your API's GitLab webhook endpoint, `https://tembo.example.com/api/webhook/gitlab`, reachable from GitLab.
+
+## 3. Connect and verify
+
+1. Open **Settings → Integrations** on your instance and connect the service account or install GitLab through OAuth.
+2. Confirm the expected projects appear in Tembo.
+3. Start a session against a test repository and check that Tembo can open a merge request.
+4. Check GitLab's project webhook deliveries if merge request comments or pipeline events do not reach Tembo.
+
+For token rotation, update the saved service-account connection. If repositories are missing, verify project membership before granting broader token scopes.

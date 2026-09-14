@@ -1,0 +1,29 @@
+---
+title: 'Clerk'
+description: 'Connect Clerk MCP tools to your self-hosted Tembo instance.'
+---
+
+## Prerequisites
+
+Complete the [shared prerequisites](/features/self-hosted/integrations/overview) and prepare access to the intended Clerk application. Your API and sandboxes must be able to reach the provider's MCP service and its authentication endpoints.
+
+## Connect Clerk
+
+1. Open **Settings → Integrations** on your own Tembo instance.
+2. Select **Clerk** and start the installation.
+3. Complete the provider authorization if prompted. Review the requested access and select the intended account or workspace.
+4. Confirm the connection is ready before starting a new session.
+
+The catalog server endpoint is `https://mcp.clerk.com/mcp`. The catalog type is `clerk-mcp` if your administrator restricts suggested servers.
+
+For OAuth, your instance uses its own API callback, normally `https://tembo.example.com/api/oauth/mcp/callback`. If the provider requires an explicitly registered client, follow the [self-hosted MCP authentication instructions](/features/self-hosted/integrations/mcp#oauth-on-your-own-domain).
+
+## Verify
+
+Start a new session and ask Tembo to inspect a development application without changing users. Confirm the tools are available and that any returned account data belongs to the account you intended to connect.
+
+## Access and troubleshooting
+
+Use a development instance for verification; user and organization actions may affect authentication access.
+
+If the card is missing, check your release and catalog settings. If the connection remains pending, finish authorization from your own instance. For connectivity failures, check DNS, outbound policy, and TLS trust from both the API and sandbox. See [MCP setup](/features/self-hosted/integrations/mcp) for custom servers and connection visibility.

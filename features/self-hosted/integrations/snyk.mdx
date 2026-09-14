@@ -1,0 +1,30 @@
+---
+title: 'Snyk'
+description: 'Connect Snyk service-account credentials on supported self-hosted releases.'
+---
+
+<Note>
+  The service-account connection is gated in the implementation. Confirm availability for your release and organization with [support](/support) before creating credentials. Do not assume the hosted OAuth walkthrough applies to your self-hosted release.
+</Note>
+
+## Prerequisites
+
+Complete the [shared prerequisites](/features/self-hosted/integrations/overview). You need permission to create a Snyk service account in the organization you intend to connect.
+
+## 1. Create a service account
+
+In Snyk, create a service account with credential type **OAuth 2.0 client credentials**. Assign access to the organization and projects Tembo should inspect. Copy its client ID and client secret.
+
+## 2. Connect from your instance
+
+1. Open **Settings → Integrations** and select Snyk.
+2. Enter the service-account client ID and secret in the connection dialog.
+3. Select the organization returned by Snyk and complete the connection.
+
+This connection exchanges service-account credentials for tokens; it does not require a browser OAuth redirect or setting instance-wide `snyk.clientId` and `snyk.clientSecret` keys.
+
+## 3. Verify and maintain
+
+Start a session against a test repository and ask it to inspect the connected Snyk projects. If no organizations appear, check the account's organization membership and credentials. If the Snyk card is absent, confirm release availability rather than creating an unrelated OAuth app.
+
+Rotate the saved connection credentials when rotating the Snyk service account. Review proposed dependency changes before merging them.

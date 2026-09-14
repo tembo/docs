@@ -1,0 +1,30 @@
+---
+title: 'Notion'
+description: 'Register a Notion OAuth integration for your self-hosted Tembo instance.'
+---
+
+## Prerequisites
+
+Complete the [shared prerequisites](/features/self-hosted/integrations/overview). You need permission to create a Notion integration and share the pages Tembo should access.
+
+## 1. Create a public integration
+
+Create a Notion public integration with OAuth redirect URI `https://tembo.example.com/api/oauth/notion/callback`. An internal integration token is not a substitute for the OAuth client credentials used by this connection.
+
+Choose capabilities for the work you intend Tembo to perform. Start with reading content; only enable content changes if your workflows require them. Copy the OAuth client ID and secret.
+
+## 2. Configure Tembo
+
+Set `notion.clientId` and `notion.clientSecret` in `/var/lib/tembo/config.json`. Follow the [restart instructions](/features/self-hosted/integrations/overview#instance-configuration).
+
+## 3. Install and verify
+
+1. Open **Settings → Integrations** on your instance and install Notion.
+2. Authorize the workspace and select the pages the integration should access.
+3. Start a new session and ask Tembo to summarize a shared test page.
+
+If a page is missing, check that it was shared with the integration and that your capabilities allow reading it. See [Notion usage](/integrations/notion) for workflow ideas.
+
+<Note>
+  Do not configure Notion webhooks as part of this setup. The native webhook receiver does not process Notion events yet; a successful connection is not confirmation of event-trigger support.
+</Note>

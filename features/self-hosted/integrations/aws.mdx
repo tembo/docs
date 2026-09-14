@@ -1,0 +1,36 @@
+---
+title: 'AWS'
+description: 'Configure your self-hosted instance as an OIDC issuer for AWS agent access.'
+---
+
+## Prerequisites
+
+Complete the [shared prerequisites](/features/self-hosted/integrations/overview). You need an AWS administrator who can create an IAM OIDC provider and role, and an HTTPS issuer whose discovery document and public signing keys AWS can retrieve.
+
+This integration gives agents AWS credentials. It is separate from [S3 object storage](/features/self-hosted/integrations/aws-storage) and does not require deploying Tembo on AWS.
+
+## 1. Configure the issuer
+
+Provision an RSA private key for signing OIDC tokens and store its PEM value in `oidc.privateKey` in `/var/lib/tembo/config.json`. Set `oidc.keyId` to an identifier for that signing key. Keep the private key secret; only the public JWKS should be exposed.
+
+`oidc.issuer` defaults to `api.base` without a trailing slash. For the standard deployment in this guide, use `https://tembo.example.com/api`. If you override it, ensure the advertised issuer, discovery location, and JWKS URL agree with the endpoints your deployment serves.
+
+Follow the [restart instructions](/features/self-hosted/integrations/overview#instance-configuration), then verify the issuer's `/.well-known/openid-configuration` and the `jwks_uri` it advertises are reachable by AWS and return a public signing key.
+
+## 2. Create the AWS trust relationship
+
+Use the manual setup in the [AWS guide](/integrations/aws), replacing the hosted issuer with your own throughout:
+
+- Register your issuer URL as the IAM OIDC provider and use `sts.amazonaws.com` as its audience.
+- In the role's federated principal, use your account's OIDC provider ARN.
+- In the trust-policy condition keys, use your issuer without `https://`, retaining any path. For this example, the keys are `tembo.example.com/api:aud` and `tembo.example.com/api:sub`.
+- Set the audience condition to `sts.amazonaws.com` and the subject condition to `org:` followed by your full Tembo workspace ID.
+- Attach only the AWS permissions the agent's tasks require.
+
+Do not use the hosted `internal.tembo.io` issuer or an unmodified hosted CloudFormation template. The optional `aws.oidcTemplateUrl` configuration is for a connection template appropriate to your deployment.
+
+## 3. Connect and verify
+
+In **Settings → Integrations** on your instance, connect the AWS account using the IAM role you created. Start a session and ask the agent to report its AWS caller identity before performing any changes.
+
+If STS rejects the request, compare the token issuer, key ID, audience, and workspace subject with the provider and trust policy. Plan signing-key rotation with your administrator so AWS can fetch the replacement public key.

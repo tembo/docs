@@ -1,0 +1,29 @@
+---
+title: 'Datadog'
+description: 'Connect Datadog MCP tools to your self-hosted Tembo instance.'
+---
+
+## Prerequisites
+
+Complete the [shared prerequisites](/features/self-hosted/integrations/overview) and prepare a Datadog account and the Datadog site that hosts your data. Your API and sandboxes must be able to reach the provider's MCP service and its authentication endpoints.
+
+## Connect Datadog
+
+1. Open **Settings → Integrations** on your own Tembo instance.
+2. Select **Datadog** and start the installation.
+3. Complete the provider authorization if prompted. Review the requested access and select the intended account or workspace.
+4. Confirm the connection is ready before starting a new session.
+
+The catalog server defaults to US1 at `https://mcp.datadoghq.com/v1/mcp`. The catalog type is `datadog-mcp` if your administrator restricts suggested servers.
+
+For OAuth, your instance uses its own API callback, normally `https://tembo.example.com/api/oauth/mcp/callback`. If the provider requires an explicitly registered client, follow the [self-hosted MCP authentication instructions](/features/self-hosted/integrations/mcp#oauth-on-your-own-domain).
+
+## Verify
+
+Start a new session and ask Tembo to read a test monitor or a small set of recent metrics. Confirm the tools are available and that any returned account data belongs to the account you intended to connect.
+
+## Access and troubleshooting
+
+Select the Datadog site matching your account during installation. Connecting to the wrong regional endpoint does not grant access to data in your actual site.
+
+If the card is missing, check your release and catalog settings. If the connection remains pending, finish authorization from your own instance. For connectivity failures, check DNS, outbound policy, and TLS trust from both the API and sandbox. See [MCP setup](/features/self-hosted/integrations/mcp) for custom servers and connection visibility.

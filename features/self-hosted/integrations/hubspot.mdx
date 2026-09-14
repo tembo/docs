@@ -1,0 +1,39 @@
+---
+title: 'HubSpot'
+description: 'Configure HubSpot event triggers and MCP access for self-hosted Tembo.'
+---
+
+## Prerequisites
+
+Complete the [shared prerequisites](/features/self-hosted/integrations/overview). You need a HubSpot account that can create applications and authorize access to the target portal.
+
+HubSpot has two separate connections: the native integration receives CRM events, while the MCP integration provides tools during sessions. Configure either or both according to your workflow.
+
+## 1. Configure event triggers
+
+Create a HubSpot OAuth application with redirect URL `https://tembo.example.com/api/oauth/hubspot/callback`. Configure the scopes `oauth`, `crm.objects.contacts.read`, `crm.objects.companies.read`, `crm.objects.deals.read`, and `tickets`.
+
+Set the webhook target to `https://tembo.example.com/api/webhook/hubspot`. Subscribe to the supported events you need, such as contact, company, deal, or ticket creation. See [HubSpot triggers](/integrations/hubspot) for supported event types; installing the app alone does not select an agent's triggers.
+
+Set these keys in `/var/lib/tembo/config.json`:
+
+| Key | Value |
+|---|---|
+| `hubspot.clientId` | Event application's client ID |
+| `hubspot.clientSecret` | Event application's client secret, also used for webhook signature verification |
+| `hubspot.appId` | Event application's numeric app ID |
+
+## 2. Configure MCP access, if needed
+
+Create a HubSpot MCP Auth App for your instance and register `https://tembo.example.com/api/oauth/mcp/callback` as its redirect URL. Set `mcp.hubspot.clientId` and `mcp.hubspot.clientSecret` to that application's credentials.
+
+These keys are separate from `hubspot.clientId` and `hubspot.clientSecret`. MCP authorization does not install event subscriptions, and event authorization does not connect MCP tools.
+
+## 3. Install and verify
+
+1. Follow the [restart instructions](/features/self-hosted/integrations/overview#instance-configuration).
+2. Open **Settings → Integrations** on your instance and authorize the HubSpot connection or connections you configured.
+3. For events, configure a matching agent trigger and create a test CRM record.
+4. For MCP, start a new session and ask it to read a test record before permitting write actions.
+
+If webhook signatures fail, check your client secret, server clock, and public API URL. If only tools or only triggers work, confirm you installed both connections when your workflow needs both.

@@ -1,0 +1,28 @@
+---
+title: 'Supabase'
+description: 'Configure Supabase platform OAuth for self-hosted Tembo.'
+---
+
+## Prerequisites
+
+Complete the [shared prerequisites](/features/self-hosted/integrations/overview). You need a Supabase organization and access to create a Supabase OAuth application.
+
+<Note>
+  This integration connects the Supabase hosted platform. To query a database belonging to a self-hosted Supabase deployment, use the [Postgres integration](/features/self-hosted/integrations/postgres) instead.
+</Note>
+
+## 1. Register an OAuth application
+
+Create a Supabase OAuth application and register `https://tembo.example.com/api/oauth/supabase/callback` as its redirect URI. Copy the client ID and secret, and review the permissions granted by the application.
+
+## 2. Configure Tembo
+
+Set `supabase.clientId` and `supabase.clientSecret` in `/var/lib/tembo/config.json`. Use your own application credentials, not credentials from the hosted Tembo service. Follow the [restart instructions](/features/self-hosted/integrations/overview#instance-configuration).
+
+## 3. Install and verify
+
+1. Open **Settings → Integrations** on your instance and install Supabase.
+2. Authorize access to the intended Supabase organization.
+3. Confirm the connection and ask a new session to inspect a test project's metadata.
+
+For direct SQL access, configure a separate Postgres connection with the database permissions your task requires. See the [Supabase guide](/integrations/supabase) for usage.

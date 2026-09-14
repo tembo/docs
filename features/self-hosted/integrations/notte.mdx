@@ -1,0 +1,29 @@
+---
+title: 'Notte'
+description: 'Connect Notte MCP tools to your self-hosted Tembo instance.'
+---
+
+## Prerequisites
+
+Complete the [shared prerequisites](/features/self-hosted/integrations/overview) and prepare a Notte API credential approved for agent use. Your API and sandboxes must be able to reach the provider's MCP service and its authentication endpoints.
+
+## Connect Notte
+
+1. Open **Settings → Integrations** on your own Tembo instance.
+2. Select **Notte** and start the installation.
+3. Enter the required authentication header in the connection dialog, then save.
+4. Confirm the connection is ready before starting a new session.
+
+The catalog server endpoint is `https://api.notte.cc/mcp/`. The catalog type is `notte-mcp` if your administrator restricts suggested servers.
+
+This catalog entry uses authentication headers rather than assuming a browser OAuth flow.
+
+## Verify
+
+Start a new session and ask Tembo to inspect a disposable browser session. Confirm the tools are available and that any returned account data belongs to the account you intended to connect.
+
+## Access and troubleshooting
+
+Enter the API credential in the connection dialog as an Authorization header using the Bearer scheme. Store it in the connection, not in a committed file.
+
+If the card is missing, check your release and catalog settings. If the connection remains pending, finish authorization from your own instance. For connectivity failures, check DNS, outbound policy, and TLS trust from both the API and sandbox. See [MCP setup](/features/self-hosted/integrations/mcp) for custom servers and connection visibility.

@@ -1,0 +1,29 @@
+---
+title: 'Tavily'
+description: 'Connect Tavily MCP tools to your self-hosted Tembo instance.'
+---
+
+## Prerequisites
+
+Complete the [shared prerequisites](/features/self-hosted/integrations/overview) and prepare access to Tavily search tools. Your API and sandboxes must be able to reach the provider's MCP service and its authentication endpoints.
+
+## Connect Tavily
+
+1. Open **Settings → Integrations** on your own Tembo instance.
+2. Select **Tavily** and start the installation.
+3. Complete the provider authorization if prompted. Review the requested access and select the intended account or workspace.
+4. Confirm the connection is ready before starting a new session.
+
+The catalog server endpoint is `https://mcp.tavily.com/mcp`. The catalog type is `tavily-mcp` if your administrator restricts suggested servers.
+
+For OAuth, your instance uses its own API callback, normally `https://tembo.example.com/api/oauth/mcp/callback`. If the provider requires an explicitly registered client, follow the [self-hosted MCP authentication instructions](/features/self-hosted/integrations/mcp#oauth-on-your-own-domain).
+
+## Verify
+
+Start a new session and ask Tembo to search for a non-sensitive public topic. Confirm the tools are available and that any returned account data belongs to the account you intended to connect.
+
+## Access and troubleshooting
+
+Do not put internal secrets in search queries. Review the scope before asking the agent to crawl sites.
+
+If the card is missing, check your release and catalog settings. If the connection remains pending, finish authorization from your own instance. For connectivity failures, check DNS, outbound policy, and TLS trust from both the API and sandbox. See [MCP setup](/features/self-hosted/integrations/mcp) for custom servers and connection visibility.

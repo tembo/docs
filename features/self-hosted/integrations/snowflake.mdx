@@ -1,0 +1,30 @@
+---
+title: 'Snowflake'
+description: 'Point Snowflake Cortex tools at your self-hosted Tembo API.'
+---
+
+## Prerequisites
+
+You need the Snowflake features and roles listed in the [Snowflake guide](/integrations/snowflake#prerequisites), an API token generated on your own Tembo instance, and a network route from Snowflake to your instance's HTTPS API.
+
+Snowflake is the client in this integration: it calls Tembo through a Python UDF and Snowflake-managed MCP server. It does not give Tembo agents direct SQL access to Snowflake.
+
+## Adapt the Snowflake setup
+
+Follow the [Snowflake installation guide](/integrations/snowflake), making these substitutions before running its SQL and Python examples:
+
+| Hosted setting | Self-hosted replacement |
+|---|---|
+| Tembo API token | A token from your instance, stored in the Snowflake secret |
+| Network rule for `api.tembo.io` | The hostname of your API, without a URL scheme or path |
+| API base `https://api.tembo.io` | Your full API base, such as `https://tembo.example.com/api` |
+
+Keep the API prefix when constructing request URLs, but do not add it twice. Confirm the paths used by the tools exist in your installed release's [API reference](/api).
+
+## Verify
+
+Start with a read-only tool that lists sessions. Confirm it returns data from your self-hosted organization before enabling tools that create sessions or trigger agents.
+
+If the request cannot connect, check Snowflake's network rule, external access integration, and routing to the instance. If it returns an authorization error, confirm the token was issued by your instance rather than the hosted service.
+
+Do not use the alternative external-MCP OAuth path unless your deployed Tembo version supports the authentication it requires.

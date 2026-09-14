@@ -1,0 +1,60 @@
+---
+title: 'MCP'
+description: 'Connect built-in and custom MCP tools to self-hosted Tembo sessions.'
+---
+
+## Prerequisites
+
+Complete the [shared prerequisites](/features/self-hosted/integrations/overview). You need access to the provider account or MCP server, permission to authorize its tools, and network connectivity from your API and sandboxes to the server.
+
+Self-hosting Tembo does not self-host a provider's MCP service. Remote connections still send tool requests to that service. Review data handling and permissions before connecting sensitive systems.
+
+## Built-in servers
+
+Open **Settings → Integrations** on your instance, choose a server, and complete its connection flow. Start a new session to verify tool access. Use the provider-specific guide for account requirements and a safe first request:
+
+| Integration | Setup guide |
+|---|---|
+| Apify | [Connect Apify](/features/self-hosted/integrations/apify) |
+| Attio | [Connect Attio](/features/self-hosted/integrations/attio) |
+| Clerk | [Connect Clerk](/features/self-hosted/integrations/clerk) |
+| Context7 | [Connect Context7](/features/self-hosted/integrations/context7) |
+| Datadog | [Connect Datadog](/features/self-hosted/integrations/datadog) |
+| Fathom | [Connect Fathom](/features/self-hosted/integrations/fathom) |
+| Granola | [Connect Granola](/features/self-hosted/integrations/granola) |
+| Hamster | [Connect Hamster](/features/self-hosted/integrations/hamster) |
+| HubSpot | [Connect HubSpot](/features/self-hosted/integrations/hubspot) |
+| Jam | [Connect Jam](/features/self-hosted/integrations/jam) |
+| KERNEL | [Connect KERNEL](/features/self-hosted/integrations/kernel) |
+| Mobbin | [Connect Mobbin](/features/self-hosted/integrations/mobbin) |
+| Neon | [Connect Neon](/features/self-hosted/integrations/neon) |
+| Notte | [Connect Notte](/features/self-hosted/integrations/notte) |
+| PlanetScale | [Connect PlanetScale](/features/self-hosted/integrations/planetscale) |
+| PostHog | [Connect PostHog](/features/self-hosted/integrations/posthog) |
+| Pylon | [Connect Pylon](/features/self-hosted/integrations/pylon) |
+| Stripe | [Connect Stripe](/features/self-hosted/integrations/stripe) |
+| Supermemory | [Connect Supermemory](/features/self-hosted/integrations/supermemory) |
+| Tavily | [Connect Tavily](/features/self-hosted/integrations/tavily) |
+| TinyFish | [Connect TinyFish](/features/self-hosted/integrations/tinyfish) |
+
+<Note>
+  Intercom is marked coming soon in the catalog and is not included as a working setup path. Your installed release may expose a subset of these servers. The `mcp.enabledSuggestedServers` instance setting can restrict the catalog using comma-separated server type identifiers; an empty value enables all suggested types, but does not make coming-soon integrations available.
+</Note>
+
+## OAuth on your own domain
+
+Tembo uses the provider's MCP authentication flow. Its callback for a standard self-hosted deployment is `https://tembo.example.com/api/oauth/mcp/callback`, derived from your API base URL.
+
+If a provider requires a pre-registered OAuth client, register this callback and use the connection's OAuth client configuration. Do not reuse credentials registered only for hosted Tembo callbacks. [HubSpot](/features/self-hosted/integrations/hubspot) has dedicated instance configuration for its MCP Auth App.
+
+If authorization is pending, complete or retry the authorization from your instance. Check redirect registration, API base URL, and provider restrictions if authorization fails.
+
+## Custom and private servers
+
+Use **Custom MCP** to add an HTTP, SSE, or stdio server. The [MCP configuration guide](/integrations/mcp#custom-server-transport-types) provides the accepted JSON formats.
+
+- **HTTP or SSE:** enter the server URL and any required authentication headers. For private endpoints, configure network access and TLS trust from the API and sandboxes.
+- **Stdio:** provide the executable, arguments, and environment variables. The executable and its dependencies must exist in the sandbox image, not just on the Tembo host.
+- **Visibility:** workspace administrators can choose a personal or shared connection; non-admin connections are personal. Match visibility to the data the credentials can access.
+
+Start with a read-only tool call and confirm the returned data belongs to the expected account. Avoid putting secrets in committed configuration examples or asking agents to print credentials during verification.
