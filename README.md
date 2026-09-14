@@ -93,6 +93,6 @@ The dev server defaults to `http://localhost:3000`. Keep it running while you ed
 
 Configure `CI_BOT_APP_ID` and `CI_BOT_PRIVATE_KEY` for the existing CI bot GitHub App installed on this repository with contents and pull requests write permissions before merging the workflow. Updates run automatically on release events without an enable flag. Manual workflow runs retry missed notifications. The SDK repository needs the same App installed on `docs` with contents write to send repository dispatches.
 
-`Validate SDK examples` checks example-update PRs without secrets or live API calls. Required approval must be configured separately in GitHub branch rules.
+`Validate SDK examples` checks same-repository example-update PRs without secrets or live API calls. Fork PRs are excluded from the internal RunsOn runners. Required approval must be configured separately in GitHub branch rules.
 
 To regenerate manually: `node scripts/update-sdk-examples.mjs <released-version>`. The example bodies remain Scalar-generated; the script only packages them as Mintlify code samples.
