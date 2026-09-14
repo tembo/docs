@@ -1,0 +1,42 @@
+---
+title: 'Jira'
+description: 'Create an Atlassian OAuth application for Jira Cloud on self-hosted Tembo.'
+---
+
+## Prerequisites
+
+Complete the [shared prerequisites](/features/self-hosted/integrations/overview). You need access to the Atlassian developer console and a Jira Cloud account with permission to access the projects you will connect. This OAuth flow uses Atlassian Cloud, not Jira Data Center.
+
+## 1. Create the OAuth application
+
+Create an OAuth 2.0 (3LO) application in the Atlassian developer console. Configure its callback as `https://tembo.example.com/api/oauth/atlassian/callback`.
+
+<Note>
+  The callback and configuration prefix are `atlassian`, not `jira`.
+</Note>
+
+Add the API permissions requested by Tembo's Atlassian connection:
+
+| API | Scopes |
+|---|---|
+| Jira | `read:jira-work`, `read:jira-user`, `manage:jira-webhook`, `manage:jira-configuration`, `write:jira-work`, `read:issue-details:jira`, `read:project:jira` |
+| Jira Software | `read:board-scope:jira-software`, `read:sprint:jira-software` |
+| Confluence | `read:confluence-content.all`, `read:confluence-space.summary`, `search:confluence`, `readonly:content.attachment:confluence`, `read:content:confluence`, `read:content-details:confluence`, `read:space:confluence`, `read:page:confluence`, `read:attachment:confluence`, `read:comment:confluence`, `read:label:confluence` |
+| Refresh tokens | `offline_access` |
+
+The connection requests Confluence scopes as well as Jira scopes. Review these permissions before authorizing, even if your initial use case is Jira only.
+
+## 2. Configure Tembo
+
+Set `atlassian.clientId` and `atlassian.clientSecret` in `/var/lib/tembo/config.json` using the application's credentials. Follow the [restart instructions](/features/self-hosted/integrations/overview#instance-configuration).
+
+For Jira event delivery, allow requests to `https://tembo.example.com/api/webhook/atlassian`.
+
+## 3. Install and verify
+
+1. Open **Settings → Integrations** on your instance and install Jira.
+2. Authorize the intended Atlassian site.
+3. Confirm the expected projects and issues are available.
+4. Configure a Jira trigger in [Agents](/features/agents) and test it on a non-production issue.
+
+If another user cannot authorize your app, check the app's distribution settings. If issues are missing, check that user's Jira project permissions. The OAuth connection does not configure a Confluence Forge app; contact [support](/support) if you also need Forge-backed Confluence events.

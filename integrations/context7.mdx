@@ -1,0 +1,31 @@
+---
+title: 'Context7'
+description: 'Retrieve library documentation and version-specific code examples through Context7 MCP.'
+---
+
+Retrieve library documentation and version-specific code examples through Context7 MCP.
+
+## Prerequisites
+
+You need access to your Tembo organization and access to Context7 and the library name you want to look up. Review the provider permissions before granting access to your data.
+
+## Installation
+
+1. Open **Settings → Integrations** in Tembo.
+2. Select **Context7** and start the installation.
+3. Complete the provider authorization if prompted. Review the requested access and select the intended account or workspace.
+4. Confirm the connection is ready before starting a new session.
+
+The catalog server endpoint is `https://mcp.context7.com/mcp/oauth`.
+
+If authorization requires a pre-registered OAuth client, follow the [MCP authentication instructions](/integrations/mcp#advanced) and register the callback shown in the connection dialog.
+
+## Usage and verification
+
+Start a new session and ask Tembo to retrieve documentation for a known library and version. Confirm the tools are available and that any returned account data belongs to the account you intended to connect.
+
+## Access and troubleshooting
+
+Include the intended library version in your request so the returned documentation matches your project.
+
+If the connection remains pending, return to **Settings → Integrations** and finish authorization. If tools do not appear, confirm the connection was saved and start a new session. See [MCP troubleshooting](/integrations/mcp#advanced) for authentication and connectivity checks.

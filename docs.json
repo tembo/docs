@@ -82,12 +82,41 @@
                                     {
                                         "group": "Integrations",
                                         "pages": [
-                                            "features/self-hosted/integrations/aws-storage",
-                                            "features/self-hosted/integrations/azure-storage",
-                                            "features/self-hosted/integrations/github",
-                                            "features/self-hosted/integrations/linear",
-                                            "features/self-hosted/integrations/sentry",
-                                            "features/self-hosted/integrations/slack"
+                                            "features/self-hosted/integrations/overview",
+                                            {
+                                                "group": "Git providers",
+                                                "pages": [
+                                                    "features/self-hosted/integrations/github",
+                                                    "features/self-hosted/integrations/gitlab",
+                                                    "features/self-hosted/integrations/bitbucket"
+                                                ]
+                                            },
+                                            {
+                                                "group": "Collaboration and monitoring",
+                                                "pages": [
+                                                    "features/self-hosted/integrations/linear",
+                                                    "features/self-hosted/integrations/jira",
+                                                    "features/self-hosted/integrations/notion",
+                                                    "features/self-hosted/integrations/slack",
+                                                    "features/self-hosted/integrations/teams",
+                                                    "features/self-hosted/integrations/sentry",
+                                                    "features/self-hosted/integrations/hubspot"
+                                                ]
+                                            },
+                                            {
+                                                "group": "Cloud and data",
+                                                "pages": [
+                                                    "features/self-hosted/integrations/aws",
+                                                    "features/self-hosted/integrations/supabase"
+                                                ]
+                                            },
+                                            {
+                                                "group": "Deployment storage",
+                                                "pages": [
+                                                    "features/self-hosted/integrations/aws-storage",
+                                                    "features/self-hosted/integrations/azure-storage"
+                                                ]
+                                            }
                                         ]
                                     }
                                 ]
@@ -128,6 +157,29 @@
                             "integrations/jira",
                             "integrations/linear",
                             "integrations/mcp",
+                            {
+                                "group": "MCP tools",
+                                "pages": [
+                                    "integrations/apify",
+                                    "integrations/attio",
+                                    "integrations/clerk",
+                                    "integrations/context7",
+                                    "integrations/datadog",
+                                    "integrations/granola",
+                                    "integrations/hamster",
+                                    "integrations/jam",
+                                    "integrations/kernel",
+                                    "integrations/mobbin",
+                                    "integrations/neon",
+                                    "integrations/notte",
+                                    "integrations/planetscale",
+                                    "integrations/posthog",
+                                    "integrations/pylon",
+                                    "integrations/supermemory",
+                                    "integrations/tavily",
+                                    "integrations/tinyfish"
+                                ]
+                            },
                             "integrations/notion",
                             "integrations/openconnect",
                             "integrations/postgres",

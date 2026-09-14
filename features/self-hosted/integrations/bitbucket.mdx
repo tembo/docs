@@ -1,0 +1,35 @@
+---
+title: 'Bitbucket'
+description: 'Register a Bitbucket Cloud OAuth consumer for self-hosted Tembo.'
+---
+
+## Prerequisites
+
+Complete the [shared prerequisites](/features/self-hosted/integrations/overview). You need permission to create an OAuth consumer in your Bitbucket Cloud workspace and access to the repositories you want to connect. This flow targets Bitbucket Cloud, not Bitbucket Data Center.
+
+## 1. Create an OAuth consumer
+
+In your Bitbucket workspace settings, create an OAuth consumer with callback URL `https://tembo.example.com/api/oauth/bitbucket/callback`.
+
+Configure permissions covering the scopes Tembo requests: `account`, `repository`, `pullrequest:write`, and `webhook`. Copy the consumer key and secret.
+
+## 2. Configure Tembo
+
+Add these keys to `/var/lib/tembo/config.json`:
+
+| Key | Value |
+|---|---|
+| `bitbucket.clientId` | OAuth consumer key |
+| `bitbucket.clientSecret` | OAuth consumer secret |
+| `bitbucket.webhookSecret` | A unique, randomly generated webhook signing secret |
+
+Follow the [restart instructions](/features/self-hosted/integrations/overview#instance-configuration). Allow Bitbucket webhook delivery to `https://tembo.example.com/api/webhook/bitbucket`.
+
+## 3. Install and verify
+
+1. Open **Settings → Integrations** on your instance and install Bitbucket.
+2. Authorize the consumer using an account with access to the intended workspace.
+3. Select a connected repository and start a test session.
+4. Confirm a pull request can be opened and that webhook deliveries succeed.
+
+If installation works but repository actions fail, check both the consumer permissions and the authorizing user's repository access. See the [Bitbucket guide](/integrations/bitbucket) for usage.

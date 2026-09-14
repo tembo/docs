@@ -1,0 +1,31 @@
+---
+title: 'Granola'
+description: 'Bring Granola meeting notes, summaries, and insights into Tembo sessions.'
+---
+
+Bring Granola meeting notes, summaries, and insights into Tembo sessions.
+
+## Prerequisites
+
+You need access to your Tembo organization and a Granola account with access to a test meeting note. Review the provider permissions before granting access to your data.
+
+## Installation
+
+1. Open **Settings → Integrations** in Tembo.
+2. Select **Granola** and start the installation.
+3. Complete the provider authorization if prompted. Review the requested access and select the intended account or workspace.
+4. Confirm the connection is ready before starting a new session.
+
+The catalog server endpoint is `https://mcp.granola.ai/mcp`.
+
+If authorization requires a pre-registered OAuth client, follow the [MCP authentication instructions](/integrations/mcp#advanced) and register the callback shown in the connection dialog.
+
+## Usage and verification
+
+Start a new session and ask Tembo to summarize a non-sensitive meeting note. Confirm the tools are available and that any returned account data belongs to the account you intended to connect.
+
+## Access and troubleshooting
+
+Meeting notes may contain confidential information. Authorize only the account whose notes the session should access.
+
+If the connection remains pending, return to **Settings → Integrations** and finish authorization. If tools do not appear, confirm the connection was saved and start a new session. See [MCP troubleshooting](/integrations/mcp#advanced) for authentication and connectivity checks.

@@ -1,0 +1,42 @@
+---
+title: 'Microsoft Teams'
+description: 'Prepare a self-hosted Microsoft Teams bot integration with the Tembo team.'
+---
+
+<Warning>
+  Microsoft Teams is a sideload pilot. Contact [support](/support) to confirm your release supports it and obtain an app package configured for your own bot and deployment. The hosted Tembo package is not a ready-to-use self-hosted configuration.
+</Warning>
+
+## Prerequisites
+
+Complete the [shared prerequisites](/features/self-hosted/integrations/overview). You also need a Microsoft 365 administrator who can approve the application and custom app uploads, and access to provision an Entra application and Azure Bot resource.
+
+## 1. Register the bot and OAuth application
+
+With the Tembo team, register an Entra application and Azure Bot resource, enable its Teams channel, and configure its messaging endpoint as `https://tembo.example.com/api/webhook/ms-teams`.
+
+Register `https://tembo.example.com/api/oauth/ms-teams/callback` as the OAuth web redirect URI. Tembo requests `openid`, `profile`, `email`, `offline_access`, and `User.Read`. Confirm the application account types and tenant policy with your administrator before installation.
+
+## 2. Configure Tembo
+
+Set these keys in `/var/lib/tembo/config.json`:
+
+| Key | Value |
+|---|---|
+| `msteams.appId` | Bot's Entra application client ID |
+| `msteams.appPassword` | Bot application client secret value |
+| `msteams.appTenantId` | Tenant ID containing the bot registration |
+| `msteams.appType` | Bot application type matching the Azure registration |
+| `msteams.clientId` | OAuth client ID, if different from the bot app ID |
+| `msteams.clientSecret` | OAuth client secret, if different from the bot secret |
+
+The OAuth credentials fall back to `msteams.appId` and `msteams.appPassword` when left empty. Follow the [restart instructions](/features/self-hosted/integrations/overview#instance-configuration).
+
+## 3. Install and verify
+
+1. Have your administrator upload the self-hosted app package supplied for your deployment.
+2. Complete the Teams connection from **Settings → Integrations** on your instance.
+3. Install the app in the chat or team where you intend to use it.
+4. Mention the bot with a test request and confirm a session appears on your instance and progress returns to the same conversation.
+
+If the bot does not respond, check the installed scope, bot ID in the package, messaging endpoint, and tenant policy. See [Teams usage and cloud limitations](/integrations/teams).

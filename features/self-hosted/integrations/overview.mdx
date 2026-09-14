@@ -1,0 +1,50 @@
+---
+title: 'Integration setup'
+description: 'Configure integrations that require config.json changes on your self-hosted Tembo instance.'
+---
+
+This section covers integrations that require integration-specific changes to `/var/lib/tembo/config.json`. Use these guides to configure provider applications, signing credentials, or deployment storage for your self-hosted instance.
+
+For integrations configured entirely through the UI, sandbox environment variables, or external tools, use the [general integration guides](/integrations). Follow those steps from your own Tembo instance rather than the hosted dashboard.
+
+## Prerequisites
+
+- A running [self-hosted deployment](/features/self-hosted/overview) and administrator access to your Tembo organization.
+- Administrator access to the external service when creating applications or granting organization-wide access.
+- A stable HTTPS address for your deployment. The examples use `https://tembo.example.com`, with the API served under `/api/`.
+- Outbound connectivity from the Tembo API and, where tools run there, agent sandboxes to the provider. OAuth redirects must be reachable by your browser; webhook endpoints must be reachable by the provider. A private instance needs an approved ingress path for webhooks.
+
+## Instance configuration
+
+For guides that require application credentials, merge the listed keys into `/var/lib/tembo/config.json`; do not replace your existing configuration. Keep secrets out of source control and restrict access to the file.
+
+Set `frontend.url` to your browser-facing origin and `api.base` to your externally reachable API base, including the trailing slash. For the examples in this section, those values are `https://tembo.example.com` and `https://tembo.example.com/api/`. If your API uses a different host or prefix, adjust every callback and webhook URL accordingly.
+
+After saving configuration changes, restart the API service:
+
+```bash
+sudo systemctl restart tembo-ts-api
+```
+
+Start OAuth installations from **Settings → Integrations** on **your instance**, not from the hosted Tembo dashboard or the provider's application page. The authorization request includes state that associates the connection with your organization.
+
+## Choose a setup guide
+
+| Setup type | Integrations |
+|---|---|
+| Git providers | [GitHub](/features/self-hosted/integrations/github), [GitLab](/features/self-hosted/integrations/gitlab), [Bitbucket](/features/self-hosted/integrations/bitbucket) |
+| Issues and collaboration | [Linear](/features/self-hosted/integrations/linear), [Jira](/features/self-hosted/integrations/jira), [Notion](/features/self-hosted/integrations/notion), [Slack](/features/self-hosted/integrations/slack), [Microsoft Teams](/features/self-hosted/integrations/teams) |
+| Monitoring and CRM | [Sentry](/features/self-hosted/integrations/sentry), [HubSpot](/features/self-hosted/integrations/hubspot) |
+| Cloud and data | [AWS](/features/self-hosted/integrations/aws), [Supabase](/features/self-hosted/integrations/supabase) |
+| Deployment storage | [AWS S3](/features/self-hosted/integrations/aws-storage), [Azure Blob Storage](/features/self-hosted/integrations/azure-storage) |
+
+<Note>
+  Integration availability depends on your installed release and organization settings. Pilot features and provider limitations are called out in their guides. If a card is missing, contact [support](/support) before provisioning credentials.
+</Note>
+
+## Troubleshooting
+
+- **Redirect mismatch:** compare the registered callback with the actual authorization request, including its scheme, hostname, API prefix, and path.
+- **Connected but no events:** inspect provider webhook deliveries and confirm the endpoint is reachable without an interactive login. Check signing credentials and event subscriptions.
+- **Connected but tools cannot reach data:** test DNS, routing, and TLS from the sandbox, not only from the host VM. Limit access to the resources the integration needs.
+- **Credential rotation:** update the instance configuration or saved connection where the credential was originally entered, then reconnect if the provider invalidated existing tokens.
