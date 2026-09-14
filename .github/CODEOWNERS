@@ -6,7 +6,7 @@
 # Repository -> Insights -> Code owners errors.
 
 # Fallback — active maintainers with repository-wide context
-*                       @DarrenBaldwin07 @benja @ryw
+*                       @DarrenBaldwin07 @benja @ryw @cooper-gadd
 
 # Documentation areas
 /api/                   @DarrenBaldwin07 @benja
@@ -23,7 +23,3 @@
 
 # Changes to ownership itself get reviewed by repository maintainers
 /.github/CODEOWNERS     @DarrenBaldwin07 @benja @ryw
-
-/openapi.sdk.overlay.json @cooper-gadd
-/scripts/*sdk-examples.mjs @cooper-gadd
-/.github/workflows/*sdk-examples.yml @cooper-gadd @Coleary005 @milldr @DarrenBaldwin07
