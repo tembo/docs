@@ -69,5 +69,4 @@ jobs:
             Generated from the released Scalar SDK reference and manifest.
             Typechecked against npm-published `@tembo-io/sdk@${{ steps.release.outputs.version }}`.
             Only the SDK examples overlay changes; production OpenAPI and layout are unchanged.
-          reviewers: cooper-gadd
           assignees: cooper-gadd
