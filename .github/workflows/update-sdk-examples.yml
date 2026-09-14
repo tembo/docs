@@ -1,0 +1,74 @@
+name: Update released SDK examples
+
+on:
+  repository_dispatch:
+    types: [sdk-published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sdk-examples-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    if: github.repository == 'tembo/docs' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - name: Resolve current stable npm release
+        id: release
+        run: |
+          VERSION=$(npm view @tembo-io/sdk dist-tags.latest)
+          [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit 1
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+      - name: Generate examples from that release
+        env:
+          SDK_VERSION: ${{ steps.release.outputs.version }}
+        run: node scripts/update-sdk-examples.mjs "$SDK_VERSION"
+      - id: diff
+        run: |
+          if ! git diff --quiet -- openapi.sdk.overlay.json; then
+            echo 'changed=true' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Validate against the published package
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          SDK_VERSION: ${{ steps.release.outputs.version }}
+        run: |
+          npm install --prefix "$RUNNER_TEMP/sdk-consumer" --ignore-scripts --no-audit --no-fund "@tembo-io/sdk@$SDK_VERSION" typescript@6.0.3
+          node scripts/validate-sdk-examples.mjs "$RUNNER_TEMP/sdk-consumer"
+      - name: Generate docs PR token
+        if: steps.diff.outputs.changed == 'true'
+        id: bot
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349
+        with:
+          app-id: ${{ vars.CI_PUBLIC_BOT_APP_ID }}
+          private-key: ${{ secrets.CI_PUBLIC_BOT_PRIVATE_KEY }}
+          owner: tembo
+          repositories: docs
+          permission-contents: write
+          permission-pull-requests: write
+      - name: Open or update SDK examples PR
+        if: steps.diff.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@22a9089034f40e5a961c8808d113e2c98fb63676
+        with:
+          token: ${{ steps.bot.outputs.token }}
+          branch: tembo/update-sdk-examples
+          base: main
+          add-paths: openapi.sdk.overlay.json
+          commit-message: 'docs(api): update SDK examples to ${{ steps.release.outputs.version }}'
+          title: 'docs(api): update SDK examples to ${{ steps.release.outputs.version }}'
+          body: |
+            Generated from the released Scalar SDK reference and manifest.
+            Typechecked against npm-published `@tembo-io/sdk@${{ steps.release.outputs.version }}`.
+            Only the SDK examples overlay changes; production OpenAPI and layout are unchanged.
+          assignees: cooper-gadd
