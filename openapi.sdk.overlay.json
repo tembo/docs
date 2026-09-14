@@ -660,7 +660,7 @@
                     {
                         "lang": "typescript",
                         "label": "TypeScript SDK",
-                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst session = await client.sessions.create({\n  mcpServers: [],\n  description: 'x',\n});\n"
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst session = await client.sessions.create({\n  description: 'Fix the authentication bug in the login component',\n  projectId: 'your-project-id',\n  agent: 'claudeCode:claude-opus-4-5',\n  codeRepositoryIds: ['123e4567-e89b-12d3-a456-426614174000'],\n  baseBranch: 'main',\n  targetBranch: 'main',\n  visibility: 'private',\n  mcpServers: [],\n});\n"
                     }
                 ]
             }

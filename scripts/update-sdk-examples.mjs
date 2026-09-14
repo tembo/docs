@@ -28,7 +28,16 @@ for (const match of reference.matchAll(/```ts\n([\s\S]*?)```/g)) {
 assert.ok(manifest.operations.length > 0, 'The SDK must contain operations');
 const actions = manifest.operations.map((operation) => {
     const method = `${operation.publicResource}.${operation.publicOperation}`;
-    const example = examples.get(method);
+    const example = method === 'sessions.create' ? `const session = await client.sessions.create({
+  description: 'Fix the authentication bug in the login component',
+  projectId: 'your-project-id',
+  agent: 'claudeCode:claude-opus-4-5',
+  codeRepositoryIds: ['123e4567-e89b-12d3-a456-426614174000'],
+  baseBranch: 'main',
+  targetBranch: 'main',
+  visibility: 'private',
+  mcpServers: [],
+});` : examples.get(method);
     assert.ok(example, `Missing generated example: ${method}`);
     assert.ok(operation.path.startsWith('/v1/'), `Unexpected path: ${operation.path}`);
     return {
