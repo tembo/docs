@@ -1,0 +1,31 @@
+---
+title: 'TinyFish'
+description: 'Use TinyFish web agents to navigate and extract information through MCP.'
+---
+
+Use TinyFish web agents to navigate and extract information through MCP.
+
+## Prerequisites
+
+You need access to your Tembo organization and access to TinyFish web agents. Review the provider permissions before granting access to your data.
+
+## Installation
+
+1. Open **Settings → Integrations** in Tembo.
+2. Select **TinyFish** and start the installation.
+3. Complete the provider authorization if prompted. Review the requested access and select the intended account or workspace.
+4. Confirm the connection is ready before starting a new session.
+
+The catalog server endpoint is `https://agent.tinyfish.ai/mcp`.
+
+If authorization requires a pre-registered OAuth client, follow the [MCP authentication instructions](/integrations/mcp#advanced) and register the callback shown in the connection dialog.
+
+## Usage and verification
+
+Start a new session and ask Tembo to inspect a public test page. Confirm the tools are available and that any returned account data belongs to the account you intended to connect.
+
+## Access and troubleshooting
+
+Keep the first task read-only and confirm the destination before allowing form submissions or other browser actions.
+
+If the connection remains pending, return to **Settings → Integrations** and finish authorization. If tools do not appear, confirm the connection was saved and start a new session. See [MCP troubleshooting](/integrations/mcp#advanced) for authentication and connectivity checks.

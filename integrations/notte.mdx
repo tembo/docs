@@ -1,0 +1,31 @@
+---
+title: 'Notte'
+description: 'Connect Notte cloud browser tools using an API credential.'
+---
+
+Connect Notte cloud browser tools using an API credential.
+
+## Prerequisites
+
+You need access to your Tembo organization and a Notte API credential approved for agent use. Review the provider permissions before granting access to your data.
+
+## Installation
+
+1. Open **Settings → Integrations** in Tembo.
+2. Select **Notte** and start the installation.
+3. Set the **Authorization** header to `Bearer <your-api-key>` in the connection dialog, then save.
+4. Confirm the connection is ready before starting a new session.
+
+The catalog server endpoint is `https://api.notte.cc/mcp/`.
+
+This catalog entry uses authentication headers rather than assuming a browser OAuth flow.
+
+## Usage and verification
+
+Start a new session and ask Tembo to inspect a disposable browser session. Confirm the tools are available and that any returned account data belongs to the account you intended to connect.
+
+## Access and troubleshooting
+
+Enter the API credential in the connection dialog as an Authorization header using the Bearer scheme. Store it in the connection, not in a committed file.
+
+If the connection remains pending, return to **Settings → Integrations** and finish authorization. If tools do not appear, confirm the connection was saved and start a new session. See [MCP troubleshooting](/integrations/mcp#advanced) for authentication and connectivity checks.
