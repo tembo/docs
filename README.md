@@ -96,5 +96,3 @@ Configure `CI_BOT_APP_ID` and `CI_BOT_PRIVATE_KEY` for a GitHub App installed on
 `Validate SDK examples` checks example-update PRs without secrets or live API calls. Required approval must be configured separately in GitHub branch rules.
 
 To regenerate manually: `node scripts/update-sdk-examples.mjs <released-version>`. The example bodies remain Scalar-generated; the script only packages them as Mintlify code samples.
-
-`Notify engineering of SDK docs PR` mentions Cooper only when a new `tembo/update-sdk-examples` PR opens against `main`. Store an incoming webhook configured for `#engineering` as `SLACK_ENGINEERING_WEBHOOK_URL` in both `docs` and `sdk`. The workflow must be on `main`; existing PR updates and reopen events stay silent. It reads event metadata without checking out PR code. A manual rerun can resend the notification.
