@@ -91,7 +91,7 @@ The dev server defaults to `http://localhost:3000`. Keep it running while you ed
 
 `Update released SDK examples` receives `sdk-published` after the SDK's npm publish job succeeds. It resolves npm's current stable `latest` (so delayed events cannot downgrade examples), regenerates `openapi.sdk.overlay.json`, typechecks it against that exact npm package, and opens or updates a PR assigned to `@cooper-gadd`. Unchanged output is a no-op. It never auto-merges or changes production OpenAPI.
 
-Configure `CI_BOT_APP_ID` and `CI_BOT_PRIVATE_KEY` for a GitHub App installed on this repository with contents and pull requests write permissions. Enable repository variable `SDK_DOCS_AUTOGEN_ENABLED=true` after setup. Manual workflow runs retry missed notifications. The SDK repository needs the same App installed on `docs` with contents write to send repository dispatches.
+Configure `CI_BOT_APP_ID` and `CI_BOT_PRIVATE_KEY` for the existing CI bot GitHub App installed on this repository with contents and pull requests write permissions before merging the workflow. Updates run automatically on release events without an enable flag. Manual workflow runs retry missed notifications. The SDK repository needs the same App installed on `docs` with contents write to send repository dispatches.
 
 `Validate SDK examples` checks example-update PRs without secrets or live API calls. `CODEOWNERS` requests review from `@cooper-gadd` for SDK examples and their automation once the ownership rules reach `main`. Existing workflow maintainers remain owners of the automation. Required approval must be configured separately in GitHub branch rules.
 
