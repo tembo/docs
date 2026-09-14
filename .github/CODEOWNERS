@@ -23,3 +23,7 @@
 
 # Changes to ownership itself get reviewed by repository maintainers
 /.github/CODEOWNERS     @DarrenBaldwin07 @benja @ryw
+
+/openapi.sdk.overlay.json @cooper-gadd
+/scripts/*sdk-examples.mjs @cooper-gadd
+/.github/workflows/*sdk-examples.yml @cooper-gadd @Coleary005 @milldr @DarrenBaldwin07

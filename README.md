@@ -86,3 +86,13 @@ The dev server defaults to `http://localhost:3000`. Keep it running while you ed
 - [Mintlify Documentation](https://mintlify.com/docs)
 - [Support](mailto:support@tembo.io)
 - [Book a Demo](https://book.avoma.com/tembo/tembo-demo/)
+
+## SDK example updates
+
+`Update released SDK examples` receives `sdk-published` after the SDK's npm publish job succeeds. It resolves npm's current stable `latest` (so delayed events cannot downgrade examples), regenerates `openapi.sdk.overlay.json`, typechecks it against that exact npm package, and opens or updates a PR assigned to `@cooper-gadd`. Unchanged output is a no-op. It never auto-merges or changes production OpenAPI.
+
+Configure `CI_BOT_APP_ID` and `CI_BOT_PRIVATE_KEY` for a GitHub App installed on this repository with contents and pull requests write permissions. Enable repository variable `SDK_DOCS_AUTOGEN_ENABLED=true` after setup. Manual workflow runs retry missed notifications. The SDK repository needs the same App installed on `docs` with contents write to send repository dispatches.
+
+`Validate SDK examples` checks example-update PRs without secrets or live API calls. `CODEOWNERS` requests the SDK owner's review; required approval must be configured separately in GitHub branch rules.
+
+To regenerate manually: `node scripts/update-sdk-examples.mjs <released-version>`. The example bodies remain Scalar-generated; the script only packages them as Mintlify code samples.
