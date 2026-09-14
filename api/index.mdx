@@ -33,9 +33,6 @@ curl -H "Authorization: Bearer YOUR_API_KEY" \
 
 ## TypeScript SDK
 
-Use the TypeScript SDK to call the API from your Node.js application. You need
-Node.js 20 or later and an API key from the dashboard.
-
 ```bash
 npm install @tembo-io/sdk
 ```
@@ -51,13 +48,6 @@ const client = new Tembo();
 const models = await client.models.list({ limit: '1' });
 console.log(models);
 ```
-
-The client reads `TEMBO_API_KEY` automatically and uses `https://api.tembo.io`
-by default. For a self-hosted deployment, also set `TEMBO_BASE_URL` to
-`https://{deployment-origin}/api/public-api` and use an API key from that deployment.
-
-See the [SDK reference](https://github.com/tembo/sdk/blob/main/api.md) for available
-methods, parameters, and response types.
 
 ## Rate limits
 
