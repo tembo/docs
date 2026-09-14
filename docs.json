@@ -30,7 +30,7 @@
     "api": {
         "openapi": {
             "source": "https://api.tembo.io/public-api/openapi/public",
-            "overlays": ["openapi.servers.overlay.yml"]
+            "overlays": ["openapi.servers.overlay.yml", "openapi.sdk.overlay.json"]
         }
     },
     "integrations": {
@@ -162,7 +162,7 @@
                         "public": true,
                         "openapi": {
                             "source": "https://api.tembo.io/public-api/openapi/public",
-                            "overlays": ["openapi.servers.overlay.yml"],
+                            "overlays": ["openapi.servers.overlay.yml", "openapi.sdk.overlay.json"],
                             "directory": "api/v1"
                         },
                         "pages": [

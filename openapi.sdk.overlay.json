@@ -1,0 +1,1401 @@
+{
+    "overlay": "1.0.0",
+    "info": {
+        "title": "Scalar-generated examples from @tembo-io/sdk 0.3.0",
+        "version": "0.3.0"
+    },
+    "actions": [
+        {
+            "target": "$.paths[\"/v1/api-keys\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst apiKey = await client.apiKeys.list({\n  limit: '50',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/api-keys\"][\"post\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst apiKey = await client.apiKeys.create({});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/api-keys/{apiKeyId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst apiKey = await client.apiKeys.retrieve('7c9e6679-7425-40de-944b-e07fc1f90ae7');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/api-keys/{apiKeyId}\"][\"patch\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst apiKey = await client.apiKeys.update('7c9e6679-7425-40de-944b-e07fc1f90ae7', {\n  name: 'x',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/api-keys/{apiKeyId}\"][\"delete\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst apiKey = await client.apiKeys.delete('7c9e6679-7425-40de-944b-e07fc1f90ae7');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/skills\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst skill = await client.skills.list({\n  limit: '50',\n  source: 'organization',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/skills\"][\"post\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst skill = await client.skills.create({\n  description: '',\n  name: 'x',\n  files: [\n    {\n      content: '',\n      filename: 'x',\n    },\n  ],\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/skills/{skillId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst skill = await client.skills.retrieve('7c9e6679-7425-40de-944b-e07fc1f90ae7');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/skills/{skillId}\"][\"patch\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst skill = await client.skills.update('7c9e6679-7425-40de-944b-e07fc1f90ae7', {});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/skills/{skillId}\"][\"delete\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst skill = await client.skills.delete('7c9e6679-7425-40de-944b-e07fc1f90ae7');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/insights\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst insight = await client.insights.retrieve();\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/insights\"][\"patch\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst insight = await client.insights.update({\n  enabled: false,\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/insights/members\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst insight = await client.insights.listMembers({\n  limit: '50',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/insights/repositories\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst insight = await client.insights.listRepositories({\n  limit: '50',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/organizations\"][\"post\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst organization = await client.organizations.create({\n  name: 'x',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/organizations/{organizationId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst organization = await client.organizations.retrieve('organizationId');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/organizations/{organizationId}\"][\"patch\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst organization = await client.organizations.update('organizationId', {});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/organizations/{organizationId}\"][\"delete\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst organization = await client.organizations.delete('organizationId');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/organizations/{organizationId}/members\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst member = await client.organizations.members.list('organizationId', {\n  limit: 50,\n  status: 'active',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/organizations/{organizationId}/members\"][\"post\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst member = await client.organizations.members.create('organizationId', {\n  emailAddress: 'user@example.com',\n  role: 'org:member',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/organizations/{organizationId}/members/{memberId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst member = await client.organizations.members.retrieve('memberId', {\n  organizationId: 'organizationId',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/organizations/{organizationId}/members/{memberId}\"][\"patch\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst member = await client.organizations.members.update('memberId', {\n  organizationId: 'organizationId',\n  role: 'org:admin',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/organizations/{organizationId}/members/{memberId}\"][\"delete\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst member = await client.organizations.members.delete('memberId', {\n  organizationId: 'organizationId',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/organizations/{organizationId}/secrets\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst secret = await client.organizations.secrets.list('organizationId', {\n  limit: 50,\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/organizations/{organizationId}/secrets\"][\"post\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst secret = await client.organizations.secrets.create('organizationId', {\n  key: 'x',\n  value: 'x',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/organizations/{organizationId}/secrets/{secretId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst secret = await client.organizations.secrets.retrieve('7c9e6679-7425-40de-944b-e07fc1f90ae7', {\n  organizationId: 'organizationId',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/organizations/{organizationId}/secrets/{secretId}\"][\"patch\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst secret = await client.organizations.secrets.update('7c9e6679-7425-40de-944b-e07fc1f90ae7', {\n  organizationId: 'organizationId',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/organizations/{organizationId}/secrets/{secretId}\"][\"delete\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst secret = await client.organizations.secrets.delete('7c9e6679-7425-40de-944b-e07fc1f90ae7', {\n  organizationId: 'organizationId',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/organizations/{organizationId}/settings\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst setting = await client.organizations.settings.retrieve('organizationId');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/organizations/{organizationId}/settings\"][\"patch\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst setting = await client.organizations.settings.update('organizationId', {});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/mcp-connections\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst mcpConnection = await client.mcpConnections.list({\n  limit: '50',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/mcp-connections\"][\"post\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst mcpConnection = await client.mcpConnections.create({\n  name: 'x',\n  args: [],\n  command: 'x',\n  type: 'stdio',\n  visibility: 'shared',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/mcp-connections/{mcpConnectionId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst mcpConnection = await client.mcpConnections.retrieve('7c9e6679-7425-40de-944b-e07fc1f90ae7');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/mcp-connections/{mcpConnectionId}\"][\"patch\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst mcpConnection = await client.mcpConnections.update('7c9e6679-7425-40de-944b-e07fc1f90ae7', {\n  type: 'remote',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/mcp-connections/{mcpConnectionId}\"][\"delete\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst mcpConnection = await client.mcpConnections.delete('7c9e6679-7425-40de-944b-e07fc1f90ae7');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/mcp-connections/{mcpConnectionId}/authorize\"][\"post\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst mcpConnection = await client.mcpConnections.authorize('7c9e6679-7425-40de-944b-e07fc1f90ae7');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/mcp-connections/{mcpConnectionId}/test\"][\"post\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst mcpConnection = await client.mcpConnections.test('7c9e6679-7425-40de-944b-e07fc1f90ae7');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/artifacts\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst artifact = await client.artifacts.list({\n  limit: '50',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/artifacts\"][\"post\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst artifact = await client.artifacts.create({\n  title: 'x',\n  output: {\n    type: 'html',\n    content: 'x',\n  },\n  sessionId: '7c9e6679-7425-40de-944b-e07fc1f90ae7',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/artifacts/{artifactId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst artifact = await client.artifacts.retrieve('7c9e6679-7425-40de-944b-e07fc1f90ae7');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/artifacts/{artifactId}\"][\"delete\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst artifact = await client.artifacts.delete('7c9e6679-7425-40de-944b-e07fc1f90ae7');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/messages\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst message = await client.messages.list({\n  limit: '50',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/messages\"][\"post\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst message = await client.messages.create({\n  content: 'x',\n  sessionId: '7c9e6679-7425-40de-944b-e07fc1f90ae7',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/messages/{messageId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst message = await client.messages.retrieve('7c9e6679-7425-40de-944b-e07fc1f90ae7');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/messages/{messageId}\"][\"patch\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst message = await client.messages.update('7c9e6679-7425-40de-944b-e07fc1f90ae7', {});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/messages/{messageId}\"][\"delete\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst message = await client.messages.delete('7c9e6679-7425-40de-944b-e07fc1f90ae7');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/models\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst model = await client.models.list({\n  limit: '50',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/models/{modelName}\"][\"patch\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst model = await client.models.update('claude-fable-5-1', {});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/users/{userId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst user = await client.users.retrieve('userId');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/users/{userId}\"][\"patch\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst user = await client.users.update('userId', {\n  onboarding: {\n    positionInCompany: 'x',\n    useCase: 'x',\n    howDidYouHear: 'x',\n  },\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/users/{userId}\"][\"delete\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst user = await client.users.delete('userId', {});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/users/{userId}/connected-accounts\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst connectedAccount = await client.users.connectedAccounts.list('userId', {\n  limit: '50',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/users/{userId}/connected-accounts/{connectedAccountId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst connectedAccount = await client.users.connectedAccounts.retrieve('connectedAccountId', {\n  userId: 'userId',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/sessions\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst session = await client.sessions.list({\n  limit: 50,\n  includeArchived: true,\n  includeTotal: false,\n  sortBy: 'lastQueuedAt',\n  state: 'all',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/sessions\"][\"post\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst session = await client.sessions.create({\n  mcpServers: [],\n  description: 'x',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/sessions/{sessionId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst session = await client.sessions.retrieve('7c9e6679-7425-40de-944b-e07fc1f90ae7');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/sessions/{sessionId}\"][\"patch\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst session = await client.sessions.update('7c9e6679-7425-40de-944b-e07fc1f90ae7', {});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/sessions/{sessionId}\"][\"delete\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst session = await client.sessions.delete('7c9e6679-7425-40de-944b-e07fc1f90ae7');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/sessions/{sessionId}/stop\"][\"post\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst session = await client.sessions.stop('7c9e6679-7425-40de-944b-e07fc1f90ae7');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/sessions/{sessionId}/events\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst session = await client.sessions.listEvents('7c9e6679-7425-40de-944b-e07fc1f90ae7', {\n  limit: 50,\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/sessions/sources\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst source = await client.sessions.sources.list({\n  limit: 50,\n  includeTotal: false,\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/sessions/sources/{sourceId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst source = await client.sessions.sources.retrieve('7c9e6679-7425-40de-944b-e07fc1f90ae7');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/sessions/{sessionId}/files\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst file = await client.sessions.files.list('7c9e6679-7425-40de-944b-e07fc1f90ae7', {\n  limit: 50,\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/sessions/{sessionId}/files/{fileId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst file = await client.sessions.files.retrieve('7c9e6679-7425-40de-944b-e07fc1f90ae7', {\n  sessionId: '7c9e6679-7425-40de-944b-e07fc1f90ae7',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/sessions/{sessionId}/diffs\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst diff = await client.sessions.diffs.list('7c9e6679-7425-40de-944b-e07fc1f90ae7', {\n  limit: 50,\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/sessions/{sessionId}/diffs/{diffId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst diff = await client.sessions.diffs.retrieve('7c9e6679-7425-40de-944b-e07fc1f90ae7', {\n  sessionId: '7c9e6679-7425-40de-944b-e07fc1f90ae7',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/projects/defaults\"][\"put\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst project = await client.projects.updateDefaults({\n  projectId: 'x',\n  sandboxSize: 'nano',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/projects\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst project = await client.projects.list({\n  limit: 50,\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/projects\"][\"post\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst project = await client.projects.create({\n  name: 'x',\n  sizes: ['nano'],\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/projects/{projectId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst project = await client.projects.retrieve('projectId');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/projects/{projectId}\"][\"patch\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst project = await client.projects.update('projectId', {});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/projects/{projectId}\"][\"delete\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst project = await client.projects.delete('projectId');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/projects/{projectId}/environment-variables\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst environmentVariable = await client.projects.environmentVariables.list('projectId');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/projects/{projectId}/environment-variables\"][\"post\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst environmentVariable = await client.projects.environmentVariables.create('projectId', {\n  secrets: [\n    {\n      key: '',\n      value: 'x',\n    },\n  ],\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/projects/{projectId}/environment-variables/{key}\"][\"delete\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst environmentVariable = await client.projects.environmentVariables.delete('key', {\n  projectId: 'projectId',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/projects/{projectId}/snapshots\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst snapshot = await client.projects.snapshots.list('projectId', {\n  limit: 50,\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/projects/{projectId}/snapshots/{snapshotId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst snapshot = await client.projects.snapshots.retrieve('snapshotId', {\n  projectId: 'projectId',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/projects/{projectId}/snapshots/{snapshotId}\"][\"patch\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst snapshot = await client.projects.snapshots.update('snapshotId', {\n  projectId: 'projectId',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/projects/{projectId}/snapshots/{snapshotId}\"][\"delete\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst snapshot = await client.projects.snapshots.delete('snapshotId', {\n  projectId: 'projectId',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/projects/{projectId}/builds\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst build = await client.projects.builds.list('projectId', {\n  limit: 50,\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/projects/{projectId}/builds\"][\"post\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst build = await client.projects.builds.create('projectId', {});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/projects/{projectId}/builds/{buildId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst build = await client.projects.builds.retrieve('buildId', {\n  projectId: 'projectId',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/projects/{projectId}/builds/{buildId}/cancel\"][\"post\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst build = await client.projects.builds.cancel('buildId', {\n  projectId: 'projectId',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/projects/{projectId}/schedules\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst schedule = await client.projects.schedules.list('projectId', {\n  limit: 50,\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/projects/{projectId}/schedules\"][\"post\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst schedule = await client.projects.schedules.create('projectId', {\n  cron: 'x',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/projects/{projectId}/schedules/{scheduleId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst schedule = await client.projects.schedules.retrieve('scheduleId', {\n  projectId: 'projectId',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/projects/{projectId}/schedules/{scheduleId}\"][\"patch\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst schedule = await client.projects.schedules.update('scheduleId', {\n  projectId: 'projectId',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/projects/{projectId}/schedules/{scheduleId}\"][\"delete\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst schedule = await client.projects.schedules.delete('scheduleId', {\n  projectId: 'projectId',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/pull-requests\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst pullRequest = await client.pullRequests.list({\n  limit: '50',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/pull-requests/{pullRequestId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst pullRequest = await client.pullRequests.retrieve('7c9e6679-7425-40de-944b-e07fc1f90ae7');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/agents\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst agent = await client.agents.list({\n  limit: '50',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/agents\"][\"post\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst agent = await client.agents.create({});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/agents/{agentId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst agent = await client.agents.retrieve('7c9e6679-7425-40de-944b-e07fc1f90ae7');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/agents/{agentId}\"][\"patch\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst agent = await client.agents.update('7c9e6679-7425-40de-944b-e07fc1f90ae7', {});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/agents/{agentId}\"][\"delete\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst agent = await client.agents.delete('7c9e6679-7425-40de-944b-e07fc1f90ae7');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/agents/templates\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst template = await client.agents.templates.list({\n  limit: '50',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/agents/templates/{templateName}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst template = await client.agents.templates.retrieve('templateName');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/agents/{agentId}/schedules\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst schedule = await client.agents.schedules.list('7c9e6679-7425-40de-944b-e07fc1f90ae7', {\n  limit: '50',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/agents/{agentId}/schedules\"][\"post\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst schedule = await client.agents.schedules.create('7c9e6679-7425-40de-944b-e07fc1f90ae7', {\n  cron: 'x',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/agents/{agentId}/schedules/{scheduleId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst schedule = await client.agents.schedules.retrieve('7c9e6679-7425-40de-944b-e07fc1f90ae7', {\n  agentId: '7c9e6679-7425-40de-944b-e07fc1f90ae7',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/agents/{agentId}/schedules/{scheduleId}\"][\"patch\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst schedule = await client.agents.schedules.update('7c9e6679-7425-40de-944b-e07fc1f90ae7', {\n  agentId: '7c9e6679-7425-40de-944b-e07fc1f90ae7',\n  cron: 'x',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/agents/{agentId}/schedules/{scheduleId}\"][\"delete\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst schedule = await client.agents.schedules.delete('7c9e6679-7425-40de-944b-e07fc1f90ae7', {\n  agentId: '7c9e6679-7425-40de-944b-e07fc1f90ae7',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/agents/{agentId}/triggers\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst trigger = await client.agents.triggers.list('7c9e6679-7425-40de-944b-e07fc1f90ae7', {\n  limit: '50',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/agents/{agentId}/triggers\"][\"post\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst trigger = await client.agents.triggers.create('7c9e6679-7425-40de-944b-e07fc1f90ae7', {\n  name: 'x',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/agents/{agentId}/triggers/{triggerId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst trigger = await client.agents.triggers.retrieve('7c9e6679-7425-40de-944b-e07fc1f90ae7', {\n  agentId: '7c9e6679-7425-40de-944b-e07fc1f90ae7',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/agents/{agentId}/triggers/{triggerId}\"][\"patch\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst trigger = await client.agents.triggers.update('7c9e6679-7425-40de-944b-e07fc1f90ae7', {\n  agentId: '7c9e6679-7425-40de-944b-e07fc1f90ae7',\n  name: 'x',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/agents/{agentId}/triggers/{triggerId}\"][\"delete\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst trigger = await client.agents.triggers.delete('7c9e6679-7425-40de-944b-e07fc1f90ae7', {\n  agentId: '7c9e6679-7425-40de-944b-e07fc1f90ae7',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/agents/{agentId}/runs\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst run = await client.agents.runs.list('7c9e6679-7425-40de-944b-e07fc1f90ae7', {\n  limit: '50',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/agents/{agentId}/runs\"][\"post\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst run = await client.agents.runs.create('7c9e6679-7425-40de-944b-e07fc1f90ae7');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/agents/{agentId}/runs/{runId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst run = await client.agents.runs.retrieve('7c9e6679-7425-40de-944b-e07fc1f90ae7', {\n  agentId: '7c9e6679-7425-40de-944b-e07fc1f90ae7',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/repositories\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst repository = await client.repositories.list({\n  limit: 50,\n  order: 'desc',\n  sort: 'pullRequests',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/repositories/{repositoryId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst repository = await client.repositories.retrieve('7c9e6679-7425-40de-944b-e07fc1f90ae7');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/integrations\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst integration = await client.integrations.list({\n  limit: '50',\n  includeTotal: 'false',\n});\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/integrations/{integrationId}\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst integration = await client.integrations.retrieve('7c9e6679-7425-40de-944b-e07fc1f90ae7');\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/billing\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst billing = await client.billing.retrieve();\n"
+                    }
+                ]
+            }
+        },
+        {
+            "target": "$.paths[\"/v1/billing/usage\"][\"get\"]",
+            "update": {
+                "x-codeSamples": [
+                    {
+                        "lang": "typescript",
+                        "label": "TypeScript SDK",
+                        "source": "import Tembo from '@tembo-io/sdk';\n\nconst client = new Tembo();\n\nconst billing = await client.billing.listUsage({\n  limit: '50',\n});\n"
+                    }
+                ]
+            }
+        }
+    ]
+}
