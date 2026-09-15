@@ -86,3 +86,7 @@ The dev server defaults to `http://localhost:3000`. Keep it running while you ed
 - [Mintlify Documentation](https://mintlify.com/docs)
 - [Support](mailto:support@tembo.io)
 - [Book a Demo](https://book.avoma.com/tembo/tembo-demo/)
+
+## Temporary Test session verification
+
+This temporary section verifies that the end-to-end test session can clone and modify a connected repository without committing or pushing changes.
