@@ -195,6 +195,11 @@
                         ]
                     },
                     {
+                        "group": "Blog",
+                        "public": true,
+                        "pages": ["blog/agent-environments-in-milliseconds"]
+                    },
+                    {
                         "group": "Other",
                         "public": true,
                         "pages": ["resources/pwa", "resources/pricing"]
