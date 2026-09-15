@@ -173,7 +173,8 @@
         object-fit: contain;
     }
 
-    img[src="/images/integrations/mcp-icon.png"] {
+    img[src*="/images/integrations/mcp-icon.png"],
+    img[src*="/images/integrations/tailscale.svg"] {
         filter: invert(1);
     }
 
@@ -183,7 +184,8 @@
     }
 }
 
-.dark [data-component-part="card-icon"] img[src="/images/integrations/mcp-icon.png"] {
+.dark [data-component-part="card-icon"] img[src*="/images/integrations/mcp-icon.png"],
+.dark [data-component-part="card-icon"] img[src*="/images/integrations/tailscale.svg"] {
     filter: none;
 }
 
