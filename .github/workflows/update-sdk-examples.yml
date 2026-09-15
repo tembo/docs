@@ -4,6 +4,11 @@ on:
   repository_dispatch:
     types: [sdk-published]
   workflow_dispatch:
+    inputs:
+      version:
+        description: Published stable SDK version to document
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -24,12 +29,23 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '24'
-      - name: Resolve current stable npm release
+      - name: Verify requested npm release is available
         id: release
+        env:
+          SDK_VERSION: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.version || inputs.version }}
         run: |
-          VERSION=$(npm view @tembo-io/sdk dist-tags.latest)
-          [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit 1
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          set -euo pipefail
+          [[ "$SDK_VERSION" =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]] || exit 1
+          for attempt in {1..12}; do
+            if [ "$(npm view "@tembo-io/sdk@$SDK_VERSION" version --prefer-online)" = "$SDK_VERSION" ]; then
+              echo "version=$SDK_VERSION" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "Waiting for SDK $SDK_VERSION on npm (attempt $attempt/12)."
+            sleep 10
+          done
+          echo "::error::SDK $SDK_VERSION is not available on npm; rerun this workflow once it is published."
+          exit 1
       - name: Generate examples from that release
         env:
           SDK_VERSION: ${{ steps.release.outputs.version }}
