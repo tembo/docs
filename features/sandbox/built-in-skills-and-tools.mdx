@@ -1,11 +1,264 @@
 ---
 title: 'Built-in skills and tools'
-description: 'Reference for the MCP tools, Tembo CLI commands, and skills available in your sandbox.'
+description: 'Reference for pre-installed dependencies and versions, MCP tools, Tembo CLI commands, and skills available in your sandbox.'
 ---
 
 Your sandbox gives your agent MCP tools for interacting with Tembo, a `tembo` CLI for terminal operations, and skills that explain how to use those capabilities.
 
 This page lists Tembo's built-in capabilities. Your available tools and skills can also depend on your agent, organization settings, and connected integrations. Third-party MCP servers and custom skills can add to this list.
+
+## Pre-installed dependencies
+
+Your sandbox VM includes the following packages before your repository setup runs. Versions below are a snapshot of the **NixOS 25.05, x86_64-linux base-image definition on September 15, 2026**. Your session's versions can differ as images are rebuilt or your organization and repository install additional dependencies.
+
+The tables cover development tools, agents, desktop packages, and system utilities selected by the VM's Nix configuration, not every transitive library in the Nix store. Integration-specific MCP servers and packages fetched on demand are not included. Package names follow the Nix package metadata; a package can provide multiple commands.
+
+### Languages and build tools
+
+| Dependency | Version |
+| --- | --- |
+| `nodejs` | 22.20.0 |
+| `bun` | 1.3.13 |
+| `pnpm` | 10.15.1 |
+| `yarn` | 1.22.22 |
+| `python3` | 3.12.12 |
+| `pipx` | 1.7.1 |
+| `uv` | 0.7.22 |
+| `ruff` | 0.11.13 |
+| `openjdk` | 21.0.9+10 |
+| `gradle` | 8.14.3 |
+| `maven` | 3.9.9 |
+| `ruby` | 3.3.9 |
+| `ruby3.3-rubocop-1.75.2` | 1.75.2 |
+| `bundler-2.6.6` | 2.6.6 |
+| `ruby3.3-rspec-core-3.13.3` | 3.13.3 |
+| `dotnet-sdk-wrapped` | 10.0.300 |
+| `gcc-wrapper` | 14.3.0 |
+| `binutils-wrapper` | 2.44 |
+| `pkg-config-wrapper` | 0.29.2 |
+| `gnumake` | 4.4.1 |
+| `gettext` | 0.22.5 |
+
+| Dependency | Version |
+| --- | --- |
+| Rust toolchain (`rustc`, Cargo, Clippy, rustfmt, rust-src) | 1.96.0 (Fenix stable snapshot, 2026-05-28) |
+
+Node.js includes npm and npx. Python is 3.12, Java is OpenJDK 21, and the .NET package is SDK 10.0.300. Go and the BEAM tools (Erlang and Elixir) are not pre-installed.
+
+### Development and command-line tools
+
+| Dependency | Version |
+| --- | --- |
+| `git` | 2.50.1 |
+| `curl` | 8.14.1 |
+| `wget` | 1.25.0 |
+| `jq` | 1.7.1 |
+| `yq` | 3.4.3 |
+| `bat` | 0.25.0 |
+| `ripgrep` | 14.1.1 |
+| `ast-grep` | 0.37.0 |
+| `vim` | 9.1.1566 |
+| `nano` | 8.6 |
+| `lnav` | 0.12.4 |
+| `httpie` | 3.2.4 |
+| `strace` | 6.17 |
+| `lsof` | 4.99.4 |
+| `ShellCheck` | 0.10.0 |
+| `direnv` | 2.36.0 |
+| `gawk` | 5.3.2 |
+| `gnused` | 4.9 |
+| `gnugrep` | 3.11 |
+| `findutils` | 4.10.0 |
+| `coreutils` | 9.7 |
+| `diffutils` | 3.12 |
+| `gnutar` | 1.35 |
+| `gzip` | 1.14 |
+| `zstd` | 1.5.7 |
+| `unzip` | 6.0 |
+| `zip` | 3.0 |
+| `less` | 668 |
+| `tmux` | 3.5a |
+| `tree` | 2.2.1 |
+| `file` | 5.45 |
+| `which` | 2.23 |
+| `htop` | 3.4.1 |
+| `gotop` | 4.2.0 |
+| `procps` | 4.0.4 |
+| `psmisc` | 23.7 |
+| `rsync` | 3.4.1 |
+| `inotify-tools` | 4.23.9.0 |
+| `fzf` | 0.62.0 |
+| `bash-interactive` | 5.2p37 |
+| `zsh` | 5.9 |
+| `docker` | 27.5.1 |
+| `devcontainer` | 0.76.0 |
+
+The interactive shell also uses Starship 1.23.0 for its prompt.
+
+The `yq` package is the Python/jq-based implementation. GitHub CLI is wrapped for session authentication; its upstream version is listed below.
+
+### Cloud, networking, and database tools
+
+| Dependency | Version |
+| --- | --- |
+| `awscli2` | 2.27.2 |
+| `google-cloud-sdk` | 519.0.0 |
+| `mcp-toolbox-for-databases` | 1.5.0 |
+| `netcat-gnu` | 0.7.1 |
+| `openssh` | 10.0p2 |
+| `openconnect` | 9.12 |
+| `openvpn` | 2.6.14 |
+| `tailscale` | 1.82.5 |
+| `nmap` | 7.98 |
+| `socat` | 1.8.0.3 |
+
+| Dependency | Version |
+| --- | --- |
+| GitHub CLI (`gh`) | 2.100.0 |
+| Infisical (`infisical`) | 0.41.1 |
+
+Cloud and private-network access still require the corresponding credentials or connected integrations. MCP Toolbox provides the `toolbox` command; it does not install database servers.
+
+### Coding agents and browser automation
+
+| Dependency | Version |
+| --- | --- |
+| `amp` | 0.0.1787947269-g83b159 |
+| `claude-code` | 2.1.251 |
+| `codex` | 0.150.1 |
+| `cursor-agent` | 2026.08.25-3e8eec8 |
+| `droid` | 0.206.0 |
+| `fx` | 0.0.10 |
+| `gemini-cli` | 0.57.0 |
+| `grok` | 1.0.5 |
+| `opencode` | 1.18.25 |
+| `pi` | 0.84.3 |
+| `agent-browser` | 0.35.1 |
+
+These are the packaged agent versions, not a guarantee that every agent is enabled for your session. `claude-devcontainer` wraps the same Claude Code package; it is not a separately versioned agent.
+
+### Browser and Computer preview
+
+| Dependency | Version |
+| --- | --- |
+| `chromium` | 143.0.7499.169 |
+| `vscode` | 1.105.0 |
+| `ghostty` | 1.3.1 |
+| `kitty` | 0.42.1 |
+| `ffmpeg-full` | 7.1.1 |
+| `selkies` | 2.0.0-dev-20260822 |
+| `openbox` | 3.6.1 |
+| `tint2` | 17.1.3 |
+| `plank` | 0.11.89 |
+| `picom` | 12.5 |
+| `dconf` | 0.40.0 |
+| `bamf` | 0.5.6 |
+| `ulauncher` | 5.15.7 |
+| `pcmanfm` | 1.3.2 |
+| `wmctrl` | 1.07 |
+| `xdotool` | 3.20211022.1 |
+| `xwallpaper` | 0.7.6 |
+| `xprop` | 1.2.7 |
+| `xsetroot` | 1.1.3 |
+| `xwininfo` | 1.1.6 |
+| `capitaine-cursors` | 4 |
+| `adwaita-icon-theme` | 48.0 |
+
+| Dependency | Version |
+| --- | --- |
+| DejaVu fonts | 2.37 |
+
+The `tembo-chromium` and `tembo-code` launchers use the Chromium and VS Code versions above. Desktop packages being installed does not mean every desktop application is running.
+
+<Accordion title="System utilities and runtime libraries">
+
+| Dependency | Version |
+| --- | --- |
+| `acl` | 2.3.2 |
+| `attr` | 2.5.2 |
+| `bcache-tools` | 1.0.8 |
+| `bind` | 9.20.15 |
+| `btrfs-progs` | 6.14 |
+| `busybox` | 1.36.1 |
+| `bzip2` | 1.0.8 |
+| `coreutils-full` | 9.7 |
+| `cpio` | 2.15 |
+| `dbus` | 1.14.10 |
+| `dhcpcd` | 10.1.0 |
+| `dmidecode` | 3.6 |
+| `dosfstools` | 4.2 |
+| `e2fsprogs` | 1.47.2 |
+| `fontconfig` | 2.16.0 |
+| `fuse` | 2.9.9 |
+| `gcc` | 14.3.0 |
+| `glibc` | 2.40 |
+| `glibc-locales` | 2.40 |
+| `grub` | 2.12 |
+| `icu4c` | 76.1 |
+| `iproute2` | 6.14.0 |
+| `iptables` | 1.8.11 |
+| `iputils` | 20250605 |
+| `kbd` | 2.7.1 |
+| `kexec-tools` | 2.0.29 |
+| `kmod` | 31 |
+| `libcap` | 2.75 |
+| `libressl` | 4.1.1 |
+| `linux-pam` | 1.6.1 |
+| `lvm2` | 2.03.31 |
+| `mdadm` | 4.3 |
+| `mkpasswd` | 5.6.4 |
+| `ncurses` | 6.5 |
+| `net-tools` | 2.10 |
+| `nix` | 2.28.5 |
+| `nix-bash-completions` | 0.6.8 |
+| `nix-zsh-completions` | 0.5.1 |
+| `openresolv` | 3.13.2 |
+| `openssl` | 3.4.3 |
+| `patch` | 2.7.6 |
+| `polkit` | 126 |
+| `shadow` | 4.17.4 |
+| `systemd` | 257.10 |
+| `time` | 1.9 |
+| `util-linux` | 2.41.1 |
+| `xfsprogs` | 6.13.0 |
+| `xz` | 5.8.1 |
+
+| Dependency | Version |
+| --- | --- |
+| FUSE 3 (`fuse`) | 3.16.2 |
+| zlib (nix-ld compatibility library) | 1.3.1 |
+
+Both FUSE 2 and FUSE 3 are included. The GCC runtime libraries and compiler wrapper share version 14.3.0. `getent` and `getconf` use glibc 2.40.
+
+</Accordion>
+
+<Accordion title="Terminal compatibility data">
+
+These packages contribute terminal descriptions (terminfo), not additional terminal application binaries. Ghostty and Kitty are also installed as applications with the versions in the Computer preview table.
+
+| Dependency | Version |
+| --- | --- |
+| `alacritty` | 0.15.1 |
+| `contour` | 0.6.1.7494 |
+| `foot` | 1.22.3 |
+| `ghostty` | 1.1.3 |
+| `kitty` | 0.42.1 |
+| `mtm` | 1.2.1 |
+| `rio` | 0.2.14 |
+| `rxvt-unicode` | 9.31 |
+| `st` | 0.9.2 |
+| `termite` | 15 |
+| `yaft` | 0.2.9 |
+
+The image also includes `tmux-terminfo` and `wezterm-terminfo`, which do not declare separate versions in the image configuration.
+
+</Accordion>
+
+### Image-managed helpers
+
+The Tembo CLI, repository/session helpers, desktop launchers, sandbox server, authentication wrappers, and compatibility shims are shipped with the image rather than independently versioned in the package list. Use `tembo --version` to check the CLI installed in your session. Sandbar's preview/tunnel client is pinned by source revision, not a release version: `6d934d331b97ed438137499add9029c08461b14c` for this snapshot. NixOS management commands follow the NixOS release above.
+
+If you need a dependency that is not listed, ask your agent to use the `install-custom-dependencies` skill.
 
 ## MCP tools
 
