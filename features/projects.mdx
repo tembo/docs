@@ -5,7 +5,7 @@ description: 'Create reusable environments so Tembo sessions start with the righ
 
 Projects are reusable environments for Tembo sessions. A project defines the repositories, workspace skills, dependencies, setup script, default agent instructions, and session sizes that a team uses for a particular codebase or workflow.
 
-Tembo prepares an environment for each selected session size. When you start a session from that project, Tembo restores the prepared environment instead of cloning repositories and installing dependencies from scratch. This is especially useful for large repositories, monorepos, and projects with slow dependency installs.
+Tembo prepares an environment for each selected session size. Each project build captures both disk and memory, including running processes. When you start a session from that project, Tembo clones this prepared environment instead of cloning repositories and installing dependencies from scratch. This is especially useful for large repositories, monorepos, and projects with slow dependency installs.
 
 <Note>
   Projects are available on paid plans. Upgrade in **Settings** > **Billing**, or [book a call with us](https://book.avoma.com/tembo/tembo-demo/) if you need access to test them.
@@ -100,6 +100,8 @@ A project can have at most 100 environment variables. Keys must be unique, value
 Use the setup script for preparation that is not handled by repository dependency installation or [`tembo.nix`](/features/sandbox/custom-dependencies). Tembo runs the script while building the project's environments, after it clones the selected repositories.
 
 The script has access to workspace-wide [environment variables](/features/sandbox/environment-variables) and any environment variables added to the project. Anything the script installs or writes to disk becomes part of the prepared environment.
+
+Processes that your setup script starts and leaves running are also preserved in every session that boots from that project build. For example, you can start your whole app during setup—its frontend development server, backend API, and background workers—so each session starts with the app already running instead of having to launch it again. Start long-running processes in the background so the setup script can finish and Tembo can capture the environment.
 
 <Note>
   This project setup script is separate from the `setupScript` [hook](/features/hooks) in `.tembo.json`. The `.tembo.json` hook runs during the environment build only when **Install dependencies** is enabled, while the project setup script runs whenever it is configured. Sessions restored from a prepared environment do not run the `.tembo.json` hook at startup. Rebuild the project environment after changing setup commands so new sessions pick them up.
